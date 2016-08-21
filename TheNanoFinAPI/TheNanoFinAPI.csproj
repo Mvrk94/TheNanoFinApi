@@ -184,11 +184,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadFiles\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AuthZeroConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -219,11 +223,26 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ConsumerWalletHandlerController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InsuranceManagerHandlerController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\productsController.cs" />
+    <Compile Include="Controllers\RandomDataController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TestManagerController.cs" />
+    <Compile Include="Controllers\UserHandlerController.cs" />
+    <Compile Include="Controllers\ValidatorController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\WalletHandlerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountBindingModels.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\activeproductitem.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
@@ -236,6 +255,17 @@
     <Compile Include="Models\document.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOEnvironment\DTOconsumerEnvironment.cs" />
+    <Compile Include="Models\DTOEnvironment\DTOinsuranceManagerEnvironment.cs" />
+    <Compile Include="Models\DTOEnvironment\DTOrellerEnvironment.cs" />
+    <Compile Include="Models\DTOEnvironment\DTOUserEnvironment.cs" />
+    <Compile Include="Models\DTOEnvironment\EntityMapper.cs" />
+    <Compile Include="Models\DTOEnvironment\GeneralDTOs.cs" />
+    <Compile Include="Models\DTOEnvironment\ProductDTO.cs" />
+    <Compile Include="Models\DTOEnvironment\Reports.cs" />
+    <Compile Include="Models\DTOEnvironment\ValidatorDTO.cs" />
+    <Compile Include="Models\EmailModel.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\insuranceproduct.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
@@ -260,6 +290,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>nanofinEF.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\nanofinEntities.cs" />
     <Compile Include="Models\notificationlog.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
@@ -315,6 +346,8 @@
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

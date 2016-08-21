@@ -4,15 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using TheNanoFinAPI.Models;
 
-namespace TheNanoFinAPI.Controllers
+namespace NanofinAPI.Controllers
 {
+    [Authorize]
     public class ValuesController : ApiController
     {
-        private database_nanofinEntities  db = new database_nanofinEntities();
-
-
         // GET api/values
         public IEnumerable<string> Get()
         {
