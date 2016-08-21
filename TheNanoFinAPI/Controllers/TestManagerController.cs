@@ -1,6 +1,4 @@
 ﻿using NanofinAPI.Models;
-using NanoFinAPI_6_07.Models;
-using NanoFinAPI_6_07.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

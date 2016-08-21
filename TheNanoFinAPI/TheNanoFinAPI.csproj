@@ -25,7 +25,8 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <ApplicationInsightsResourceId>/subscriptions/31a53af0-eb3b-4cdc-b16a-dcdd6aa6c0b2/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/TheNanoFinAPI</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>
+    </ApplicationInsightsResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,6 +53,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Extreme.Numerics.SinglePrecision.Net40, Version=6.0.16073.0, Culture=neutral, PublicKeyToken=9e513770f58567b2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\Extreme Optimization\Numerical Libraries for .NET 6.0\bin\Net40\Extreme.Numerics.SinglePrecision.Net40.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -88,19 +93,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\user\Desktop\EFdll6.9.9\MySql.Data.dll</HintPath>
+      <HintPath>..\packages\Azure Personal  Entity FrameWork Pack\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF5, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\user\Desktop\EFdll6.9.8\MySql.Data.Entity.EF5.dll</HintPath>
+      <HintPath>..\packages\Azure Personal  Entity FrameWork Pack\MySql.Data.Entity.EF5.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\user\Desktop\EFdll6.9.9\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\packages\Azure Personal  Entity FrameWork Pack\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\user\Desktop\EFdll6.9.8\MySql.Web.dll</HintPath>
+      <HintPath>..\packages\Azure Personal  Entity FrameWork Pack\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.4.0\lib\net40\Swashbuckle.Core.dll</HintPath>
@@ -187,12 +192,9 @@
     <Folder Include="UploadFiles\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AuthZeroConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -223,7 +225,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConsumerWalletHandlerController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -265,7 +266,6 @@
     <Compile Include="Models\DTOEnvironment\Reports.cs" />
     <Compile Include="Models\DTOEnvironment\ValidatorDTO.cs" />
     <Compile Include="Models\EmailModel.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\insuranceproduct.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
@@ -346,8 +346,6 @@
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -389,9 +387,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <EntityDeploy Include="Models\nanofinEF.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>nanofinEF.Designer.cs</LastGenOutput>
@@ -399,6 +394,7 @@
     <Content Include="Models\nanofinEF.edmx.diagram">
       <DependentUpon>nanofinEF.edmx</DependentUpon>
     </Content>
+    <Content Include="ApplicationInsights.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
