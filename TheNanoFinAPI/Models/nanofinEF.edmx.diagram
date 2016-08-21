@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9a6f3dff28eb4f959d0ebd7615817ef4" Name="Diagram1" ZoomLevel="65">
+        <EntityTypeShape EntityType="database_nanofinModel.activeproductitem" Width="1.5" PointX="7.5" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.claimuploaddocument" Width="1.5" PointX="8.25" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.consumer" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.document" Width="1.5" PointX="12.75" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.insuranceproduct" Width="1.5" PointX="7.5" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.insurancetype" Width="1.5" PointX="5.25" PointY="29.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.location" Width="1.5" PointX="8" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.notificationlog" Width="1.5" PointX="5.25" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.processapplication" Width="1.5" PointX="12.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.product" Width="1.5" PointX="10.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.productprovider" Width="1.5" PointX="5.25" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.productproviderpayment" Width="1.5" PointX="14.75" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.productredemptionlog" Width="1.5" PointX="12.75" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.producttype" Width="1.5" PointX="8.25" PointY="30.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.reseller" Width="1.5" PointX="10.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.systemadmin" Width="1.5" PointX="5.25" PointY="34" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.transactiontype" Width="1.5" PointX="10.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.unittype" Width="1.5" PointX="5.25" PointY="31.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.user" Width="1.5" PointX="3" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.usertype" Width="1.5" PointX="0.75" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.validator" Width="1.5" PointX="5.25" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.voucher" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.vouchertransaction" Width="1.5" PointX="12.5" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.vouchertype" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="database_nanofinModel.productsalespermonth" Width="1.5" PointX="5" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="database_nanofinModel.activeproductitems_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.activeproductitems_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.claimuploaddocument_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.productproviderpayment_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.productredemptionlog_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.claimuploaddocument_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.claimuploaddocument_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.consumer_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.document_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.insuranceproduct_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.insuranceproduct_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.insuranceproduct_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.insuranceproduct_ibfk_4" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.reseller_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.notificationlog_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.processapplications_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.product_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.product_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.productprovider_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.productproviderpayment_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.productredemptionlog_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.reseller_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.systemadmin_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.vouchertransaction_ibfk_5" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.user_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.validator_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.voucher_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.vouchertransaction_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.vouchertransaction_ibfk_4" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.voucher_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.vouchertransaction_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="database_nanofinModel.vouchertransaction_ibfk_2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
