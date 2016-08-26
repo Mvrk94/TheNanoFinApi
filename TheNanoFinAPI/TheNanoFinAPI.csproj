@@ -247,6 +247,12 @@
     <Compile Include="Models\activeproductitem.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\claim.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claimtemplate.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\claimuploaddocument.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>

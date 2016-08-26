@@ -32,9 +32,12 @@ namespace TheNanoFinAPI.Models
         public Nullable<decimal> grossMonthlyIncome { get; set; }
         public Nullable<decimal> nettMonthlyIncome { get; set; }
         public Nullable<decimal> totalMonthlyExpenses { get; set; }
+        public Nullable<int> Location_ID { get; set; }
+        public Nullable<int> numDependant { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<activeproductitem> activeproductitems { get; set; }
         public virtual user user { get; set; }
+        public virtual location location { get; set; }
     }
 }

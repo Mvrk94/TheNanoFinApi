@@ -19,9 +19,11 @@ namespace TheNanoFinAPI.Models
         public int ActiveProductItems_ID { get; set; }
         public int document_ID { get; set; }
         public string claimUploadDocumentPath { get; set; }
+        public Nullable<int> Claim_ID { get; set; }
     
         public virtual activeproductitem activeproductitem { get; set; }
         public virtual user user { get; set; }
         public virtual document document { get; set; }
+        public virtual claim claim { get; set; }
     }
 }

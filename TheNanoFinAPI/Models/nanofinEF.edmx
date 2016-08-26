@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="database_nanofinModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="database_nanofinModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="activeproductitems">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
@@ -21,6 +21,22 @@
           <Property Name="activeProductItemEndDate" Type="datetime" Precision="0" />
           <Property Name="PurchaseConfirmationDocPath" Type="varchar" MaxLength="1024" />
         </EntityType>
+        <EntityType Name="claim">
+          <Key>
+            <PropertyRef Name="Claim_ID" />
+          </Key>
+          <Property Name="Claim_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActiveProductItems_ID" Type="int" />
+          <Property Name="capturedClaimFormDataJson" Type="longtext" />
+        </EntityType>
+        <EntityType Name="claimtemplate">
+          <Key>
+            <PropertyRef Name="claimtemplate_ID" />
+          </Key>
+          <Property Name="claimtemplate_ID" Type="int" Nullable="false" />
+          <Property Name="templateName" Type="varchar" MaxLength="65" />
+          <Property Name="formDataRequiredJson" Type="longtext" />
+        </EntityType>
         <EntityType Name="claimuploaddocument">
           <Key>
             <PropertyRef Name="claimUploadDocument_ID" />
@@ -30,6 +46,7 @@
           <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
           <Property Name="document_ID" Type="int" Nullable="false" />
           <Property Name="claimUploadDocumentPath" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Claim_ID" Type="int" />
         </EntityType>
         <EntityType Name="consumer">
           <Key>
@@ -47,6 +64,8 @@
           <Property Name="grossMonthlyIncome" Type="decimal" Precision="8" Scale="2" />
           <Property Name="nettMonthlyIncome" Type="decimal" Precision="8" Scale="2" />
           <Property Name="totalMonthlyExpenses" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Location_ID" Type="int" />
+          <Property Name="numDependant" Type="int" />
         </EntityType>
         <EntityType Name="document">
           <Key>
@@ -77,6 +96,7 @@
           <Property Name="ApiKey" Type="varchar" MaxLength="2000" />
           <Property Name="claimContactNo" Type="varchar" MaxLength="16" />
           <Property Name="claimFormPath" Type="varchar" MaxLength="1024" />
+          <Property Name="claimtemplate_ID" Type="int" />
         </EntityType>
         <EntityType Name="insurancetype">
           <Key>
@@ -94,6 +114,8 @@
           <Property Name="City" Type="varchar" MaxLength="32" />
           <Property Name="LatLng" Type="varchar" MaxLength="64" />
           <Property Name="PostalCode" Type="varchar" MaxLength="45" />
+          <Property Name="GDP" Type="int" />
+          <Property Name="UnemploymentRate" Type="decimal" Precision="8" Scale="2" />
         </EntityType>
         <EntityType Name="notificationlog">
           <Key>
@@ -336,6 +358,42 @@ warning 6013: The table/view 'def.database_nanofin.salespermonth' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ActiveProductItems_ID">
+          <End Role="activeproductitems" Type="Self.activeproductitems" Multiplicity="0..1" />
+          <End Role="claim" Type="Self.claim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="activeproductitems">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Principal>
+            <Dependent Role="claim">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Claim_ID">
+          <End Role="claim" Type="Self.claim" Multiplicity="0..1" />
+          <End Role="claimuploaddocument" Type="Self.claimuploaddocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="claim">
+              <PropertyRef Name="Claim_ID" />
+            </Principal>
+            <Dependent Role="claimuploaddocument">
+              <PropertyRef Name="Claim_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="claimtemplate_ID">
+          <End Role="claimtemplate" Type="Self.claimtemplate" Multiplicity="0..1" />
+          <End Role="insuranceproduct" Type="Self.insuranceproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="claimtemplate">
+              <PropertyRef Name="claimtemplate_ID" />
+            </Principal>
+            <Dependent Role="insuranceproduct">
+              <PropertyRef Name="claimtemplate_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="claimuploaddocument_ibfk_1">
           <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="claimuploaddocument" Type="Self.claimuploaddocument" Multiplicity="*" />
@@ -381,6 +439,18 @@ warning 6013: The table/view 'def.database_nanofin.salespermonth' does not have 
             </Principal>
             <Dependent Role="consumer">
               <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="consumer_ibfk_2">
+          <End Role="locations" Type="Self.locations" Multiplicity="0..1" />
+          <End Role="consumer" Type="Self.consumer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="locations">
+              <PropertyRef Name="Location_ID" />
+            </Principal>
+            <Dependent Role="consumer">
+              <PropertyRef Name="Location_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -698,6 +768,8 @@ warning 6013: The table/view 'def.database_nanofin.salespermonth' does not have 
         </Association>
         <EntityContainer Name="database_nanofinModelStoreContainer">
           <EntitySet Name="activeproductitems" EntityType="Self.activeproductitems" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="claim" EntityType="Self.claim" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="claimtemplate" EntityType="Self.claimtemplate" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="claimuploaddocument" EntityType="Self.claimuploaddocument" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="consumer" EntityType="Self.consumer" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="document" EntityType="Self.document" Schema="database_nanofin" store:Type="Tables" />
@@ -737,6 +809,18 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
             <End Role="product" EntitySet="product" />
             <End Role="activeproductitems" EntitySet="activeproductitems" />
           </AssociationSet>
+          <AssociationSet Name="ActiveProductItems_ID" Association="Self.ActiveProductItems_ID">
+            <End Role="activeproductitems" EntitySet="activeproductitems" />
+            <End Role="claim" EntitySet="claim" />
+          </AssociationSet>
+          <AssociationSet Name="Claim_ID" Association="Self.Claim_ID">
+            <End Role="claim" EntitySet="claim" />
+            <End Role="claimuploaddocument" EntitySet="claimuploaddocument" />
+          </AssociationSet>
+          <AssociationSet Name="claimtemplate_ID" Association="Self.claimtemplate_ID">
+            <End Role="claimtemplate" EntitySet="claimtemplate" />
+            <End Role="insuranceproduct" EntitySet="insuranceproduct" />
+          </AssociationSet>
           <AssociationSet Name="claimuploaddocument_ibfk_1" Association="Self.claimuploaddocument_ibfk_1">
             <End Role="user" EntitySet="user" />
             <End Role="claimuploaddocument" EntitySet="claimuploaddocument" />
@@ -751,6 +835,10 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           </AssociationSet>
           <AssociationSet Name="consumer_ibfk_1" Association="Self.consumer_ibfk_1">
             <End Role="user" EntitySet="user" />
+            <End Role="consumer" EntitySet="consumer" />
+          </AssociationSet>
+          <AssociationSet Name="consumer_ibfk_2" Association="Self.consumer_ibfk_2">
+            <End Role="locations" EntitySet="locations" />
             <End Role="consumer" EntitySet="consumer" />
           </AssociationSet>
           <AssociationSet Name="document_ibfk_1" Association="Self.document_ibfk_1">
@@ -858,8 +946,7 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
             <End Role="vouchertransaction" EntitySet="vouchertransaction" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="database_nanofinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -883,6 +970,7 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <NavigationProperty Name="claimuploaddocuments" Relationship="Self.claimuploaddocument_ibfk_2" FromRole="activeproductitems" ToRole="claimuploaddocument" />
           <NavigationProperty Name="productproviderpayments" Relationship="Self.productproviderpayment_ibfk_2" FromRole="activeproductitems" ToRole="productproviderpayment" />
           <NavigationProperty Name="productredemptionlogs" Relationship="Self.productredemptionlog_ibfk_2" FromRole="activeproductitems" ToRole="productredemptionlog" />
+          <NavigationProperty Name="claims" Relationship="database_nanofinModel.ActiveProductItems_ID" FromRole="activeproductitem" ToRole="claim" />
         </EntityType>
         <EntityType Name="claimuploaddocument">
           <Key>
@@ -896,6 +984,8 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <NavigationProperty Name="activeproductitem" Relationship="Self.claimuploaddocument_ibfk_2" FromRole="claimuploaddocument" ToRole="activeproductitems" />
           <NavigationProperty Name="user" Relationship="Self.claimuploaddocument_ibfk_1" FromRole="claimuploaddocument" ToRole="user" />
           <NavigationProperty Name="document" Relationship="Self.claimuploaddocument_ibfk_3" FromRole="claimuploaddocument" ToRole="document" />
+          <Property Name="Claim_ID" Type="Int32" />
+          <NavigationProperty Name="claim" Relationship="database_nanofinModel.Claim_ID" FromRole="claimuploaddocument" ToRole="claim" />
         </EntityType>
         <EntityType Name="consumer">
           <Key>
@@ -915,6 +1005,9 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="totalMonthlyExpenses" Type="Decimal" />
           <NavigationProperty Name="activeproductitems" Relationship="Self.activeproductitems_ibfk_1" FromRole="consumer" ToRole="activeproductitems" />
           <NavigationProperty Name="user" Relationship="Self.consumer_ibfk_1" FromRole="consumer" ToRole="user" />
+          <Property Name="Location_ID" Type="Int32" />
+          <Property Name="numDependant" Type="Int32" />
+          <NavigationProperty Name="location" Relationship="database_nanofinModel.consumer_ibfk_2" FromRole="consumer" ToRole="location" />
         </EntityType>
         <EntityType Name="document">
           <Key>
@@ -951,6 +1044,8 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <NavigationProperty Name="productprovider" Relationship="Self.insuranceproduct_ibfk_2" FromRole="insuranceproduct" ToRole="productprovider" />
           <NavigationProperty Name="insurancetype" Relationship="Self.insuranceproduct_ibfk_3" FromRole="insuranceproduct" ToRole="insurancetype" />
           <NavigationProperty Name="product" Relationship="Self.insuranceproduct_ibfk_4" FromRole="insuranceproduct" ToRole="product" />
+          <Property Name="claimtemplate_ID" Type="Int32" />
+          <NavigationProperty Name="claimtemplate" Relationship="database_nanofinModel.claimtemplate_ID" FromRole="insuranceproduct" ToRole="claimtemplate" />
         </EntityType>
         <EntityType Name="insurancetype">
           <Key>
@@ -970,6 +1065,9 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="PostalCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="resellers" Relationship="Self.reseller_ibfk_2" FromRole="locations" ToRole="reseller" />
+          <Property Name="GDP" Type="Int32" />
+          <Property Name="UnemploymentRate" Type="Decimal" />
+          <NavigationProperty Name="consumers" Relationship="database_nanofinModel.consumer_ibfk_2" FromRole="location" ToRole="consumer" />
         </EntityType>
         <EntityType Name="notificationlog">
           <Key>
@@ -1764,7 +1862,92 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
             <End Role="voucher" EntitySet="vouchers" />
             <End Role="vouchertransaction" EntitySet="vouchertransactions" />
           </AssociationSet>
+          <EntitySet Name="claims" EntityType="database_nanofinModel.claim" />
+          <EntitySet Name="claimtemplates" EntityType="database_nanofinModel.claimtemplate" />
+          <AssociationSet Name="ActiveProductItems_ID" Association="database_nanofinModel.ActiveProductItems_ID">
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End Role="claim" EntitySet="claims" />
+          </AssociationSet>
+          <AssociationSet Name="Claim_ID" Association="database_nanofinModel.Claim_ID">
+            <End Role="claim" EntitySet="claims" />
+            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
+          </AssociationSet>
+          <AssociationSet Name="claimtemplate_ID" Association="database_nanofinModel.claimtemplate_ID">
+            <End Role="claimtemplate" EntitySet="claimtemplates" />
+            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+          </AssociationSet>
+          <AssociationSet Name="consumer_ibfk_2" Association="database_nanofinModel.consumer_ibfk_2">
+            <End Role="location" EntitySet="locations" />
+            <End Role="consumer" EntitySet="consumers" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="claim">
+          <Key>
+            <PropertyRef Name="Claim_ID" />
+          </Key>
+          <Property Name="Claim_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActiveProductItems_ID" Type="Int32" />
+          <Property Name="capturedClaimFormDataJson" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="activeproductitem" Relationship="database_nanofinModel.ActiveProductItems_ID" FromRole="claim" ToRole="activeproductitem" />
+          <NavigationProperty Name="claimuploaddocuments" Relationship="database_nanofinModel.Claim_ID" FromRole="claim" ToRole="claimuploaddocument" />
+        </EntityType>
+        <EntityType Name="claimtemplate">
+          <Key>
+            <PropertyRef Name="claimtemplate_ID" />
+          </Key>
+          <Property Name="claimtemplate_ID" Type="Int32" Nullable="false" />
+          <Property Name="templateName" Type="String" MaxLength="65" FixedLength="false" Unicode="false" />
+          <Property Name="formDataRequiredJson" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="insuranceproducts" Relationship="database_nanofinModel.claimtemplate_ID" FromRole="claimtemplate" ToRole="insuranceproduct" />
+        </EntityType>
+        <Association Name="ActiveProductItems_ID">
+          <End Type="database_nanofinModel.activeproductitem" Role="activeproductitem" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.claim" Role="claim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="activeproductitem">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Principal>
+            <Dependent Role="claim">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Claim_ID">
+          <End Type="database_nanofinModel.claim" Role="claim" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.claimuploaddocument" Role="claimuploaddocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="claim">
+              <PropertyRef Name="Claim_ID" />
+            </Principal>
+            <Dependent Role="claimuploaddocument">
+              <PropertyRef Name="Claim_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="claimtemplate_ID">
+          <End Type="database_nanofinModel.claimtemplate" Role="claimtemplate" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="claimtemplate">
+              <PropertyRef Name="claimtemplate_ID" />
+            </Principal>
+            <Dependent Role="insuranceproduct">
+              <PropertyRef Name="claimtemplate_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="consumer_ibfk_2">
+          <End Type="database_nanofinModel.location" Role="location" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.consumer" Role="consumer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="Location_ID" />
+            </Principal>
+            <Dependent Role="consumer">
+              <PropertyRef Name="Location_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1791,6 +1974,7 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <EntitySetMapping Name="claimuploaddocuments">
             <EntityTypeMapping TypeName="database_nanofinModel.claimuploaddocument">
               <MappingFragment StoreEntitySet="claimuploaddocument">
+                <ScalarProperty Name="Claim_ID" ColumnName="Claim_ID" />
                 <ScalarProperty Name="claimUploadDocument_ID" ColumnName="claimUploadDocument_ID" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
@@ -1802,6 +1986,8 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <EntitySetMapping Name="consumers">
             <EntityTypeMapping TypeName="database_nanofinModel.consumer">
               <MappingFragment StoreEntitySet="consumer">
+                <ScalarProperty Name="numDependant" ColumnName="numDependant" />
+                <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
                 <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="consumerDateOfBirth" ColumnName="consumerDateOfBirth" />
@@ -1832,6 +2018,7 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <EntitySetMapping Name="insuranceproducts">
             <EntityTypeMapping TypeName="database_nanofinModel.insuranceproduct">
               <MappingFragment StoreEntitySet="insuranceproduct">
+                <ScalarProperty Name="claimtemplate_ID" ColumnName="claimtemplate_ID" />
                 <ScalarProperty Name="InsuranceProduct_ID" ColumnName="InsuranceProduct_ID" />
                 <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
                 <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
@@ -1860,6 +2047,8 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <EntitySetMapping Name="locations">
             <EntityTypeMapping TypeName="database_nanofinModel.location">
               <MappingFragment StoreEntitySet="locations">
+                <ScalarProperty Name="UnemploymentRate" ColumnName="UnemploymentRate" />
+                <ScalarProperty Name="GDP" ColumnName="GDP" />
                 <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
                 <ScalarProperty Name="Province" ColumnName="Province" />
                 <ScalarProperty Name="City" ColumnName="City" />
@@ -2089,6 +2278,24 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
                 <ScalarProperty Name="productName" ColumnName="productName" />
                 <ScalarProperty Name="sales" ColumnName="sales" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="claims">
+            <EntityTypeMapping TypeName="database_nanofinModel.claim">
+              <MappingFragment StoreEntitySet="claim">
+                <ScalarProperty Name="capturedClaimFormDataJson" ColumnName="capturedClaimFormDataJson" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+                <ScalarProperty Name="Claim_ID" ColumnName="Claim_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="claimtemplates">
+            <EntityTypeMapping TypeName="database_nanofinModel.claimtemplate">
+              <MappingFragment StoreEntitySet="claimtemplate">
+                <ScalarProperty Name="formDataRequiredJson" ColumnName="formDataRequiredJson" />
+                <ScalarProperty Name="templateName" ColumnName="templateName" />
+                <ScalarProperty Name="claimtemplate_ID" ColumnName="claimtemplate_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -20,6 +20,7 @@ namespace TheNanoFinAPI.Models
             this.claimuploaddocuments = new HashSet<claimuploaddocument>();
             this.productproviderpayments = new HashSet<productproviderpayment>();
             this.productredemptionlogs = new HashSet<productredemptionlog>();
+            this.claims = new HashSet<claim>();
         }
     
         public int ActiveProductItems_ID { get; set; }
@@ -42,5 +43,7 @@ namespace TheNanoFinAPI.Models
         public virtual ICollection<productproviderpayment> productproviderpayments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<productredemptionlog> productredemptionlogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<claim> claims { get; set; }
     }
 }
