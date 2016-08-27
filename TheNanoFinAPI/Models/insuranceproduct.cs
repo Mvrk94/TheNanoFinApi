@@ -28,10 +28,12 @@ namespace TheNanoFinAPI.Models
         public string ApiKey { get; set; }
         public string claimContactNo { get; set; }
         public string claimFormPath { get; set; }
+        public Nullable<int> claimtemplate_ID { get; set; }
     
         public virtual unittype unittype { get; set; }
         public virtual productprovider productprovider { get; set; }
         public virtual insurancetype insurancetype { get; set; }
         public virtual product product { get; set; }
+        public virtual claimtemplate claimtemplate { get; set; }
     }
 }

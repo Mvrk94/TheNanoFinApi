@@ -50,5 +50,7 @@ namespace TheNanoFinAPI.Models
         public virtual DbSet<vouchertransaction> vouchertransactions { get; set; }
         public virtual DbSet<vouchertype> vouchertypes { get; set; }
         public virtual DbSet<productsalespermonth> productsalespermonths { get; set; }
+        public virtual DbSet<claim> claims { get; set; }
+        public virtual DbSet<claimtemplate> claimtemplates { get; set; }
     }
 }

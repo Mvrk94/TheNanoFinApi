@@ -12,26 +12,19 @@ namespace TheNanoFinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class location
+    public partial class claimtemplate
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public location()
+        public claimtemplate()
         {
-            this.resellers = new HashSet<reseller>();
-            this.consumers = new HashSet<consumer>();
+            this.insuranceproducts = new HashSet<insuranceproduct>();
         }
     
-        public int Location_ID { get; set; }
-        public string Province { get; set; }
-        public string City { get; set; }
-        public string LatLng { get; set; }
-        public string PostalCode { get; set; }
-        public Nullable<int> GDP { get; set; }
-        public Nullable<decimal> UnemploymentRate { get; set; }
+        public int claimtemplate_ID { get; set; }
+        public string templateName { get; set; }
+        public string formDataRequiredJson { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<reseller> resellers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<consumer> consumers { get; set; }
+        public virtual ICollection<insuranceproduct> insuranceproducts { get; set; }
     }
 }

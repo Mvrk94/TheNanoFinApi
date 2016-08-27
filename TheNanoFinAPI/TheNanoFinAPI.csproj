@@ -97,7 +97,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Azure Personal  Entity FrameWork Pack\MySql.Data.dll</HintPath>
+      <HintPath>..\..\Users\user\Desktop\EFdll6.9.9\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF5, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -105,7 +105,7 @@
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Azure Personal  Entity FrameWork Pack\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\..\Users\user\Desktop\EFdll6.9.9\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -264,6 +264,12 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\activeproductitem.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claim.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claimtemplate.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\claimuploaddocument.cs">
