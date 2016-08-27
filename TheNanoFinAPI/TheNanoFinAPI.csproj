@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="Extreme.Numerics.Net40, Version=6.0.16073.0, Culture=neutral, PublicKeyToken=9e513770f58567b2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Extreme Opt\Extreme.Numerics.Net40.dll</HintPath>
+      <HintPath>..\ourReferences\Extreme.Numerics.Net40.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -97,19 +97,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Users\user\Desktop\EFdll6.9.9\MySql.Data.dll</HintPath>
+      <HintPath>..\ourReferences\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF5, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Azure Personal  Entity FrameWork Pack\MySql.Data.Entity.EF5.dll</HintPath>
+      <HintPath>..\ourReferences\MySql.Data.Entity.EF5.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Users\user\Desktop\EFdll6.9.9\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\ourReferences\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Azure Personal  Entity FrameWork Pack\MySql.Web.dll</HintPath>
+      <HintPath>..\ourReferences\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="RDotNet, Version=1.5.5.0, Culture=neutral, PublicKeyToken=5f72f6e23c6920d4, processorArchitecture=MSIL">
       <HintPath>..\packages\R.NET.1.5.5\lib\net40\RDotNet.dll</HintPath>
