@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="Extreme.Numerics.Net40, Version=6.0.16073.0, Culture=neutral, PublicKeyToken=9e513770f58567b2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Program Files (x86)\Extreme Optimization\Numerical Libraries for .NET 6.0\bin\Net40\Extreme.Numerics.Net40.dll</HintPath>
+      <HintPath>..\packages\Extreme Opt\Extreme.Numerics.Net40.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -252,6 +252,7 @@
     <Compile Include="Controllers\productsController.cs" />
     <Compile Include="Controllers\RandomDataController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\ReportsMasterController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TestManagerController.cs" />
     <Compile Include="Controllers\UserHandlerController.cs" />
@@ -289,6 +290,7 @@
     <Compile Include="Models\DTOEnvironment\GeneralDTOs.cs" />
     <Compile Include="Models\DTOEnvironment\ProductDTO.cs" />
     <Compile Include="Models\DTOEnvironment\Reports.cs" />
+    <Compile Include="Models\DTOEnvironment\reportsMaster.cs" />
     <Compile Include="Models\DTOEnvironment\ValidatorDTO.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\insuranceproduct.cs">
