@@ -27,9 +27,6 @@ namespace TheNanoFinAPI.Controllers
 
         nanofinEntities db = new nanofinEntities();
 
-
-
-
         [HttpGet]
         public async Task<Boolean> SetConsumerData()
         {
@@ -40,18 +37,19 @@ namespace TheNanoFinAPI.Controllers
 
             foreach ( consumer  temp  in list)
             {
-                temp.gender = gender[r.Next() % 2];
-                temp.maritalStatus = (r.Next(100) > 55) ? "Single" : "Married";
-                temp.employmentStatus = (r.Next(100) > 80) ? "Unemplyed" : "Employed";
-                int gross = 1200 + (r.Next(3800));
-                temp.grossMonthlyIncome = gross;
-                temp.nettMonthlyIncome = (Decimal) (1 +  gross*  0.15) ;
-                temp.totalMonthlyExpenses = gross *(Decimal) 0.5;
+                //temp.gender = gender[r.Next() % 2];
+                //temp.maritalStatus = (r.Next(100) > 55) ? "Single" : "Married";
+                //temp.employmentStatus = (r.Next(100) > 80) ? "Unemplyed" : "Employed";
+                temp.numDependant = (r.Next(4));
+                //int gross = 1200 + (r.Next(3800));
+                //temp.grossMonthlyIncome = gross;
+                //temp.nettMonthlyIncome = (Decimal) (1 +  gross*  0.15) ;
+                //temp.totalMonthlyExpenses = gross *(Decimal) 0.5;
                await db.SaveChangesAsync();
-                toreturn = true;
+               
             }
 
-
+ toreturn = true;
             return toreturn;
         }
 
@@ -124,21 +122,21 @@ namespace TheNanoFinAPI.Controllers
 
 
 
-            int ConsumerIncrement = (int)((con.Length - 1) / 12);
+            int ConsumerIncrement = 3;
             int ConsumerThisMonth = 0;
 
             Random random = new Random();
             int resllerCounter = con.Count();
 
-            DateTime  LASTYear  =  new DateTime (2016,07,01);
+            DateTime  LASTYear  =  new DateTime (2015,01,01);
 
             while(LASTYear < DateTime.Now)
             {
 
-                resllerCounter = 7;
+                resllerCounter = 1;
                 for (int  r = 0;  r < resllerCounter; r++)
                 {
-                    decimal bulkAmount = 0;
+                    
                     List<ConsumerPurchases> purchases = new List<ConsumerPurchases>();
                     consumer temp;
                     List<product> prod = db.products.ToList();
@@ -187,7 +185,7 @@ namespace TheNanoFinAPI.Controllers
                             purchaseNo++;
                         }
 
-                        if (medical > 69)
+                        if (medical < 69)
                         {
                             if (salary > 4000)
                             {
@@ -203,7 +201,7 @@ namespace TheNanoFinAPI.Controllers
                             purchaseNo++;
                         }
 
-                        if (funeral > 95)
+                        if (funeral < 95)
                         {
 
                             if (temp.maritalStatus.CompareTo("Single") == 1)
@@ -225,7 +223,7 @@ namespace TheNanoFinAPI.Controllers
                                 }
                             }
 
-                            if (temp.maritalStatus.CompareTo("Married") == 1)
+                            if (temp.maritalStatus.CompareTo("Married") == 1 || temp.numDependant >= 2)
                             {
                                 if (salary > 4000)
                                 {
@@ -250,19 +248,22 @@ namespace TheNanoFinAPI.Controllers
                         purchases.Add(purchase);
                     }
                     int resID = res.ElementAt(r).User_ID;
-                    wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
+                    wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next())); 
 
 
                     foreach( var s  in purchases)
                     {
                         wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost +3 , LASTYear.AddHours(24 + random.Next(45)));
+                        int count = 0;
                         foreach( var pur  in s.data)
                         {
-                            if (pur != 0) cw.redeemProduct(s.ConsumerID, pur, 1, LASTYear.AddHours(48 +random.Next(45)));
+                            count++;
+                            if (pur != 0) cw.redeemProduct(s.ConsumerID, pur, 1, LASTYear.AddHours(168*count +random.Next(150)));
                         }
                     }
 
                 }
+                resllerCounter = (resllerCounter == 14) ? 10 : resllerCounter++;
                 ConsumerThisMonth = con.Count();
                 LASTYear = LASTYear.AddMonths(1);
             }
