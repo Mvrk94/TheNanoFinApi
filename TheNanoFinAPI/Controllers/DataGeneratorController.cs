@@ -248,7 +248,7 @@ namespace TheNanoFinAPI.Controllers
                         purchases.Add(purchase);
                     }
                     int resID = res.ElementAt(r).User_ID;
-                    wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next())); 
+                    wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
 
 
                     foreach( var s  in purchases)
