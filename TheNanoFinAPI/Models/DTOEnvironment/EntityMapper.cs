@@ -7,6 +7,9 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
 {
    public static class EntityMapper
     {
+        
+
+
         public static activeproductitem updateEntity(activeproductitem entityObjct, DTOactiveproductitem dto)
         {
             if (entityObjct == null) entityObjct = new activeproductitem();
@@ -27,6 +30,30 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         }
 
 
+        public static claim updateEntity(claim entityObjct, DTOclaim dto)
+        {
+            if (entityObjct == null) entityObjct = new claim();
+
+            entityObjct.Claim_ID = dto.Claim_ID;
+            entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
+            entityObjct.capturedClaimFormDataJson = dto.capturedClaimFormDataJson;
+
+            return entityObjct;
+        }
+
+
+        public static claimtemplate updateEntity(claimtemplate entityObjct, DTOclaimtemplate dto)
+        {
+            if (entityObjct == null) entityObjct = new claimtemplate();
+
+            entityObjct.claimtemplate_ID = dto.claimtemplate_ID;
+            entityObjct.templateName = dto.templateName;
+            entityObjct.formDataRequiredJson = dto.formDataRequiredJson;
+
+            return entityObjct;
+        }
+
+
         public static claimuploaddocument updateEntity(claimuploaddocument entityObjct, DTOclaimuploaddocument dto)
         {
             if (entityObjct == null) entityObjct = new claimuploaddocument();
@@ -36,6 +63,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
             entityObjct.document_ID = dto.document_ID;
             entityObjct.claimUploadDocumentPath = dto.claimUploadDocumentPath;
+            entityObjct.Claim_ID = dto.Claim_ID;
 
             return entityObjct;
         }
@@ -57,6 +85,8 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             entityObjct.grossMonthlyIncome = dto.grossMonthlyIncome;
             entityObjct.nettMonthlyIncome = dto.nettMonthlyIncome;
             entityObjct.totalMonthlyExpenses = dto.totalMonthlyExpenses;
+            entityObjct.Location_ID = dto.Location_ID;
+            entityObjct.numDependant = dto.numDependant;
 
             return entityObjct;
         }
@@ -95,6 +125,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             entityObjct.ApiKey = dto.ApiKey;
             entityObjct.claimContactNo = dto.claimContactNo;
             entityObjct.claimFormPath = dto.claimFormPath;
+            entityObjct.claimtemplate_ID = dto.claimtemplate_ID;
 
             return entityObjct;
         }
@@ -120,10 +151,19 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             entityObjct.City = dto.City;
             entityObjct.LatLng = dto.LatLng;
             entityObjct.PostalCode = dto.PostalCode;
+            entityObjct.GDP = dto.GDP;
+            entityObjct.UnemploymentRate = dto.UnemploymentRate;
 
             return entityObjct;
         }
 
+        public static nanofinEntities updateEntity(nanofinEntities entityObjct, DTOnanofinEntities dto)
+        {
+            if (entityObjct == null) entityObjct = new nanofinEntities();
+
+
+            return entityObjct;
+        }
 
 
         public static notificationlog updateEntity(notificationlog entityObjct, DTOnotificationlog dto)
@@ -336,6 +376,10 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
+        internal static object updateEntity(consumer putConsumer, DTOconsumerUserProfileInfo dtoConsumerProfile)
+        {
+            throw new NotImplementedException();
+        }
 
         public static validator updateEntity(validator entityObjct, DTOvalidator dto)
         {
@@ -357,6 +401,10 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
+        internal static object updateEntity(user putUser, DTOconsumerUserProfileInfo dtoConsumerProfile)
+        {
+            throw new NotImplementedException();
+        }
 
         public static voucher updateEntity(voucher entityObjct, DTOvoucher dto)
         {
@@ -403,14 +451,5 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
-        internal static object updateEntity(user putUser, DTOconsumerUserProfileInfo dtoConsumerProfile)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static object updateEntity(consumer putConsumer, DTOconsumerUserProfileInfo dtoConsumerProfile)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

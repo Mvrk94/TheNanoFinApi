@@ -5,6 +5,7 @@ using System.Web;
 
 namespace TheNanoFinAPI.Models.DTOEnvironment
 {
+
     public class DTOactiveproductitem
     {
         public int ActiveProductItems_ID { get; set; }
@@ -38,6 +39,40 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOclaim
+    {
+        public int Claim_ID { get; set; }
+        public Nullable<int> ActiveProductItems_ID { get; set; }
+        public string capturedClaimFormDataJson { get; set; }
+
+        public DTOclaim() { }
+
+        public DTOclaim(claim entityObjct)
+        {
+            Claim_ID = entityObjct.Claim_ID;
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            capturedClaimFormDataJson = entityObjct.capturedClaimFormDataJson;
+        }
+    }
+
+
+    public class DTOclaimtemplate
+    {
+        public int claimtemplate_ID { get; set; }
+        public string templateName { get; set; }
+        public string formDataRequiredJson { get; set; }
+
+        public DTOclaimtemplate() { }
+
+        public DTOclaimtemplate(claimtemplate entityObjct)
+        {
+            claimtemplate_ID = entityObjct.claimtemplate_ID;
+            templateName = entityObjct.templateName;
+            formDataRequiredJson = entityObjct.formDataRequiredJson;
+        }
+    }
+
+
     public class DTOclaimuploaddocument
     {
         public int claimUploadDocument_ID { get; set; }
@@ -45,6 +80,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         public int ActiveProductItems_ID { get; set; }
         public int document_ID { get; set; }
         public string claimUploadDocumentPath { get; set; }
+        public Nullable<int> Claim_ID { get; set; }
 
         public DTOclaimuploaddocument() { }
 
@@ -55,6 +91,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
             document_ID = entityObjct.document_ID;
             claimUploadDocumentPath = entityObjct.claimUploadDocumentPath;
+            Claim_ID = entityObjct.Claim_ID;
         }
     }
 
@@ -73,6 +110,8 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         public Nullable<decimal> grossMonthlyIncome { get; set; }
         public Nullable<decimal> nettMonthlyIncome { get; set; }
         public Nullable<decimal> totalMonthlyExpenses { get; set; }
+        public Nullable<int> Location_ID { get; set; }
+        public Nullable<int> numDependant { get; set; }
 
         public DTOconsumer() { }
 
@@ -90,6 +129,8 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             grossMonthlyIncome = entityObjct.grossMonthlyIncome;
             nettMonthlyIncome = entityObjct.nettMonthlyIncome;
             totalMonthlyExpenses = entityObjct.totalMonthlyExpenses;
+            Location_ID = entityObjct.Location_ID;
+            numDependant = entityObjct.numDependant;
         }
     }
 
@@ -117,6 +158,8 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
     }
 
 
+    
+
     public class DTOinsuranceproduct
     {
         public int InsuranceProduct_ID { get; set; }
@@ -133,6 +176,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         public string ApiKey { get; set; }
         public string claimContactNo { get; set; }
         public string claimFormPath { get; set; }
+        public Nullable<int> claimtemplate_ID { get; set; }
 
         public DTOinsuranceproduct() { }
 
@@ -152,6 +196,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             ApiKey = entityObjct.ApiKey;
             claimContactNo = entityObjct.claimContactNo;
             claimFormPath = entityObjct.claimFormPath;
+            claimtemplate_ID = entityObjct.claimtemplate_ID;
         }
     }
 
@@ -178,6 +223,8 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         public string City { get; set; }
         public string LatLng { get; set; }
         public string PostalCode { get; set; }
+        public Nullable<int> GDP { get; set; }
+        public Nullable<decimal> UnemploymentRate { get; set; }
 
         public DTOlocation() { }
 
@@ -188,6 +235,21 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             City = entityObjct.City;
             LatLng = entityObjct.LatLng;
             PostalCode = entityObjct.PostalCode;
+            GDP = entityObjct.GDP;
+            UnemploymentRate = entityObjct.UnemploymentRate;
+        }
+    }
+
+
+  
+
+    public class DTOnanofinEntities
+    {
+
+        public DTOnanofinEntities() { }
+
+        public DTOnanofinEntities(nanofinEntities entityObjct)
+        {
         }
     }
 
@@ -620,5 +682,6 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             voucherTypeDescription = entityObjct.voucherTypeDescription;
         }
     }
+
 
 }
