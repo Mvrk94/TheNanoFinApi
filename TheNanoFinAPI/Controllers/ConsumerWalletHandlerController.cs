@@ -18,7 +18,7 @@ namespace NanoFinAPI.Controllers
         private nanofinEntities db = new nanofinEntities();
 
         #region RedeemProduct Code
-        public async Task<IHttpActionResult> redeemProduct(int userID, int productID, int numberUnits, DateTime startdate)
+        public IHttpActionResult redeemProduct(int userID, int productID, int numberUnits, DateTime startdate)
         {
             //check that the minimum number of units is applied according to what is in db:
             if (!isValidNumUnits(productID,numberUnits))
@@ -62,7 +62,7 @@ namespace NanoFinAPI.Controllers
 
                         vouchersList.ElementAt(i).voucherValue = 0;
                         db.Entry(vouchersList.ElementAt(i)).State = EntityState.Modified;
-                        await db.SaveChangesAsync();
+                         db.SaveChanges();
 
                         //addVoucherTransactionLog()
                         //addVoucherTransactionLog(vouchersList.ElementAt(i).Voucher_ID, vouchersList.ElementAt(i).Voucher_ID, userID, 0, 31, voucherVal, "Voucher Redemption for Product Purchase", System.DateTime.Now);
@@ -79,7 +79,7 @@ namespace NanoFinAPI.Controllers
                         //use a part of this voucher
                         vouchersList.ElementAt(i).voucherValue = voucherVal - amountToDeduct;
                         db.Entry(vouchersList.ElementAt(i)).State = EntityState.Modified;
-                        await db.SaveChangesAsync();
+                         db.SaveChanges();
 
                         //add voucherTransactionLog()
                         //addVoucherTransactionLog(vouchersList.ElementAt(i).Voucher_ID, vouchersList.ElementAt(i).Voucher_ID, userID, 0, 31, amountToDeduct, "Voucher Redemption for Product Purchase", DateTime.Now);
@@ -268,9 +268,9 @@ namespace NanoFinAPI.Controllers
 
         //GET specific Product/productID
         [ResponseType(typeof(DTOproduct))]
-        public async Task<IHttpActionResult> Getproduct(int id)
+        public IHttpActionResult Getproduct(int id)
         {
-            DTOproduct toReturn = new DTOproduct(await db.products.FindAsync(id));
+            DTOproduct toReturn = new DTOproduct( db.products.Find(id));
             if (toReturn == null)
             {
                 return NotFound();
@@ -403,7 +403,7 @@ namespace NanoFinAPI.Controllers
         //Update profile information /userID/updatedProfile- will update both consumer and user tables based on the DTOconsumerUserProfile being passed
         [ResponseType(typeof(void))]
         [HttpPut]
-        public async Task<IHttpActionResult> updateConsumerProfile(int UserId, DTOconsumerUserProfileInfo dtoConsumerProfile)
+        public IHttpActionResult updateConsumerProfile(int UserId, DTOconsumerUserProfileInfo dtoConsumerProfile)
         {
             if (!ModelState.IsValid)
             {
@@ -426,7 +426,7 @@ namespace NanoFinAPI.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                 db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {

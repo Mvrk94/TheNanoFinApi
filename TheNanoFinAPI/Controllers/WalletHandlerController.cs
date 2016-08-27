@@ -29,7 +29,7 @@ namespace NanoFinAPI.Controllers
         //-reseller sends voucher= update reseller's voucher amount
 
 
-        public async Task<IHttpActionResult> SendVoucher(int senderID, int receiverID, decimal amountToSend, int transactionType_ID, int voucherTypeID)
+        public IHttpActionResult SendVoucher(int senderID, int receiverID, decimal amountToSend, int transactionType_ID, int voucherTypeID, DateTime date)
         {
             if (getVoucherAccountBalance(senderID) < amountToSend)
             {
@@ -43,11 +43,11 @@ namespace NanoFinAPI.Controllers
             newVoucher.User_ID = receiverID;
             newVoucher.voucherValue = amountToSend;
             newVoucher.VoucherType_ID = voucherTypeID;
-            DateTime now = DateTime.Now;
+            DateTime now = date;
             now.ToString("yyyy-MM-dd H:mm:ss");
             newVoucher.voucherCreationDate = now;
             db.vouchers.Add(newVoucher);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
 
             for (int i = 0; i < senderVouchers.Count && toDeduct > 0; i++)
@@ -57,13 +57,13 @@ namespace NanoFinAPI.Controllers
                 if (toDeduct >= temp.voucherValue)
                 {
                     toDeduct -= temp.voucherValue;
-                    addVoucherTransaction(newVoucher.Voucher_ID, temp.Voucher_ID, receiverID, senderID, temp.voucherValue, transactionType_ID);
+                    addVoucherTransaction(newVoucher.Voucher_ID, temp.Voucher_ID, receiverID, senderID, temp.voucherValue, transactionType_ID,date);
                     temp.voucherValue = 0;
                 }
                 else
                 {
                     temp.voucherValue -= toDeduct;
-                    addVoucherTransaction(newVoucher.Voucher_ID, temp.Voucher_ID, receiverID, senderID, toDeduct, transactionType_ID);
+                    addVoucherTransaction(newVoucher.Voucher_ID, temp.Voucher_ID, receiverID, senderID, toDeduct, transactionType_ID,date);
                     toDeduct = 0;
                 }
 
@@ -73,7 +73,7 @@ namespace NanoFinAPI.Controllers
         }
 
 
-        private void addVoucherTransaction(int newVoucherID, int voucherID, int receiverID, int senderID, decimal Amount, int transactionTypeID)
+        private void addVoucherTransaction(int newVoucherID, int voucherID, int receiverID, int senderID, decimal Amount, int transactionTypeID,DateTime date)
         {
             vouchertransaction newTransaction = new vouchertransaction();
             newTransaction.VoucherSentTo = newVoucherID;
@@ -82,7 +82,7 @@ namespace NanoFinAPI.Controllers
             newTransaction.Sender_ID = senderID;
             newTransaction.transactionAmount = Amount;
             newTransaction.TransactionType_ID = transactionTypeID;
-            DateTime now = DateTime.Now;
+            DateTime now = date;
             now.ToString("yyyy-MM-dd H:mm:ss");
             newTransaction.transactionDate = now;
             //newTransaction.transactionDate = DateTime.Now;
@@ -95,7 +95,7 @@ namespace NanoFinAPI.Controllers
         }
 
 
-        public async Task<IHttpActionResult> buyBulkVoucher(int userID, decimal BulkVoucherAmount)
+        public IHttpActionResult buyBulkVoucher(int userID, decimal BulkVoucherAmount , DateTime date)
         {
             if (isUserReseller(userID))
             {
@@ -106,11 +106,11 @@ namespace NanoFinAPI.Controllers
                 newVoucher.User_ID = userID;
                 newVoucher.voucherValue = BulkVoucherAmount;
                 newVoucher.VoucherType_ID = 1;
-                newVoucher.voucherCreationDate = DateTime.Now;
+                newVoucher.voucherCreationDate = date;
                 db.vouchers.Add(newVoucher);
-                await db.SaveChangesAsync();
+                 db.SaveChanges();
 
-                addVoucherTransaction(newVoucher.Voucher_ID, newVoucher.Voucher_ID, userID, 0, BulkVoucherAmount, 1);
+                addVoucherTransaction(newVoucher.Voucher_ID, newVoucher.Voucher_ID, userID, 1, BulkVoucherAmount, 1, date);
 
                 return Ok();
             }
@@ -124,7 +124,7 @@ namespace NanoFinAPI.Controllers
 
 
         //Send bulk voucher recipient details unknown
-        public async Task<IHttpActionResult> sendBulkVoucher_RecipientUnknown(int resellerUserID, string recipientDetails, decimal transferAmount)
+        public IHttpActionResult sendBulkVoucher_RecipientUnknown(int resellerUserID, string recipientDetails, decimal transferAmount, DateTime date)
         {
             if (isUserReseller(resellerUserID))
             {
@@ -137,7 +137,7 @@ namespace NanoFinAPI.Controllers
                     }
                     else
                     {
-                        await SendVoucher(resellerUserID, recipientUserID, transferAmount, 2, 2);
+                         SendVoucher(resellerUserID, recipientUserID, transferAmount, 2, 2, date);
                     }
                 }
                 else
@@ -154,7 +154,7 @@ namespace NanoFinAPI.Controllers
         }
 
         //Send bulk voucher recipient details known
-        public async Task<IHttpActionResult> sendBulkVoucher(int resellerUserID, int recipientID, decimal transferAmount)
+        public IHttpActionResult sendBulkVoucher(int resellerUserID, int recipientID, decimal transferAmount, DateTime date)
         {
             if (isUserReseller(resellerUserID))
             {
@@ -166,7 +166,7 @@ namespace NanoFinAPI.Controllers
                     }
                     else
                     {
-                        await SendVoucher(resellerUserID, recipientID, transferAmount, 2, 2);
+                         SendVoucher(resellerUserID, recipientID, transferAmount, 2, 2,date);
                     }
                 }
                 else
@@ -182,7 +182,7 @@ namespace NanoFinAPI.Controllers
             }
         }
 
-        public async Task<IHttpActionResult> consumerSendVoucher(int consumerUserID, int recipientID, decimal transferAmount)
+        public IHttpActionResult consumerSendVoucher(int consumerUserID, int recipientID, decimal transferAmount, DateTime date)
         {
             if (isUserConsumer(consumerUserID) && isUserConsumer(recipientID))
             {
@@ -194,7 +194,7 @@ namespace NanoFinAPI.Controllers
                     }
                     else
                     {
-                        await SendVoucher(consumerUserID, recipientID, transferAmount, 21, 2);
+                         SendVoucher(consumerUserID, recipientID, transferAmount, 21, 2, date);
                     }
 
 
@@ -212,14 +212,14 @@ namespace NanoFinAPI.Controllers
             }
         }
 
-        public async Task<IHttpActionResult> consumerSendVoucher_RecipientUnknown(int consumerUserID, string recipientDetails, decimal transferAmount)
+        public IHttpActionResult consumerSendVoucher_RecipientUnknown(int consumerUserID, string recipientDetails, decimal transferAmount, DateTime date)
         {
             if (isUserConsumer(consumerUserID))
             {
                 int recipientUserID = getUserDetailsToUserID(recipientDetails);
                 if (isUserConsumer(recipientUserID))
                 {
-                    await SendVoucher(consumerUserID, recipientUserID, transferAmount, 21, 2);
+                     SendVoucher(consumerUserID, recipientUserID, transferAmount, 21, 2, date);
                     return Ok();
                 }
                 else
@@ -273,7 +273,7 @@ namespace NanoFinAPI.Controllers
         {
             if (isUserReseller(resellerUserID))
             {
-                List<vouchertransaction> rawVoucherTransactionList = (from c in db.vouchertransactions where c.Receiver_ID == resellerUserID && c.Sender_ID == 0 && c.TransactionType_ID == 1 select c).ToList();
+                List<vouchertransaction> rawVoucherTransactionList = (from c in db.vouchertransactions where c.Receiver_ID == resellerUserID && c.Sender_ID == 1 && c.TransactionType_ID == 1 select c).ToList();
 
                 if (rawVoucherTransactionList == null)
                 {

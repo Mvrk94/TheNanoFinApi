@@ -8,6 +8,8 @@ using NanofinAPI.Models;
 using NanofinAPI.Models.DTO;
 using System.Web.Http.Description;
 using TheNanoFinAPI.Models;
+using System.Text;
+using System.IO;
 
 namespace NanofinAPI.Controllers
 {
@@ -121,6 +123,24 @@ namespace NanofinAPI.Controllers
                     });
             
             return toreturn;
+        }
+
+
+
+        public void writeToCSV()
+        {
+
+            var csv = new StringBuilder();
+            List<productsalespermonth> prods = db.productsalespermonths.ToList();
+            //in your loop
+            foreach (var temp in prods)
+            {
+                var newLine = string.Format("{0},{1},{2}", temp.activeProductItemStartDate, temp.Product_ID, temp.sales);
+                csv.AppendLine(newLine);
+
+
+            }
+            File.WriteAllText("data.csv", csv.ToString());
         }
 
         #endregion
