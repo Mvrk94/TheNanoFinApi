@@ -91,7 +91,8 @@ namespace TheNanoFinAPI.Controllers
        [HttpGet]
        public List<LocationReports> getCurrentMonthSales()
         {
-            var list = (from c in db.monthlylocationsales where c.activeProductItemStartDate.Value > DateTime.Now.AddMonths(-1) select c).ToList(); ;
+            var currentDate = DateTime.Now.AddMonths(-2);
+            var list = (from c in db.monthlylocationsales where c.activeProductItemStartDate.Value > currentDate select c).ToList(); ;
 
             var toreturn = new List<LocationReports>();
 
