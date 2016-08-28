@@ -391,6 +391,7 @@
       <DependentUpon>nanofinEF.edmx</DependentUpon>
     </Content>
     <Content Include="Reports\productSales.csv" />
+    <None Include="Properties\PublishProfiles\nanofinapibeta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
