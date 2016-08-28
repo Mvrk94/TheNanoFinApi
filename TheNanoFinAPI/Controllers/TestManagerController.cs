@@ -1,6 +1,7 @@
 ﻿using NanofinAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -17,9 +18,11 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         nanofinEntities db = new nanofinEntities();
 
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOactiveproductitem))]
         public async Task<DTOactiveproductitem> Postactiveproductitem(DTOactiveproductitem newDTO)
         {
+
             activeproductitem newProd = EntityMapper.updateEntity(null, newDTO);
             db.activeproductitems.Add(newProd);
             await db.SaveChangesAsync();
@@ -28,6 +31,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOactiveproductitem> Getactiveproductitem()
         {
@@ -43,7 +47,19 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        // PUT: api/activeproductitem/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putactiveproductitem(int ID, DTOactiveproductitem editedDTO)
+        {
+            activeproductitem toUpdate = db.activeproductitems.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOconsumer))]
         public async Task<DTOconsumer> Postconsumer(DTOconsumer newDTO)
         {
@@ -56,7 +72,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
-
+        [HttpGet]
         // GET: api/testManager
         public List<DTOconsumer> Getconsumer()
         {
@@ -70,7 +86,185 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/consumer/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putconsumer(int ID, DTOconsumer editedDTO)
+        {
+            consumer toUpdate = db.consumers.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
+        [ResponseType(typeof(DTOclaim))]
+        public async Task<DTOclaim> Postclaim(DTOclaim newDTO)
+        {
+
+            claim newProd = EntityMapper.updateEntity(null, newDTO);
+            db.claims.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        [HttpGet]
+        // GET: api/testManager
+        public List<DTOclaim> Getclaim()
+        {
+            List<DTOclaim> toReturn = new List<DTOclaim>();
+            List<claim> list = (from c in db.claims select c).ToList();
+
+            foreach (claim p in list)
+            {
+                toReturn.Add(new DTOclaim(p));
+            }
+
+            return toReturn;
+        }
+
+
+        // PUT: api/claim/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putclaim(int ID, DTOclaim editedDTO)
+        {
+            claim toUpdate = db.claims.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        // POST: api/testManager
+        [HttpPost]
+        [ResponseType(typeof(DTOclaimtemplate))]
+        public async Task<DTOclaimtemplate> Postclaimtemplate(DTOclaimtemplate newDTO)
+        {
+
+            claimtemplate newProd = EntityMapper.updateEntity(null, newDTO);
+            db.claimtemplates.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        [HttpGet]
+        // GET: api/testManager
+        public List<DTOclaimtemplate> Getclaimtemplate()
+        {
+            List<DTOclaimtemplate> toReturn = new List<DTOclaimtemplate>();
+            List<claimtemplate> list = (from c in db.claimtemplates select c).ToList();
+
+            foreach (claimtemplate p in list)
+            {
+                toReturn.Add(new DTOclaimtemplate(p));
+            }
+
+            return toReturn;
+        }
+
+
+        // PUT: api/claimtemplate/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putclaimtemplate(int ID, DTOclaimtemplate editedDTO)
+        {
+            claimtemplate toUpdate = db.claimtemplates.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        // POST: api/testManager
+        [HttpPost]
+        [ResponseType(typeof(DTOclaimuploaddocument))]
+        public async Task<DTOclaimuploaddocument> Postclaimuploaddocument(DTOclaimuploaddocument newDTO)
+        {
+
+            claimuploaddocument newProd = EntityMapper.updateEntity(null, newDTO);
+            db.claimuploaddocuments.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        [HttpGet]
+        // GET: api/testManager
+        public List<DTOclaimuploaddocument> Getclaimuploaddocument()
+        {
+            List<DTOclaimuploaddocument> toReturn = new List<DTOclaimuploaddocument>();
+            List<claimuploaddocument> list = (from c in db.claimuploaddocuments select c).ToList();
+
+            foreach (claimuploaddocument p in list)
+            {
+                toReturn.Add(new DTOclaimuploaddocument(p));
+            }
+
+            return toReturn;
+        }
+
+
+        // PUT: api/claimuploaddocument/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putclaimuploaddocument(int ID, DTOclaimuploaddocument editedDTO)
+        {
+            claimuploaddocument toUpdate = db.claimuploaddocuments.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        // POST: api/testManager
+        [HttpPost]
+        [ResponseType(typeof(DTOdocument))]
+        public async Task<DTOdocument> Postdocument(DTOdocument newDTO)
+        {
+
+            document newProd = EntityMapper.updateEntity(null, newDTO);
+            db.documents.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        [HttpGet]
+        // GET: api/testManager
+        public List<DTOdocument> Getdocument()
+        {
+            List<DTOdocument> toReturn = new List<DTOdocument>();
+            List<document> list = (from c in db.documents select c).ToList();
+
+            foreach (document p in list)
+            {
+                toReturn.Add(new DTOdocument(p));
+            }
+
+            return toReturn;
+        }
+
+
+        // PUT: api/document/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putdocument(int ID, DTOdocument editedDTO)
+        {
+            document toUpdate = db.documents.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOinsuranceproduct))]
         public async Task<DTOinsuranceproduct> Postinsuranceproduct(DTOinsuranceproduct newDTO)
         {
@@ -83,6 +277,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOinsuranceproduct> Getinsuranceproduct()
         {
@@ -96,7 +291,21 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/insuranceproduct/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putinsuranceproduct(int ID, DTOinsuranceproduct editedDTO)
+        {
+            insuranceproduct toUpdate = db.insuranceproducts.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOinsurancetype))]
         public async Task<DTOinsurancetype> Postinsurancetype(DTOinsurancetype newDTO)
         {
@@ -109,6 +318,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOinsurancetype> Getinsurancetype()
         {
@@ -122,7 +332,62 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/insurancetype/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putinsurancetype(int ID, DTOinsurancetype editedDTO)
+        {
+            insurancetype toUpdate = db.insurancetypes.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
+        [ResponseType(typeof(DTOlocation))]
+        public async Task<DTOlocation> Postlocation(DTOlocation newDTO)
+        {
+
+            location newProd = EntityMapper.updateEntity(null, newDTO);
+            db.locations.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        [HttpGet]
+        // GET: api/testManager
+        public List<DTOlocation> Getlocation()
+        {
+            List<DTOlocation> toReturn = new List<DTOlocation>();
+            List<location> list = (from c in db.locations select c).ToList();
+
+            foreach (location p in list)
+            {
+                toReturn.Add(new DTOlocation(p));
+            }
+
+            return toReturn;
+        }
+
+
+        // PUT: api/location/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putlocation(int ID, DTOlocation editedDTO)
+        {
+            location toUpdate = db.locations.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOnotificationlog))]
         public async Task<DTOnotificationlog> Postnotificationlog(DTOnotificationlog newDTO)
         {
@@ -135,6 +400,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOnotificationlog> Getnotificationlog()
         {
@@ -148,7 +414,21 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/notificationlog/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putnotificationlog(int ID, DTOnotificationlog editedDTO)
+        {
+            notificationlog toUpdate = db.notificationlogs.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOproduct))]
         public async Task<DTOproduct> Postproduct(DTOproduct newDTO)
         {
@@ -161,6 +441,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOproduct> Getproduct()
         {
@@ -174,7 +455,21 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/product/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putproduct(int ID, DTOproduct editedDTO)
+        {
+            product toUpdate = db.products.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOproductprovider))]
         public async Task<DTOproductprovider> Postproductprovider(DTOproductprovider newDTO)
         {
@@ -187,6 +482,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOproductprovider> Getproductprovider()
         {
@@ -200,7 +496,144 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/productprovider/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putproductprovider(int ID, DTOproductprovider editedDTO)
+        {
+            productprovider toUpdate = db.productproviders.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
+        [ResponseType(typeof(DTOproductproviderpayment))]
+        public async Task<DTOproductproviderpayment> Postproductproviderpayment(DTOproductproviderpayment newDTO)
+        {
+
+            productproviderpayment newProd = EntityMapper.updateEntity(null, newDTO);
+            db.productproviderpayments.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        [HttpGet]
+        // GET: api/testManager
+        public List<DTOproductproviderpayment> Getproductproviderpayment()
+        {
+            List<DTOproductproviderpayment> toReturn = new List<DTOproductproviderpayment>();
+            List<productproviderpayment> list = (from c in db.productproviderpayments select c).ToList();
+
+            foreach (productproviderpayment p in list)
+            {
+                toReturn.Add(new DTOproductproviderpayment(p));
+            }
+
+            return toReturn;
+        }
+
+
+        // PUT: api/productproviderpayment/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putproductproviderpayment(int ID, DTOproductproviderpayment editedDTO)
+        {
+            productproviderpayment toUpdate = db.productproviderpayments.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        // POST: api/testManager
+        [HttpPost]
+        [ResponseType(typeof(DTOproductredemptionlog))]
+        public async Task<DTOproductredemptionlog> Postproductredemptionlog(DTOproductredemptionlog newDTO)
+        {
+
+            productredemptionlog newProd = EntityMapper.updateEntity(null, newDTO);
+            db.productredemptionlogs.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        [HttpGet]
+        // GET: api/testManager
+        public List<DTOproductredemptionlog> Getproductredemptionlog()
+        {
+            List<DTOproductredemptionlog> toReturn = new List<DTOproductredemptionlog>();
+            List<productredemptionlog> list = (from c in db.productredemptionlogs select c).ToList();
+
+            foreach (productredemptionlog p in list)
+            {
+                toReturn.Add(new DTOproductredemptionlog(p));
+            }
+
+            return toReturn;
+        }
+
+
+        // PUT: api/productredemptionlog/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putproductredemptionlog(int ID, DTOproductredemptionlog editedDTO)
+        {
+            productredemptionlog toUpdate = db.productredemptionlogs.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        // POST: api/testManager
+        [HttpPost]
+        [ResponseType(typeof(DTOproductsalespermonth))]
+        public async Task<DTOproductsalespermonth> Postproductsalespermonth(DTOproductsalespermonth newDTO)
+        {
+
+            productsalespermonth newProd = EntityMapper.updateEntity(null, newDTO);
+            db.productsalespermonths.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        [HttpGet]
+        // GET: api/testManager
+        public List<DTOproductsalespermonth> Getproductsalespermonth()
+        {
+            List<DTOproductsalespermonth> toReturn = new List<DTOproductsalespermonth>();
+            List<productsalespermonth> list = (from c in db.productsalespermonths select c).ToList();
+
+            foreach (productsalespermonth p in list)
+            {
+                toReturn.Add(new DTOproductsalespermonth(p));
+            }
+
+            return toReturn;
+        }
+
+
+        // PUT: api/productsalespermonth/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putproductsalespermonth(int ID, DTOproductsalespermonth editedDTO)
+        {
+            productsalespermonth toUpdate = db.productsalespermonths.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOproducttype))]
         public async Task<DTOproducttype> Postproducttype(DTOproducttype newDTO)
         {
@@ -213,6 +646,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOproducttype> Getproducttype()
         {
@@ -226,7 +660,62 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/producttype/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putproducttype(int ID, DTOproducttype editedDTO)
+        {
+            producttype toUpdate = db.producttypes.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
+        [ResponseType(typeof(DTOprocessapplication))]
+        public async Task<DTOprocessapplication> Postprocessapplication(DTOprocessapplication newDTO)
+        {
+
+            processapplication newProd = EntityMapper.updateEntity(null, newDTO);
+            db.processapplications.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        [HttpGet]
+        // GET: api/testManager
+        public List<DTOprocessapplication> Getprocessapplication()
+        {
+            List<DTOprocessapplication> toReturn = new List<DTOprocessapplication>();
+            List<processapplication> list = (from c in db.processapplications select c).ToList();
+
+            foreach (processapplication p in list)
+            {
+                toReturn.Add(new DTOprocessapplication(p));
+            }
+
+            return toReturn;
+        }
+
+
+        // PUT: api/processapplication/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putprocessapplication(int ID, DTOprocessapplication editedDTO)
+        {
+            processapplication toUpdate = db.processapplications.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOreseller))]
         public async Task<DTOreseller> Postreseller(DTOreseller newDTO)
         {
@@ -239,6 +728,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOreseller> Getreseller()
         {
@@ -252,7 +742,21 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/reseller/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putreseller(int ID, DTOreseller editedDTO)
+        {
+            reseller toUpdate = db.resellers.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOsystemadmin))]
         public async Task<DTOsystemadmin> Postsystemadmin(DTOsystemadmin newDTO)
         {
@@ -265,6 +769,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOsystemadmin> Getsystemadmin()
         {
@@ -278,7 +783,21 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/systemadmin/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putsystemadmin(int ID, DTOsystemadmin editedDTO)
+        {
+            systemadmin toUpdate = db.systemadmins.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOtransactiontype))]
         public async Task<DTOtransactiontype> Posttransactiontype(DTOtransactiontype newDTO)
         {
@@ -291,6 +810,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOtransactiontype> Gettransactiontype()
         {
@@ -304,33 +824,62 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/transactiontype/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Puttransactiontype(int ID, DTOtransactiontype editedDTO)
+        {
+            transactiontype toUpdate = db.transactiontypes.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
-        [ResponseType(typeof(DTOtransactiontype))]
-        public async Task<DTOtransactiontype> Posttrasnsactiontype(DTOtransactiontype newDTO)
+        [HttpPost]
+        [ResponseType(typeof(DTOunittype))]
+        public async Task<DTOunittype> Postunittype(DTOunittype newDTO)
         {
 
-            transactiontype newProd = EntityMapper.updateEntity(null, newDTO);
-            db.transactiontypes.Add(newProd);
+            unittype newProd = EntityMapper.updateEntity(null, newDTO);
+            db.unittypes.Add(newProd);
             await db.SaveChangesAsync();
 
             return newDTO;
         }
 
 
+        [HttpGet]
         // GET: api/testManager
-        public List<DTOtransactiontype> Gettrasnsactiontype()
+        public List<DTOunittype> Getunittype()
         {
-            List<DTOtransactiontype> toReturn = new List<DTOtransactiontype>();
-            List<transactiontype> list = (from c in db.transactiontypes select c).ToList();
+            List<DTOunittype> toReturn = new List<DTOunittype>();
+            List<unittype> list = (from c in db.unittypes select c).ToList();
 
-            foreach (transactiontype p in list)
+            foreach (unittype p in list)
             {
-                toReturn.Add(new DTOtransactiontype(p));
+                toReturn.Add(new DTOunittype(p));
             }
 
             return toReturn;
         }
+
+
+        // PUT: api/unittype/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putunittype(int ID, DTOunittype editedDTO)
+        {
+            unittype toUpdate = db.unittypes.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOuser))]
         public async Task<DTOuser> Postuser(DTOuser newDTO)
         {
@@ -343,6 +892,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOuser> Getuser()
         {
@@ -356,7 +906,21 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/user/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putuser(int ID, DTOuser editedDTO)
+        {
+            user toUpdate = db.users.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOusertype))]
         public async Task<DTOusertype> Postusertype(DTOusertype newDTO)
         {
@@ -369,6 +933,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOusertype> Getusertype()
         {
@@ -382,7 +947,21 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/usertype/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putusertype(int ID, DTOusertype editedDTO)
+        {
+            usertype toUpdate = db.usertypes.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOvalidator))]
         public async Task<DTOvalidator> Postvalidator(DTOvalidator newDTO)
         {
@@ -395,6 +974,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOvalidator> Getvalidator()
         {
@@ -408,7 +988,21 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/validator/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putvalidator(int ID, DTOvalidator editedDTO)
+        {
+            validator toUpdate = db.validators.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOvoucher))]
         public async Task<DTOvoucher> Postvoucher(DTOvoucher newDTO)
         {
@@ -421,6 +1015,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOvoucher> Getvoucher()
         {
@@ -436,22 +1031,19 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
-        // GET: api/testManager
-        public List<DTOproductredemptionlog> RedemptionLog()
+        // PUT: api/voucher/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putvoucher(int ID, DTOvoucher editedDTO)
         {
-            List<DTOproductredemptionlog> toReturn = new List<DTOproductredemptionlog>();
-            List<productredemptionlog> list = (from c in db.productredemptionlogs select c).ToList();
-
-            foreach (productredemptionlog p in list)
-            {
-                toReturn.Add(new DTOproductredemptionlog(p));
-            }
-
-            return toReturn;
+            voucher toUpdate = db.vouchers.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
         }
-
-
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOvouchertransaction))]
         public async Task<DTOvouchertransaction> Postvouchertransaction(DTOvouchertransaction newDTO)
         {
@@ -464,6 +1056,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOvouchertransaction> Getvouchertransaction()
         {
@@ -477,7 +1070,21 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/vouchertransaction/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putvouchertransaction(int ID, DTOvouchertransaction editedDTO)
+        {
+            vouchertransaction toUpdate = db.vouchertransactions.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
         // POST: api/testManager
+        [HttpPost]
         [ResponseType(typeof(DTOvouchertype))]
         public async Task<DTOvouchertype> Postvouchertype(DTOvouchertype newDTO)
         {
@@ -490,6 +1097,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
         }
 
 
+        [HttpGet]
         // GET: api/testManager
         public List<DTOvouchertype> Getvouchertype()
         {
@@ -503,6 +1111,20 @@ namespace NanoFinAPI_6_07.Controllers.testManager
 
             return toReturn;
         }
+
+
+        // PUT: api/vouchertype/5
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putvouchertype(int ID, DTOvouchertype editedDTO)
+        {
+            vouchertype toUpdate = db.vouchertypes.Find(ID);
+            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
 
 
 

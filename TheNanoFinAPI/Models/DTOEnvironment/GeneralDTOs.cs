@@ -16,7 +16,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         public decimal productValue { get; set; }
         public int duration { get; set; }
         public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
-        public string transactionLocation { get; set; }
+        public int transactionLocation { get; set; }
         public Nullable<System.DateTime> activeProductItemEndDate { get; set; }
         public string PurchaseConfirmationDocPath { get; set; }
 
@@ -32,7 +32,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             productValue = entityObjct.productValue;
             duration = entityObjct.duration;
             activeProductItemStartDate = entityObjct.activeProductItemStartDate;
-            transactionLocation = entityObjct.transactionLocation;
+            transactionLocation = (int)entityObjct.transactionlocation;
             activeProductItemEndDate = entityObjct.activeProductItemEndDate;
             PurchaseConfirmationDocPath = entityObjct.PurchaseConfirmationDocPath;
         }
@@ -682,6 +682,8 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             voucherTypeDescription = entityObjct.voucherTypeDescription;
         }
     }
+
+    
 
 
 }

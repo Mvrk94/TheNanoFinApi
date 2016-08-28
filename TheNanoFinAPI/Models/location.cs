@@ -17,8 +17,10 @@ namespace TheNanoFinAPI.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public location()
         {
-            this.resellers = new HashSet<reseller>();
+            this.activeproductitems = new HashSet<activeproductitem>();
+            this.activeproductitems1 = new HashSet<activeproductitem>();
             this.consumers = new HashSet<consumer>();
+            this.resellers = new HashSet<reseller>();
         }
     
         public int Location_ID { get; set; }
@@ -30,8 +32,12 @@ namespace TheNanoFinAPI.Models
         public Nullable<decimal> UnemploymentRate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<reseller> resellers { get; set; }
+        public virtual ICollection<activeproductitem> activeproductitems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<activeproductitem> activeproductitems1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<consumer> consumers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<reseller> resellers { get; set; }
     }
 }

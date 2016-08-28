@@ -26,6 +26,8 @@ namespace TheNanoFinAPI.Models
         }
     
         public virtual DbSet<activeproductitem> activeproductitems { get; set; }
+        public virtual DbSet<claim> claims { get; set; }
+        public virtual DbSet<claimtemplate> claimtemplates { get; set; }
         public virtual DbSet<claimuploaddocument> claimuploaddocuments { get; set; }
         public virtual DbSet<consumer> consumers { get; set; }
         public virtual DbSet<document> documents { get; set; }
@@ -49,8 +51,7 @@ namespace TheNanoFinAPI.Models
         public virtual DbSet<voucher> vouchers { get; set; }
         public virtual DbSet<vouchertransaction> vouchertransactions { get; set; }
         public virtual DbSet<vouchertype> vouchertypes { get; set; }
+        public virtual DbSet<monthlylocationsale> monthlylocationsales { get; set; }
         public virtual DbSet<productsalespermonth> productsalespermonths { get; set; }
-        public virtual DbSet<claim> claims { get; set; }
-        public virtual DbSet<claimtemplate> claimtemplates { get; set; }
     }
 }

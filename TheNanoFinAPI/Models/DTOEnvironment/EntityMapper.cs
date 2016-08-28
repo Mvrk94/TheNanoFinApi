@@ -22,7 +22,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             entityObjct.productValue = dto.productValue;
             entityObjct.duration = dto.duration;
             entityObjct.activeProductItemStartDate = dto.activeProductItemStartDate;
-            entityObjct.transactionLocation = dto.transactionLocation;
+            entityObjct.transactionlocation = dto.transactionLocation;
             entityObjct.activeProductItemEndDate = dto.activeProductItemEndDate;
             entityObjct.PurchaseConfirmationDocPath = dto.PurchaseConfirmationDocPath;
 

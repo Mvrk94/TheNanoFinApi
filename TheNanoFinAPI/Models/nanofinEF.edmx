@@ -17,7 +17,7 @@
           <Property Name="productValue" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="duration" Type="int" Nullable="false" />
           <Property Name="activeProductItemStartDate" Type="date" />
-          <Property Name="transactionLocation" Type="varchar" MaxLength="128" />
+          <Property Name="transactionlocation" Type="int" />
           <Property Name="activeProductItemEndDate" Type="datetime" Precision="0" />
           <Property Name="PurchaseConfirmationDocPath" Type="varchar" MaxLength="1024" />
         </EntityType>
@@ -33,7 +33,7 @@
           <Key>
             <PropertyRef Name="claimtemplate_ID" />
           </Key>
-          <Property Name="claimtemplate_ID" Type="int" Nullable="false" />
+          <Property Name="claimtemplate_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="templateName" Type="varchar" MaxLength="65" />
           <Property Name="formDataRequiredJson" Type="longtext" />
         </EntityType>
@@ -317,6 +317,17 @@
           <Property Name="voucherTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.monthlylocationsales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="monthlylocationsales">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="activeProductItemStartDate" Type="date" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="transactionLocation" Type="int" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.productsalespermonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="productsalespermonth">
           <Key>
@@ -355,6 +366,18 @@ warning 6013: The table/view 'def.database_nanofin.salespermonth' does not have 
             </Principal>
             <Dependent Role="activeproductitems">
               <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="activeproductitems_ibfk_3">
+          <End Role="locations" Type="Self.locations" Multiplicity="0..1" />
+          <End Role="activeproductitems" Type="Self.activeproductitems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="locations">
+              <PropertyRef Name="Location_ID" />
+            </Principal>
+            <Dependent Role="activeproductitems">
+              <PropertyRef Name="transactionlocation" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -463,6 +486,18 @@ warning 6013: The table/view 'def.database_nanofin.salespermonth' does not have 
             </Principal>
             <Dependent Role="document">
               <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_transactionlocation">
+          <End Role="locations" Type="Self.locations" Multiplicity="0..1" />
+          <End Role="activeproductitems" Type="Self.activeproductitems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="locations">
+              <PropertyRef Name="Location_ID" />
+            </Principal>
+            <Dependent Role="activeproductitems">
+              <PropertyRef Name="transactionlocation" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -793,6 +828,14 @@ warning 6013: The table/view 'def.database_nanofin.salespermonth' does not have 
           <EntitySet Name="voucher" EntityType="Self.voucher" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertransaction" EntityType="Self.vouchertransaction" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertype" EntityType="Self.vouchertype" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="monthlylocationsales" EntityType="Self.monthlylocationsales" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`monthlylocationsales`.`activeProductItemStartDate`, 
+`monthlylocationsales`.`Product_ID`, 
+`monthlylocationsales`.`transactionLocation`, 
+`monthlylocationsales`.`sales`
+FROM `monthlylocationsales` AS `monthlylocationsales`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="productsalespermonth" EntityType="Self.productsalespermonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `productsalespermonth`.`activeProductItemStartDate`, 
@@ -807,6 +850,10 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           </AssociationSet>
           <AssociationSet Name="activeproductitems_ibfk_2" Association="Self.activeproductitems_ibfk_2">
             <End Role="product" EntitySet="product" />
+            <End Role="activeproductitems" EntitySet="activeproductitems" />
+          </AssociationSet>
+          <AssociationSet Name="activeproductitems_ibfk_3" Association="Self.activeproductitems_ibfk_3">
+            <End Role="locations" EntitySet="locations" />
             <End Role="activeproductitems" EntitySet="activeproductitems" />
           </AssociationSet>
           <AssociationSet Name="ActiveProductItems_ID" Association="Self.ActiveProductItems_ID">
@@ -844,6 +891,10 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <AssociationSet Name="document_ibfk_1" Association="Self.document_ibfk_1">
             <End Role="product" EntitySet="product" />
             <End Role="document" EntitySet="document" />
+          </AssociationSet>
+          <AssociationSet Name="fk_transactionlocation" Association="Self.fk_transactionlocation">
+            <End Role="locations" EntitySet="locations" />
+            <End Role="activeproductitems" EntitySet="activeproductitems" />
           </AssociationSet>
           <AssociationSet Name="insuranceproduct_ibfk_1" Association="Self.insuranceproduct_ibfk_1">
             <End Role="unittype" EntitySet="unittype" />
@@ -950,6 +1001,188 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="database_nanofinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="database_nanofinEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="activeproductitems" EntityType="database_nanofinModel.activeproductitem" />
+          <EntitySet Name="claims" EntityType="database_nanofinModel.claim" />
+          <EntitySet Name="claimtemplates" EntityType="database_nanofinModel.claimtemplate" />
+          <EntitySet Name="claimuploaddocuments" EntityType="database_nanofinModel.claimuploaddocument" />
+          <EntitySet Name="consumers" EntityType="database_nanofinModel.consumer" />
+          <EntitySet Name="documents" EntityType="database_nanofinModel.document" />
+          <EntitySet Name="insuranceproducts" EntityType="database_nanofinModel.insuranceproduct" />
+          <EntitySet Name="insurancetypes" EntityType="database_nanofinModel.insurancetype" />
+          <EntitySet Name="locations" EntityType="database_nanofinModel.location" />
+          <EntitySet Name="notificationlogs" EntityType="database_nanofinModel.notificationlog" />
+          <EntitySet Name="processapplications" EntityType="database_nanofinModel.processapplication" />
+          <EntitySet Name="products" EntityType="database_nanofinModel.product" />
+          <EntitySet Name="productproviders" EntityType="database_nanofinModel.productprovider" />
+          <EntitySet Name="productproviderpayments" EntityType="database_nanofinModel.productproviderpayment" />
+          <EntitySet Name="productredemptionlogs" EntityType="database_nanofinModel.productredemptionlog" />
+          <EntitySet Name="producttypes" EntityType="database_nanofinModel.producttype" />
+          <EntitySet Name="resellers" EntityType="database_nanofinModel.reseller" />
+          <EntitySet Name="systemadmins" EntityType="database_nanofinModel.systemadmin" />
+          <EntitySet Name="transactiontypes" EntityType="database_nanofinModel.transactiontype" />
+          <EntitySet Name="unittypes" EntityType="database_nanofinModel.unittype" />
+          <EntitySet Name="users" EntityType="database_nanofinModel.user" />
+          <EntitySet Name="usertypes" EntityType="database_nanofinModel.usertype" />
+          <EntitySet Name="validators" EntityType="database_nanofinModel.validator" />
+          <EntitySet Name="vouchers" EntityType="database_nanofinModel.voucher" />
+          <EntitySet Name="vouchertransactions" EntityType="database_nanofinModel.vouchertransaction" />
+          <EntitySet Name="vouchertypes" EntityType="database_nanofinModel.vouchertype" />
+          <EntitySet Name="monthlylocationsales" EntityType="database_nanofinModel.monthlylocationsale" />
+          <EntitySet Name="productsalespermonths" EntityType="database_nanofinModel.productsalespermonth" />
+          <AssociationSet Name="activeproductitems_ibfk_1" Association="database_nanofinModel.activeproductitems_ibfk_1">
+            <End Role="consumer" EntitySet="consumers" />
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+          </AssociationSet>
+          <AssociationSet Name="activeproductitems_ibfk_2" Association="database_nanofinModel.activeproductitems_ibfk_2">
+            <End Role="product" EntitySet="products" />
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+          </AssociationSet>
+          <AssociationSet Name="activeproductitems_ibfk_3" Association="database_nanofinModel.activeproductitems_ibfk_3">
+            <End Role="location" EntitySet="locations" />
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+          </AssociationSet>
+          <AssociationSet Name="ActiveProductItems_ID" Association="database_nanofinModel.ActiveProductItems_ID">
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End Role="claim" EntitySet="claims" />
+          </AssociationSet>
+          <AssociationSet Name="claimuploaddocument_ibfk_2" Association="database_nanofinModel.claimuploaddocument_ibfk_2">
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_transactionlocation" Association="database_nanofinModel.fk_transactionlocation">
+            <End Role="location" EntitySet="locations" />
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+          </AssociationSet>
+          <AssociationSet Name="productproviderpayment_ibfk_2" Association="database_nanofinModel.productproviderpayment_ibfk_2">
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
+          </AssociationSet>
+          <AssociationSet Name="productredemptionlog_ibfk_2" Association="database_nanofinModel.productredemptionlog_ibfk_2">
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End Role="productredemptionlog" EntitySet="productredemptionlogs" />
+          </AssociationSet>
+          <AssociationSet Name="Claim_ID" Association="database_nanofinModel.Claim_ID">
+            <End Role="claim" EntitySet="claims" />
+            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
+          </AssociationSet>
+          <AssociationSet Name="claimtemplate_ID" Association="database_nanofinModel.claimtemplate_ID">
+            <End Role="claimtemplate" EntitySet="claimtemplates" />
+            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+          </AssociationSet>
+          <AssociationSet Name="claimuploaddocument_ibfk_1" Association="database_nanofinModel.claimuploaddocument_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
+          </AssociationSet>
+          <AssociationSet Name="claimuploaddocument_ibfk_3" Association="database_nanofinModel.claimuploaddocument_ibfk_3">
+            <End Role="document" EntitySet="documents" />
+            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
+          </AssociationSet>
+          <AssociationSet Name="consumer_ibfk_1" Association="database_nanofinModel.consumer_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="consumer" EntitySet="consumers" />
+          </AssociationSet>
+          <AssociationSet Name="consumer_ibfk_2" Association="database_nanofinModel.consumer_ibfk_2">
+            <End Role="location" EntitySet="locations" />
+            <End Role="consumer" EntitySet="consumers" />
+          </AssociationSet>
+          <AssociationSet Name="document_ibfk_1" Association="database_nanofinModel.document_ibfk_1">
+            <End Role="product" EntitySet="products" />
+            <End Role="document" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="insuranceproduct_ibfk_1" Association="database_nanofinModel.insuranceproduct_ibfk_1">
+            <End Role="unittype" EntitySet="unittypes" />
+            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+          </AssociationSet>
+          <AssociationSet Name="insuranceproduct_ibfk_2" Association="database_nanofinModel.insuranceproduct_ibfk_2">
+            <End Role="productprovider" EntitySet="productproviders" />
+            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+          </AssociationSet>
+          <AssociationSet Name="insuranceproduct_ibfk_3" Association="database_nanofinModel.insuranceproduct_ibfk_3">
+            <End Role="insurancetype" EntitySet="insurancetypes" />
+            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+          </AssociationSet>
+          <AssociationSet Name="insuranceproduct_ibfk_4" Association="database_nanofinModel.insuranceproduct_ibfk_4">
+            <End Role="product" EntitySet="products" />
+            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+          </AssociationSet>
+          <AssociationSet Name="reseller_ibfk_2" Association="database_nanofinModel.reseller_ibfk_2">
+            <End Role="location" EntitySet="locations" />
+            <End Role="reseller" EntitySet="resellers" />
+          </AssociationSet>
+          <AssociationSet Name="notificationlog_ibfk_1" Association="database_nanofinModel.notificationlog_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="notificationlog" EntitySet="notificationlogs" />
+          </AssociationSet>
+          <AssociationSet Name="processapplications_ibfk_1" Association="database_nanofinModel.processapplications_ibfk_1">
+            <End Role="product" EntitySet="products" />
+            <End Role="processapplication" EntitySet="processapplications" />
+          </AssociationSet>
+          <AssociationSet Name="product_ibfk_1" Association="database_nanofinModel.product_ibfk_1">
+            <End Role="productprovider" EntitySet="productproviders" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="product_ibfk_2" Association="database_nanofinModel.product_ibfk_2">
+            <End Role="producttype" EntitySet="producttypes" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="productprovider_ibfk_1" Association="database_nanofinModel.productprovider_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="productprovider" EntitySet="productproviders" />
+          </AssociationSet>
+          <AssociationSet Name="productproviderpayment_ibfk_1" Association="database_nanofinModel.productproviderpayment_ibfk_1">
+            <End Role="productprovider" EntitySet="productproviders" />
+            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
+          </AssociationSet>
+          <AssociationSet Name="productredemptionlog_ibfk_1" Association="database_nanofinModel.productredemptionlog_ibfk_1">
+            <End Role="voucher" EntitySet="vouchers" />
+            <End Role="productredemptionlog" EntitySet="productredemptionlogs" />
+          </AssociationSet>
+          <AssociationSet Name="reseller_ibfk_1" Association="database_nanofinModel.reseller_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="reseller" EntitySet="resellers" />
+          </AssociationSet>
+          <AssociationSet Name="systemadmin_ibfk_1" Association="database_nanofinModel.systemadmin_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="systemadmin" EntitySet="systemadmins" />
+          </AssociationSet>
+          <AssociationSet Name="vouchertransaction_ibfk_5" Association="database_nanofinModel.vouchertransaction_ibfk_5">
+            <End Role="transactiontype" EntitySet="transactiontypes" />
+            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+          </AssociationSet>
+          <AssociationSet Name="user_ibfk_1" Association="database_nanofinModel.user_ibfk_1">
+            <End Role="usertype" EntitySet="usertypes" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="validator_ibfk_1" Association="database_nanofinModel.validator_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="validator" EntitySet="validators" />
+          </AssociationSet>
+          <AssociationSet Name="voucher_ibfk_2" Association="database_nanofinModel.voucher_ibfk_2">
+            <End Role="user" EntitySet="users" />
+            <End Role="voucher" EntitySet="vouchers" />
+          </AssociationSet>
+          <AssociationSet Name="vouchertransaction_ibfk_3" Association="database_nanofinModel.vouchertransaction_ibfk_3">
+            <End Role="user" EntitySet="users" />
+            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+          </AssociationSet>
+          <AssociationSet Name="vouchertransaction_ibfk_4" Association="database_nanofinModel.vouchertransaction_ibfk_4">
+            <End Role="user" EntitySet="users" />
+            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+          </AssociationSet>
+          <AssociationSet Name="voucher_ibfk_1" Association="database_nanofinModel.voucher_ibfk_1">
+            <End Role="vouchertype" EntitySet="vouchertypes" />
+            <End Role="voucher" EntitySet="vouchers" />
+          </AssociationSet>
+          <AssociationSet Name="vouchertransaction_ibfk_1" Association="database_nanofinModel.vouchertransaction_ibfk_1">
+            <End Role="voucher" EntitySet="vouchers" />
+            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+          </AssociationSet>
+          <AssociationSet Name="vouchertransaction_ibfk_2" Association="database_nanofinModel.vouchertransaction_ibfk_2">
+            <End Role="voucher" EntitySet="vouchers" />
+            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="activeproductitem">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
@@ -957,20 +1190,41 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemPolicyNum" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="activeProductItemPolicyNum" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="isActive" Type="Boolean" />
           <Property Name="productValue" Type="Decimal" Nullable="false" />
           <Property Name="duration" Type="Int32" Nullable="false" />
           <Property Name="activeProductItemStartDate" Type="DateTime" />
-          <Property Name="transactionLocation" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="transactionlocation" Type="Int32" />
           <Property Name="activeProductItemEndDate" Type="DateTime" />
           <Property Name="PurchaseConfirmationDocPath" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="consumer" Relationship="Self.activeproductitems_ibfk_1" FromRole="activeproductitems" ToRole="consumer" />
-          <NavigationProperty Name="product" Relationship="Self.activeproductitems_ibfk_2" FromRole="activeproductitems" ToRole="product" />
-          <NavigationProperty Name="claimuploaddocuments" Relationship="Self.claimuploaddocument_ibfk_2" FromRole="activeproductitems" ToRole="claimuploaddocument" />
-          <NavigationProperty Name="productproviderpayments" Relationship="Self.productproviderpayment_ibfk_2" FromRole="activeproductitems" ToRole="productproviderpayment" />
-          <NavigationProperty Name="productredemptionlogs" Relationship="Self.productredemptionlog_ibfk_2" FromRole="activeproductitems" ToRole="productredemptionlog" />
+          <NavigationProperty Name="consumer" Relationship="database_nanofinModel.activeproductitems_ibfk_1" FromRole="activeproductitem" ToRole="consumer" />
+          <NavigationProperty Name="product" Relationship="database_nanofinModel.activeproductitems_ibfk_2" FromRole="activeproductitem" ToRole="product" />
+          <NavigationProperty Name="location" Relationship="database_nanofinModel.activeproductitems_ibfk_3" FromRole="activeproductitem" ToRole="location" />
           <NavigationProperty Name="claims" Relationship="database_nanofinModel.ActiveProductItems_ID" FromRole="activeproductitem" ToRole="claim" />
+          <NavigationProperty Name="claimuploaddocuments" Relationship="database_nanofinModel.claimuploaddocument_ibfk_2" FromRole="activeproductitem" ToRole="claimuploaddocument" />
+          <NavigationProperty Name="location1" Relationship="database_nanofinModel.fk_transactionlocation" FromRole="activeproductitem" ToRole="location" />
+          <NavigationProperty Name="productproviderpayments" Relationship="database_nanofinModel.productproviderpayment_ibfk_2" FromRole="activeproductitem" ToRole="productproviderpayment" />
+          <NavigationProperty Name="productredemptionlogs" Relationship="database_nanofinModel.productredemptionlog_ibfk_2" FromRole="activeproductitem" ToRole="productredemptionlog" />
+        </EntityType>
+        <EntityType Name="claim">
+          <Key>
+            <PropertyRef Name="Claim_ID" />
+          </Key>
+          <Property Name="Claim_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActiveProductItems_ID" Type="Int32" />
+          <Property Name="capturedClaimFormDataJson" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="activeproductitem" Relationship="database_nanofinModel.ActiveProductItems_ID" FromRole="claim" ToRole="activeproductitem" />
+          <NavigationProperty Name="claimuploaddocuments" Relationship="database_nanofinModel.Claim_ID" FromRole="claim" ToRole="claimuploaddocument" />
+        </EntityType>
+        <EntityType Name="claimtemplate">
+          <Key>
+            <PropertyRef Name="claimtemplate_ID" />
+          </Key>
+          <Property Name="claimtemplate_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="templateName" Type="String" MaxLength="65" FixedLength="false" Unicode="false" />
+          <Property Name="formDataRequiredJson" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="insuranceproducts" Relationship="database_nanofinModel.claimtemplate_ID" FromRole="claimtemplate" ToRole="insuranceproduct" />
         </EntityType>
         <EntityType Name="claimuploaddocument">
           <Key>
@@ -980,12 +1234,12 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
           <Property Name="document_ID" Type="Int32" Nullable="false" />
-          <Property Name="claimUploadDocumentPath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="activeproductitem" Relationship="Self.claimuploaddocument_ibfk_2" FromRole="claimuploaddocument" ToRole="activeproductitems" />
-          <NavigationProperty Name="user" Relationship="Self.claimuploaddocument_ibfk_1" FromRole="claimuploaddocument" ToRole="user" />
-          <NavigationProperty Name="document" Relationship="Self.claimuploaddocument_ibfk_3" FromRole="claimuploaddocument" ToRole="document" />
+          <Property Name="claimUploadDocumentPath" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Claim_ID" Type="Int32" />
+          <NavigationProperty Name="activeproductitem" Relationship="database_nanofinModel.claimuploaddocument_ibfk_2" FromRole="claimuploaddocument" ToRole="activeproductitem" />
           <NavigationProperty Name="claim" Relationship="database_nanofinModel.Claim_ID" FromRole="claimuploaddocument" ToRole="claim" />
+          <NavigationProperty Name="user" Relationship="database_nanofinModel.claimuploaddocument_ibfk_1" FromRole="claimuploaddocument" ToRole="user" />
+          <NavigationProperty Name="document" Relationship="database_nanofinModel.claimuploaddocument_ibfk_3" FromRole="claimuploaddocument" ToRole="document" />
         </EntityType>
         <EntityType Name="consumer">
           <Key>
@@ -1003,10 +1257,10 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="grossMonthlyIncome" Type="Decimal" />
           <Property Name="nettMonthlyIncome" Type="Decimal" />
           <Property Name="totalMonthlyExpenses" Type="Decimal" />
-          <NavigationProperty Name="activeproductitems" Relationship="Self.activeproductitems_ibfk_1" FromRole="consumer" ToRole="activeproductitems" />
-          <NavigationProperty Name="user" Relationship="Self.consumer_ibfk_1" FromRole="consumer" ToRole="user" />
           <Property Name="Location_ID" Type="Int32" />
           <Property Name="numDependant" Type="Int32" />
+          <NavigationProperty Name="activeproductitems" Relationship="database_nanofinModel.activeproductitems_ibfk_1" FromRole="consumer" ToRole="activeproductitem" />
+          <NavigationProperty Name="user" Relationship="database_nanofinModel.consumer_ibfk_1" FromRole="consumer" ToRole="user" />
           <NavigationProperty Name="location" Relationship="database_nanofinModel.consumer_ibfk_2" FromRole="consumer" ToRole="location" />
         </EntityType>
         <EntityType Name="document">
@@ -1015,12 +1269,12 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           </Key>
           <Property Name="document_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="documentName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="documentName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="documentDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="docPreferredFormat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="docPreparationRequired" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="claimuploaddocuments" Relationship="Self.claimuploaddocument_ibfk_3" FromRole="document" ToRole="claimuploaddocument" />
-          <NavigationProperty Name="product" Relationship="Self.document_ibfk_1" FromRole="document" ToRole="product" />
+          <NavigationProperty Name="claimuploaddocuments" Relationship="database_nanofinModel.claimuploaddocument_ibfk_3" FromRole="document" ToRole="claimuploaddocument" />
+          <NavigationProperty Name="product" Relationship="database_nanofinModel.document_ibfk_1" FromRole="document" ToRole="product" />
         </EntityType>
         <EntityType Name="insuranceproduct">
           <Key>
@@ -1040,20 +1294,20 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="ApiKey" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="claimContactNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="claimFormPath" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="unittype" Relationship="Self.insuranceproduct_ibfk_1" FromRole="insuranceproduct" ToRole="unittype" />
-          <NavigationProperty Name="productprovider" Relationship="Self.insuranceproduct_ibfk_2" FromRole="insuranceproduct" ToRole="productprovider" />
-          <NavigationProperty Name="insurancetype" Relationship="Self.insuranceproduct_ibfk_3" FromRole="insuranceproduct" ToRole="insurancetype" />
-          <NavigationProperty Name="product" Relationship="Self.insuranceproduct_ibfk_4" FromRole="insuranceproduct" ToRole="product" />
           <Property Name="claimtemplate_ID" Type="Int32" />
           <NavigationProperty Name="claimtemplate" Relationship="database_nanofinModel.claimtemplate_ID" FromRole="insuranceproduct" ToRole="claimtemplate" />
+          <NavigationProperty Name="unittype" Relationship="database_nanofinModel.insuranceproduct_ibfk_1" FromRole="insuranceproduct" ToRole="unittype" />
+          <NavigationProperty Name="productprovider" Relationship="database_nanofinModel.insuranceproduct_ibfk_2" FromRole="insuranceproduct" ToRole="productprovider" />
+          <NavigationProperty Name="insurancetype" Relationship="database_nanofinModel.insuranceproduct_ibfk_3" FromRole="insuranceproduct" ToRole="insurancetype" />
+          <NavigationProperty Name="product" Relationship="database_nanofinModel.insuranceproduct_ibfk_4" FromRole="insuranceproduct" ToRole="product" />
         </EntityType>
         <EntityType Name="insurancetype">
           <Key>
             <PropertyRef Name="InsuranceType_ID" />
           </Key>
           <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="insuranctTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="insuranceproducts" Relationship="Self.insuranceproduct_ibfk_3" FromRole="insurancetype" ToRole="insuranceproduct" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="insuranceproducts" Relationship="database_nanofinModel.insuranceproduct_ibfk_3" FromRole="insurancetype" ToRole="insuranceproduct" />
         </EntityType>
         <EntityType Name="location">
           <Key>
@@ -1064,20 +1318,22 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="City" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="PostalCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="resellers" Relationship="Self.reseller_ibfk_2" FromRole="locations" ToRole="reseller" />
           <Property Name="GDP" Type="Int32" />
           <Property Name="UnemploymentRate" Type="Decimal" />
+          <NavigationProperty Name="activeproductitems" Relationship="database_nanofinModel.activeproductitems_ibfk_3" FromRole="location" ToRole="activeproductitem" />
+          <NavigationProperty Name="activeproductitems1" Relationship="database_nanofinModel.fk_transactionlocation" FromRole="location" ToRole="activeproductitem" />
           <NavigationProperty Name="consumers" Relationship="database_nanofinModel.consumer_ibfk_2" FromRole="location" ToRole="consumer" />
+          <NavigationProperty Name="resellers" Relationship="database_nanofinModel.reseller_ibfk_2" FromRole="location" ToRole="reseller" />
         </EntityType>
         <EntityType Name="notificationlog">
           <Key>
             <PropertyRef Name="NotificationLog_ID" />
           </Key>
           <Property Name="NotificationLog_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="notificationType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="notificationType" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="notificationReceiver" Type="Int32" Nullable="false" />
           <Property Name="notificationDateSent" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.notificationlog_ibfk_1" FromRole="notificationlog" ToRole="user" />
+          <NavigationProperty Name="user" Relationship="database_nanofinModel.notificationlog_ibfk_1" FromRole="notificationlog" ToRole="user" />
         </EntityType>
         <EntityType Name="processapplication">
           <Key>
@@ -1085,10 +1341,10 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           </Key>
           <Property Name="ProcessApplication_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="OperationType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OperationType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="value1" Type="Decimal" Nullable="false" />
           <Property Name="value2" Type="DateTime" />
-          <NavigationProperty Name="product" Relationship="Self.processapplications_ibfk_1" FromRole="processapplications" ToRole="product" />
+          <NavigationProperty Name="product" Relationship="database_nanofinModel.processapplications_ibfk_1" FromRole="processapplication" ToRole="product" />
         </EntityType>
         <EntityType Name="product">
           <Key>
@@ -1097,7 +1353,7 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
           <Property Name="ProductType_ID" Type="Int32" />
-          <Property Name="productName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="productDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="detailedDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="productPolicyDocPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -1105,12 +1361,12 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="salesTargetAmount" Type="Decimal" />
           <Property Name="ratingAverage" Type="Decimal" />
           <Property Name="numTimesRated" Type="Int32" />
-          <NavigationProperty Name="activeproductitems" Relationship="Self.activeproductitems_ibfk_2" FromRole="product" ToRole="activeproductitems" />
-          <NavigationProperty Name="documents" Relationship="Self.document_ibfk_1" FromRole="product" ToRole="document" />
-          <NavigationProperty Name="insuranceproducts" Relationship="Self.insuranceproduct_ibfk_4" FromRole="product" ToRole="insuranceproduct" />
-          <NavigationProperty Name="processapplications" Relationship="Self.processapplications_ibfk_1" FromRole="product" ToRole="processapplications" />
-          <NavigationProperty Name="productprovider" Relationship="Self.product_ibfk_1" FromRole="product" ToRole="productprovider" />
-          <NavigationProperty Name="producttype" Relationship="Self.product_ibfk_2" FromRole="product" ToRole="producttype" />
+          <NavigationProperty Name="activeproductitems" Relationship="database_nanofinModel.activeproductitems_ibfk_2" FromRole="product" ToRole="activeproductitem" />
+          <NavigationProperty Name="documents" Relationship="database_nanofinModel.document_ibfk_1" FromRole="product" ToRole="document" />
+          <NavigationProperty Name="insuranceproducts" Relationship="database_nanofinModel.insuranceproduct_ibfk_4" FromRole="product" ToRole="insuranceproduct" />
+          <NavigationProperty Name="processapplications" Relationship="database_nanofinModel.processapplications_ibfk_1" FromRole="product" ToRole="processapplication" />
+          <NavigationProperty Name="productprovider" Relationship="database_nanofinModel.product_ibfk_1" FromRole="product" ToRole="productprovider" />
+          <NavigationProperty Name="producttype" Relationship="database_nanofinModel.product_ibfk_2" FromRole="product" ToRole="producttype" />
         </EntityType>
         <EntityType Name="productprovider">
           <Key>
@@ -1122,10 +1378,10 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="ppVATnumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ppFaxNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ppAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="insuranceproducts" Relationship="Self.insuranceproduct_ibfk_2" FromRole="productprovider" ToRole="insuranceproduct" />
-          <NavigationProperty Name="products" Relationship="Self.product_ibfk_1" FromRole="productprovider" ToRole="product" />
-          <NavigationProperty Name="user" Relationship="Self.productprovider_ibfk_1" FromRole="productprovider" ToRole="user" />
-          <NavigationProperty Name="productproviderpayments" Relationship="Self.productproviderpayment_ibfk_1" FromRole="productprovider" ToRole="productproviderpayment" />
+          <NavigationProperty Name="insuranceproducts" Relationship="database_nanofinModel.insuranceproduct_ibfk_2" FromRole="productprovider" ToRole="insuranceproduct" />
+          <NavigationProperty Name="products" Relationship="database_nanofinModel.product_ibfk_1" FromRole="productprovider" ToRole="product" />
+          <NavigationProperty Name="user" Relationship="database_nanofinModel.productprovider_ibfk_1" FromRole="productprovider" ToRole="user" />
+          <NavigationProperty Name="productproviderpayments" Relationship="database_nanofinModel.productproviderpayment_ibfk_1" FromRole="productprovider" ToRole="productproviderpayment" />
         </EntityType>
         <EntityType Name="productproviderpayment">
           <Key>
@@ -1137,8 +1393,8 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="AmountToPay" Type="Decimal" />
           <Property Name="hasBeenPayed" Type="Boolean" />
-          <NavigationProperty Name="activeproductitem" Relationship="Self.productproviderpayment_ibfk_2" FromRole="productproviderpayment" ToRole="activeproductitems" />
-          <NavigationProperty Name="productprovider" Relationship="Self.productproviderpayment_ibfk_1" FromRole="productproviderpayment" ToRole="productprovider" />
+          <NavigationProperty Name="activeproductitem" Relationship="database_nanofinModel.productproviderpayment_ibfk_2" FromRole="productproviderpayment" ToRole="activeproductitem" />
+          <NavigationProperty Name="productprovider" Relationship="database_nanofinModel.productproviderpayment_ibfk_1" FromRole="productproviderpayment" ToRole="productprovider" />
         </EntityType>
         <EntityType Name="productredemptionlog">
           <Key>
@@ -1148,16 +1404,16 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="Voucher_ID" Type="Int32" Nullable="false" />
           <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
           <Property Name="transactionAmount" Type="Decimal" Nullable="false" />
-          <NavigationProperty Name="activeproductitem" Relationship="Self.productredemptionlog_ibfk_2" FromRole="productredemptionlog" ToRole="activeproductitems" />
-          <NavigationProperty Name="voucher" Relationship="Self.productredemptionlog_ibfk_1" FromRole="productredemptionlog" ToRole="voucher" />
+          <NavigationProperty Name="activeproductitem" Relationship="database_nanofinModel.productredemptionlog_ibfk_2" FromRole="productredemptionlog" ToRole="activeproductitem" />
+          <NavigationProperty Name="voucher" Relationship="database_nanofinModel.productredemptionlog_ibfk_1" FromRole="productredemptionlog" ToRole="voucher" />
         </EntityType>
         <EntityType Name="producttype">
           <Key>
             <PropertyRef Name="ProductType_ID" />
           </Key>
           <Property Name="ProductType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductTypeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="products" Relationship="Self.product_ibfk_2" FromRole="producttype" ToRole="product" />
+          <Property Name="ProductTypeName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="products" Relationship="database_nanofinModel.product_ibfk_2" FromRole="producttype" ToRole="product" />
         </EntityType>
         <EntityType Name="reseller">
           <Key>
@@ -1167,8 +1423,8 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <Property Name="resellerIsValidated" Type="Boolean" />
           <Property Name="resellerBankBranchName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="resellerBankAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="resellerBankName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="resellerBankAccountNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="resellerBankName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="resellerBankBranchCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="resellerDateOfBirth" Type="DateTime" />
           <Property Name="street" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
@@ -1181,8 +1437,8 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="StartedSharingTime" Type="DateTime" />
           <Property Name="minutesAvailable" Type="Int32" />
           <Property Name="LocationID" Type="Int32" />
-          <NavigationProperty Name="location" Relationship="Self.reseller_ibfk_2" FromRole="reseller" ToRole="locations" />
-          <NavigationProperty Name="user" Relationship="Self.reseller_ibfk_1" FromRole="reseller" ToRole="user" />
+          <NavigationProperty Name="location" Relationship="database_nanofinModel.reseller_ibfk_2" FromRole="reseller" ToRole="location" />
+          <NavigationProperty Name="user" Relationship="database_nanofinModel.reseller_ibfk_1" FromRole="reseller" ToRole="user" />
         </EntityType>
         <EntityType Name="systemadmin">
           <Key>
@@ -1192,15 +1448,15 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <Property Name="systemAdminOTP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="systemAdminHasTwoPartAuth" Type="Boolean" />
-          <NavigationProperty Name="user" Relationship="Self.systemadmin_ibfk_1" FromRole="systemadmin" ToRole="user" />
+          <NavigationProperty Name="user" Relationship="database_nanofinModel.systemadmin_ibfk_1" FromRole="systemadmin" ToRole="user" />
         </EntityType>
         <EntityType Name="transactiontype">
           <Key>
             <PropertyRef Name="TransactionType_ID" />
           </Key>
           <Property Name="TransactionType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="transactionTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="vouchertransactions" Relationship="Self.vouchertransaction_ibfk_5" FromRole="transactiontype" ToRole="vouchertransaction" />
+          <Property Name="transactionTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vouchertransactions" Relationship="database_nanofinModel.vouchertransaction_ibfk_5" FromRole="transactiontype" ToRole="vouchertransaction" />
         </EntityType>
         <EntityType Name="unittype">
           <Key>
@@ -1208,18 +1464,18 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           </Key>
           <Property Name="UnitType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UnitTypeDescription" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="insuranceproducts" Relationship="Self.insuranceproduct_ibfk_1" FromRole="unittype" ToRole="insuranceproduct" />
+          <NavigationProperty Name="insuranceproducts" Relationship="database_nanofinModel.insuranceproduct_ibfk_1" FromRole="unittype" ToRole="insuranceproduct" />
         </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="User_ID" />
           </Key>
           <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="userLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="userName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userFirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userLastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="userEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="userContactNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userContactNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="userPassword" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="userIsActive" Type="Boolean" />
           <Property Name="userType" Type="Int32" />
@@ -1230,17 +1486,17 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="timeStap" Type="DateTime" />
           <Property Name="resetPasswordKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="blockchainAddress" Type="String" MaxLength="20000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="claimuploaddocuments" Relationship="Self.claimuploaddocument_ibfk_1" FromRole="user" ToRole="claimuploaddocument" />
-          <NavigationProperty Name="consumers" Relationship="Self.consumer_ibfk_1" FromRole="user" ToRole="consumer" />
-          <NavigationProperty Name="notificationlogs" Relationship="Self.notificationlog_ibfk_1" FromRole="user" ToRole="notificationlog" />
-          <NavigationProperty Name="productproviders" Relationship="Self.productprovider_ibfk_1" FromRole="user" ToRole="productprovider" />
-          <NavigationProperty Name="resellers" Relationship="Self.reseller_ibfk_1" FromRole="user" ToRole="reseller" />
-          <NavigationProperty Name="systemadmins" Relationship="Self.systemadmin_ibfk_1" FromRole="user" ToRole="systemadmin" />
-          <NavigationProperty Name="usertype1" Relationship="Self.user_ibfk_1" FromRole="user" ToRole="usertype" />
-          <NavigationProperty Name="validators" Relationship="Self.validator_ibfk_1" FromRole="user" ToRole="validator" />
-          <NavigationProperty Name="vouchers" Relationship="Self.voucher_ibfk_2" FromRole="user" ToRole="voucher" />
-          <NavigationProperty Name="vouchertransactions" Relationship="Self.vouchertransaction_ibfk_3" FromRole="user" ToRole="vouchertransaction" />
-          <NavigationProperty Name="vouchertransactions1" Relationship="Self.vouchertransaction_ibfk_4" FromRole="user" ToRole="vouchertransaction" />
+          <NavigationProperty Name="claimuploaddocuments" Relationship="database_nanofinModel.claimuploaddocument_ibfk_1" FromRole="user" ToRole="claimuploaddocument" />
+          <NavigationProperty Name="consumers" Relationship="database_nanofinModel.consumer_ibfk_1" FromRole="user" ToRole="consumer" />
+          <NavigationProperty Name="notificationlogs" Relationship="database_nanofinModel.notificationlog_ibfk_1" FromRole="user" ToRole="notificationlog" />
+          <NavigationProperty Name="productproviders" Relationship="database_nanofinModel.productprovider_ibfk_1" FromRole="user" ToRole="productprovider" />
+          <NavigationProperty Name="resellers" Relationship="database_nanofinModel.reseller_ibfk_1" FromRole="user" ToRole="reseller" />
+          <NavigationProperty Name="systemadmins" Relationship="database_nanofinModel.systemadmin_ibfk_1" FromRole="user" ToRole="systemadmin" />
+          <NavigationProperty Name="usertype1" Relationship="database_nanofinModel.user_ibfk_1" FromRole="user" ToRole="usertype" />
+          <NavigationProperty Name="validators" Relationship="database_nanofinModel.validator_ibfk_1" FromRole="user" ToRole="validator" />
+          <NavigationProperty Name="vouchers" Relationship="database_nanofinModel.voucher_ibfk_2" FromRole="user" ToRole="voucher" />
+          <NavigationProperty Name="vouchertransactions" Relationship="database_nanofinModel.vouchertransaction_ibfk_3" FromRole="user" ToRole="vouchertransaction" />
+          <NavigationProperty Name="vouchertransactions1" Relationship="database_nanofinModel.vouchertransaction_ibfk_4" FromRole="user" ToRole="vouchertransaction" />
         </EntityType>
         <EntityType Name="usertype">
           <Key>
@@ -1248,7 +1504,7 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           </Key>
           <Property Name="UserType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="users" Relationship="Self.user_ibfk_1" FromRole="usertype" ToRole="user" />
+          <NavigationProperty Name="users" Relationship="database_nanofinModel.user_ibfk_1" FromRole="usertype" ToRole="user" />
         </EntityType>
         <EntityType Name="validator">
           <Key>
@@ -1266,7 +1522,7 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="validatorBankAccNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="validatorBankBranchName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="validatorBankBranchCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="user" Relationship="Self.validator_ibfk_1" FromRole="validator" ToRole="user" />
+          <NavigationProperty Name="user" Relationship="database_nanofinModel.validator_ibfk_1" FromRole="validator" ToRole="user" />
         </EntityType>
         <EntityType Name="voucher">
           <Key>
@@ -1281,11 +1537,11 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="OTPtimeStap" Type="DateTime" />
           <Property Name="QRdata" Type="String" MaxLength="7000" FixedLength="false" Unicode="false" />
           <Property Name="QRtimeStap" Type="DateTime" />
-          <NavigationProperty Name="productredemptionlogs" Relationship="Self.productredemptionlog_ibfk_1" FromRole="voucher" ToRole="productredemptionlog" />
-          <NavigationProperty Name="user" Relationship="Self.voucher_ibfk_2" FromRole="voucher" ToRole="user" />
-          <NavigationProperty Name="vouchertype" Relationship="Self.voucher_ibfk_1" FromRole="voucher" ToRole="vouchertype" />
-          <NavigationProperty Name="vouchertransactions" Relationship="Self.vouchertransaction_ibfk_1" FromRole="voucher" ToRole="vouchertransaction" />
-          <NavigationProperty Name="vouchertransactions1" Relationship="Self.vouchertransaction_ibfk_2" FromRole="voucher" ToRole="vouchertransaction" />
+          <NavigationProperty Name="productredemptionlogs" Relationship="database_nanofinModel.productredemptionlog_ibfk_1" FromRole="voucher" ToRole="productredemptionlog" />
+          <NavigationProperty Name="user" Relationship="database_nanofinModel.voucher_ibfk_2" FromRole="voucher" ToRole="user" />
+          <NavigationProperty Name="vouchertype" Relationship="database_nanofinModel.voucher_ibfk_1" FromRole="voucher" ToRole="vouchertype" />
+          <NavigationProperty Name="vouchertransactions" Relationship="database_nanofinModel.vouchertransaction_ibfk_1" FromRole="voucher" ToRole="vouchertransaction" />
+          <NavigationProperty Name="vouchertransactions1" Relationship="database_nanofinModel.vouchertransaction_ibfk_2" FromRole="voucher" ToRole="vouchertransaction" />
         </EntityType>
         <EntityType Name="vouchertransaction">
           <Key>
@@ -1300,19 +1556,28 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="transactionAmount" Type="Decimal" Nullable="false" />
           <Property Name="transactionDescription" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="transactionDate" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="transactiontype" Relationship="Self.vouchertransaction_ibfk_5" FromRole="vouchertransaction" ToRole="transactiontype" />
-          <NavigationProperty Name="user" Relationship="Self.vouchertransaction_ibfk_3" FromRole="vouchertransaction" ToRole="user" />
-          <NavigationProperty Name="user1" Relationship="Self.vouchertransaction_ibfk_4" FromRole="vouchertransaction" ToRole="user" />
-          <NavigationProperty Name="voucher" Relationship="Self.vouchertransaction_ibfk_1" FromRole="vouchertransaction" ToRole="voucher" />
-          <NavigationProperty Name="voucher1" Relationship="Self.vouchertransaction_ibfk_2" FromRole="vouchertransaction" ToRole="voucher" />
+          <NavigationProperty Name="transactiontype" Relationship="database_nanofinModel.vouchertransaction_ibfk_5" FromRole="vouchertransaction" ToRole="transactiontype" />
+          <NavigationProperty Name="user" Relationship="database_nanofinModel.vouchertransaction_ibfk_3" FromRole="vouchertransaction" ToRole="user" />
+          <NavigationProperty Name="user1" Relationship="database_nanofinModel.vouchertransaction_ibfk_4" FromRole="vouchertransaction" ToRole="user" />
+          <NavigationProperty Name="voucher" Relationship="database_nanofinModel.vouchertransaction_ibfk_1" FromRole="vouchertransaction" ToRole="voucher" />
+          <NavigationProperty Name="voucher1" Relationship="database_nanofinModel.vouchertransaction_ibfk_2" FromRole="vouchertransaction" ToRole="voucher" />
         </EntityType>
         <EntityType Name="vouchertype">
           <Key>
             <PropertyRef Name="VoucherType_ID" />
           </Key>
           <Property Name="VoucherType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="voucherTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="vouchers" Relationship="Self.voucher_ibfk_1" FromRole="vouchertype" ToRole="voucher" />
+          <Property Name="voucherTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vouchers" Relationship="database_nanofinModel.voucher_ibfk_1" FromRole="vouchertype" ToRole="voucher" />
+        </EntityType>
+        <EntityType Name="monthlylocationsale">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="sales" Type="Decimal" />
         </EntityType>
         <EntityType Name="productsalespermonth">
           <Key>
@@ -1321,585 +1586,45 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           </Key>
           <Property Name="activeProductItemStartDate" Type="DateTime" />
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="productName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
         <Association Name="activeproductitems_ibfk_1">
-          <End Role="consumer" Type="Self.consumer" Multiplicity="1" />
-          <End Role="activeproductitems" Type="Self.activeproductitem" Multiplicity="*" />
+          <End Type="database_nanofinModel.consumer" Role="consumer" Multiplicity="1" />
+          <End Type="database_nanofinModel.activeproductitem" Role="activeproductitem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="consumer">
               <PropertyRef Name="Consumer_ID" />
             </Principal>
-            <Dependent Role="activeproductitems">
+            <Dependent Role="activeproductitem">
               <PropertyRef Name="Consumer_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="activeproductitems_ibfk_2">
-          <End Role="product" Type="Self.product" Multiplicity="1" />
-          <End Role="activeproductitems" Type="Self.activeproductitem" Multiplicity="*" />
+          <End Type="database_nanofinModel.product" Role="product" Multiplicity="1" />
+          <End Type="database_nanofinModel.activeproductitem" Role="activeproductitem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="product">
               <PropertyRef Name="Product_ID" />
             </Principal>
-            <Dependent Role="activeproductitems">
+            <Dependent Role="activeproductitem">
               <PropertyRef Name="Product_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="claimuploaddocument_ibfk_2">
-          <End Role="activeproductitems" Type="Self.activeproductitem" Multiplicity="1" />
-          <End Role="claimuploaddocument" Type="Self.claimuploaddocument" Multiplicity="*" />
+        <Association Name="activeproductitems_ibfk_3">
+          <End Type="database_nanofinModel.location" Role="location" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.activeproductitem" Role="activeproductitem" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="activeproductitems">
-              <PropertyRef Name="ActiveProductItems_ID" />
-            </Principal>
-            <Dependent Role="claimuploaddocument">
-              <PropertyRef Name="ActiveProductItems_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="productproviderpayment_ibfk_2">
-          <End Role="activeproductitems" Type="Self.activeproductitem" Multiplicity="0..1" />
-          <End Role="productproviderpayment" Type="Self.productproviderpayment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="activeproductitems">
-              <PropertyRef Name="ActiveProductItems_ID" />
-            </Principal>
-            <Dependent Role="productproviderpayment">
-              <PropertyRef Name="ActiveProductItems_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="productredemptionlog_ibfk_2">
-          <End Role="activeproductitems" Type="Self.activeproductitem" Multiplicity="1" />
-          <End Role="productredemptionlog" Type="Self.productredemptionlog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="activeproductitems">
-              <PropertyRef Name="ActiveProductItems_ID" />
-            </Principal>
-            <Dependent Role="productredemptionlog">
-              <PropertyRef Name="ActiveProductItems_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="claimuploaddocument_ibfk_1">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="claimuploaddocument" Type="Self.claimuploaddocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="claimuploaddocument">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="claimuploaddocument_ibfk_3">
-          <End Role="document" Type="Self.document" Multiplicity="1" />
-          <End Role="claimuploaddocument" Type="Self.claimuploaddocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="document">
-              <PropertyRef Name="document_ID" />
-            </Principal>
-            <Dependent Role="claimuploaddocument">
-              <PropertyRef Name="document_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="consumer_ibfk_1">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="consumer" Type="Self.consumer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="consumer">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="document_ibfk_1">
-          <End Role="product" Type="Self.product" Multiplicity="1" />
-          <End Role="document" Type="Self.document" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="Product_ID" />
-            </Principal>
-            <Dependent Role="document">
-              <PropertyRef Name="Product_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="insuranceproduct_ibfk_1">
-          <End Role="unittype" Type="Self.unittype" Multiplicity="0..1" />
-          <End Role="insuranceproduct" Type="Self.insuranceproduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="unittype">
-              <PropertyRef Name="UnitType_ID" />
-            </Principal>
-            <Dependent Role="insuranceproduct">
-              <PropertyRef Name="ipUnitType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="insuranceproduct_ibfk_2">
-          <End Role="productprovider" Type="Self.productprovider" Multiplicity="1" />
-          <End Role="insuranceproduct" Type="Self.insuranceproduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productprovider">
-              <PropertyRef Name="ProductProvider_ID" />
-            </Principal>
-            <Dependent Role="insuranceproduct">
-              <PropertyRef Name="ProductProvider_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="insuranceproduct_ibfk_3">
-          <End Role="insurancetype" Type="Self.insurancetype" Multiplicity="1" />
-          <End Role="insuranceproduct" Type="Self.insuranceproduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="insurancetype">
-              <PropertyRef Name="InsuranceType_ID" />
-            </Principal>
-            <Dependent Role="insuranceproduct">
-              <PropertyRef Name="InsuranceType_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="insuranceproduct_ibfk_4">
-          <End Role="product" Type="Self.product" Multiplicity="1" />
-          <End Role="insuranceproduct" Type="Self.insuranceproduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="Product_ID" />
-            </Principal>
-            <Dependent Role="insuranceproduct">
-              <PropertyRef Name="Product_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="reseller_ibfk_2">
-          <End Role="locations" Type="Self.location" Multiplicity="0..1" />
-          <End Role="reseller" Type="Self.reseller" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="locations">
+            <Principal Role="location">
               <PropertyRef Name="Location_ID" />
             </Principal>
-            <Dependent Role="reseller">
-              <PropertyRef Name="LocationID" />
+            <Dependent Role="activeproductitem">
+              <PropertyRef Name="transactionlocation" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="notificationlog_ibfk_1">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="notificationlog" Type="Self.notificationlog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="notificationlog">
-              <PropertyRef Name="notificationReceiver" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="processapplications_ibfk_1">
-          <End Role="product" Type="Self.product" Multiplicity="1" />
-          <End Role="processapplications" Type="Self.processapplication" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="Product_ID" />
-            </Principal>
-            <Dependent Role="processapplications">
-              <PropertyRef Name="Product_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="product_ibfk_1">
-          <End Role="productprovider" Type="Self.productprovider" Multiplicity="1" />
-          <End Role="product" Type="Self.product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productprovider">
-              <PropertyRef Name="ProductProvider_ID" />
-            </Principal>
-            <Dependent Role="product">
-              <PropertyRef Name="ProductProvider_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="product_ibfk_2">
-          <End Role="producttype" Type="Self.producttype" Multiplicity="0..1" />
-          <End Role="product" Type="Self.product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producttype">
-              <PropertyRef Name="ProductType_ID" />
-            </Principal>
-            <Dependent Role="product">
-              <PropertyRef Name="ProductType_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="productprovider_ibfk_1">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="productprovider" Type="Self.productprovider" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="productprovider">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="productproviderpayment_ibfk_1">
-          <End Role="productprovider" Type="Self.productprovider" Multiplicity="0..1" />
-          <End Role="productproviderpayment" Type="Self.productproviderpayment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productprovider">
-              <PropertyRef Name="ProductProvider_ID" />
-            </Principal>
-            <Dependent Role="productproviderpayment">
-              <PropertyRef Name="ProductProvider_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="productredemptionlog_ibfk_1">
-          <End Role="voucher" Type="Self.voucher" Multiplicity="1" />
-          <End Role="productredemptionlog" Type="Self.productredemptionlog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="voucher">
-              <PropertyRef Name="Voucher_ID" />
-            </Principal>
-            <Dependent Role="productredemptionlog">
-              <PropertyRef Name="Voucher_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="reseller_ibfk_1">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="reseller" Type="Self.reseller" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="reseller">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="systemadmin_ibfk_1">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="systemadmin" Type="Self.systemadmin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="systemadmin">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="vouchertransaction_ibfk_5">
-          <End Role="transactiontype" Type="Self.transactiontype" Multiplicity="1" />
-          <End Role="vouchertransaction" Type="Self.vouchertransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="transactiontype">
-              <PropertyRef Name="TransactionType_ID" />
-            </Principal>
-            <Dependent Role="vouchertransaction">
-              <PropertyRef Name="TransactionType_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="user_ibfk_1">
-          <End Role="usertype" Type="Self.usertype" Multiplicity="0..1" />
-          <End Role="user" Type="Self.user" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="usertype">
-              <PropertyRef Name="UserType_ID" />
-            </Principal>
-            <Dependent Role="user">
-              <PropertyRef Name="userType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="validator_ibfk_1">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="validator" Type="Self.validator" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="validator">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="voucher_ibfk_2">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="voucher" Type="Self.voucher" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="voucher">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="vouchertransaction_ibfk_3">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="vouchertransaction" Type="Self.vouchertransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="vouchertransaction">
-              <PropertyRef Name="Sender_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="vouchertransaction_ibfk_4">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="vouchertransaction" Type="Self.vouchertransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="vouchertransaction">
-              <PropertyRef Name="Receiver_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="voucher_ibfk_1">
-          <End Role="vouchertype" Type="Self.vouchertype" Multiplicity="1" />
-          <End Role="voucher" Type="Self.voucher" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="vouchertype">
-              <PropertyRef Name="VoucherType_ID" />
-            </Principal>
-            <Dependent Role="voucher">
-              <PropertyRef Name="VoucherType_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="vouchertransaction_ibfk_1">
-          <End Role="voucher" Type="Self.voucher" Multiplicity="1" />
-          <End Role="vouchertransaction" Type="Self.vouchertransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="voucher">
-              <PropertyRef Name="Voucher_ID" />
-            </Principal>
-            <Dependent Role="vouchertransaction">
-              <PropertyRef Name="VoucherSentTo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="vouchertransaction_ibfk_2">
-          <End Role="voucher" Type="Self.voucher" Multiplicity="1" />
-          <End Role="vouchertransaction" Type="Self.vouchertransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="voucher">
-              <PropertyRef Name="Voucher_ID" />
-            </Principal>
-            <Dependent Role="vouchertransaction">
-              <PropertyRef Name="Voucher_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="database_nanofinEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="activeproductitems" EntityType="Self.activeproductitem" />
-          <EntitySet Name="claimuploaddocuments" EntityType="Self.claimuploaddocument" />
-          <EntitySet Name="consumers" EntityType="Self.consumer" />
-          <EntitySet Name="documents" EntityType="Self.document" />
-          <EntitySet Name="insuranceproducts" EntityType="Self.insuranceproduct" />
-          <EntitySet Name="insurancetypes" EntityType="Self.insurancetype" />
-          <EntitySet Name="locations" EntityType="Self.location" />
-          <EntitySet Name="notificationlogs" EntityType="Self.notificationlog" />
-          <EntitySet Name="processapplications" EntityType="Self.processapplication" />
-          <EntitySet Name="products" EntityType="Self.product" />
-          <EntitySet Name="productproviders" EntityType="Self.productprovider" />
-          <EntitySet Name="productproviderpayments" EntityType="Self.productproviderpayment" />
-          <EntitySet Name="productredemptionlogs" EntityType="Self.productredemptionlog" />
-          <EntitySet Name="producttypes" EntityType="Self.producttype" />
-          <EntitySet Name="resellers" EntityType="Self.reseller" />
-          <EntitySet Name="systemadmins" EntityType="Self.systemadmin" />
-          <EntitySet Name="transactiontypes" EntityType="Self.transactiontype" />
-          <EntitySet Name="unittypes" EntityType="Self.unittype" />
-          <EntitySet Name="users" EntityType="Self.user" />
-          <EntitySet Name="usertypes" EntityType="Self.usertype" />
-          <EntitySet Name="validators" EntityType="Self.validator" />
-          <EntitySet Name="vouchers" EntityType="Self.voucher" />
-          <EntitySet Name="vouchertransactions" EntityType="Self.vouchertransaction" />
-          <EntitySet Name="vouchertypes" EntityType="Self.vouchertype" />
-          <EntitySet Name="productsalespermonths" EntityType="Self.productsalespermonth" />
-          <AssociationSet Name="activeproductitems_ibfk_1" Association="Self.activeproductitems_ibfk_1">
-            <End Role="consumer" EntitySet="consumers" />
-            <End Role="activeproductitems" EntitySet="activeproductitems" />
-          </AssociationSet>
-          <AssociationSet Name="activeproductitems_ibfk_2" Association="Self.activeproductitems_ibfk_2">
-            <End Role="product" EntitySet="products" />
-            <End Role="activeproductitems" EntitySet="activeproductitems" />
-          </AssociationSet>
-          <AssociationSet Name="claimuploaddocument_ibfk_2" Association="Self.claimuploaddocument_ibfk_2">
-            <End Role="activeproductitems" EntitySet="activeproductitems" />
-            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
-          </AssociationSet>
-          <AssociationSet Name="productproviderpayment_ibfk_2" Association="Self.productproviderpayment_ibfk_2">
-            <End Role="activeproductitems" EntitySet="activeproductitems" />
-            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
-          </AssociationSet>
-          <AssociationSet Name="productredemptionlog_ibfk_2" Association="Self.productredemptionlog_ibfk_2">
-            <End Role="activeproductitems" EntitySet="activeproductitems" />
-            <End Role="productredemptionlog" EntitySet="productredemptionlogs" />
-          </AssociationSet>
-          <AssociationSet Name="claimuploaddocument_ibfk_1" Association="Self.claimuploaddocument_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
-          </AssociationSet>
-          <AssociationSet Name="claimuploaddocument_ibfk_3" Association="Self.claimuploaddocument_ibfk_3">
-            <End Role="document" EntitySet="documents" />
-            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
-          </AssociationSet>
-          <AssociationSet Name="consumer_ibfk_1" Association="Self.consumer_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="consumer" EntitySet="consumers" />
-          </AssociationSet>
-          <AssociationSet Name="document_ibfk_1" Association="Self.document_ibfk_1">
-            <End Role="product" EntitySet="products" />
-            <End Role="document" EntitySet="documents" />
-          </AssociationSet>
-          <AssociationSet Name="insuranceproduct_ibfk_1" Association="Self.insuranceproduct_ibfk_1">
-            <End Role="unittype" EntitySet="unittypes" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
-          </AssociationSet>
-          <AssociationSet Name="insuranceproduct_ibfk_2" Association="Self.insuranceproduct_ibfk_2">
-            <End Role="productprovider" EntitySet="productproviders" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
-          </AssociationSet>
-          <AssociationSet Name="insuranceproduct_ibfk_3" Association="Self.insuranceproduct_ibfk_3">
-            <End Role="insurancetype" EntitySet="insurancetypes" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
-          </AssociationSet>
-          <AssociationSet Name="insuranceproduct_ibfk_4" Association="Self.insuranceproduct_ibfk_4">
-            <End Role="product" EntitySet="products" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
-          </AssociationSet>
-          <AssociationSet Name="reseller_ibfk_2" Association="Self.reseller_ibfk_2">
-            <End Role="locations" EntitySet="locations" />
-            <End Role="reseller" EntitySet="resellers" />
-          </AssociationSet>
-          <AssociationSet Name="notificationlog_ibfk_1" Association="Self.notificationlog_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="notificationlog" EntitySet="notificationlogs" />
-          </AssociationSet>
-          <AssociationSet Name="processapplications_ibfk_1" Association="Self.processapplications_ibfk_1">
-            <End Role="product" EntitySet="products" />
-            <End Role="processapplications" EntitySet="processapplications" />
-          </AssociationSet>
-          <AssociationSet Name="product_ibfk_1" Association="Self.product_ibfk_1">
-            <End Role="productprovider" EntitySet="productproviders" />
-            <End Role="product" EntitySet="products" />
-          </AssociationSet>
-          <AssociationSet Name="product_ibfk_2" Association="Self.product_ibfk_2">
-            <End Role="producttype" EntitySet="producttypes" />
-            <End Role="product" EntitySet="products" />
-          </AssociationSet>
-          <AssociationSet Name="productprovider_ibfk_1" Association="Self.productprovider_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="productprovider" EntitySet="productproviders" />
-          </AssociationSet>
-          <AssociationSet Name="productproviderpayment_ibfk_1" Association="Self.productproviderpayment_ibfk_1">
-            <End Role="productprovider" EntitySet="productproviders" />
-            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
-          </AssociationSet>
-          <AssociationSet Name="productredemptionlog_ibfk_1" Association="Self.productredemptionlog_ibfk_1">
-            <End Role="voucher" EntitySet="vouchers" />
-            <End Role="productredemptionlog" EntitySet="productredemptionlogs" />
-          </AssociationSet>
-          <AssociationSet Name="reseller_ibfk_1" Association="Self.reseller_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="reseller" EntitySet="resellers" />
-          </AssociationSet>
-          <AssociationSet Name="systemadmin_ibfk_1" Association="Self.systemadmin_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="systemadmin" EntitySet="systemadmins" />
-          </AssociationSet>
-          <AssociationSet Name="vouchertransaction_ibfk_5" Association="Self.vouchertransaction_ibfk_5">
-            <End Role="transactiontype" EntitySet="transactiontypes" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
-          </AssociationSet>
-          <AssociationSet Name="user_ibfk_1" Association="Self.user_ibfk_1">
-            <End Role="usertype" EntitySet="usertypes" />
-            <End Role="user" EntitySet="users" />
-          </AssociationSet>
-          <AssociationSet Name="validator_ibfk_1" Association="Self.validator_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="validator" EntitySet="validators" />
-          </AssociationSet>
-          <AssociationSet Name="voucher_ibfk_2" Association="Self.voucher_ibfk_2">
-            <End Role="user" EntitySet="users" />
-            <End Role="voucher" EntitySet="vouchers" />
-          </AssociationSet>
-          <AssociationSet Name="vouchertransaction_ibfk_3" Association="Self.vouchertransaction_ibfk_3">
-            <End Role="user" EntitySet="users" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
-          </AssociationSet>
-          <AssociationSet Name="vouchertransaction_ibfk_4" Association="Self.vouchertransaction_ibfk_4">
-            <End Role="user" EntitySet="users" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
-          </AssociationSet>
-          <AssociationSet Name="voucher_ibfk_1" Association="Self.voucher_ibfk_1">
-            <End Role="vouchertype" EntitySet="vouchertypes" />
-            <End Role="voucher" EntitySet="vouchers" />
-          </AssociationSet>
-          <AssociationSet Name="vouchertransaction_ibfk_1" Association="Self.vouchertransaction_ibfk_1">
-            <End Role="voucher" EntitySet="vouchers" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
-          </AssociationSet>
-          <AssociationSet Name="vouchertransaction_ibfk_2" Association="Self.vouchertransaction_ibfk_2">
-            <End Role="voucher" EntitySet="vouchers" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
-          </AssociationSet>
-          <EntitySet Name="claims" EntityType="database_nanofinModel.claim" />
-          <EntitySet Name="claimtemplates" EntityType="database_nanofinModel.claimtemplate" />
-          <AssociationSet Name="ActiveProductItems_ID" Association="database_nanofinModel.ActiveProductItems_ID">
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
-            <End Role="claim" EntitySet="claims" />
-          </AssociationSet>
-          <AssociationSet Name="Claim_ID" Association="database_nanofinModel.Claim_ID">
-            <End Role="claim" EntitySet="claims" />
-            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
-          </AssociationSet>
-          <AssociationSet Name="claimtemplate_ID" Association="database_nanofinModel.claimtemplate_ID">
-            <End Role="claimtemplate" EntitySet="claimtemplates" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
-          </AssociationSet>
-          <AssociationSet Name="consumer_ibfk_2" Association="database_nanofinModel.consumer_ibfk_2">
-            <End Role="location" EntitySet="locations" />
-            <End Role="consumer" EntitySet="consumers" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="claim">
-          <Key>
-            <PropertyRef Name="Claim_ID" />
-          </Key>
-          <Property Name="Claim_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ActiveProductItems_ID" Type="Int32" />
-          <Property Name="capturedClaimFormDataJson" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="activeproductitem" Relationship="database_nanofinModel.ActiveProductItems_ID" FromRole="claim" ToRole="activeproductitem" />
-          <NavigationProperty Name="claimuploaddocuments" Relationship="database_nanofinModel.Claim_ID" FromRole="claim" ToRole="claimuploaddocument" />
-        </EntityType>
-        <EntityType Name="claimtemplate">
-          <Key>
-            <PropertyRef Name="claimtemplate_ID" />
-          </Key>
-          <Property Name="claimtemplate_ID" Type="Int32" Nullable="false" />
-          <Property Name="templateName" Type="String" MaxLength="65" FixedLength="false" Unicode="false" />
-          <Property Name="formDataRequiredJson" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="insuranceproducts" Relationship="database_nanofinModel.claimtemplate_ID" FromRole="claimtemplate" ToRole="insuranceproduct" />
-        </EntityType>
         <Association Name="ActiveProductItems_ID">
           <End Type="database_nanofinModel.activeproductitem" Role="activeproductitem" Multiplicity="0..1" />
           <End Type="database_nanofinModel.claim" Role="claim" Multiplicity="*" />
@@ -1908,6 +1633,54 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
               <PropertyRef Name="ActiveProductItems_ID" />
             </Principal>
             <Dependent Role="claim">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="claimuploaddocument_ibfk_2">
+          <End Type="database_nanofinModel.activeproductitem" Role="activeproductitem" Multiplicity="1" />
+          <End Type="database_nanofinModel.claimuploaddocument" Role="claimuploaddocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="activeproductitem">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Principal>
+            <Dependent Role="claimuploaddocument">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_transactionlocation">
+          <End Type="database_nanofinModel.location" Role="location" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.activeproductitem" Role="activeproductitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="Location_ID" />
+            </Principal>
+            <Dependent Role="activeproductitem">
+              <PropertyRef Name="transactionlocation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="productproviderpayment_ibfk_2">
+          <End Type="database_nanofinModel.activeproductitem" Role="activeproductitem" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.productproviderpayment" Role="productproviderpayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="activeproductitem">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Principal>
+            <Dependent Role="productproviderpayment">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="productredemptionlog_ibfk_2">
+          <End Type="database_nanofinModel.activeproductitem" Role="activeproductitem" Multiplicity="1" />
+          <End Type="database_nanofinModel.productredemptionlog" Role="productredemptionlog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="activeproductitem">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Principal>
+            <Dependent Role="productredemptionlog">
               <PropertyRef Name="ActiveProductItems_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1936,6 +1709,42 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="claimuploaddocument_ibfk_1">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.claimuploaddocument" Role="claimuploaddocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="claimuploaddocument">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="claimuploaddocument_ibfk_3">
+          <End Type="database_nanofinModel.document" Role="document" Multiplicity="1" />
+          <End Type="database_nanofinModel.claimuploaddocument" Role="claimuploaddocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="document">
+              <PropertyRef Name="document_ID" />
+            </Principal>
+            <Dependent Role="claimuploaddocument">
+              <PropertyRef Name="document_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="consumer_ibfk_1">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.consumer" Role="consumer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="consumer">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="consumer_ibfk_2">
           <End Type="database_nanofinModel.location" Role="location" Multiplicity="0..1" />
           <End Type="database_nanofinModel.consumer" Role="consumer" Multiplicity="*" />
@@ -1948,7 +1757,295 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="document_ibfk_1">
+          <End Type="database_nanofinModel.product" Role="product" Multiplicity="1" />
+          <End Type="database_nanofinModel.document" Role="document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="document">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="insuranceproduct_ibfk_1">
+          <End Type="database_nanofinModel.unittype" Role="unittype" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unittype">
+              <PropertyRef Name="UnitType_ID" />
+            </Principal>
+            <Dependent Role="insuranceproduct">
+              <PropertyRef Name="ipUnitType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="insuranceproduct_ibfk_2">
+          <End Type="database_nanofinModel.productprovider" Role="productprovider" Multiplicity="1" />
+          <End Type="database_nanofinModel.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productprovider">
+              <PropertyRef Name="ProductProvider_ID" />
+            </Principal>
+            <Dependent Role="insuranceproduct">
+              <PropertyRef Name="ProductProvider_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="insuranceproduct_ibfk_3">
+          <End Type="database_nanofinModel.insurancetype" Role="insurancetype" Multiplicity="1" />
+          <End Type="database_nanofinModel.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="insurancetype">
+              <PropertyRef Name="InsuranceType_ID" />
+            </Principal>
+            <Dependent Role="insuranceproduct">
+              <PropertyRef Name="InsuranceType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="insuranceproduct_ibfk_4">
+          <End Type="database_nanofinModel.product" Role="product" Multiplicity="1" />
+          <End Type="database_nanofinModel.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="insuranceproduct">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reseller_ibfk_2">
+          <End Type="database_nanofinModel.location" Role="location" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.reseller" Role="reseller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="Location_ID" />
+            </Principal>
+            <Dependent Role="reseller">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="notificationlog_ibfk_1">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.notificationlog" Role="notificationlog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="notificationlog">
+              <PropertyRef Name="notificationReceiver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="processapplications_ibfk_1">
+          <End Type="database_nanofinModel.product" Role="product" Multiplicity="1" />
+          <End Type="database_nanofinModel.processapplication" Role="processapplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="processapplication">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="product_ibfk_1">
+          <End Type="database_nanofinModel.productprovider" Role="productprovider" Multiplicity="1" />
+          <End Type="database_nanofinModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productprovider">
+              <PropertyRef Name="ProductProvider_ID" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="ProductProvider_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="product_ibfk_2">
+          <End Type="database_nanofinModel.producttype" Role="producttype" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producttype">
+              <PropertyRef Name="ProductType_ID" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="ProductType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="productprovider_ibfk_1">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.productprovider" Role="productprovider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="productprovider">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="productproviderpayment_ibfk_1">
+          <End Type="database_nanofinModel.productprovider" Role="productprovider" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.productproviderpayment" Role="productproviderpayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productprovider">
+              <PropertyRef Name="ProductProvider_ID" />
+            </Principal>
+            <Dependent Role="productproviderpayment">
+              <PropertyRef Name="ProductProvider_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="productredemptionlog_ibfk_1">
+          <End Type="database_nanofinModel.voucher" Role="voucher" Multiplicity="1" />
+          <End Type="database_nanofinModel.productredemptionlog" Role="productredemptionlog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="voucher">
+              <PropertyRef Name="Voucher_ID" />
+            </Principal>
+            <Dependent Role="productredemptionlog">
+              <PropertyRef Name="Voucher_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reseller_ibfk_1">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.reseller" Role="reseller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="reseller">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="systemadmin_ibfk_1">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.systemadmin" Role="systemadmin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="systemadmin">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="vouchertransaction_ibfk_5">
+          <End Type="database_nanofinModel.transactiontype" Role="transactiontype" Multiplicity="1" />
+          <End Type="database_nanofinModel.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="transactiontype">
+              <PropertyRef Name="TransactionType_ID" />
+            </Principal>
+            <Dependent Role="vouchertransaction">
+              <PropertyRef Name="TransactionType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_ibfk_1">
+          <End Type="database_nanofinModel.usertype" Role="usertype" Multiplicity="0..1" />
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usertype">
+              <PropertyRef Name="UserType_ID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="userType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="validator_ibfk_1">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.validator" Role="validator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="validator">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="voucher_ibfk_2">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.voucher" Role="voucher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="voucher">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="vouchertransaction_ibfk_3">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="vouchertransaction">
+              <PropertyRef Name="Sender_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="vouchertransaction_ibfk_4">
+          <End Type="database_nanofinModel.user" Role="user" Multiplicity="1" />
+          <End Type="database_nanofinModel.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="vouchertransaction">
+              <PropertyRef Name="Receiver_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="voucher_ibfk_1">
+          <End Type="database_nanofinModel.vouchertype" Role="vouchertype" Multiplicity="1" />
+          <End Type="database_nanofinModel.voucher" Role="voucher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vouchertype">
+              <PropertyRef Name="VoucherType_ID" />
+            </Principal>
+            <Dependent Role="voucher">
+              <PropertyRef Name="VoucherType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="vouchertransaction_ibfk_1">
+          <End Type="database_nanofinModel.voucher" Role="voucher" Multiplicity="1" />
+          <End Type="database_nanofinModel.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="voucher">
+              <PropertyRef Name="Voucher_ID" />
+            </Principal>
+            <Dependent Role="vouchertransaction">
+              <PropertyRef Name="VoucherSentTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="vouchertransaction_ibfk_2">
+          <End Type="database_nanofinModel.voucher" Role="voucher" Multiplicity="1" />
+          <End Type="database_nanofinModel.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="voucher">
+              <PropertyRef Name="Voucher_ID" />
+            </Principal>
+            <Dependent Role="vouchertransaction">
+              <PropertyRef Name="Voucher_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1957,327 +2054,17 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <EntitySetMapping Name="activeproductitems">
             <EntityTypeMapping TypeName="database_nanofinModel.activeproductitem">
               <MappingFragment StoreEntitySet="activeproductitems">
-                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
-                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="activeProductItemPolicyNum" ColumnName="activeProductItemPolicyNum" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="productValue" ColumnName="productValue" />
-                <ScalarProperty Name="duration" ColumnName="duration" />
-                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
-                <ScalarProperty Name="transactionLocation" ColumnName="transactionLocation" />
-                <ScalarProperty Name="activeProductItemEndDate" ColumnName="activeProductItemEndDate" />
                 <ScalarProperty Name="PurchaseConfirmationDocPath" ColumnName="PurchaseConfirmationDocPath" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="claimuploaddocuments">
-            <EntityTypeMapping TypeName="database_nanofinModel.claimuploaddocument">
-              <MappingFragment StoreEntitySet="claimuploaddocument">
-                <ScalarProperty Name="Claim_ID" ColumnName="Claim_ID" />
-                <ScalarProperty Name="claimUploadDocument_ID" ColumnName="claimUploadDocument_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
-                <ScalarProperty Name="document_ID" ColumnName="document_ID" />
-                <ScalarProperty Name="claimUploadDocumentPath" ColumnName="claimUploadDocumentPath" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="consumers">
-            <EntityTypeMapping TypeName="database_nanofinModel.consumer">
-              <MappingFragment StoreEntitySet="consumer">
-                <ScalarProperty Name="numDependant" ColumnName="numDependant" />
-                <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
-                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="consumerDateOfBirth" ColumnName="consumerDateOfBirth" />
-                <ScalarProperty Name="consumerAddress" ColumnName="consumerAddress" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
-                <ScalarProperty Name="topProductCategoriesInterestedIn" ColumnName="topProductCategoriesInterestedIn" />
-                <ScalarProperty Name="homeOwnerType" ColumnName="homeOwnerType" />
-                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
-                <ScalarProperty Name="grossMonthlyIncome" ColumnName="grossMonthlyIncome" />
-                <ScalarProperty Name="nettMonthlyIncome" ColumnName="nettMonthlyIncome" />
-                <ScalarProperty Name="totalMonthlyExpenses" ColumnName="totalMonthlyExpenses" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="documents">
-            <EntityTypeMapping TypeName="database_nanofinModel.document">
-              <MappingFragment StoreEntitySet="document">
-                <ScalarProperty Name="document_ID" ColumnName="document_ID" />
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="documentName" ColumnName="documentName" />
-                <ScalarProperty Name="documentDescription" ColumnName="documentDescription" />
-                <ScalarProperty Name="docPreferredFormat" ColumnName="docPreferredFormat" />
-                <ScalarProperty Name="docPreparationRequired" ColumnName="docPreparationRequired" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="insuranceproducts">
-            <EntityTypeMapping TypeName="database_nanofinModel.insuranceproduct">
-              <MappingFragment StoreEntitySet="insuranceproduct">
-                <ScalarProperty Name="claimtemplate_ID" ColumnName="claimtemplate_ID" />
-                <ScalarProperty Name="InsuranceProduct_ID" ColumnName="InsuranceProduct_ID" />
-                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
-                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="ipCoverAmount" ColumnName="ipCoverAmount" />
-                <ScalarProperty Name="ipUnitCost" ColumnName="ipUnitCost" />
-                <ScalarProperty Name="ipUnitType" ColumnName="ipUnitType" />
-                <ScalarProperty Name="ipMinimunNoOfUnits" ColumnName="ipMinimunNoOfUnits" />
-                <ScalarProperty Name="ipClaimInfoPath" ColumnName="ipClaimInfoPath" />
-                <ScalarProperty Name="claimTimeframe" ColumnName="claimTimeframe" />
-                <ScalarProperty Name="policyNumberApiLink" ColumnName="policyNumberApiLink" />
-                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
-                <ScalarProperty Name="claimContactNo" ColumnName="claimContactNo" />
-                <ScalarProperty Name="claimFormPath" ColumnName="claimFormPath" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="insurancetypes">
-            <EntityTypeMapping TypeName="database_nanofinModel.insurancetype">
-              <MappingFragment StoreEntitySet="insurancetype">
-                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
-                <ScalarProperty Name="insuranctTypeDescription" ColumnName="insuranctTypeDescription" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="locations">
-            <EntityTypeMapping TypeName="database_nanofinModel.location">
-              <MappingFragment StoreEntitySet="locations">
-                <ScalarProperty Name="UnemploymentRate" ColumnName="UnemploymentRate" />
-                <ScalarProperty Name="GDP" ColumnName="GDP" />
-                <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
-                <ScalarProperty Name="Province" ColumnName="Province" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="LatLng" ColumnName="LatLng" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="notificationlogs">
-            <EntityTypeMapping TypeName="database_nanofinModel.notificationlog">
-              <MappingFragment StoreEntitySet="notificationlog">
-                <ScalarProperty Name="NotificationLog_ID" ColumnName="NotificationLog_ID" />
-                <ScalarProperty Name="notificationType" ColumnName="notificationType" />
-                <ScalarProperty Name="notificationReceiver" ColumnName="notificationReceiver" />
-                <ScalarProperty Name="notificationDateSent" ColumnName="notificationDateSent" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="processapplications">
-            <EntityTypeMapping TypeName="database_nanofinModel.processapplication">
-              <MappingFragment StoreEntitySet="processapplications">
-                <ScalarProperty Name="ProcessApplication_ID" ColumnName="ProcessApplication_ID" />
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
-                <ScalarProperty Name="value1" ColumnName="value1" />
-                <ScalarProperty Name="value2" ColumnName="value2" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="products">
-            <EntityTypeMapping TypeName="database_nanofinModel.product">
-              <MappingFragment StoreEntitySet="product">
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
-                <ScalarProperty Name="ProductType_ID" ColumnName="ProductType_ID" />
-                <ScalarProperty Name="productName" ColumnName="productName" />
-                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
-                <ScalarProperty Name="detailedDescription" ColumnName="detailedDescription" />
-                <ScalarProperty Name="productPolicyDocPath" ColumnName="productPolicyDocPath" />
-                <ScalarProperty Name="isAvailableForPurchase" ColumnName="isAvailableForPurchase" />
-                <ScalarProperty Name="salesTargetAmount" ColumnName="salesTargetAmount" />
-                <ScalarProperty Name="ratingAverage" ColumnName="ratingAverage" />
-                <ScalarProperty Name="numTimesRated" ColumnName="numTimesRated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productproviders">
-            <EntityTypeMapping TypeName="database_nanofinModel.productprovider">
-              <MappingFragment StoreEntitySet="productprovider">
-                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="ppCompanyName" ColumnName="ppCompanyName" />
-                <ScalarProperty Name="ppVATnumber" ColumnName="ppVATnumber" />
-                <ScalarProperty Name="ppFaxNumber" ColumnName="ppFaxNumber" />
-                <ScalarProperty Name="ppAddress" ColumnName="ppAddress" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productproviderpayments">
-            <EntityTypeMapping TypeName="database_nanofinModel.productproviderpayment">
-              <MappingFragment StoreEntitySet="productproviderpayment">
-                <ScalarProperty Name="Productproviderpayment_ID" ColumnName="Productproviderpayment_ID" />
-                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
-                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="AmountToPay" ColumnName="AmountToPay" />
-                <ScalarProperty Name="hasBeenPayed" ColumnName="hasBeenPayed" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productredemptionlogs">
-            <EntityTypeMapping TypeName="database_nanofinModel.productredemptionlog">
-              <MappingFragment StoreEntitySet="productredemptionlog">
-                <ScalarProperty Name="Voucher_ID" ColumnName="Voucher_ID" />
-                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
-                <ScalarProperty Name="transactionAmount" ColumnName="transactionAmount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="producttypes">
-            <EntityTypeMapping TypeName="database_nanofinModel.producttype">
-              <MappingFragment StoreEntitySet="producttype">
-                <ScalarProperty Name="ProductType_ID" ColumnName="ProductType_ID" />
-                <ScalarProperty Name="ProductTypeName" ColumnName="ProductTypeName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="resellers">
-            <EntityTypeMapping TypeName="database_nanofinModel.reseller">
-              <MappingFragment StoreEntitySet="reseller">
-                <ScalarProperty Name="Reseller_ID" ColumnName="Reseller_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="resellerIsValidated" ColumnName="resellerIsValidated" />
-                <ScalarProperty Name="resellerBankBranchName" ColumnName="resellerBankBranchName" />
-                <ScalarProperty Name="resellerBankAccountNumber" ColumnName="resellerBankAccountNumber" />
-                <ScalarProperty Name="resellerBankName" ColumnName="resellerBankName" />
-                <ScalarProperty Name="resellerBankBranchCode" ColumnName="resellerBankBranchCode" />
-                <ScalarProperty Name="resellerDateOfBirth" ColumnName="resellerDateOfBirth" />
-                <ScalarProperty Name="street" ColumnName="street" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
-                <ScalarProperty Name="province" ColumnName="province" />
-                <ScalarProperty Name="country" ColumnName="country" />
-                <ScalarProperty Name="sellingLocation" ColumnName="sellingLocation" />
-                <ScalarProperty Name="isSharingLocation" ColumnName="isSharingLocation" />
-                <ScalarProperty Name="StartedSharingTime" ColumnName="StartedSharingTime" />
-                <ScalarProperty Name="minutesAvailable" ColumnName="minutesAvailable" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="systemadmins">
-            <EntityTypeMapping TypeName="database_nanofinModel.systemadmin">
-              <MappingFragment StoreEntitySet="systemadmin">
-                <ScalarProperty Name="SystemAdmin_ID" ColumnName="SystemAdmin_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="systemAdminOTP" ColumnName="systemAdminOTP" />
-                <ScalarProperty Name="systemAdminHasTwoPartAuth" ColumnName="systemAdminHasTwoPartAuth" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="transactiontypes">
-            <EntityTypeMapping TypeName="database_nanofinModel.transactiontype">
-              <MappingFragment StoreEntitySet="transactiontype">
-                <ScalarProperty Name="TransactionType_ID" ColumnName="TransactionType_ID" />
-                <ScalarProperty Name="transactionTypeDescription" ColumnName="transactionTypeDescription" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="unittypes">
-            <EntityTypeMapping TypeName="database_nanofinModel.unittype">
-              <MappingFragment StoreEntitySet="unittype">
-                <ScalarProperty Name="UnitType_ID" ColumnName="UnitType_ID" />
-                <ScalarProperty Name="UnitTypeDescription" ColumnName="UnitTypeDescription" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="database_nanofinModel.user">
-              <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
-                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
-                <ScalarProperty Name="userName" ColumnName="userName" />
-                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
-                <ScalarProperty Name="userContactNumber" ColumnName="userContactNumber" />
-                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
-                <ScalarProperty Name="userIsActive" ColumnName="userIsActive" />
-                <ScalarProperty Name="userType" ColumnName="userType" />
-                <ScalarProperty Name="userActivationType" ColumnName="userActivationType" />
-                <ScalarProperty Name="IDnumber" ColumnName="IDnumber" />
-                <ScalarProperty Name="IdDocumentPath" ColumnName="IdDocumentPath" />
-                <ScalarProperty Name="IdDocumentLastUpdated" ColumnName="IdDocumentLastUpdated" />
-                <ScalarProperty Name="timeStap" ColumnName="timeStap" />
-                <ScalarProperty Name="resetPasswordKey" ColumnName="resetPasswordKey" />
-                <ScalarProperty Name="blockchainAddress" ColumnName="blockchainAddress" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="usertypes">
-            <EntityTypeMapping TypeName="database_nanofinModel.usertype">
-              <MappingFragment StoreEntitySet="usertype">
-                <ScalarProperty Name="UserType_ID" ColumnName="UserType_ID" />
-                <ScalarProperty Name="UserTypeDescription" ColumnName="UserTypeDescription" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="validators">
-            <EntityTypeMapping TypeName="database_nanofinModel.validator">
-              <MappingFragment StoreEntitySet="validator">
-                <ScalarProperty Name="Validator_ID" ColumnName="Validator_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="validatiorCompany" ColumnName="validatiorCompany" />
-                <ScalarProperty Name="validatorLicenseNumber" ColumnName="validatorLicenseNumber" />
-                <ScalarProperty Name="validatorLicenseProvider" ColumnName="validatorLicenseProvider" />
-                <ScalarProperty Name="validatorValidUntil" ColumnName="validatorValidUntil" />
-                <ScalarProperty Name="validatorVATNumber" ColumnName="validatorVATNumber" />
-                <ScalarProperty Name="validatorAddress" ColumnName="validatorAddress" />
-                <ScalarProperty Name="validatorBankName" ColumnName="validatorBankName" />
-                <ScalarProperty Name="validatorBankAccNumber" ColumnName="validatorBankAccNumber" />
-                <ScalarProperty Name="validatorBankBranchName" ColumnName="validatorBankBranchName" />
-                <ScalarProperty Name="validatorBankBranchCode" ColumnName="validatorBankBranchCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vouchers">
-            <EntityTypeMapping TypeName="database_nanofinModel.voucher">
-              <MappingFragment StoreEntitySet="voucher">
-                <ScalarProperty Name="Voucher_ID" ColumnName="Voucher_ID" />
-                <ScalarProperty Name="VoucherType_ID" ColumnName="VoucherType_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="voucherValue" ColumnName="voucherValue" />
-                <ScalarProperty Name="voucherCreationDate" ColumnName="voucherCreationDate" />
-                <ScalarProperty Name="OTP" ColumnName="OTP" />
-                <ScalarProperty Name="OTPtimeStap" ColumnName="OTPtimeStap" />
-                <ScalarProperty Name="QRdata" ColumnName="QRdata" />
-                <ScalarProperty Name="QRtimeStap" ColumnName="QRtimeStap" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vouchertransactions">
-            <EntityTypeMapping TypeName="database_nanofinModel.vouchertransaction">
-              <MappingFragment StoreEntitySet="vouchertransaction">
-                <ScalarProperty Name="Voucher_ID" ColumnName="Voucher_ID" />
-                <ScalarProperty Name="VoucherSentTo" ColumnName="VoucherSentTo" />
-                <ScalarProperty Name="Sender_ID" ColumnName="Sender_ID" />
-                <ScalarProperty Name="Receiver_ID" ColumnName="Receiver_ID" />
-                <ScalarProperty Name="TransactionType_ID" ColumnName="TransactionType_ID" />
-                <ScalarProperty Name="transactionAmount" ColumnName="transactionAmount" />
-                <ScalarProperty Name="transactionDescription" ColumnName="transactionDescription" />
-                <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vouchertypes">
-            <EntityTypeMapping TypeName="database_nanofinModel.vouchertype">
-              <MappingFragment StoreEntitySet="vouchertype">
-                <ScalarProperty Name="VoucherType_ID" ColumnName="VoucherType_ID" />
-                <ScalarProperty Name="voucherTypeDescription" ColumnName="voucherTypeDescription" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productsalespermonths">
-            <EntityTypeMapping TypeName="database_nanofinModel.productsalespermonth">
-              <MappingFragment StoreEntitySet="productsalespermonth">
+                <ScalarProperty Name="activeProductItemEndDate" ColumnName="activeProductItemEndDate" />
+                <ScalarProperty Name="transactionlocation" ColumnName="transactionlocation" />
                 <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="productValue" ColumnName="productValue" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="activeProductItemPolicyNum" ColumnName="activeProductItemPolicyNum" />
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="productName" ColumnName="productName" />
-                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2299,6 +2086,326 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="claimuploaddocuments">
+            <EntityTypeMapping TypeName="database_nanofinModel.claimuploaddocument">
+              <MappingFragment StoreEntitySet="claimuploaddocument">
+                <ScalarProperty Name="Claim_ID" ColumnName="Claim_ID" />
+                <ScalarProperty Name="claimUploadDocumentPath" ColumnName="claimUploadDocumentPath" />
+                <ScalarProperty Name="document_ID" ColumnName="document_ID" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="claimUploadDocument_ID" ColumnName="claimUploadDocument_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="consumers">
+            <EntityTypeMapping TypeName="database_nanofinModel.consumer">
+              <MappingFragment StoreEntitySet="consumer">
+                <ScalarProperty Name="numDependant" ColumnName="numDependant" />
+                <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
+                <ScalarProperty Name="totalMonthlyExpenses" ColumnName="totalMonthlyExpenses" />
+                <ScalarProperty Name="nettMonthlyIncome" ColumnName="nettMonthlyIncome" />
+                <ScalarProperty Name="grossMonthlyIncome" ColumnName="grossMonthlyIncome" />
+                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
+                <ScalarProperty Name="homeOwnerType" ColumnName="homeOwnerType" />
+                <ScalarProperty Name="topProductCategoriesInterestedIn" ColumnName="topProductCategoriesInterestedIn" />
+                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="consumerAddress" ColumnName="consumerAddress" />
+                <ScalarProperty Name="consumerDateOfBirth" ColumnName="consumerDateOfBirth" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documents">
+            <EntityTypeMapping TypeName="database_nanofinModel.document">
+              <MappingFragment StoreEntitySet="document">
+                <ScalarProperty Name="docPreparationRequired" ColumnName="docPreparationRequired" />
+                <ScalarProperty Name="docPreferredFormat" ColumnName="docPreferredFormat" />
+                <ScalarProperty Name="documentDescription" ColumnName="documentDescription" />
+                <ScalarProperty Name="documentName" ColumnName="documentName" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="document_ID" ColumnName="document_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="insuranceproducts">
+            <EntityTypeMapping TypeName="database_nanofinModel.insuranceproduct">
+              <MappingFragment StoreEntitySet="insuranceproduct">
+                <ScalarProperty Name="claimtemplate_ID" ColumnName="claimtemplate_ID" />
+                <ScalarProperty Name="claimFormPath" ColumnName="claimFormPath" />
+                <ScalarProperty Name="claimContactNo" ColumnName="claimContactNo" />
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+                <ScalarProperty Name="policyNumberApiLink" ColumnName="policyNumberApiLink" />
+                <ScalarProperty Name="claimTimeframe" ColumnName="claimTimeframe" />
+                <ScalarProperty Name="ipClaimInfoPath" ColumnName="ipClaimInfoPath" />
+                <ScalarProperty Name="ipMinimunNoOfUnits" ColumnName="ipMinimunNoOfUnits" />
+                <ScalarProperty Name="ipUnitType" ColumnName="ipUnitType" />
+                <ScalarProperty Name="ipUnitCost" ColumnName="ipUnitCost" />
+                <ScalarProperty Name="ipCoverAmount" ColumnName="ipCoverAmount" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+                <ScalarProperty Name="InsuranceProduct_ID" ColumnName="InsuranceProduct_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="insurancetypes">
+            <EntityTypeMapping TypeName="database_nanofinModel.insurancetype">
+              <MappingFragment StoreEntitySet="insurancetype">
+                <ScalarProperty Name="insuranctTypeDescription" ColumnName="insuranctTypeDescription" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="locations">
+            <EntityTypeMapping TypeName="database_nanofinModel.location">
+              <MappingFragment StoreEntitySet="locations">
+                <ScalarProperty Name="UnemploymentRate" ColumnName="UnemploymentRate" />
+                <ScalarProperty Name="GDP" ColumnName="GDP" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="LatLng" ColumnName="LatLng" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notificationlogs">
+            <EntityTypeMapping TypeName="database_nanofinModel.notificationlog">
+              <MappingFragment StoreEntitySet="notificationlog">
+                <ScalarProperty Name="notificationDateSent" ColumnName="notificationDateSent" />
+                <ScalarProperty Name="notificationReceiver" ColumnName="notificationReceiver" />
+                <ScalarProperty Name="notificationType" ColumnName="notificationType" />
+                <ScalarProperty Name="NotificationLog_ID" ColumnName="NotificationLog_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="processapplications">
+            <EntityTypeMapping TypeName="database_nanofinModel.processapplication">
+              <MappingFragment StoreEntitySet="processapplications">
+                <ScalarProperty Name="value2" ColumnName="value2" />
+                <ScalarProperty Name="value1" ColumnName="value1" />
+                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="ProcessApplication_ID" ColumnName="ProcessApplication_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="database_nanofinModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="numTimesRated" ColumnName="numTimesRated" />
+                <ScalarProperty Name="ratingAverage" ColumnName="ratingAverage" />
+                <ScalarProperty Name="salesTargetAmount" ColumnName="salesTargetAmount" />
+                <ScalarProperty Name="isAvailableForPurchase" ColumnName="isAvailableForPurchase" />
+                <ScalarProperty Name="productPolicyDocPath" ColumnName="productPolicyDocPath" />
+                <ScalarProperty Name="detailedDescription" ColumnName="detailedDescription" />
+                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="ProductType_ID" ColumnName="ProductType_ID" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productproviders">
+            <EntityTypeMapping TypeName="database_nanofinModel.productprovider">
+              <MappingFragment StoreEntitySet="productprovider">
+                <ScalarProperty Name="ppAddress" ColumnName="ppAddress" />
+                <ScalarProperty Name="ppFaxNumber" ColumnName="ppFaxNumber" />
+                <ScalarProperty Name="ppVATnumber" ColumnName="ppVATnumber" />
+                <ScalarProperty Name="ppCompanyName" ColumnName="ppCompanyName" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productproviderpayments">
+            <EntityTypeMapping TypeName="database_nanofinModel.productproviderpayment">
+              <MappingFragment StoreEntitySet="productproviderpayment">
+                <ScalarProperty Name="hasBeenPayed" ColumnName="hasBeenPayed" />
+                <ScalarProperty Name="AmountToPay" ColumnName="AmountToPay" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+                <ScalarProperty Name="Productproviderpayment_ID" ColumnName="Productproviderpayment_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productredemptionlogs">
+            <EntityTypeMapping TypeName="database_nanofinModel.productredemptionlog">
+              <MappingFragment StoreEntitySet="productredemptionlog">
+                <ScalarProperty Name="transactionAmount" ColumnName="transactionAmount" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+                <ScalarProperty Name="Voucher_ID" ColumnName="Voucher_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producttypes">
+            <EntityTypeMapping TypeName="database_nanofinModel.producttype">
+              <MappingFragment StoreEntitySet="producttype">
+                <ScalarProperty Name="ProductTypeName" ColumnName="ProductTypeName" />
+                <ScalarProperty Name="ProductType_ID" ColumnName="ProductType_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resellers">
+            <EntityTypeMapping TypeName="database_nanofinModel.reseller">
+              <MappingFragment StoreEntitySet="reseller">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="minutesAvailable" ColumnName="minutesAvailable" />
+                <ScalarProperty Name="StartedSharingTime" ColumnName="StartedSharingTime" />
+                <ScalarProperty Name="isSharingLocation" ColumnName="isSharingLocation" />
+                <ScalarProperty Name="sellingLocation" ColumnName="sellingLocation" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="province" ColumnName="province" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="resellerDateOfBirth" ColumnName="resellerDateOfBirth" />
+                <ScalarProperty Name="resellerBankBranchCode" ColumnName="resellerBankBranchCode" />
+                <ScalarProperty Name="resellerBankName" ColumnName="resellerBankName" />
+                <ScalarProperty Name="resellerBankAccountNumber" ColumnName="resellerBankAccountNumber" />
+                <ScalarProperty Name="resellerBankBranchName" ColumnName="resellerBankBranchName" />
+                <ScalarProperty Name="resellerIsValidated" ColumnName="resellerIsValidated" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Reseller_ID" ColumnName="Reseller_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="systemadmins">
+            <EntityTypeMapping TypeName="database_nanofinModel.systemadmin">
+              <MappingFragment StoreEntitySet="systemadmin">
+                <ScalarProperty Name="systemAdminHasTwoPartAuth" ColumnName="systemAdminHasTwoPartAuth" />
+                <ScalarProperty Name="systemAdminOTP" ColumnName="systemAdminOTP" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="SystemAdmin_ID" ColumnName="SystemAdmin_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transactiontypes">
+            <EntityTypeMapping TypeName="database_nanofinModel.transactiontype">
+              <MappingFragment StoreEntitySet="transactiontype">
+                <ScalarProperty Name="transactionTypeDescription" ColumnName="transactionTypeDescription" />
+                <ScalarProperty Name="TransactionType_ID" ColumnName="TransactionType_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="unittypes">
+            <EntityTypeMapping TypeName="database_nanofinModel.unittype">
+              <MappingFragment StoreEntitySet="unittype">
+                <ScalarProperty Name="UnitTypeDescription" ColumnName="UnitTypeDescription" />
+                <ScalarProperty Name="UnitType_ID" ColumnName="UnitType_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="database_nanofinModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="blockchainAddress" ColumnName="blockchainAddress" />
+                <ScalarProperty Name="resetPasswordKey" ColumnName="resetPasswordKey" />
+                <ScalarProperty Name="timeStap" ColumnName="timeStap" />
+                <ScalarProperty Name="IdDocumentLastUpdated" ColumnName="IdDocumentLastUpdated" />
+                <ScalarProperty Name="IdDocumentPath" ColumnName="IdDocumentPath" />
+                <ScalarProperty Name="IDnumber" ColumnName="IDnumber" />
+                <ScalarProperty Name="userActivationType" ColumnName="userActivationType" />
+                <ScalarProperty Name="userType" ColumnName="userType" />
+                <ScalarProperty Name="userIsActive" ColumnName="userIsActive" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userContactNumber" ColumnName="userContactNumber" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usertypes">
+            <EntityTypeMapping TypeName="database_nanofinModel.usertype">
+              <MappingFragment StoreEntitySet="usertype">
+                <ScalarProperty Name="UserTypeDescription" ColumnName="UserTypeDescription" />
+                <ScalarProperty Name="UserType_ID" ColumnName="UserType_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="validators">
+            <EntityTypeMapping TypeName="database_nanofinModel.validator">
+              <MappingFragment StoreEntitySet="validator">
+                <ScalarProperty Name="validatorBankBranchCode" ColumnName="validatorBankBranchCode" />
+                <ScalarProperty Name="validatorBankBranchName" ColumnName="validatorBankBranchName" />
+                <ScalarProperty Name="validatorBankAccNumber" ColumnName="validatorBankAccNumber" />
+                <ScalarProperty Name="validatorBankName" ColumnName="validatorBankName" />
+                <ScalarProperty Name="validatorAddress" ColumnName="validatorAddress" />
+                <ScalarProperty Name="validatorVATNumber" ColumnName="validatorVATNumber" />
+                <ScalarProperty Name="validatorValidUntil" ColumnName="validatorValidUntil" />
+                <ScalarProperty Name="validatorLicenseProvider" ColumnName="validatorLicenseProvider" />
+                <ScalarProperty Name="validatorLicenseNumber" ColumnName="validatorLicenseNumber" />
+                <ScalarProperty Name="validatiorCompany" ColumnName="validatiorCompany" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Validator_ID" ColumnName="Validator_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vouchers">
+            <EntityTypeMapping TypeName="database_nanofinModel.voucher">
+              <MappingFragment StoreEntitySet="voucher">
+                <ScalarProperty Name="QRtimeStap" ColumnName="QRtimeStap" />
+                <ScalarProperty Name="QRdata" ColumnName="QRdata" />
+                <ScalarProperty Name="OTPtimeStap" ColumnName="OTPtimeStap" />
+                <ScalarProperty Name="OTP" ColumnName="OTP" />
+                <ScalarProperty Name="voucherCreationDate" ColumnName="voucherCreationDate" />
+                <ScalarProperty Name="voucherValue" ColumnName="voucherValue" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="VoucherType_ID" ColumnName="VoucherType_ID" />
+                <ScalarProperty Name="Voucher_ID" ColumnName="Voucher_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vouchertransactions">
+            <EntityTypeMapping TypeName="database_nanofinModel.vouchertransaction">
+              <MappingFragment StoreEntitySet="vouchertransaction">
+                <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
+                <ScalarProperty Name="transactionDescription" ColumnName="transactionDescription" />
+                <ScalarProperty Name="transactionAmount" ColumnName="transactionAmount" />
+                <ScalarProperty Name="TransactionType_ID" ColumnName="TransactionType_ID" />
+                <ScalarProperty Name="Receiver_ID" ColumnName="Receiver_ID" />
+                <ScalarProperty Name="Sender_ID" ColumnName="Sender_ID" />
+                <ScalarProperty Name="VoucherSentTo" ColumnName="VoucherSentTo" />
+                <ScalarProperty Name="Voucher_ID" ColumnName="Voucher_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vouchertypes">
+            <EntityTypeMapping TypeName="database_nanofinModel.vouchertype">
+              <MappingFragment StoreEntitySet="vouchertype">
+                <ScalarProperty Name="voucherTypeDescription" ColumnName="voucherTypeDescription" />
+                <ScalarProperty Name="VoucherType_ID" ColumnName="VoucherType_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="monthlylocationsales">
+            <EntityTypeMapping TypeName="database_nanofinModel.monthlylocationsale">
+              <MappingFragment StoreEntitySet="monthlylocationsales">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="transactionLocation" ColumnName="transactionLocation" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productsalespermonths">
+            <EntityTypeMapping TypeName="database_nanofinModel.productsalespermonth">
+              <MappingFragment StoreEntitySet="productsalespermonth">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2314,7 +2421,7 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

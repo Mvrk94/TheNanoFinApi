@@ -35,4 +35,12 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         public double[] previouse { get; set; }
     }
 
+    public class LocationReports
+    {
+        public DateTime? date { get; set; }
+        public int productID { get; set; }
+        public string latlng { get; set; }
+        public decimal sales { get; set; }
+    }
+
 }

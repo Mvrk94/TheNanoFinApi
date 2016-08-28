@@ -12,8 +12,17 @@ using System.Web.Http.Description;
 
 namespace TheNanoFinAPI.Controllers
 {
+    public class DTOlocationTemp
+    {
+        public int Location_ID { get; set; }
+        public string Province { get; set; }
+        public string City { get; set; }
+        public string LatLng { get; set; }
+        public string PostalCode { get; set; }
+    }
 
-    public class ConsumerPurchases
+
+        public class ConsumerPurchases
     {
         public  int ConsumerID;
         public int[] data = { 0, 0, 0, 0 };
@@ -55,16 +64,23 @@ namespace TheNanoFinAPI.Controllers
 
 
         [HttpPost]
-        public Boolean  PostLOcations(List<DTOlocation> locat)
+        public Boolean  PostLOcations(List<DTOlocationTemp> locat)
         {
             Boolean toreturn = true;
 
-            foreach(DTOlocation  temp in locat)
+            foreach(DTOlocationTemp dto in locat)
             {
-                db.locations.Add(EntityMapper.updateEntity(null, temp));
+                var entityObjct = new location();
+
+                entityObjct.Location_ID = dto.Location_ID;
+                entityObjct.Province = dto.Province;
+                entityObjct.City = dto.City;
+                entityObjct.LatLng = dto.LatLng;
+                entityObjct.PostalCode = dto.PostalCode;
+                db.locations.Add(entityObjct);
+                db.SaveChangesAsync();
             }
-
-
+            
             return toreturn;
         }
 
@@ -96,7 +112,7 @@ namespace TheNanoFinAPI.Controllers
 
             foreach (var temp  in prod)
             {
-                //temp.isActive = false;
+                temp.isActive = false;
                 temp.activeProductItemPolicyNum = "PP-IM-" + toreturn;
                 db.SaveChanges();
                 toreturn++;
@@ -126,14 +142,14 @@ namespace TheNanoFinAPI.Controllers
             int ConsumerThisMonth = 0;
 
             Random random = new Random();
-            int resllerCounter = con.Count();
+            int resllerCounter;
 
-            DateTime  LASTYear  =  new DateTime (2015,01,01);
-
+            DateTime  LASTYear  =  new DateTime (2016,08,01);
+             resllerCounter = 14;
             while(LASTYear < DateTime.Now)
             {
 
-                resllerCounter = 1;
+                
                 for (int  r = 0;  r < resllerCounter; r++)
                 {
                     
@@ -248,7 +264,7 @@ namespace TheNanoFinAPI.Controllers
                         purchases.Add(purchase);
                     }
                     int resID = res.ElementAt(r).User_ID;
-                    wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next())); 
+                    wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
 
 
                     foreach( var s  in purchases)
@@ -263,8 +279,11 @@ namespace TheNanoFinAPI.Controllers
                     }
 
                 }
-                resllerCounter = (resllerCounter == 14) ? 10 : resllerCounter++;
-                ConsumerThisMonth = con.Count();
+
+                if (resllerCounter < 14) resllerCounter++;
+                else
+                    resllerCounter =9;
+           
                 LASTYear = LASTYear.AddMonths(1);
             }
 
@@ -287,6 +306,33 @@ namespace TheNanoFinAPI.Controllers
             await db.SaveChangesAsync();
 
             return newDTO;
+        }
+
+
+        [HttpGet]
+        public Boolean setReseller_Consumer_Location()
+        {
+            var consm = (from c in db.consumers select c).ToArray();
+            var res = (from c in db.resellers select c).ToArray();
+            var loc = (from c in db.locations select c).ToArray();
+            var leng = loc.Length;
+            var rand = new Random();
+            var resLeng = res.Length;
+            var conLeng = consm.Length;
+            var locationID = 0;
+
+            for( int r = 0;  r <  15; r++)
+            {
+                locationID = loc[rand.Next(leng)].Location_ID;
+                res[r].LocationID = locationID;
+                for (int c = r*3; c < (r+1)*3; c++)
+                {
+                    consm[c].Location_ID = locationID;
+                }
+                db.SaveChangesAsync();
+            }
+
+            return true;
         }
 
 

@@ -17,10 +17,10 @@ namespace TheNanoFinAPI.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public activeproductitem()
         {
+            this.claims = new HashSet<claim>();
             this.claimuploaddocuments = new HashSet<claimuploaddocument>();
             this.productproviderpayments = new HashSet<productproviderpayment>();
             this.productredemptionlogs = new HashSet<productredemptionlog>();
-            this.claims = new HashSet<claim>();
         }
     
         public int ActiveProductItems_ID { get; set; }
@@ -31,19 +31,21 @@ namespace TheNanoFinAPI.Models
         public decimal productValue { get; set; }
         public int duration { get; set; }
         public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
-        public string transactionLocation { get; set; }
+        public Nullable<int> transactionlocation { get; set; }
         public Nullable<System.DateTime> activeProductItemEndDate { get; set; }
         public string PurchaseConfirmationDocPath { get; set; }
     
         public virtual consumer consumer { get; set; }
         public virtual product product { get; set; }
+        public virtual location location { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<claim> claims { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<claimuploaddocument> claimuploaddocuments { get; set; }
+        public virtual location location1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<productproviderpayment> productproviderpayments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<productredemptionlog> productredemptionlogs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<claim> claims { get; set; }
     }
 }

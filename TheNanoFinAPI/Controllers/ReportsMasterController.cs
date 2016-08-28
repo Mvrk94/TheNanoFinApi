@@ -7,6 +7,7 @@ using System.Web.Http;
 using TheNanoFinAPI.Models.DTOEnvironment;
 using TheNanoFinAPI.Models;
 using Extreme.Statistics;
+using Extreme.Statistics.TimeSeriesAnalysis;
 
 namespace TheNanoFinAPI.Controllers
 {
@@ -19,8 +20,8 @@ namespace TheNanoFinAPI.Controllers
         public List<productTarget> TargetProgrees(int productProvider)
         {
             var toreturn = new List<productTarget>();
-            var currentDate = DateTime.Now.AddMonths(-1);
-            var salesPerProduct = (from c  in db.productsalespermonths where currentDate > c.activeProductItemStartDate select c).ToList() ;
+            var currentDate = DateTime.Now.AddMonths(-2);
+            var salesPerProduct = (from c  in db.productsalespermonths where currentDate < c.activeProductItemStartDate.Value select c).ToList() ;
             
 
             foreach (var  p in salesPerProduct)
@@ -60,22 +61,20 @@ namespace TheNanoFinAPI.Controllers
 
 
         [HttpGet]
-        public ProductForCast getProductPredictions( int productID, int numPredictions)
+        public ProductForCast getProductPredictions( int productID, int numPredictions, int value1 = 1, int value2 = 5)
         {
             var toreturn = new ProductForCast();
-            var pastSales = (from c in db.productsalespermonths where c.Product_ID== productID select c).ToList();
+            var pastSales = (from c in db.productsalespermonths where c.Product_ID== productID select c.sales.Value).ToList();
 
             toreturn.productID = productID;
-            toreturn.name = pastSales.ElementAt(0).productName;
+            toreturn.name = db.products.Find(productID).productName;
+            toreturn.previouse = Array.ConvertAll(pastSales.ToArray(), x => (double)x);          
 
-            toreturn.previouse = Array.ConvertAll(pastSales.Select(c => c.sales).ToArray(), x => (double)x);
+            ArimaModel model = new ArimaModel(toreturn.previouse, value1, value2);
+            model.Compute();
 
-            int arrayLenght = toreturn.previouse.Length;
-            SimpleRegressionModel model1 = new SimpleRegressionModel(generateTimeData(arrayLenght + numPredictions), toreturn.previouse);
-            model1.NoIntercept = true;
-            model1.Compute();
-           toreturn.predictions =  Array.ConvertAll(model1.Predictions.ToArray(), x => (double)x);
-
+            toreturn.predictions = Array.ConvertAll(model.Forecast(numPredictions).ToArray(), x => (double)x);
+            
             return toreturn;
         }
 
@@ -85,24 +84,55 @@ namespace TheNanoFinAPI.Controllers
         {
             var toreturn = new overallForeCast();
 
+            return toreturn;
+        }
+
+
+       [HttpGet]
+       public List<LocationReports> getCurrentMonthSales()
+        {
+            var list = (from c in db.monthlylocationsales where c.activeProductItemStartDate.Value > DateTime.Now.AddMonths(-1) select c).ToList(); ;
+
+            var toreturn = new List<LocationReports>();
+
+            foreach (var temp in list)
+            {
+                toreturn.Add(new LocationReports
+                {
+                    date = temp.activeProductItemStartDate.Value,
+                    latlng = db.locations.Find(temp.transactionLocation.Value).LatLng,
+                    productID = temp.Product_ID,
+                    sales = temp.sales.Value
+                });
+            }
 
 
             return toreturn;
         }
 
+        [HttpGet]
+        public List<LocationReports> getForecastMonthSales()
+        {
+            var list = (from c in db.monthlylocationsales select c).ToList(); ;
+
+            var toreturn = new List<LocationReports>();
+
+            foreach (var temp in list)
+            {
+                toreturn.Add(new LocationReports
+                {
+                    date = temp.activeProductItemStartDate.Value,
+                    latlng = db.locations.Find(temp.transactionLocation.Value).LatLng,
+                    productID = temp.Product_ID,
+                    sales = temp.sales.Value
+                });
+            }
+
+            return toreturn;
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
+      
 
 
 

@@ -22,8 +22,8 @@ namespace TheNanoFinAPI.Models
         public Nullable<int> Claim_ID { get; set; }
     
         public virtual activeproductitem activeproductitem { get; set; }
+        public virtual claim claim { get; set; }
         public virtual user user { get; set; }
         public virtual document document { get; set; }
-        public virtual claim claim { get; set; }
     }
 }
