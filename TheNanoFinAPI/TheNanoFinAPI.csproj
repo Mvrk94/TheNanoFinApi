@@ -345,7 +345,8 @@
     <Compile Include="MultiChainLib\Client\JsonRpcRequest.cs" />
     <Compile Include="MultiChainLib\Client\JsonRpcResponse.cs" />
     <Compile Include="MultiChainLib\Client\MultiChainClient.cs" />
-    <Compile Include="MultiChainLib\Controllers\ResellerController.cs" />
+    <Compile Include="MultiChainLib\Controllers\MResellerController.cs" />
+    <Compile Include="MultiChainLib\Controllers\MUserController.cs" />
     <Compile Include="MultiChainLib\Model\AddressGroupingResponse.cs" />
     <Compile Include="MultiChainLib\Model\AddressResponse.cs" />
     <Compile Include="MultiChainLib\Model\AssetBalanceResponse.cs" />

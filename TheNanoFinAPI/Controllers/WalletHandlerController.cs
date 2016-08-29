@@ -10,6 +10,7 @@ using TheNanoFinAPI.Models;
 using TheNanoFinAPI.Models.DTOEnvironment;
 using MultiChainLib;
 using MultiChainLib.Controllers;
+using TheNanoFinAPI.MultiChainLib.Controllers;
 
 namespace NanoFinAPI.Controllers
 {
@@ -30,12 +31,11 @@ namespace NanoFinAPI.Controllers
         //PUT...update a voucher: use cases involved:
         //-reseller sends voucher= update reseller's voucher amount
 
-        public async Task<List<PeerResponse>> testBCConn()
+        public async void testGrantPermissions()
         {
-            ResellerController ctrl = new ResellerController();
-            List<PeerResponse> list = await ctrl.test();
-            return list;
-
+            MUserController ctrl = new MUserController(21);
+            ctrl = await ctrl.init();
+            ctrl.grantPermissions(BlockchainPermissions.Send, BlockchainPermissions.Receive);
         }
 
         public IHttpActionResult SendVoucher(int senderID, int receiverID, decimal amountToSend, int transactionType_ID, int voucherTypeID, DateTime date)
