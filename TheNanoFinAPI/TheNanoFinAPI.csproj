@@ -69,19 +69,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ourReferences\MySql.Data.dll</HintPath>
+      <HintPath>..\..\..\Users\Lusani\Desktop\Entity Framework run versions\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF5, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ourReferences\MySql.Data.Entity.EF5.dll</HintPath>
+      <HintPath>..\..\..\Users\Lusani\Desktop\Entity Framework run versions\MySql.Data.Entity.EF5.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ourReferences\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\..\..\Users\Lusani\Desktop\Entity Framework run versions\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ourReferences\MySql.Web.dll</HintPath>
+      <HintPath>..\..\..\Users\Lusani\Desktop\Entity Framework run versions\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="RDotNet, Version=1.5.5.0, Culture=neutral, PublicKeyToken=5f72f6e23c6920d4, processorArchitecture=MSIL">
       <HintPath>..\packages\R.NET.1.5.5\lib\net40\RDotNet.dll</HintPath>
@@ -282,6 +282,15 @@
     <Compile Include="Models\monthlylocationsale.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\monthlyproductsalesperlocation.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\monthlyprovincesalesview.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\monthlyProvinceSales_Result.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\nanofinEF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -307,6 +316,18 @@
     <Compile Include="Models\product.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductLocation1_Result.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductLocationSales_Result.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductLocation_Result.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\productPredictedSalesPerLocation_Result.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\productprovider.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
@@ -323,6 +344,9 @@
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\reseller.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\salespermonth.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\systemadmin.cs">
@@ -407,7 +431,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -431,7 +457,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>

@@ -43,4 +43,18 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         public decimal sales { get; set; }
     }
 
+    public class MonthlyProvincialSales
+    {
+        public DateTime? activeProductItemStartDate { get; set; }
+        public int ProductProvider_ID { get; set; }
+        public string Province { get; set; }
+        public string city { get; set; }
+        public string LatLng { get; set; }
+        public decimal sales { get; set; }
+
+        public static explicit operator MonthlyProvincialSales(monthlyProvinceSales_Result v)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
