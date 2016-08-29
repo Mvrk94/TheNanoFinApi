@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace TheNanoFinAPI
 {
@@ -10,7 +11,8 @@ namespace TheNanoFinAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+            var cors = new EnableCorsAttribute("http://localhost:65101","*","*");
+            config.EnableCors(cors); //M Enable cors code added: Nuget package Microsoft
             // Web API routes
             config.MapHttpAttributeRoutes();
 
