@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Web.Http.Description;
 using TheNanoFinAPI.Models;
 using TheNanoFinAPI.Models.DTOEnvironment;
+using MultiChainLib;
+using MultiChainLib.Controllers;
 
 namespace NanoFinAPI.Controllers
 {
@@ -28,6 +30,13 @@ namespace NanoFinAPI.Controllers
         //PUT...update a voucher: use cases involved:
         //-reseller sends voucher= update reseller's voucher amount
 
+        public async Task<List<PeerResponse>> testBCConn()
+        {
+            ResellerController ctrl = new ResellerController();
+            List<PeerResponse> list = await ctrl.test();
+            return list;
+
+        }
 
         public IHttpActionResult SendVoucher(int senderID, int receiverID, decimal amountToSend, int transactionType_ID, int voucherTypeID, DateTime date)
         {
