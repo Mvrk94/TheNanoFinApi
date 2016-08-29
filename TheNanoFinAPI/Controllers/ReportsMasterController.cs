@@ -61,7 +61,7 @@ namespace TheNanoFinAPI.Controllers
 
 
         [HttpGet]
-        public ProductForCast getProductPredictions( int productID, int numPredictions, int value1 = 1, int value2 = 5)
+        public ProductForCast getProductSalesPredictions( int productID, int numPredictions, int value1 = 1, int value2 = 5)
         {
             var toreturn = new ProductForCast();
             var pastSales = (from c in db.productsalespermonths where c.Product_ID== productID select c.sales.Value).ToList();
@@ -80,60 +80,65 @@ namespace TheNanoFinAPI.Controllers
 
 
         [HttpGet]
-        public overallForeCast getMonthlyForecast(int productProvider)
+        public overallForeCast getPPMonthlySalesForecast(int productProvider, int numPredictions,int value1 = 1, int value2 = 5)
         {
             var toreturn = new overallForeCast();
+            var monthlysales = (from c in db.salespermonths where c.ProductProvider_ID == productProvider select c.sales.Value).ToList();
+
+            toreturn.previouse = Array.ConvertAll(monthlysales.ToArray(), c => (double)c);
+            ArimaModel model = new ArimaModel(toreturn.previouse, value1, value2);
+            model.Compute();
+
+            toreturn.predictions = Array.ConvertAll(model.Forecast(numPredictions).ToArray(), x => (double)x);
 
             return toreturn;
         }
 
-
-       [HttpGet]
-       public List<LocationReports> getCurrentMonthSales()
-        {
-            var currentDate = DateTime.Now.AddMonths(-2);
-            var list = (from c in db.monthlylocationsales where c.activeProductItemStartDate.Value > currentDate select c).ToList(); ;
-
-            var toreturn = new List<LocationReports>();
-
-            foreach (var temp in list)
-            {
-                toreturn.Add(new LocationReports
-                {
-                    date = temp.activeProductItemStartDate.Value,
-                    latlng = db.locations.Find(temp.transactionLocation.Value).LatLng,
-                    productID = temp.Product_ID,
-                    sales = temp.sales.Value
-                });
-            }
-
-
-            return toreturn;
-        }
 
         [HttpGet]
-        public List<LocationReports> getForecastMonthSales()
+        public List<DTOmonthlyprovincesalesview> get_PP_ProvincialSales(int productProvider)
         {
-            var list = (from c in db.monthlylocationsales select c).ToList(); ;
+            var sales = (from c in db.monthlyprovincesalesviews where c.ProductProvider_ID == productProvider select c).ToList();
+            var toreturn = new List<DTOmonthlyprovincesalesview>();
 
-            var toreturn = new List<LocationReports>();
-
-            foreach (var temp in list)
+            foreach( var temp  in  sales)
             {
-                toreturn.Add(new LocationReports
-                {
-                    date = temp.activeProductItemStartDate.Value,
-                    latlng = db.locations.Find(temp.transactionLocation.Value).LatLng,
-                    productID = temp.Product_ID,
-                    sales = temp.sales.Value
-                });
+                toreturn.Add(new DTOmonthlyprovincesalesview(temp));
             }
 
             return toreturn;
         }
 
+       [HttpGet]
+       public List<DTOmonthlylocationsale> GetMonthlyProductsalesperlocation(int productID , int locationID)
+        {
+            var list = (from c in db.monthlylocationsales where c.Product_ID == productID && c.transactionLocation == locationID select c).ToList(); ;
+            var locals = db.locations;
+            var toreturn = new List<DTOmonthlylocationsale>();
 
-      
+            foreach (var temp in list)
+            {
+                toreturn.Add(new DTOmonthlylocationsale(temp));
+            }
+            
+            return toreturn;
+        }
+
+
+        [HttpGet]
+        public overallForeCast PredictLocationProductSales( int  productID, int locationID, int numPredictions, int value1 = 1, int value2 = 5)
+        {
+            var toreturn = new overallForeCast();
+            var monthlysales = (from c in db.monthlylocationsales where c.transactionLocation == locationID && c.Product_ID == productID select c.sales.Value).ToList();
+
+            toreturn.previouse = Array.ConvertAll(monthlysales.ToArray(), c => (double)c);
+            ArimaModel model = new ArimaModel(toreturn.previouse, value1, value2);
+            model.Compute();
+
+            toreturn.predictions = Array.ConvertAll(model.Forecast(numPredictions).ToArray(), x => (double)x);
+
+            return toreturn;
+        }
 
 
 
