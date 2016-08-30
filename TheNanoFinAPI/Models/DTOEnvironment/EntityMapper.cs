@@ -104,6 +104,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
+
         public static insuranceproduct updateEntity(insuranceproduct entityObjct, DTOinsuranceproduct dto)
         {
             if (entityObjct == null) entityObjct = new insuranceproduct();
@@ -153,6 +154,65 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
 
             return entityObjct;
         }
+
+
+        public static monthlylocationsale updateEntity(monthlylocationsale entityObjct, DTOmonthlylocationsale dto)
+        {
+            if (entityObjct == null) entityObjct = new monthlylocationsale();
+
+            entityObjct.datum = dto.datum;
+            entityObjct.Product_ID = dto.Product_ID;
+            entityObjct.transactionLocation = dto.transactionLocation;
+            entityObjct.sales = dto.sales;
+
+            return entityObjct;
+        }
+
+
+        public static monthlylocationsalessum updateEntity(monthlylocationsalessum entityObjct, DTOmonthlylocationsalessum dto)
+        {
+            if (entityObjct == null) entityObjct = new monthlylocationsalessum();
+
+            entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
+            entityObjct.datum = dto.datum;
+            entityObjct.transactionLocation = dto.transactionLocation;
+            entityObjct.sales = dto.sales;
+
+            return entityObjct;
+        }
+
+
+        public static monthlyproductsalesperlocation updateEntity(monthlyproductsalesperlocation entityObjct, DTOmonthlyproductsalesperlocation dto)
+        {
+            if (entityObjct == null) entityObjct = new monthlyproductsalesperlocation();
+
+            entityObjct.datum = dto.datum;
+            entityObjct.ProductProvider_ID = dto.ProductProvider_ID;
+            entityObjct.Product_ID = dto.Product_ID;
+            entityObjct.Location_ID = dto.Location_ID;
+            entityObjct.Province = dto.Province;
+            entityObjct.city = dto.city;
+            entityObjct.LatLng = dto.LatLng;
+            entityObjct.sales = dto.sales;
+
+            return entityObjct;
+        }
+
+
+        public static monthlyprovincesalesview updateEntity(monthlyprovincesalesview entityObjct, DTOmonthlyprovincesalesview dto)
+        {
+            if (entityObjct == null) entityObjct = new monthlyprovincesalesview();
+
+            entityObjct.datum = dto.datum;
+            entityObjct.ProductProvider_ID = dto.ProductProvider_ID;
+            entityObjct.Province = dto.Province;
+            entityObjct.LatLng = dto.LatLng;
+            entityObjct.sales = dto.sales;
+
+            return entityObjct;
+        }
+
+
 
         public static notificationlog updateEntity(notificationlog entityObjct, DTOnotificationlog dto)
         {
@@ -247,7 +307,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         {
             if (entityObjct == null) entityObjct = new productsalespermonth();
 
-            entityObjct.activeProductItemStartDate = dto.activeProductItemStartDate;
+            entityObjct.datum = dto.datum;
             entityObjct.Product_ID = dto.Product_ID;
             entityObjct.productName = dto.productName;
             entityObjct.sales = dto.sales;
@@ -298,8 +358,8 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         {
             if (entityObjct == null) entityObjct = new salespermonth();
 
-            entityObjct.activeProductItemStartDate = dto.activeProductItemStartDate;
-            entityObjct.ProductProvider_ID = dto.ProductProvider_ID;
+            entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
+            entityObjct.datum = dto.datum;
             entityObjct.sales = dto.sales;
 
             return entityObjct;
@@ -376,6 +436,15 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
+        internal static object updateEntity(user putUser, DTOconsumerUserProfileInfo dtoConsumerProfile)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static object updateEntity(consumer putConsumer, DTOconsumerUserProfileInfo dtoConsumerProfile)
+        {
+            throw new NotImplementedException();
+        }
 
         public static validator updateEntity(validator entityObjct, DTOvalidator dto)
         {
@@ -415,15 +484,6 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
-        internal static object updateEntity(user putUser, DTOconsumerUserProfileInfo dtoConsumerProfile)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static object updateEntity(consumer putConsumer, DTOconsumerUserProfileInfo dtoConsumerProfile)
-        {
-            throw new NotImplementedException();
-        }
 
         public static vouchertransaction updateEntity(vouchertransaction entityObjct, DTOvouchertransaction dto)
         {
@@ -452,6 +512,8 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
-        
+
+
+
     }
 }

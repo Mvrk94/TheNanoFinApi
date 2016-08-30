@@ -14,8 +14,8 @@ namespace TheNanoFinAPI.Models
     
     public partial class salespermonth
     {
-        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
-        public int ProductProvider_ID { get; set; }
+        public int ActiveProductItems_ID { get; set; }
+        public string datum { get; set; }
         public Nullable<decimal> sales { get; set; }
     }
 }

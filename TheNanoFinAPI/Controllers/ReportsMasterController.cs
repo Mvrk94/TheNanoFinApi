@@ -17,11 +17,13 @@ namespace TheNanoFinAPI.Controllers
         database_nanofinEntities db = new database_nanofinEntities();
 
         [HttpGet]
-        public List<productTarget> TargetProgrees(int productProvider)
+        public List<productTarget> TargetProgrees(int productProvider, int numMonths)
         {
             var toreturn = new List<productTarget>();
-            var currentDate = DateTime.Now.AddMonths(-2);
-            var salesPerProduct = (from c  in db.productsalespermonths where currentDate < c.activeProductItemStartDate.Value select c).ToList() ;
+            var currentDate = DateTime.Now.AddMonths(numMonths*-1);
+            var salesPerProduct = (from c  in db.productsalespermonths where
+                                   currentDate > DateTime.ParseExact(c.datum, "yyyy-MM", System.Globalization.CultureInfo.InvariantCulture)
+                                   select c).ToList() ;
             
 
             foreach (var  p in salesPerProduct)
@@ -32,7 +34,7 @@ namespace TheNanoFinAPI.Controllers
                     ProductID = p.Product_ID,
                     currentSales = p.sales,
                     targetSales = db.products.Find(p.Product_ID).salesTargetAmount,
-                    monthSate = p.activeProductItemStartDate,
+                    monthSate = p.datum,
                 });
             }
 
@@ -62,11 +64,13 @@ namespace TheNanoFinAPI.Controllers
 
 
         [HttpGet]
-        public DTOcompareProducts getMonthyProductSales(int productID)
+        public DTOcompareProducts getMonthyProductSales(int productID , int numMonths)
         {
             var toreturn = new DTOcompareProducts();
-            var datum = new DateTime(2016, 01, 01);
-            var pastSales = (from c in db.productsalespermonths where c.Product_ID == productID && c.activeProductItemStartDate.Value > datum  select c.sales.Value).ToList();
+            var currentDate = DateTime.Now.AddMonths(numMonths * -1);
+            var pastSales = (from c in db.productsalespermonths where c.Product_ID == productID &&
+                             currentDate > DateTime.ParseExact(c.datum, "yyyy-MM", System.Globalization.CultureInfo.InvariantCulture)
+                             select c.sales.Value).ToList();
 
             toreturn.name = db.products.Find(productID).productName;
             toreturn.previouse = Array.ConvertAll(pastSales.ToArray(), x => (double)x);
@@ -97,7 +101,7 @@ namespace TheNanoFinAPI.Controllers
         public overallForeCast getPPMonthlySalesForecast(int productProvider, int numPredictions,int value1 = 1, int value2 = 5)
         {
             var toreturn = new overallForeCast();
-            var monthlysales = (from c in db.salespermonths where c.ProductProvider_ID == productProvider select c.sales.Value).ToList();
+            var monthlysales = (from c in db.salespermonths select c.sales.Value).ToList();
 
             toreturn.previouse = Array.ConvertAll(monthlysales.ToArray(), c => (double)c);
             ArimaModel model = new ArimaModel(toreturn.previouse, value1, value2);

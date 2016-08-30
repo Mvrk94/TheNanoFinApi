@@ -135,7 +135,7 @@ namespace NanofinAPI.Controllers
             //in your loop
             foreach (var temp in prods)
             {
-                var newLine = string.Format("{0},{1},{2}", temp.activeProductItemStartDate, temp.Product_ID, temp.sales);
+                var newLine = string.Format("{0},{1},{2}", temp.datum, temp.Product_ID, temp.sales);
                 csv.AppendLine(newLine);
 
 

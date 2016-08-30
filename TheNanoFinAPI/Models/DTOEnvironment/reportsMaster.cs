@@ -12,7 +12,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         public int ProductID { get; set; }
         public decimal? currentSales { get; set; }
         public decimal? targetSales { get; set; }
-        public DateTime? monthSate { get; set; }
+        public string monthSate { get; set; }
     }
 
     public class productView

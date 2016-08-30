@@ -282,6 +282,9 @@
     <Compile Include="Models\monthlylocationsale.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\monthlylocationsalessum.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\monthlyproductsalesperlocation.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
