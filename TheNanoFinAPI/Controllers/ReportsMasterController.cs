@@ -21,9 +21,7 @@ namespace TheNanoFinAPI.Controllers
         {
             var toreturn = new List<productTarget>();
             var currentDate = DateTime.Now.AddMonths(numMonths*-1);
-            var salesPerProduct = (from c  in db.productsalespermonths where
-                                   currentDate > DateTime.ParseExact(c.datum, "yyyy-MM", System.Globalization.CultureInfo.InvariantCulture)
-                                   select c).ToList() ;
+            var salesPerProduct = (from c  in db.productsalespermonths select c).ToList() ;
             
 
             foreach (var  p in salesPerProduct)
@@ -64,12 +62,10 @@ namespace TheNanoFinAPI.Controllers
 
 
         [HttpGet]
-        public DTOcompareProducts getMonthyProductSales(int productID , int numMonths)
+        public DTOcompareProducts getMonthyProductSales(int productID)
         {
             var toreturn = new DTOcompareProducts();
-            var currentDate = DateTime.Now.AddMonths(numMonths * -1);
-            var pastSales = (from c in db.productsalespermonths where c.Product_ID == productID &&
-                             currentDate > DateTime.ParseExact(c.datum, "yyyy-MM", System.Globalization.CultureInfo.InvariantCulture)
+            var pastSales = (from c in db.productsalespermonths where c.Product_ID == productID
                              select c.sales.Value).ToList();
 
             toreturn.name = db.products.Find(productID).productName;
