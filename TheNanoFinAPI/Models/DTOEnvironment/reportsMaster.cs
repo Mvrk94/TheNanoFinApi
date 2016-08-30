@@ -8,6 +8,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
     
     public class productTarget
     {
+        public string name { get; set; }
         public int ProductID { get; set; }
         public decimal? currentSales { get; set; }
         public decimal? targetSales { get; set; }
@@ -56,5 +57,12 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         {
             throw new NotImplementedException();
         }
+    }
+
+
+    public class DTOcompareProducts
+    {
+        public string name { get; set; }
+        public double[] previouse { get; set; }
     }
 }
