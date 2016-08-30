@@ -28,6 +28,7 @@ namespace TheNanoFinAPI.Controllers
             {
                 toreturn.Add(new productTarget
                 {
+                    name = p.productName, 
                     ProductID = p.Product_ID,
                     currentSales = p.sales,
                     targetSales = db.products.Find(p.Product_ID).salesTargetAmount,
@@ -59,6 +60,19 @@ namespace TheNanoFinAPI.Controllers
             return toreturn;
         }
 
+
+        [HttpGet]
+        public DTOcompareProducts getMonthyProductSales(int productID)
+        {
+            var toreturn = new DTOcompareProducts();
+            var datum = new DateTime(2016, 01, 01);
+            var pastSales = (from c in db.productsalespermonths where c.Product_ID == productID && c.activeProductItemStartDate.Value > datum  select c.sales.Value).ToList();
+
+            toreturn.name = db.products.Find(productID).productName;
+            toreturn.previouse = Array.ConvertAll(pastSales.ToArray(), x => (double)x);
+
+            return toreturn;
+        }
 
         [HttpGet]
         public ProductForCast getProductSalesPredictions( int productID, int numPredictions, int value1 = 1, int value2 = 5)
