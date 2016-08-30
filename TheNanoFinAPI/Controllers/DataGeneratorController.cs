@@ -269,7 +269,7 @@ namespace TheNanoFinAPI.Controllers
 
                     foreach( var s  in purchases)
                     {
-                        wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost +3 , LASTYear.AddHours(24 + random.Next(45)));
+                        wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost +3 );
                         int count = 0;
                         foreach( var pur  in s.data)
                         {
