@@ -142,6 +142,7 @@ namespace TheNanoFinAPI.Controllers
         }
 
 
+
         [HttpGet]
         public overallForeCast PredictLocationProductSales( int  productID, int locationID, int numPredictions, int value1 = 1, int value2 = 5)
         {
