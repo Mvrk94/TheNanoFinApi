@@ -21,9 +21,7 @@ namespace TheNanoFinAPI.Controllers
         {
             var toreturn = new List<productTarget>();
             var currentDate = DateTime.Now.AddMonths(numMonths*-1);
-            var salesPerProduct = (from c  in db.productsalespermonths where
-                                   currentDate > DateTime.ParseExact(c.datum, "yyyy-MM", System.Globalization.CultureInfo.InvariantCulture)
-                                   select c).ToList() ;
+            var salesPerProduct = (from c  in db.saleslastmonths where c.datum == "2016-08" select c).ToList() ;
             
 
             foreach (var  p in salesPerProduct)
@@ -64,12 +62,10 @@ namespace TheNanoFinAPI.Controllers
 
 
         [HttpGet]
-        public DTOcompareProducts getMonthyProductSales(int productID , int numMonths)
+        public DTOcompareProducts getMonthyProductSales(int productID)
         {
             var toreturn = new DTOcompareProducts();
-            var currentDate = DateTime.Now.AddMonths(numMonths * -1);
-            var pastSales = (from c in db.productsalespermonths where c.Product_ID == productID &&
-                             currentDate > DateTime.ParseExact(c.datum, "yyyy-MM", System.Globalization.CultureInfo.InvariantCulture)
+            var pastSales = (from c in db.productsalespermonths where c.Product_ID == productID
                              select c.sales.Value).ToList();
 
             toreturn.name = db.products.Find(productID).productName;
@@ -116,7 +112,9 @@ namespace TheNanoFinAPI.Controllers
         [HttpGet]
         public List<DTOmonthlyprovincesalesview> get_PP_ProvincialSales(int productProvider)
         {
-            var sales = (from c in db.monthlyprovincesalesviews where c.ProductProvider_ID == productProvider select c).ToList();
+            var sales = (from c in db.monthlyprovincesalesviews where c.ProductProvider_ID == productProvider
+                         && c.datum == "2016-08"
+                         select c).ToList();
             var toreturn = new List<DTOmonthlyprovincesalesview>();
 
             foreach( var temp  in  sales)
@@ -130,6 +128,7 @@ namespace TheNanoFinAPI.Controllers
        [HttpGet]
        public List<DTOmonthlylocationsale> GetMonthlyProductsalesperlocation(int productID , int locationID)
         {
+            DateTime current = DateTime.Now.AddMonths(-1);
             var list = (from c in db.monthlylocationsales where c.Product_ID == productID && c.transactionLocation == locationID select c).ToList(); ;
             var locals = db.locations;
             var toreturn = new List<DTOmonthlylocationsale>();
@@ -159,7 +158,20 @@ namespace TheNanoFinAPI.Controllers
         }
 
 
+        [HttpGet]
+        public List<DTOmonthlyproductsalesperlocation> getProductLocationExpenditure(int productID)
+        {
+            var list = (from c in db.monthlyproductsalesperlocations where c.datum == "2016-08" && c.Product_ID == productID select c).ToList();
 
+            var toreturn = new List<DTOmonthlyproductsalesperlocation>();
+
+            foreach (var temp in list)
+            {
+                toreturn.Add(new DTOmonthlyproductsalesperlocation(temp));
+            }
+
+            return toreturn;
+        }
 
         #region Utils
         private double []  generateTimeData(int size)

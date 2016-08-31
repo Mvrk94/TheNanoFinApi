@@ -157,6 +157,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         }
     }
 
+
     public class DTOinsuranceproduct
     {
         public int InsuranceProduct_ID { get; set; }
@@ -238,6 +239,35 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOlocationsaleslastmonth
+    {
+        public Nullable<System.DateTime> purchaseDate { get; set; }
+        public string datum { get; set; }
+        public int ProductProvider_ID { get; set; }
+        public int Product_ID { get; set; }
+        public int Location_ID { get; set; }
+        public string Province { get; set; }
+        public string city { get; set; }
+        public string LatLng { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOlocationsaleslastmonth() { }
+
+        public DTOlocationsaleslastmonth(locationsaleslastmonth entityObjct)
+        {
+            purchaseDate = entityObjct.purchaseDate;
+            datum = entityObjct.datum;
+            ProductProvider_ID = entityObjct.ProductProvider_ID;
+            Product_ID = entityObjct.Product_ID;
+            Location_ID = entityObjct.Location_ID;
+            Province = entityObjct.Province;
+            city = entityObjct.city;
+            LatLng = entityObjct.LatLng;
+            sales = entityObjct.sales;
+        }
+    }
+
+
     public class DTOmonthlylocationsale
     {
         public Nullable<System.DateTime> datum { get; set; }
@@ -278,6 +308,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
 
     public class DTOmonthlyproductsalesperlocation
     {
+        public Nullable<System.DateTime> purchaseDate { get; set; }
         public string datum { get; set; }
         public int ProductProvider_ID { get; set; }
         public int Product_ID { get; set; }
@@ -291,6 +322,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
 
         public DTOmonthlyproductsalesperlocation(monthlyproductsalesperlocation entityObjct)
         {
+            purchaseDate = entityObjct.purchaseDate;
             datum = entityObjct.datum;
             ProductProvider_ID = entityObjct.ProductProvider_ID;
             Product_ID = entityObjct.Product_ID;
@@ -322,6 +354,8 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             sales = entityObjct.sales;
         }
     }
+
+
 
     public class DTOnotificationlog
     {
@@ -396,6 +430,50 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOProductLocation1_Result
+    {
+
+        public DTOProductLocation1_Result() { }
+
+        public DTOProductLocation1_Result(ProductLocation1_Result entityObjct)
+        {
+        }
+    }
+
+
+    public class DTOProductLocationSales_Result
+    {
+
+        public DTOProductLocationSales_Result() { }
+
+        public DTOProductLocationSales_Result(ProductLocationSales_Result entityObjct)
+        {
+        }
+    }
+
+
+    public class DTOProductLocation_Result
+    {
+
+        public DTOProductLocation_Result() { }
+
+        public DTOProductLocation_Result(ProductLocation_Result entityObjct)
+        {
+        }
+    }
+
+
+    public class DTOproductPredictedSalesPerLocation_Result
+    {
+
+        public DTOproductPredictedSalesPerLocation_Result() { }
+
+        public DTOproductPredictedSalesPerLocation_Result(productPredictedSalesPerLocation_Result entityObjct)
+        {
+        }
+    }
+
+
     public class DTOproductprovider
     {
         public int ProductProvider_ID { get; set; }
@@ -461,6 +539,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
 
     public class DTOproductsalespermonth
     {
+        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
         public string datum { get; set; }
         public int Product_ID { get; set; }
         public string productName { get; set; }
@@ -470,6 +549,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
 
         public DTOproductsalespermonth(productsalespermonth entityObjct)
         {
+            activeProductItemStartDate = entityObjct.activeProductItemStartDate;
             datum = entityObjct.datum;
             Product_ID = entityObjct.Product_ID;
             productName = entityObjct.productName;
@@ -540,9 +620,30 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOsaleslastmonth
+    {
+        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
+        public string datum { get; set; }
+        public int Product_ID { get; set; }
+        public string productName { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOsaleslastmonth() { }
+
+        public DTOsaleslastmonth(saleslastmonth entityObjct)
+        {
+            activeProductItemStartDate = entityObjct.activeProductItemStartDate;
+            datum = entityObjct.datum;
+            Product_ID = entityObjct.Product_ID;
+            productName = entityObjct.productName;
+            sales = entityObjct.sales;
+        }
+    }
+
+
     public class DTOsalespermonth
     {
-        public int ActiveProductItems_ID { get; set; }
+        public int activeProductItems_ID { get; set; }
         public string datum { get; set; }
         public Nullable<decimal> sales { get; set; }
 
@@ -550,7 +651,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
 
         public DTOsalespermonth(salespermonth entityObjct)
         {
-            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            activeProductItems_ID = entityObjct.activeProductItems_ID;
             datum = entityObjct.datum;
             sales = entityObjct.sales;
         }
@@ -768,5 +869,6 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             voucherTypeDescription = entityObjct.voucherTypeDescription;
         }
     }
+
 
 }
