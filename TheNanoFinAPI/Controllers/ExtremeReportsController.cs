@@ -171,6 +171,8 @@ namespace TheNanoFinAPI.Controllers
             toreturn.AppendLine("Log likelihood:         " +  model.LogLikelihood);
             toreturn.AppendLine("Kernel log likelihood:  "+ model.GetKernelLogLikelihood());
 
+            
+
             toreturn.AppendLine("\r\n");
             // Note that some statistical applications (notably stata) use 
             // a different definition of some of these "information criteria":

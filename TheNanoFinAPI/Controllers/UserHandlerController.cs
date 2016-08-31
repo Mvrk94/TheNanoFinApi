@@ -586,7 +586,8 @@ namespace NanoFinAPI.Controllers
             return list;
 
         }
-        [Authorize]
+        
+
         [HttpGet]
         [ResponseType(typeof(SessionObj))]
         public async Task<SessionObj> getUserSession(int userID)

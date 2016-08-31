@@ -279,7 +279,13 @@
     <Compile Include="Models\location.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\locationsaleslastmonth.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\monthlylocationsale.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\monthlylocationsalessum.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\monthlyproductsalesperlocation.cs">
@@ -344,6 +350,9 @@
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\reseller.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\saleslastmonth.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\salespermonth.cs">

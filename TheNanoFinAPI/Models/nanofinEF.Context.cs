@@ -53,10 +53,13 @@ namespace TheNanoFinAPI.Models
         public virtual DbSet<voucher> vouchers { get; set; }
         public virtual DbSet<vouchertransaction> vouchertransactions { get; set; }
         public virtual DbSet<vouchertype> vouchertypes { get; set; }
+        public virtual DbSet<locationsaleslastmonth> locationsaleslastmonths { get; set; }
         public virtual DbSet<monthlylocationsale> monthlylocationsales { get; set; }
+        public virtual DbSet<monthlylocationsalessum> monthlylocationsalessums { get; set; }
         public virtual DbSet<monthlyproductsalesperlocation> monthlyproductsalesperlocations { get; set; }
         public virtual DbSet<monthlyprovincesalesview> monthlyprovincesalesviews { get; set; }
         public virtual DbSet<productsalespermonth> productsalespermonths { get; set; }
+        public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }
         public virtual DbSet<salespermonth> salespermonths { get; set; }
     
         public virtual ObjectResult<ProductLocation_Result> ProductLocation(Nullable<int> productID)

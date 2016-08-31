@@ -12,10 +12,11 @@ namespace TheNanoFinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class salespermonth
+    public partial class monthlylocationsalessum
     {
-        public int activeProductItems_ID { get; set; }
+        public int ActiveProductItems_ID { get; set; }
         public string datum { get; set; }
+        public Nullable<int> transactionLocation { get; set; }
         public Nullable<decimal> sales { get; set; }
     }
 }
