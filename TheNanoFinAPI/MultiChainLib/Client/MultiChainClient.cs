@@ -190,6 +190,13 @@ namespace MultiChainLib
                 commentTo, startBlock, endBlock);*/
         }
 
+        public Task<JsonRpcResponse<string>> IssueMoreFromAsync(string fromAddress, string toAddress, string assetName, int quantity, decimal units = 0,
+            decimal nativeAmount = 0, string comment = null, string commentTo = null, int startBlock = 0, int endBlock = 0)
+        {
+            return this.ExecuteAsync<string>("issuemorefrom", 0, fromAddress, toAddress, assetName, quantity, units); /*, nativeAmount, comment,
+                commentTo, startBlock, endBlock);*/
+        }
+
         public Task<JsonRpcResponse<List<AssetResponse>>> ListAssetsAsync()
         {
             return this.ExecuteAsync<List<AssetResponse>>("listassets", 0);

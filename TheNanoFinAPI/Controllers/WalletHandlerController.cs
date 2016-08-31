@@ -31,11 +31,13 @@ namespace NanoFinAPI.Controllers
         //PUT...update a voucher: use cases involved:
         //-reseller sends voucher= update reseller's voucher amount
 
-        public async void testGrantPermissions()
+        public void testBuyBulk()
         {
-            MUserController ctrl = new MUserController(21);
-            ctrl = await ctrl.init();
-            ctrl.grantPermissions(BlockchainPermissions.Send, BlockchainPermissions.Receive);
+           
+
+            //MUserController ctrl = new MUserController(21);
+            //ctrl = await ctrl.init();
+            //ctrl.grantPermissions(BlockchainPermissions.Send, BlockchainPermissions.Receive);
         }
 
         public IHttpActionResult SendVoucher(int senderID, int receiverID, decimal amountToSend, int transactionType_ID, int voucherTypeID, DateTime date)
@@ -110,16 +112,20 @@ namespace NanoFinAPI.Controllers
             {
                 //need to check if reseller has the available funds in bank account - else return bad request or err page
                 //transfer money from reseller bank account to nanoFin account
-
                 voucher newVoucher = new voucher();
                 newVoucher.User_ID = userID;
                 newVoucher.voucherValue = BulkVoucherAmount;
                 newVoucher.VoucherType_ID = 1;
                 newVoucher.voucherCreationDate = date;
                 db.vouchers.Add(newVoucher);
-                 db.SaveChanges();
+                db.SaveChanges();
 
                 addVoucherTransaction(newVoucher.Voucher_ID, newVoucher.Voucher_ID, userID, 1, BulkVoucherAmount, 1, date);
+                //replicate transaction on the block chain
+                MResellerController resellerCtrl = new MResellerController(userID);
+                resellerCtrl.init();
+                resellerCtrl.buyBulk(Decimal.ToInt32(BulkVoucherAmount));
+
 
                 return Ok();
             }

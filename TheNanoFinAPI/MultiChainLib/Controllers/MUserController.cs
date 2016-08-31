@@ -15,23 +15,30 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
     {
 
         private  nanofinEntities db = new nanofinEntities();
-        MultiChainClient client;
-        String userAddress;
-        int user_ID;
+        private MultiChainClient client;
+        private String userAddress;
+        private int user_ID;
 
         public MUserController(int user_ID)
         {
             client = new MultiChainClient("188.166.170.248", 6492, false, "multichainrpc", "AYBR44NDe7VdSWXHJCrR2i2xhCcnByorzHy6f6vaczTd", "NanoFinBlockChain");
             this.user_ID = user_ID;
         }
-        //acts like constructer- creates & initializes JSON RPC Client and all necessary variables
+
+        public MUserController(int user_ID, MultiChainClient cli)
+        {
+            client = cli;
+            this.user_ID = user_ID;
+        }
+
+
         public async Task<MUserController> init()
         {
-            userAddress = await getAddress();
+            userAddress = await getUserAddress();
             return this;
         }
         //returns users associated address. if user has no address -> give user address -> return new address.
-        public async Task<string> getAddress()
+        public async Task<string> getUserAddress()
         {
             if (db.users.Where(list => list.User_ID == user_ID).Any())
             {
@@ -49,6 +56,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
                 return newAddress.Result;
             }
         }
+        
         //true if user has specified permission
         public async Task<Boolean> hasPermission(BlockchainPermissions permissionType)
         {
@@ -87,11 +95,16 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             }
             
         }
+
         //remove all double quotation marks from string.
         public static String removeQuotes(String input)
         {
             return input.Replace("\"", String.Empty);
         }
+
+        public String propertyUserAddress() { return userAddress; }
+        public int propertyUserID() { return user_ID; }
+
 
     }
 }
