@@ -156,6 +156,24 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         }
 
 
+        public static locationsaleslastmonth updateEntity(locationsaleslastmonth entityObjct, DTOlocationsaleslastmonth dto)
+        {
+            if (entityObjct == null) entityObjct = new locationsaleslastmonth();
+
+            entityObjct.purchaseDate = dto.purchaseDate;
+            entityObjct.datum = dto.datum;
+            entityObjct.ProductProvider_ID = dto.ProductProvider_ID;
+            entityObjct.Product_ID = dto.Product_ID;
+            entityObjct.Location_ID = dto.Location_ID;
+            entityObjct.Province = dto.Province;
+            entityObjct.city = dto.city;
+            entityObjct.LatLng = dto.LatLng;
+            entityObjct.sales = dto.sales;
+
+            return entityObjct;
+        }
+
+
         public static monthlylocationsale updateEntity(monthlylocationsale entityObjct, DTOmonthlylocationsale dto)
         {
             if (entityObjct == null) entityObjct = new monthlylocationsale();
@@ -186,6 +204,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         {
             if (entityObjct == null) entityObjct = new monthlyproductsalesperlocation();
 
+            entityObjct.purchaseDate = dto.purchaseDate;
             entityObjct.datum = dto.datum;
             entityObjct.ProductProvider_ID = dto.ProductProvider_ID;
             entityObjct.Product_ID = dto.Product_ID;
@@ -211,8 +230,6 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
 
             return entityObjct;
         }
-
-
 
         public static notificationlog updateEntity(notificationlog entityObjct, DTOnotificationlog dto)
         {
@@ -256,6 +273,42 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             entityObjct.salesTargetAmount = dto.salesTargetAmount;
             entityObjct.ratingAverage = dto.ratingAverage;
             entityObjct.numTimesRated = dto.numTimesRated;
+
+            return entityObjct;
+        }
+
+
+        public static ProductLocation1_Result updateEntity(ProductLocation1_Result entityObjct, DTOProductLocation1_Result dto)
+        {
+            if (entityObjct == null) entityObjct = new ProductLocation1_Result();
+
+
+            return entityObjct;
+        }
+
+
+        public static ProductLocationSales_Result updateEntity(ProductLocationSales_Result entityObjct, DTOProductLocationSales_Result dto)
+        {
+            if (entityObjct == null) entityObjct = new ProductLocationSales_Result();
+
+
+            return entityObjct;
+        }
+
+
+        public static ProductLocation_Result updateEntity(ProductLocation_Result entityObjct, DTOProductLocation_Result dto)
+        {
+            if (entityObjct == null) entityObjct = new ProductLocation_Result();
+
+
+            return entityObjct;
+        }
+
+
+        public static productPredictedSalesPerLocation_Result updateEntity(productPredictedSalesPerLocation_Result entityObjct, DTOproductPredictedSalesPerLocation_Result dto)
+        {
+            if (entityObjct == null) entityObjct = new productPredictedSalesPerLocation_Result();
+
 
             return entityObjct;
         }
@@ -307,6 +360,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         {
             if (entityObjct == null) entityObjct = new productsalespermonth();
 
+            entityObjct.activeProductItemStartDate = dto.activeProductItemStartDate;
             entityObjct.datum = dto.datum;
             entityObjct.Product_ID = dto.Product_ID;
             entityObjct.productName = dto.productName;
@@ -354,7 +408,30 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         }
 
 
-        
+        public static saleslastmonth updateEntity(saleslastmonth entityObjct, DTOsaleslastmonth dto)
+        {
+            if (entityObjct == null) entityObjct = new saleslastmonth();
+
+            entityObjct.activeProductItemStartDate = dto.activeProductItemStartDate;
+            entityObjct.datum = dto.datum;
+            entityObjct.Product_ID = dto.Product_ID;
+            entityObjct.productName = dto.productName;
+            entityObjct.sales = dto.sales;
+
+            return entityObjct;
+        }
+
+
+        public static salespermonth updateEntity(salespermonth entityObjct, DTOsalespermonth dto)
+        {
+            if (entityObjct == null) entityObjct = new salespermonth();
+
+            entityObjct.activeProductItems_ID = dto.activeProductItems_ID;
+            entityObjct.datum = dto.datum;
+            entityObjct.sales = dto.sales;
+
+            return entityObjct;
+        }
 
 
         public static systemadmin updateEntity(systemadmin entityObjct, DTOsystemadmin dto)
@@ -369,6 +446,15 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
+        internal static object updateEntity(user putUser, DTOconsumerUserProfileInfo dtoConsumerProfile)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static object updateEntity(consumer putConsumer, DTOconsumerUserProfileInfo dtoConsumerProfile)
+        {
+            throw new NotImplementedException();
+        }
 
         public static transactiontype updateEntity(transactiontype entityObjct, DTOtransactiontype dto)
         {
@@ -427,15 +513,6 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
-        internal static object updateEntity(user putUser, DTOconsumerUserProfileInfo dtoConsumerProfile)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static object updateEntity(consumer putConsumer, DTOconsumerUserProfileInfo dtoConsumerProfile)
-        {
-            throw new NotImplementedException();
-        }
 
         public static validator updateEntity(validator entityObjct, DTOvalidator dto)
         {

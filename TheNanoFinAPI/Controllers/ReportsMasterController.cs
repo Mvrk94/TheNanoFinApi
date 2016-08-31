@@ -128,6 +128,7 @@ namespace TheNanoFinAPI.Controllers
        [HttpGet]
        public List<DTOmonthlylocationsale> GetMonthlyProductsalesperlocation(int productID , int locationID)
         {
+            DateTime current = DateTime.Now.AddMonths(-1);
             var list = (from c in db.monthlylocationsales where c.Product_ID == productID && c.transactionLocation == locationID select c).ToList(); ;
             var locals = db.locations;
             var toreturn = new List<DTOmonthlylocationsale>();
@@ -157,7 +158,20 @@ namespace TheNanoFinAPI.Controllers
         }
 
 
+        [HttpGet]
+        public List<DTOmonthlyproductsalesperlocation> getProductLocationExpenditure(int productID)
+        {
+            var list = (from c in db.monthlyproductsalesperlocations where c.datum == "2016-08" && c.Product_ID == productID select c).ToList();
 
+            var toreturn = new List<DTOmonthlyproductsalesperlocation>();
+
+            foreach (var temp in list)
+            {
+                toreturn.Add(new DTOmonthlyproductsalesperlocation(temp));
+            }
+
+            return toreturn;
+        }
 
         #region Utils
         private double []  generateTimeData(int size)
