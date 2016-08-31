@@ -395,6 +395,20 @@
       <DependentUpon>nanofinEF.edmx</DependentUpon>
       <LastGenOutput>nanofinEF.cs</LastGenOutput>
     </Content>
+    <Content Include="References\EFdll6.9.8\MySql.Data.dll" />
+    <Content Include="References\EFdll6.9.8\MySql.Data.Entity.EF5.dll" />
+    <Content Include="References\EFdll6.9.8\MySql.Data.Entity.EF6.dll" />
+    <Content Include="References\EFdll6.9.8\MySql.Web.dll" />
+    <Content Include="References\EFdll6.9.9\MySql.Data.dll" />
+    <Content Include="References\EFdll6.9.9\MySql.Data.Entity.EF5.dll" />
+    <Content Include="References\EFdll6.9.9\MySql.Data.Entity.EF6.dll" />
+    <Content Include="References\EFdll6.9.9\MySql.Web.dll" />
+    <Content Include="References\ExtremeOptimizationReferances\Extreme.Numerics.Net40.dll" />
+    <Content Include="References\ExtremeOptimizationReferances\Extreme.Numerics.Net40.xml" />
+    <Content Include="References\MySql.Data.dll" />
+    <Content Include="References\MySql.Data.Entity.EF5.dll" />
+    <Content Include="References\MySql.Data.Entity.EF6.dll" />
+    <Content Include="References\MySql.Web.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
