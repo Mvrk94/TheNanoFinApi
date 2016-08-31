@@ -21,7 +21,7 @@ namespace TheNanoFinAPI.Controllers
         {
             var toreturn = new List<productTarget>();
             var currentDate = DateTime.Now.AddMonths(numMonths*-1);
-            var salesPerProduct = (from c  in db.productsalespermonths select c).ToList() ;
+            var salesPerProduct = (from c  in db.saleslastmonths where c.datum == "2016-08" select c).ToList() ;
             
 
             foreach (var  p in salesPerProduct)
@@ -112,7 +112,9 @@ namespace TheNanoFinAPI.Controllers
         [HttpGet]
         public List<DTOmonthlyprovincesalesview> get_PP_ProvincialSales(int productProvider)
         {
-            var sales = (from c in db.monthlyprovincesalesviews where c.ProductProvider_ID == productProvider select c).ToList();
+            var sales = (from c in db.monthlyprovincesalesviews where c.ProductProvider_ID == productProvider
+                         && c.datum == "2016-08"
+                         select c).ToList();
             var toreturn = new List<DTOmonthlyprovincesalesview>();
 
             foreach( var temp  in  sales)

@@ -550,7 +550,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
 
         public DTOsalespermonth(salespermonth entityObjct)
         {
-            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            ActiveProductItems_ID = entityObjct.activeProductItems_ID;
             datum = entityObjct.datum;
             sales = entityObjct.sales;
         }

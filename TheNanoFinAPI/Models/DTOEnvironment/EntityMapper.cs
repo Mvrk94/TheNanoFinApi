@@ -354,16 +354,7 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         }
 
 
-        public static salespermonth updateEntity(salespermonth entityObjct, DTOsalespermonth dto)
-        {
-            if (entityObjct == null) entityObjct = new salespermonth();
-
-            entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
-            entityObjct.datum = dto.datum;
-            entityObjct.sales = dto.sales;
-
-            return entityObjct;
-        }
+        
 
 
         public static systemadmin updateEntity(systemadmin entityObjct, DTOsystemadmin dto)
