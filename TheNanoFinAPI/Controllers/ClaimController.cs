@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using TheNanoFinAPI.Models;
 using TheNanoFinAPI.Models.DTOEnvironment;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace TheNanoFinAPI.Controllers
 {
@@ -55,11 +57,32 @@ namespace TheNanoFinAPI.Controllers
             {
                 return "No template available";
             }
-            
-
-
 
         }
+
+        //still to fix
+        public string getPrincipalMemberSectionJson(int productID)
+        {
+            DTOclaimtemplate claimTemp = getClaimTemplateForProduct(productID);
+
+            
+
+            if (claimTemp != null)
+            {
+                string allJson = claimTemp.formDataRequiredJson;
+
+                dynamic data = JObject.Parse(allJson);
+
+                string PrincipalMemberSection = data.Principal_Member_Details;
+                return PrincipalMemberSection;
+            }
+            else
+            {
+                return "No template available";
+            }
+
+        }
+
 
 
 
