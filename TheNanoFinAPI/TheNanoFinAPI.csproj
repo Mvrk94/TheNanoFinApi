@@ -276,6 +276,9 @@
     <Compile Include="Models\insurancetype.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\lastmonthprovincesale.cs">
+      <DependentUpon>nanofinEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\location.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
