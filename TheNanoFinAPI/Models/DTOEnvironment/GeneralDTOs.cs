@@ -355,6 +355,25 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         }
     }
 
+    public class DTOlastmonthprovincesale
+    {
+        public string datum { get; set; }
+        public int ProductProvider_ID { get; set; }
+        public string Province { get; set; }
+        public string LatLng { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOlastmonthprovincesale() { }
+
+        public DTOlastmonthprovincesale(lastmonthprovincesale entityObjct)
+        {
+            datum = entityObjct.datum;
+            ProductProvider_ID = entityObjct.ProductProvider_ID;
+            Province = entityObjct.Province;
+            LatLng = entityObjct.LatLng;
+            sales = entityObjct.sales;
+        }
+    }
 
 
     public class DTOnotificationlog
