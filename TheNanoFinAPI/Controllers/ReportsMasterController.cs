@@ -172,6 +172,34 @@ namespace TheNanoFinAPI.Controllers
             return toreturn;
         }
 
+
+
+
+        [HttpGet]
+          public List<lastmonthinsurancetypesale>  getLastMonthInsuranceTypeSales()
+        {
+            var toreturn = new List<lastmonthinsurancetypesale>();
+
+            toreturn = db.lastmonthinsurancetypesales.ToList();
+
+            return toreturn;
+        }
+
+        [HttpGet]
+        public overallForeCast PredictInsuranceTypeSales(int insuranceTypeID, int numPredictions, int value1 = 1, int value2 = 5)
+        {
+            var toreturn = new overallForeCast();
+            var monthlysales = (from c in db.insuranceproducttypemonthlysales where c.InsuranceType_ID == insuranceTypeID select c.monthSales.Value).ToList();
+
+            toreturn.previouse = Array.ConvertAll(monthlysales.ToArray(), c => (double)c);
+            ArimaModel model = new ArimaModel(toreturn.previouse, value1, value2);
+            model.Compute();
+
+            toreturn.predictions = Array.ConvertAll(model.Forecast(numPredictions).ToArray(), x => (double)x);
+
+            return toreturn;
+        }
+
         #region Utils
         private double []  generateTimeData(int size)
         {

@@ -317,6 +317,30 @@
           <Property Name="voucherTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.insuranceproducttypemonthlysales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="insuranceproducttypemonthlysales">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="date" />
+          <Property Name="datum" Type="varchar" MaxLength="37" />
+          <Property Name="InsuranceType_ID" Type="int" Nullable="false" />
+          <Property Name="monthSales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.lastmonthinsurancetypesale' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="lastmonthinsurancetypesale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="InsuranceType_ID" Type="int" Nullable="false" />
+          <Property Name="monthSales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.lastmonthprovincesales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="lastmonthprovincesales">
           <Key>
@@ -929,6 +953,22 @@ warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have 
           <EntitySet Name="voucher" EntityType="Self.voucher" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertransaction" EntityType="Self.vouchertransaction" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertype" EntityType="Self.vouchertype" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="insuranceproducttypemonthlysales" EntityType="Self.insuranceproducttypemonthlysales" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`insuranceproducttypemonthlysales`.`ActiveProductItems_ID`, 
+`insuranceproducttypemonthlysales`.`activeProductItemStartDate`, 
+`insuranceproducttypemonthlysales`.`datum`, 
+`insuranceproducttypemonthlysales`.`InsuranceType_ID`, 
+`insuranceproducttypemonthlysales`.`monthSales`
+FROM `insuranceproducttypemonthlysales` AS `insuranceproducttypemonthlysales`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="lastmonthinsurancetypesale" EntityType="Self.lastmonthinsurancetypesale" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`lastmonthinsurancetypesale`.`ActiveProductItems_ID`, 
+`lastmonthinsurancetypesale`.`InsuranceType_ID`, 
+`lastmonthinsurancetypesale`.`monthSales`
+FROM `lastmonthinsurancetypesale` AS `lastmonthinsurancetypesale`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="lastmonthprovincesales" EntityType="Self.lastmonthprovincesales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `lastmonthprovincesales`.`ActiveProductItems_ID`, 
@@ -1379,6 +1419,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             <End Role="vouchertransaction" EntitySet="vouchertransactions" />
           </AssociationSet>
           <EntitySet Name="lastmonthprovincesales" EntityType="database_nanofinModel.lastmonthprovincesale" />
+          <EntitySet Name="lastmonthinsurancetypesales" EntityType="database_nanofinModel.lastmonthinsurancetypesale" />
+          <EntitySet Name="insuranceproducttypemonthlysales" EntityType="database_nanofinModel.insuranceproducttypemonthlysale" />
           </EntityContainer>
         <ComplexType Name="ProductLocation_Result" />
         <ComplexType Name="ProductLocation1_Result" />
@@ -2330,6 +2372,26 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
+        <EntityType Name="lastmonthinsurancetypesale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="monthSales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="insuranceproducttypemonthlysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="monthSales" Type="Decimal" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2791,6 +2853,26 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
                 <ScalarProperty Name="Province" ColumnName="Province" />
                 <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
                 <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lastmonthinsurancetypesales">
+            <EntityTypeMapping TypeName="database_nanofinModel.lastmonthinsurancetypesale">
+              <MappingFragment StoreEntitySet="lastmonthinsurancetypesale">
+                <ScalarProperty Name="monthSales" ColumnName="monthSales" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="insuranceproducttypemonthlysales">
+            <EntityTypeMapping TypeName="database_nanofinModel.insuranceproducttypemonthlysale">
+              <MappingFragment StoreEntitySet="insuranceproducttypemonthlysales">
+                <ScalarProperty Name="monthSales" ColumnName="monthSales" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
               </MappingFragment>
             </EntityTypeMapping>

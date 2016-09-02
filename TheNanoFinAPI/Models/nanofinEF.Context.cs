@@ -62,6 +62,8 @@ namespace TheNanoFinAPI.Models
         public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }
         public virtual DbSet<salespermonth> salespermonths { get; set; }
         public virtual DbSet<lastmonthprovincesale> lastmonthprovincesales { get; set; }
+        public virtual DbSet<lastmonthinsurancetypesale> lastmonthinsurancetypesales { get; set; }
+        public virtual DbSet<insuranceproducttypemonthlysale> insuranceproducttypemonthlysales { get; set; }
     
         public virtual ObjectResult<ProductLocation_Result> ProductLocation(Nullable<int> productID)
         {
