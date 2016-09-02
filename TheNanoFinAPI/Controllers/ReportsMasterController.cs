@@ -110,14 +110,16 @@ namespace TheNanoFinAPI.Controllers
 
 
         [HttpGet]
-        public List<DTOlastmonthprovincesale> get_PP_ProvincialSales()
+        public List<DTOmonthlyprovincesalesview> get_PP_ProvincialSales(int productProvider)
         {
-            var sales = (from c in db.lastmonthprovincesales select c).ToList();
-            var toreturn = new List<DTOlastmonthprovincesale>();
+            var sales = (from c in db.monthlyprovincesalesviews where c.ProductProvider_ID == productProvider
+                         && c.datum == "2016-08"
+                         select c).ToList();
+            var toreturn = new List<DTOmonthlyprovincesalesview>();
 
             foreach( var temp  in  sales)
             {
-                toreturn.Add(new DTOlastmonthprovincesale(temp));
+                toreturn.Add(new DTOmonthlyprovincesalesview(temp));
             }
 
             return toreturn;

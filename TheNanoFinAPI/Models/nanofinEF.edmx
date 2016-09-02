@@ -317,6 +317,7 @@
           <Property Name="voucherTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+<<<<<<< HEAD
 warning 6002: The table/view 'def.database_nanofin.insuranceproducttypemonthlysales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="insuranceproducttypemonthlysales">
           <Key>
@@ -355,6 +356,8 @@ warning 6002: The table/view 'def.database_nanofin.lastmonthprovincesales' does 
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
+=======
+>>>>>>> parent of 5329813... last month locaton reports bug fixed
 warning 6002: The table/view 'def.database_nanofin.locationsaleslastmonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="locationsaleslastmonth">
           <Key>
@@ -953,6 +956,7 @@ warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have 
           <EntitySet Name="voucher" EntityType="Self.voucher" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertransaction" EntityType="Self.vouchertransaction" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertype" EntityType="Self.vouchertype" Schema="database_nanofin" store:Type="Tables" />
+<<<<<<< HEAD
           <EntitySet Name="insuranceproducttypemonthlysales" EntityType="Self.insuranceproducttypemonthlysales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `insuranceproducttypemonthlysales`.`ActiveProductItems_ID`, 
@@ -979,6 +983,8 @@ FROM `lastmonthinsurancetypesale` AS `lastmonthinsurancetypesale`</DefiningQuery
 `lastmonthprovincesales`.`sales`
 FROM `lastmonthprovincesales` AS `lastmonthprovincesales`</DefiningQuery>
           </EntitySet>
+=======
+>>>>>>> parent of 5329813... last month locaton reports bug fixed
           <EntitySet Name="locationsaleslastmonth" EntityType="Self.locationsaleslastmonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `locationsaleslastmonth`.`purchaseDate`, 
@@ -1418,9 +1424,12 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             <End Role="voucher" EntitySet="vouchers" />
             <End Role="vouchertransaction" EntitySet="vouchertransactions" />
           </AssociationSet>
+<<<<<<< HEAD
           <EntitySet Name="lastmonthprovincesales" EntityType="database_nanofinModel.lastmonthprovincesale" />
           <EntitySet Name="lastmonthinsurancetypesales" EntityType="database_nanofinModel.lastmonthinsurancetypesale" />
           <EntitySet Name="insuranceproducttypemonthlysales" EntityType="database_nanofinModel.insuranceproducttypemonthlysale" />
+=======
+>>>>>>> parent of 5329813... last month locaton reports bug fixed
           </EntityContainer>
         <ComplexType Name="ProductLocation_Result" />
         <ComplexType Name="ProductLocation1_Result" />
@@ -2360,6 +2369,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <EntityType Name="lastmonthprovincesale">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
@@ -2392,6 +2402,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
           <Property Name="monthSales" Type="Decimal" />
         </EntityType>
+=======
+>>>>>>> parent of 5329813... last month locaton reports bug fixed
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2845,6 +2857,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+<<<<<<< HEAD
           <EntitySetMapping Name="lastmonthprovincesales">
             <EntityTypeMapping TypeName="database_nanofinModel.lastmonthprovincesale">
               <MappingFragment StoreEntitySet="lastmonthprovincesales">
@@ -2877,6 +2890,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+=======
+>>>>>>> parent of 5329813... last month locaton reports bug fixed
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

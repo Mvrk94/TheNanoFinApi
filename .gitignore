@@ -243,9 +243,3 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-/References/MySql.Web.dll
-/References/MySql.Data.Entity.EF6.dll
-/References/MySql.Data.Entity.EF5.dll
-/References/MySql.Data.dll
-/References/Extreme.Numerics.Net40.xml
-/References/Extreme.Numerics.Net40.dll

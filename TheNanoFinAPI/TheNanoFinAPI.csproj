@@ -278,12 +278,15 @@
     <Compile Include="Models\insurancetype.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Models\lastmonthinsurancetypesale.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\lastmonthprovincesale.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
+=======
+>>>>>>> parent of 5329813... last month locaton reports bug fixed
     <Compile Include="Models\location.cs">
       <DependentUpon>nanofinEF.tt</DependentUpon>
     </Compile>
