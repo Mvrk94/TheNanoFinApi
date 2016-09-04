@@ -8,10 +8,11 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
     
     public class productTarget
     {
+        public string name { get; set; }
         public int ProductID { get; set; }
         public decimal? currentSales { get; set; }
         public decimal? targetSales { get; set; }
-        public DateTime? monthSate { get; set; }
+        public string monthSate { get; set; }
     }
 
     public class productView
@@ -43,4 +44,25 @@ namespace TheNanoFinAPI.Models.DTOEnvironment
         public decimal sales { get; set; }
     }
 
+    public class MonthlyProvincialSales
+    {
+        public DateTime? activeProductItemStartDate { get; set; }
+        public int ProductProvider_ID { get; set; }
+        public string Province { get; set; }
+        public string city { get; set; }
+        public string LatLng { get; set; }
+        public decimal sales { get; set; }
+
+        public static explicit operator MonthlyProvincialSales(monthlyProvinceSales_Result v)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    public class DTOcompareProducts
+    {
+        public string name { get; set; }
+        public double[] previouse { get; set; }
+    }
 }

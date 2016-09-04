@@ -14,7 +14,7 @@ namespace TheNanoFinAPI.Models
     
     public partial class monthlylocationsale
     {
-        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
+        public Nullable<System.DateTime> datum { get; set; }
         public int Product_ID { get; set; }
         public Nullable<int> transactionLocation { get; set; }
         public Nullable<decimal> sales { get; set; }

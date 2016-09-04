@@ -254,11 +254,16 @@ namespace NanoFinAPI.Controllers
         public List<DTOactiveProductItemWithDetail> GetConsumerActiveProductitemsWithDetail(int userID)
         {
             List<DTOactiveProductItemWithDetail> toReturn = new List<DTOactiveProductItemWithDetail>();
+
             List<activeproductitem> list = (from c in db.activeproductitems where c.consumer.User_ID == userID && c.isActive==true select c).ToList();
+
 
             foreach (activeproductitem p in list)
             {
-                toReturn.Add(new DTOactiveProductItemWithDetail(p));
+                //get an instance of an insurance product for each and every active product item of the consumer
+                insuranceproduct insuranceProd = (from i in db.insuranceproducts where i.Product_ID == p.Product_ID select i).SingleOrDefault();
+
+                toReturn.Add(new DTOactiveProductItemWithDetail(p,insuranceProd));
             }
 
             return toReturn;
@@ -440,6 +445,8 @@ namespace NanoFinAPI.Controllers
 
 
         #endregion
+
+
 
     }
 

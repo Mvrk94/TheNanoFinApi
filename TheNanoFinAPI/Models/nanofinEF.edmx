@@ -317,14 +317,73 @@
           <Property Name="voucherTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.locationsaleslastmonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="locationsaleslastmonth">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="Location_ID" />
+          </Key>
+          <Property Name="purchaseDate" Type="date" />
+          <Property Name="datum" Type="varchar" MaxLength="7" />
+          <Property Name="ProductProvider_ID" Type="int" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="Location_ID" Type="int" Nullable="false" />
+          <Property Name="Province" Type="varchar" MaxLength="32" />
+          <Property Name="city" Type="varchar" MaxLength="32" />
+          <Property Name="LatLng" Type="varchar" MaxLength="64" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.monthlylocationsales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="monthlylocationsales">
           <Key>
             <PropertyRef Name="Product_ID" />
           </Key>
-          <Property Name="activeProductItemStartDate" Type="date" />
+          <Property Name="datum" Type="date" />
           <Property Name="Product_ID" Type="int" Nullable="false" />
           <Property Name="transactionLocation" Type="int" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.monthlylocationsalessum' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="monthlylocationsalessum">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="datum" Type="varchar" MaxLength="7" />
+          <Property Name="transactionLocation" Type="int" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.monthlyproductsalesperlocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="monthlyproductsalesperlocation">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="Location_ID" />
+          </Key>
+          <Property Name="purchaseDate" Type="date" />
+          <Property Name="datum" Type="varchar" MaxLength="7" />
+          <Property Name="ProductProvider_ID" Type="int" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="Location_ID" Type="int" Nullable="false" />
+          <Property Name="Province" Type="varchar" MaxLength="32" />
+          <Property Name="city" Type="varchar" MaxLength="32" />
+          <Property Name="LatLng" Type="varchar" MaxLength="64" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.monthlyprovincesalesview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="monthlyprovincesalesview">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+          </Key>
+          <Property Name="datum" Type="varchar" MaxLength="7" />
+          <Property Name="ProductProvider_ID" Type="int" Nullable="false" />
+          <Property Name="Province" Type="varchar" MaxLength="32" />
+          <Property Name="LatLng" Type="varchar" MaxLength="64" />
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -335,16 +394,34 @@ warning 6002: The table/view 'def.database_nanofin.productsalespermonth' does no
             <PropertyRef Name="productName" />
           </Key>
           <Property Name="activeProductItemStartDate" Type="date" />
+          <Property Name="datum" Type="varchar" MaxLength="7" />
           <Property Name="Product_ID" Type="int" Nullable="false" />
           <Property Name="productName" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'def.database_nanofin.salespermonth' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="salespermonth">
-          <Property Name="Month" Type="date" />
+warning 6002: The table/view 'def.database_nanofin.saleslastmonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="saleslastmonth">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+          </Key>
+          <Property Name="activeProductItemStartDate" Type="date" />
+          <Property Name="datum" Type="varchar" MaxLength="7" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="productName" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
-        </EntityType>-->
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="salespermonth">
+          <Key>
+            <PropertyRef Name="activeProductItems_ID" />
+          </Key>
+          <Property Name="activeProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="datum" Type="varchar" MaxLength="7" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
         <Association Name="activeproductitems_ibfk_1">
           <End Role="consumer" Type="Self.consumer" Multiplicity="1" />
           <End Role="activeproductitems" Type="Self.activeproductitems" Multiplicity="*" />
@@ -801,6 +878,16 @@ warning 6013: The table/view 'def.database_nanofin.salespermonth' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="monthlyProvinceSales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="database_nanofin">
+          <Parameter Name="providerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ProductLocationSales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="database_nanofin">
+          <Parameter Name="productID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="productPredictedSalesPerLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="database_nanofin">
+          <Parameter Name="productID" Type="int" Mode="In" />
+          <Parameter Name="locationID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="database_nanofinModelStoreContainer">
           <EntitySet Name="activeproductitems" EntityType="Self.activeproductitems" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="claim" EntityType="Self.claim" Schema="database_nanofin" store:Type="Tables" />
@@ -828,21 +915,81 @@ warning 6013: The table/view 'def.database_nanofin.salespermonth' does not have 
           <EntitySet Name="voucher" EntityType="Self.voucher" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertransaction" EntityType="Self.vouchertransaction" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertype" EntityType="Self.vouchertype" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="locationsaleslastmonth" EntityType="Self.locationsaleslastmonth" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`locationsaleslastmonth`.`purchaseDate`, 
+`locationsaleslastmonth`.`datum`, 
+`locationsaleslastmonth`.`ProductProvider_ID`, 
+`locationsaleslastmonth`.`Product_ID`, 
+`locationsaleslastmonth`.`Location_ID`, 
+`locationsaleslastmonth`.`Province`, 
+`locationsaleslastmonth`.`city`, 
+`locationsaleslastmonth`.`LatLng`, 
+`locationsaleslastmonth`.`sales`
+FROM `locationsaleslastmonth` AS `locationsaleslastmonth`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="monthlylocationsales" EntityType="Self.monthlylocationsales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
-`monthlylocationsales`.`activeProductItemStartDate`, 
+`monthlylocationsales`.`datum`, 
 `monthlylocationsales`.`Product_ID`, 
 `monthlylocationsales`.`transactionLocation`, 
 `monthlylocationsales`.`sales`
 FROM `monthlylocationsales` AS `monthlylocationsales`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="monthlylocationsalessum" EntityType="Self.monthlylocationsalessum" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`monthlylocationsalessum`.`ActiveProductItems_ID`, 
+`monthlylocationsalessum`.`datum`, 
+`monthlylocationsalessum`.`transactionLocation`, 
+`monthlylocationsalessum`.`sales`
+FROM `monthlylocationsalessum` AS `monthlylocationsalessum`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="monthlyproductsalesperlocation" EntityType="Self.monthlyproductsalesperlocation" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`monthlyproductsalesperlocation`.`purchaseDate`, 
+`monthlyproductsalesperlocation`.`datum`, 
+`monthlyproductsalesperlocation`.`ProductProvider_ID`, 
+`monthlyproductsalesperlocation`.`Product_ID`, 
+`monthlyproductsalesperlocation`.`Location_ID`, 
+`monthlyproductsalesperlocation`.`Province`, 
+`monthlyproductsalesperlocation`.`city`, 
+`monthlyproductsalesperlocation`.`LatLng`, 
+`monthlyproductsalesperlocation`.`sales`
+FROM `monthlyproductsalesperlocation` AS `monthlyproductsalesperlocation`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="monthlyprovincesalesview" EntityType="Self.monthlyprovincesalesview" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`monthlyprovincesalesview`.`datum`, 
+`monthlyprovincesalesview`.`ProductProvider_ID`, 
+`monthlyprovincesalesview`.`Province`, 
+`monthlyprovincesalesview`.`LatLng`, 
+`monthlyprovincesalesview`.`sales`
+FROM `monthlyprovincesalesview` AS `monthlyprovincesalesview`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="productsalespermonth" EntityType="Self.productsalespermonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `productsalespermonth`.`activeProductItemStartDate`, 
+`productsalespermonth`.`datum`, 
 `productsalespermonth`.`Product_ID`, 
 `productsalespermonth`.`productName`, 
 `productsalespermonth`.`sales`
 FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="saleslastmonth" EntityType="Self.saleslastmonth" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`saleslastmonth`.`activeProductItemStartDate`, 
+`saleslastmonth`.`datum`, 
+`saleslastmonth`.`Product_ID`, 
+`saleslastmonth`.`productName`, 
+`saleslastmonth`.`sales`
+FROM `saleslastmonth` AS `saleslastmonth`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="salespermonth" EntityType="Self.salespermonth" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`salespermonth`.`activeProductItems_ID`, 
+`salespermonth`.`datum`, 
+`salespermonth`.`sales`
+FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="activeproductitems_ibfk_1" Association="Self.activeproductitems_ibfk_1">
             <End Role="consumer" EntitySet="consumer" />
@@ -1002,6 +1149,25 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
     <edmx:ConceptualModels>
       <Schema Namespace="database_nanofinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="database_nanofinEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="ProductLocation" ReturnType="Collection(database_nanofinModel.ProductLocation_Result)">
+          <Parameter Name="productID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProductLocation1" ReturnType="Collection(database_nanofinModel.ProductLocation1_Result)">
+            <Parameter Name="productID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="monthlyProvinceSales" ReturnType="Collection(database_nanofinModel.monthlyProvinceSales_Result)">
+          <Parameter Name="providerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProductLocationSales" ReturnType="Collection(database_nanofinModel.ProductLocationSales_Result)">
+          <Parameter Name="productID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="productPredictedSalesPerLocation" ReturnType="Collection(database_nanofinModel.productPredictedSalesPerLocation_Result)">
+            <Parameter Name="productID" Mode="In" Type="Int32" />
+            <Parameter Name="locationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="productPredictedSalesPerLocation1" ReturnType="Collection(database_nanofinModel.monthlyProvinceSales_Result)">
+          <Parameter Name="providerID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="activeproductitems" EntityType="database_nanofinModel.activeproductitem" />
           <EntitySet Name="claims" EntityType="database_nanofinModel.claim" />
           <EntitySet Name="claimtemplates" EntityType="database_nanofinModel.claimtemplate" />
@@ -1028,8 +1194,14 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <EntitySet Name="vouchers" EntityType="database_nanofinModel.voucher" />
           <EntitySet Name="vouchertransactions" EntityType="database_nanofinModel.vouchertransaction" />
           <EntitySet Name="vouchertypes" EntityType="database_nanofinModel.vouchertype" />
+          <EntitySet Name="locationsaleslastmonths" EntityType="database_nanofinModel.locationsaleslastmonth" />
           <EntitySet Name="monthlylocationsales" EntityType="database_nanofinModel.monthlylocationsale" />
+          <EntitySet Name="monthlylocationsalessums" EntityType="database_nanofinModel.monthlylocationsalessum" />
+          <EntitySet Name="monthlyproductsalesperlocations" EntityType="database_nanofinModel.monthlyproductsalesperlocation" />
+          <EntitySet Name="monthlyprovincesalesviews" EntityType="database_nanofinModel.monthlyprovincesalesview" />
           <EntitySet Name="productsalespermonths" EntityType="database_nanofinModel.productsalespermonth" />
+          <EntitySet Name="saleslastmonths" EntityType="database_nanofinModel.saleslastmonth" />
+          <EntitySet Name="salespermonths" EntityType="database_nanofinModel.salespermonth" />
           <AssociationSet Name="activeproductitems_ibfk_1" Association="database_nanofinModel.activeproductitems_ibfk_1">
             <End Role="consumer" EntitySet="consumers" />
             <End Role="activeproductitem" EntitySet="activeproductitems" />
@@ -1182,7 +1354,12 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
             <End Role="voucher" EntitySet="vouchers" />
             <End Role="vouchertransaction" EntitySet="vouchertransactions" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
+        <ComplexType Name="ProductLocation_Result" />
+        <ComplexType Name="ProductLocation1_Result" />
+        <ComplexType Name="monthlyProvinceSales_Result" />
+        <ComplexType Name="ProductLocationSales_Result" />
+        <ComplexType Name="productPredictedSalesPerLocation_Result" />
         <EntityType Name="activeproductitem">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
@@ -1570,13 +1747,64 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
           <Property Name="voucherTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="vouchers" Relationship="database_nanofinModel.voucher_ibfk_1" FromRole="vouchertype" ToRole="voucher" />
         </EntityType>
+        <EntityType Name="locationsaleslastmonth">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="Location_ID" />
+          </Key>
+          <Property Name="purchaseDate" Type="DateTime" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Location_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
         <EntityType Name="monthlylocationsale">
           <Key>
             <PropertyRef Name="Product_ID" />
           </Key>
-          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="datum" Type="DateTime" />
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
           <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="monthlylocationsalessum">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="monthlyproductsalesperlocation">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="Location_ID" />
+          </Key>
+          <Property Name="purchaseDate" Type="DateTime" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Location_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="monthlyprovincesalesview">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+          </Key>
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
         <EntityType Name="productsalespermonth">
@@ -1585,8 +1813,28 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
             <PropertyRef Name="productName" />
           </Key>
           <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
           <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="saleslastmonth">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+          </Key>
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="salespermonth">
+          <Key>
+            <PropertyRef Name="activeProductItems_ID" />
+          </Key>
+          <Property Name="activeProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
         <Association Name="activeproductitems_ibfk_1">
@@ -2051,6 +2299,26 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="database_nanofinModelStoreContainer" CdmEntityContainer="database_nanofinEntities">
+          <FunctionImportMapping FunctionImportName="monthlyProvinceSales" FunctionName="database_nanofinModel.Store.monthlyProvinceSales">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="database_nanofinModel.monthlyProvinceSales_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProductLocationSales" FunctionName="database_nanofinModel.Store.ProductLocationSales">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="database_nanofinModel.ProductLocationSales_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="productPredictedSalesPerLocation" FunctionName="database_nanofinModel.Store.productPredictedSalesPerLocation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="database_nanofinModel.productPredictedSalesPerLocation_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="productPredictedSalesPerLocation1" FunctionName="database_nanofinModel.Store.monthlyProvinceSales">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="database_nanofinModel.monthlyProvinceSales_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="activeproductitems">
             <EntityTypeMapping TypeName="database_nanofinModel.activeproductitem">
               <MappingFragment StoreEntitySet="activeproductitems">
@@ -2386,13 +2654,64 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="locationsaleslastmonths">
+            <EntityTypeMapping TypeName="database_nanofinModel.locationsaleslastmonth">
+              <MappingFragment StoreEntitySet="locationsaleslastmonth">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="LatLng" ColumnName="LatLng" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="purchaseDate" ColumnName="purchaseDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="monthlylocationsales">
             <EntityTypeMapping TypeName="database_nanofinModel.monthlylocationsale">
               <MappingFragment StoreEntitySet="monthlylocationsales">
                 <ScalarProperty Name="sales" ColumnName="sales" />
                 <ScalarProperty Name="transactionLocation" ColumnName="transactionLocation" />
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="monthlylocationsalessums">
+            <EntityTypeMapping TypeName="database_nanofinModel.monthlylocationsalessum">
+              <MappingFragment StoreEntitySet="monthlylocationsalessum">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="transactionLocation" ColumnName="transactionLocation" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="monthlyproductsalesperlocations">
+            <EntityTypeMapping TypeName="database_nanofinModel.monthlyproductsalesperlocation">
+              <MappingFragment StoreEntitySet="monthlyproductsalesperlocation">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="LatLng" ColumnName="LatLng" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="purchaseDate" ColumnName="purchaseDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="monthlyprovincesalesviews">
+            <EntityTypeMapping TypeName="database_nanofinModel.monthlyprovincesalesview">
+              <MappingFragment StoreEntitySet="monthlyprovincesalesview">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="LatLng" ColumnName="LatLng" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2402,11 +2721,32 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
                 <ScalarProperty Name="sales" ColumnName="sales" />
                 <ScalarProperty Name="productName" ColumnName="productName" />
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
                 <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="saleslastmonths">
+            <EntityTypeMapping TypeName="database_nanofinModel.saleslastmonth">
+              <MappingFragment StoreEntitySet="saleslastmonth">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="salespermonths">
+            <EntityTypeMapping TypeName="database_nanofinModel.salespermonth">
+              <MappingFragment StoreEntitySet="salespermonth">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="activeProductItems_ID" ColumnName="activeProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
