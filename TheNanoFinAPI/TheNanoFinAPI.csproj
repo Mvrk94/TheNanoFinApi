@@ -58,8 +58,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Extreme.Numerics.Net40, Version=6.0.16073.0, Culture=neutral, PublicKeyToken=9e513770f58567b2, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Extreme.Numerics.Net40">
       <HintPath>References\ExtremeOptimizationReferances\Extreme.Numerics.Net40.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -67,20 +66,16 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MySql.Data">
       <HintPath>References\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity.EF5, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MySql.Data.Entity.EF5">
       <HintPath>References\MySql.Data.Entity.EF5.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MySql.Data.Entity.EF6">
       <HintPath>References\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MySql.Web">
       <HintPath>References\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="RDotNet, Version=1.5.5.0, Culture=neutral, PublicKeyToken=5f72f6e23c6920d4, processorArchitecture=MSIL">
@@ -355,11 +350,14 @@
     <Compile Include="MultiChainLib\Controllers\MUtilityClass.cs" />
     <Compile Include="MultiChainLib\Model\AddressGroupingResponse.cs" />
     <Compile Include="MultiChainLib\Model\AddressResponse.cs" />
+    <Compile Include="MultiChainLib\Model\AppendRawExchangeResponse.cs" />
     <Compile Include="MultiChainLib\Model\AssetBalanceResponse.cs" />
     <Compile Include="MultiChainLib\Model\AssetResponse.cs" />
     <Compile Include="MultiChainLib\Model\BlockchainInfoResponse.cs" />
     <Compile Include="MultiChainLib\Model\BlockResponse.cs" />
+    <Compile Include="MultiChainLib\Model\bulkVoucherJSON.cs" />
     <Compile Include="MultiChainLib\Model\ChainTipResponse.cs" />
+    <Compile Include="MultiChainLib\Model\DecodeRawExchangeResponse.cs" />
     <Compile Include="MultiChainLib\Model\GetInfoResponse.cs" />
     <Compile Include="MultiChainLib\Model\GetServerInfoResponse.cs" />
     <Compile Include="MultiChainLib\Model\GetTransactionResponse.cs" />
@@ -374,6 +372,7 @@
     <Compile Include="MultiChainLib\Model\NetworkResponse.cs" />
     <Compile Include="MultiChainLib\Model\PeerResponse.cs" />
     <Compile Include="MultiChainLib\Model\PermissionsResponse.cs" />
+    <Compile Include="MultiChainLib\Model\PrepareLockUnspentFromResponse.cs" />
     <Compile Include="MultiChainLib\Model\ReceivedResponse.cs" />
     <Compile Include="MultiChainLib\Model\ScriptPubKeyResponse.cs" />
     <Compile Include="MultiChainLib\Model\ScriptResponse.cs" />
@@ -387,6 +386,7 @@
     <Compile Include="MultiChainLib\Model\UnspentAssetResponse.cs" />
     <Compile Include="MultiChainLib\Model\UnspentResponse.cs" />
     <Compile Include="MultiChainLib\Model\VerboseTransactionResponse.cs" />
+    <Compile Include="MultiChainLib\Model\voucherJSON.cs" />
     <Compile Include="MultiChainLib\Model\WalletInfoResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

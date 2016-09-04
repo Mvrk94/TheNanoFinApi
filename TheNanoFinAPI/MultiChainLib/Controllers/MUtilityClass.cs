@@ -1,4 +1,6 @@
 ﻿using MultiChainLib;
+using MultiChainLib.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

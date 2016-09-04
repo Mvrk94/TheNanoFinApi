@@ -31,13 +31,12 @@ namespace NanoFinAPI.Controllers
         //PUT...update a voucher: use cases involved:
         //-reseller sends voucher= update reseller's voucher amount
 
-        public void testBuyBulk()
+        public async void testBuyBulk()
         {
-           
 
-            //MUserController ctrl = new MUserController(21);
-            //ctrl = await ctrl.init();
-            //ctrl.grantPermissions(BlockchainPermissions.Send, BlockchainPermissions.Receive);
+            MResellerController ctrl = new MResellerController(33);
+            ctrl = await ctrl.init();
+            ctrl.buyBulk(50);
         }
 
         public IHttpActionResult SendVoucher(int senderID, int receiverID, decimal amountToSend, int transactionType_ID, int voucherTypeID, DateTime date)

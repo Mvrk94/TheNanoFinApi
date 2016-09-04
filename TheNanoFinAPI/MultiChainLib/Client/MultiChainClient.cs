@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using MultiChainLib.Model;
 
 namespace MultiChainLib
 {
@@ -32,6 +33,38 @@ namespace MultiChainLib
             this.ChainName = chainName;
             this.ChainKey = chainKey;
         }
+
+        //atomic exchange
+        public Task<JsonRpcResponse<string>> IssueMoreFromAsync(string fromAddress, string toAddress, string assetName, int quantity)
+        {
+            return this.ExecuteAsync<string>("issuemorefrom", 0, fromAddress, toAddress, assetName, quantity, 0);
+        }
+        //locks an addresses unspent transactions. NB param asset takes JSON of the form '{"assetName":Qty}'. returns txid, vout
+        public Task<JsonRpcResponse<PrepareLockUnspentFromResponse>> PrepareLockUnspentFromsync(string fromAddress, string asset)
+        {
+            return this.ExecuteAsync<PrepareLockUnspentFromResponse>("preparelockunspentfrom", 0, fromAddress, asset);
+        }
+
+        public Task<JsonRpcResponse<string>> CreateRawExchangeAsync(string txid, int vout, string asset)
+        {
+            return this.ExecuteAsync<string>("createrawexchange", 0, txid, vout, asset);
+        }
+
+        public Task<JsonRpcResponse<DecodeRawExchangeResponse>> DecodeRawExchangeAsync(string hexBlob)
+        {
+            return this.ExecuteAsync<DecodeRawExchangeResponse>("decoderawexchange", 0, hexBlob);
+        }
+
+        public Task<JsonRpcResponse<AppendRawExchangeResponse>> AppendRawExchangeAsync(string hexBlob, string txid, int vout, string asset)
+        {
+            return this.ExecuteAsync<AppendRawExchangeResponse>("appendrawexchange", 0, hexBlob, txid, vout, asset);
+        }
+
+        public Task<JsonRpcResponse<string>> SendRawTransactionAsync(string longHex)
+        {
+            return this.ExecuteAsync<string>("sendrawtransaction", 0, longHex);
+        }
+        //atomic exchange
 
         public Task<JsonRpcResponse<List<PeerResponse>>> GetPeerInfoAsync()
         {
@@ -662,6 +695,9 @@ namespace MultiChainLib
             this.OnExecuting(new EventArgs<JsonRpcRequest>(ps));
 
             var jsonOut = JsonConvert.SerializeObject(ps.Values);
+            jsonOut = jsonOut.Replace("\\", String.Empty);
+            jsonOut = jsonOut.Replace("\"{", "{");
+            jsonOut = jsonOut.Replace("}\"", "}");
             var url = this.ServiceUrl;
             try
             {
