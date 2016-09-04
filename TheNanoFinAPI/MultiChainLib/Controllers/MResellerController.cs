@@ -51,7 +51,7 @@ namespace MultiChainLib.Controllers
             recipientUser = await recipientUser.init();
             recipientUser.grantPermissions(BlockchainPermissions.Receive);
             //issue recipient voucher
-            var issueMore = await client.IssueMoreFromWithMetadataAsync(nanoFinAddr, recipientAddr, "Voucher", amount, "Issue user \'" + recipientUserID.ToString() + "\' " + amount.ToString() + " Voucher");
+            var issueMore = await client.IssueMoreFromWithMetadataAsync(nanoFinAddr, recipientAddr, "Voucher", amount, "Issue consumer \'" + recipientUserID.ToString() + "\' " + amount.ToString() + " Voucher");
             issueMore.AssertOk();
 
             return 0;

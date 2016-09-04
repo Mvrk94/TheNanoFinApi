@@ -5,25 +5,36 @@ using System.Web;
 
 namespace TheNanoFinAPI.MultiChainLib.Model
 {
-    public class MetadataJSON
+    public class IssueAssetParamsJSON
     {
-
         public Dictionary<string, object> Values { get; private set; }
 
-        public MetadataJSON()
+        public IssueAssetParamsJSON()
         {
             this.Values = new Dictionary<string, object>();
         }
 
-        public string metadata
+        public string name
         {
             get
             {
-                return this.GetValue<string>("metadata");
+                return this.GetValue<string>("name");
             }
             set
             {
-                this.SetValue("metadata", value);
+                this.SetValue("name", value);
+            }
+        }
+
+        public bool open
+        {
+            get
+            {
+                return this.GetValue<bool>("open");
+            }
+            set
+            {
+                this.SetValue("open", value);
             }
         }
 
@@ -39,6 +50,5 @@ namespace TheNanoFinAPI.MultiChainLib.Model
             else
                 return default(T);
         }
-
     }
 }

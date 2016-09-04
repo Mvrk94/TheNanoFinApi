@@ -36,7 +36,7 @@ namespace NanoFinAPI.Controllers
 
             MConsumerController ctrl = new MConsumerController(34);
             ctrl = await ctrl.init();
-            await ctrl.sendVoucherToConsumer(21, 5);
+            await ctrl.redeemVoucher("Khaya Cover", 5);
             
 
             return true;

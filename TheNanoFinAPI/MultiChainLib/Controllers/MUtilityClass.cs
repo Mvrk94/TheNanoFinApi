@@ -122,6 +122,15 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             return false;
         }
 
+        //remove all spaces from string.
+        public static string removeSpaces(string input)
+        {
+            string noSpaces = input;
+            noSpaces = noSpaces.Replace(" ", string.Empty); // kill spaces
+            noSpaces = noSpaces.Replace("	", string.Empty); //kill tabs
+            return noSpaces;
+        }
+
 
     }
 }

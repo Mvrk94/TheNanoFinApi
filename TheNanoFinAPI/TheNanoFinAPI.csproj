@@ -362,11 +362,12 @@
     <Compile Include="MultiChainLib\Model\GetInfoResponse.cs" />
     <Compile Include="MultiChainLib\Model\GetServerInfoResponse.cs" />
     <Compile Include="MultiChainLib\Model\GetTransactionResponse.cs" />
+    <Compile Include="MultiChainLib\Model\IssueAssetParamsJSON.cs" />
     <Compile Include="MultiChainLib\Model\ListPermissionsResponse.cs" />
     <Compile Include="MultiChainLib\Model\ListSinceLastBlockResponse.cs" />
     <Compile Include="MultiChainLib\Model\MempoolInfoResponse.cs" />
     <Compile Include="MultiChainLib\Model\MempoolResponse.cs" />
-    <Compile Include="MultiChainLib\Model\MetaDataJSON.cs" />
+    <Compile Include="MultiChainLib\Model\MetadataJSON.cs" />
     <Compile Include="MultiChainLib\Model\MiningInfoResponse.cs" />
     <Compile Include="MultiChainLib\Model\MultiSigResponse.cs" />
     <Compile Include="MultiChainLib\Model\NetTotalsResponse.cs" />

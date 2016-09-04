@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MultiChainLib.Model;
 using TheNanoFinAPI.MultiChainLib.Model;
+using TheNanoFinAPI.MultiChainLib.Controllers;
 
 namespace MultiChainLib
 {
@@ -34,7 +35,26 @@ namespace MultiChainLib
             this.ChainName = chainName;
             this.ChainKey = chainKey;
         }
+        //issue - 'open: true' with metadata
+        public Task<JsonRpcResponse<string>> IssueOpenWithMetadataFromAsync(string fromAddress, string toAddress, string newAssetName, int quantity, string metadataStr)
+        {
+            string newAssetNameNoSpaces = MUtilityClass.removeSpaces(newAssetName);
+            var metadataJson = new MetadataJSON()
+            {
+                metadata = metadataStr
+            };
 
+            var issueAssetParamsJson = new IssueAssetParamsJSON()
+            {
+                name = newAssetNameNoSpaces,
+                open = true
+            };
+
+            var metadataJsonStr = JsonConvert.SerializeObject(metadataJson.Values);
+            var paramsJsonStr = JsonConvert.SerializeObject(issueAssetParamsJson.Values);
+
+            return this.ExecuteAsync<string>("issuefrom", 0, fromAddress, toAddress, paramsJsonStr, quantity, 0.01, 0, metadataJsonStr);
+        }
         //issuemorefrom
         public Task<JsonRpcResponse<string>> IssueMoreFromAsync(string fromAddress, string toAddress, string assetName, int quantity)
         {
@@ -43,7 +63,7 @@ namespace MultiChainLib
         //issue more from with metadata
         public Task<JsonRpcResponse<string>> IssueMoreFromWithMetadataAsync(string fromAddress, string toAddress, string assetName, decimal quantity, string metadataStr)
         {
-            var metadataJson = new MetaDataJSON()
+            var metadataJson = new MetadataJSON()
             {
                 metadata = metadataStr
             };
