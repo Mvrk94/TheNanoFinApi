@@ -365,6 +365,7 @@
     <Compile Include="MultiChainLib\Model\ListSinceLastBlockResponse.cs" />
     <Compile Include="MultiChainLib\Model\MempoolInfoResponse.cs" />
     <Compile Include="MultiChainLib\Model\MempoolResponse.cs" />
+    <Compile Include="MultiChainLib\Model\MetaDataJSON.cs" />
     <Compile Include="MultiChainLib\Model\MiningInfoResponse.cs" />
     <Compile Include="MultiChainLib\Model\MultiSigResponse.cs" />
     <Compile Include="MultiChainLib\Model\NetTotalsResponse.cs" />

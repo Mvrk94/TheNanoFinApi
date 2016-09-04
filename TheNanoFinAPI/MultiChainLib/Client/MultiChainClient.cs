@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using MultiChainLib.Model;
+using TheNanoFinAPI.MultiChainLib.Model;
 
 namespace MultiChainLib
 {
@@ -34,11 +35,23 @@ namespace MultiChainLib
             this.ChainKey = chainKey;
         }
 
-        //atomic exchange
+        //issuemorefrom
         public Task<JsonRpcResponse<string>> IssueMoreFromAsync(string fromAddress, string toAddress, string assetName, int quantity)
         {
             return this.ExecuteAsync<string>("issuemorefrom", 0, fromAddress, toAddress, assetName, quantity, 0);
         }
+        //issue more from with metadata
+        public Task<JsonRpcResponse<string>> IssueMoreFromWithMetadataAsync(string fromAddress, string toAddress, string assetName, decimal quantity, string metadataStr)
+        {
+            var metadataJson = new MetaDataJSON()
+            {
+                metadata = metadataStr
+            };
+            var metadataJsonStr = JsonConvert.SerializeObject(metadataJson.Values);
+            return this.ExecuteAsync<string>("issuemorefrom", 0, fromAddress, toAddress, assetName, quantity, 0, metadataJsonStr);
+        }
+
+
         //locks an addresses unspent transactions. NB param asset takes JSON of the form '{"assetName":Qty}'. returns txid, vout
         public Task<JsonRpcResponse<PrepareLockUnspentFromResponse>> PrepareLockUnspentFromsync(string fromAddress, string asset)
         {
@@ -64,7 +77,7 @@ namespace MultiChainLib
         {
             return this.ExecuteAsync<string>("sendrawtransaction", 0, longHex);
         }
-        //atomic exchange
+        //methods
 
         public Task<JsonRpcResponse<List<PeerResponse>>> GetPeerInfoAsync()
         {
@@ -98,11 +111,12 @@ namespace MultiChainLib
                 commentTo ?? string.Empty);
         }
 
-        public Task<JsonRpcResponse<string>> SendWithMetadataFromAsync(string fromAddress, string toAddress, string assetName, decimal amount, byte[] dataHex)
+        public Task<JsonRpcResponse<string>> SendWithMetadataFromAsync(string fromAddress, string toAddress, string assetName, decimal amount, string dataHex)
         {
             var theAmount = new Dictionary<string, object>();
             theAmount[assetName] = amount;
-            return this.ExecuteAsync<string>("sendwithmetadatafrom", 0, fromAddress, toAddress, theAmount, FormatHex(dataHex));
+            //return this.ExecuteAsync<string>("sendwithmetadatafrom", 0, fromAddress, toAddress, theAmount, FormatHex(dataHex));
+            return this.ExecuteAsync<string>("sendwithmetadatafrom", 0, fromAddress, toAddress, theAmount, dataHex);
         }
 
         public Task<JsonRpcResponse<string>> SendAssetToAddressAsync(string address, string assetName, decimal quantity, 

@@ -31,12 +31,15 @@ namespace NanoFinAPI.Controllers
         //PUT...update a voucher: use cases involved:
         //-reseller sends voucher= update reseller's voucher amount
 
-        public async void testBuyBulk()
+        public async Task<bool> testBuyBulk()
         {
 
             MResellerController ctrl = new MResellerController(33);
             ctrl = await ctrl.init();
-            ctrl.buyBulk(50);
+            ctrl.buyBulk(5);
+            await ctrl.sendBulk(21,5);
+
+            return true;
         }
 
         public IHttpActionResult SendVoucher(int senderID, int receiverID, decimal amountToSend, int transactionType_ID, int voucherTypeID, DateTime date)

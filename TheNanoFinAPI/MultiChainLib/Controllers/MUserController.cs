@@ -96,15 +96,13 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             
         }
 
-        
-
         //remove all double quotation marks from string.
-        public static String removeQuotes(String input)
+        public static string removeQuotes(string input)
         {
-            return input.Replace("\"", String.Empty);
+            return input.Replace("\"", string.Empty);
         }
 
-        public String propertyUserAddress() { return userAddress; }
+        public string propertyUserAddress() { return userAddress; }
         public int propertyUserID() { return user_ID; }
 
 

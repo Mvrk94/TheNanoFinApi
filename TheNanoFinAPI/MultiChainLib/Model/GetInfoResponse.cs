@@ -32,6 +32,12 @@ namespace MultiChainLib
 
         [JsonProperty("nodeaddress")]
         public string NodeAddress { get; set; }
+        [JsonProperty("burnaddress")]
+        public string burnaddress { get; set; }
+        [JsonProperty("incomingpaused")]
+        public bool incomingpaused { get; set; }
+        [JsonProperty("miningpaused")]
+        public bool miningpaused { get; set; }
 
         [JsonProperty("walletversion")]
         public int WalletVersion { get; set; }
