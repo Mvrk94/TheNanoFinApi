@@ -10,13 +10,8 @@
 namespace NanofinAPI.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class monthlylocationsalessum
+    public partial class productPredictedSalesPerLocation_Result
     {
-        public int ActiveProductItems_ID { get; set; }
-        public string datum { get; set; }
-        public Nullable<int> transactionLocation { get; set; }
-        public Nullable<decimal> sales { get; set; }
     }
 }

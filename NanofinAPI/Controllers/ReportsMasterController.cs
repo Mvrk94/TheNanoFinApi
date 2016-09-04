@@ -9,7 +9,7 @@ using NanofinAPI.Models;
 using Extreme.Statistics;
 using Extreme.Statistics.TimeSeriesAnalysis;
 
-namespace TheNanoFinAPI.Controllers
+namespace NanofinAPI.Controllers
 {
     public class ReportsMasterController : ApiController
     {
@@ -60,7 +60,7 @@ namespace TheNanoFinAPI.Controllers
             return toreturn;
         }
 
-
+        #region Monthly Sales
         [HttpGet]
         public DTOcompareProducts getMonthyProductSales(int productID)
         {
@@ -108,7 +108,7 @@ namespace TheNanoFinAPI.Controllers
             return toreturn;
         }
 
-
+        
         [HttpGet]
         public List<DTOlastmonthprovincesale> get_PP_ProvincialSales()
         {
@@ -122,6 +122,7 @@ namespace TheNanoFinAPI.Controllers
 
             return toreturn;
         }
+
 
        [HttpGet]
        public List<DTOmonthlylocationsale> GetMonthlyProductsalesperlocation(int productID , int locationID)
@@ -138,14 +139,14 @@ namespace TheNanoFinAPI.Controllers
             
             return toreturn;
         }
+    #endregion
 
-
-
+        #region Product sales Perlocation
         [HttpGet]
-        public overallForeCast PredictLocationProductSales( int  productID, int locationID, int numPredictions, int value1 = 1, int value2 = 5)
+        public overallForeCast PredictLocationSales( int  productID, int locationID, int numPredictions, int value1 = 1, int value2 = 5)
         {
             var toreturn = new overallForeCast();
-            var monthlysales = (from c in db.monthlylocationsales where c.transactionLocation == locationID && c.Product_ID == productID select c.sales.Value).ToList();
+            var monthlysales = (from c in db.monthlylocationsales where c.transactionLocation == locationID select c.sales.Value).ToList();
 
             toreturn.previouse = Array.ConvertAll(monthlysales.ToArray(), c => (double)c);
             ArimaModel model = new ArimaModel(toreturn.previouse, value1, value2);
@@ -171,10 +172,64 @@ namespace TheNanoFinAPI.Controllers
 
             return toreturn;
         }
+        #endregion
 
 
+        #region Geo Reports
+
+        [HttpGet]
+        public List<monlthlocationsalessum> getCurrentMonthlyLocationSalesSum()
+        {
+            var list = (from c in db.monlthlocationsalessums where c.datum == "2016-Aug" select c).ToList();
+
+            return list;
+        }
 
 
+        [HttpGet]
+        public List<DTOmonthlylocationsale> getCurrentMonthLocationProductSalesDistribution(int locationID)
+        {
+            var toreturn = new List<DTOmonthlylocationsale>();
+            var lowerDate = new DateTime(2016, 08, 1);
+            var upperDate = new DateTime(2016, 09, 01);
+            var list = (from c in db.monthlylocationsales where c.datum > lowerDate where c.transactionLocation == locationID  && c.datum < upperDate  select c).ToList();
+
+            foreach( var p  in list)
+            {
+                toreturn.Add(new DTOmonthlylocationsale(p));
+            }
+
+            return toreturn;
+        }
+
+        [HttpGet]
+        public double []  getAllLocationSales(int locationID)
+        {
+            var purchases = (from c in db.monlthlocationsalessums where c.Location_ID == locationID select c.sales).ToArray();
+            return Array.ConvertAll<decimal?,double>(purchases, x => (double)x);
+        }
+
+        [HttpGet]
+        public List<DTOmonthlylocationsale> getProductSalesThisMonth(int productID)
+        {
+            var toreturn = new List<DTOmonthlylocationsale>();
+            var lowerDate = new DateTime(2016, 08, 1);
+            var upperDate = new DateTime(2016, 09, 01);
+            var list = (from c in db.monthlylocationsales where c.datum > lowerDate where c.Product_ID == productID && c.datum < upperDate select c).ToList();
+
+            foreach (var p in list)
+            {
+                toreturn.Add(new DTOmonthlylocationsale(p));
+            }
+
+            return toreturn;
+
+        }
+
+        #endregion
+
+
+        #region Insurance Type
         [HttpGet]
           public List<lastmonthinsurancetypesale>  getLastMonthInsuranceTypeSales()
         {
@@ -184,7 +239,7 @@ namespace TheNanoFinAPI.Controllers
 
             return toreturn;
         }
-
+        
         [HttpGet]
         public overallForeCast PredictInsuranceTypeSales(int insuranceTypeID, int numPredictions, int value1 = 1, int value2 = 5)
         {
@@ -199,7 +254,8 @@ namespace TheNanoFinAPI.Controllers
 
             return toreturn;
         }
-
+        #endregion
+      
         #region Utils
         private double []  generateTimeData(int size)
         {
@@ -213,30 +269,6 @@ namespace TheNanoFinAPI.Controllers
 
         #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
+
 }

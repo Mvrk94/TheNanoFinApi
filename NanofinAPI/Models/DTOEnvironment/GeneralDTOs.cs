@@ -321,6 +321,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             datum = entityObjct.datum;
             ProductProvider_ID = entityObjct.ProductProvider_ID;
             Product_ID = entityObjct.Product_ID;
+            
             Location_ID = entityObjct.Location_ID;
             Province = entityObjct.Province;
             city = entityObjct.city;
@@ -336,6 +337,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public int Product_ID { get; set; }
         public Nullable<int> transactionLocation { get; set; }
         public Nullable<decimal> sales { get; set; }
+        public string productName { get; set; }
 
         public DTOmonthlylocationsale() { }
 
@@ -343,25 +345,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         {
             datum = entityObjct.datum;
             Product_ID = entityObjct.Product_ID;
-            transactionLocation = entityObjct.transactionLocation;
-            sales = entityObjct.sales;
-        }
-    }
-
-
-    public class DTOmonthlylocationsalessum
-    {
-        public int ActiveProductItems_ID { get; set; }
-        public string datum { get; set; }
-        public Nullable<int> transactionLocation { get; set; }
-        public Nullable<decimal> sales { get; set; }
-
-        public DTOmonthlylocationsalessum() { }
-
-        public DTOmonthlylocationsalessum(monthlylocationsalessum entityObjct)
-        {
-            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
-            datum = entityObjct.datum;
+            productName = entityObjct.productName;
             transactionLocation = entityObjct.transactionLocation;
             sales = entityObjct.sales;
         }
@@ -374,6 +358,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public string datum { get; set; }
         public int ProductProvider_ID { get; set; }
         public int Product_ID { get; set; }
+        public string productName { get; set;}
         public int Location_ID { get; set; }
         public string Province { get; set; }
         public string city { get; set; }
@@ -388,6 +373,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             datum = entityObjct.datum;
             ProductProvider_ID = entityObjct.ProductProvider_ID;
             Product_ID = entityObjct.Product_ID;
+            productName = entityObjct.productName;
             Location_ID = entityObjct.Location_ID;
             Province = entityObjct.Province;
             city = entityObjct.city;

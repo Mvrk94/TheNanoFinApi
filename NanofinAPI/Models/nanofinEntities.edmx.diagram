@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6e2d27c8992549a4b12377b36951034c" Name="Diagram1">
+      <Diagram DiagramId="6e2d27c8992549a4b12377b36951034c" Name="Diagram1" ZoomLevel="47">
         <EntityTypeShape EntityType="nanofinEntites.activeproductitem" Width="1.5" PointX="12.75" PointY="21.375" IsExpanded="true" />
         <EntityTypeShape EntityType="nanofinEntites.claim" Width="1.5" PointX="15" PointY="22.625" IsExpanded="true" />
         <EntityTypeShape EntityType="nanofinEntites.claimtemplate" Width="1.5" PointX="5.25" PointY="32.625" IsExpanded="true" />
@@ -31,17 +31,6 @@
         <EntityTypeShape EntityType="nanofinEntites.voucher" Width="1.5" PointX="8.25" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="nanofinEntites.vouchertransaction" Width="1.5" PointX="10.5" PointY="19.875" IsExpanded="true" />
         <EntityTypeShape EntityType="nanofinEntites.vouchertype" Width="1.5" PointX="6" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.insuranceproducttypemonthlysale" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.lastmonthinsurancetypesale" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.lastmonthprovincesale" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.locationsaleslastmonth" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.monthlylocationsale" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.monthlylocationsalessum" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.monthlyproductsalesperlocation" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.monthlyprovincesalesview" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.productsalespermonth" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.saleslastmonth" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="nanofinEntites.salespermonth" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
         <AssociationConnector Association="nanofinEntites.activeproductitems_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="nanofinEntites.activeproductitems_ibfk_2" ManuallyRouted="false" />
         <AssociationConnector Association="nanofinEntites.activeproductitems_ibfk_3" ManuallyRouted="false" />
@@ -80,6 +69,17 @@
         <AssociationConnector Association="nanofinEntites.voucher_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_2" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="nanofinEntites.insuranceproducttypemonthlysale" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="nanofinEntites.lastmonthinsurancetypesale" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="nanofinEntites.lastmonthprovincesale" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="nanofinEntites.locationsaleslastmonth" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="nanofinEntites.monlthlocationsalessum" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="nanofinEntites.monthlylocationsale" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="nanofinEntites.monthlyproductsalesperlocation" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="nanofinEntites.monthlyprovincesalesview" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="nanofinEntites.productsalespermonth" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="nanofinEntites.saleslastmonth" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="nanofinEntites.salespermonth" Width="1.5" PointX="4.75" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

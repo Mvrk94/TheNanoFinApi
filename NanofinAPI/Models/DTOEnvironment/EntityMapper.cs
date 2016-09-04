@@ -228,19 +228,6 @@ namespace NanofinAPI.Models.DTOEnvironment
         }
 
 
-        public static monthlylocationsalessum updateEntity(monthlylocationsalessum entityObjct, DTOmonthlylocationsalessum dto)
-        {
-            if (entityObjct == null) entityObjct = new monthlylocationsalessum();
-
-            entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
-            entityObjct.datum = dto.datum;
-            entityObjct.transactionLocation = dto.transactionLocation;
-            entityObjct.sales = dto.sales;
-
-            return entityObjct;
-        }
-
-
         public static monthlyproductsalesperlocation updateEntity(monthlyproductsalesperlocation entityObjct, DTOmonthlyproductsalesperlocation dto)
         {
             if (entityObjct == null) entityObjct = new monthlyproductsalesperlocation();
@@ -249,6 +236,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.datum = dto.datum;
             entityObjct.ProductProvider_ID = dto.ProductProvider_ID;
             entityObjct.Product_ID = dto.Product_ID;
+            entityObjct.productName = dto.productName;
             entityObjct.Location_ID = dto.Location_ID;
             entityObjct.Province = dto.Province;
             entityObjct.city = dto.city;

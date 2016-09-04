@@ -264,16 +264,19 @@
     <Compile Include="Models\locationsaleslastmonth.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\monthlylocationsale.cs">
+    <Compile Include="Models\monlthlocationsalessum.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\monthlylocationsalessum.cs">
+    <Compile Include="Models\monthlylocationsale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\monthlyproductsalesperlocation.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\monthlyprovincesalesview.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\monthlyProvinceSales_Result.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\nanofinEntities.Context.cs">
@@ -298,6 +301,12 @@
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\product.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductLocationSales_Result.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\productPredictedSalesPerLocation_Result.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\productprovider.cs">

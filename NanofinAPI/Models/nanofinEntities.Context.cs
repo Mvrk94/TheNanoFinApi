@@ -12,6 +12,8 @@ namespace NanofinAPI.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class database_nanofinEntities : DbContext
     {
@@ -55,12 +57,43 @@ namespace NanofinAPI.Models
         public virtual DbSet<lastmonthinsurancetypesale> lastmonthinsurancetypesales { get; set; }
         public virtual DbSet<lastmonthprovincesale> lastmonthprovincesales { get; set; }
         public virtual DbSet<locationsaleslastmonth> locationsaleslastmonths { get; set; }
+        public virtual DbSet<monlthlocationsalessum> monlthlocationsalessums { get; set; }
         public virtual DbSet<monthlylocationsale> monthlylocationsales { get; set; }
-        public virtual DbSet<monthlylocationsalessum> monthlylocationsalessums { get; set; }
         public virtual DbSet<monthlyproductsalesperlocation> monthlyproductsalesperlocations { get; set; }
         public virtual DbSet<monthlyprovincesalesview> monthlyprovincesalesviews { get; set; }
         public virtual DbSet<productsalespermonth> productsalespermonths { get; set; }
         public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }
         public virtual DbSet<salespermonth> salespermonths { get; set; }
+    
+        public virtual ObjectResult<monthlyProvinceSales_Result> monthlyProvinceSales(Nullable<int> providerID)
+        {
+            var providerIDParameter = providerID.HasValue ?
+                new ObjectParameter("providerID", providerID) :
+                new ObjectParameter("providerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<monthlyProvinceSales_Result>("monthlyProvinceSales", providerIDParameter);
+        }
+    
+        public virtual ObjectResult<ProductLocationSales_Result> ProductLocationSales(Nullable<int> productID)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductLocationSales_Result>("ProductLocationSales", productIDParameter);
+        }
+    
+        public virtual ObjectResult<productPredictedSalesPerLocation_Result> productPredictedSalesPerLocation(Nullable<int> productID, Nullable<int> locationID)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("locationID", locationID) :
+                new ObjectParameter("locationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<productPredictedSalesPerLocation_Result>("productPredictedSalesPerLocation", productIDParameter, locationIDParameter);
+        }
     }
 }
