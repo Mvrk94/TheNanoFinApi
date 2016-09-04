@@ -106,6 +106,22 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             return str;
         }
 
+        //check if user has asset or if user has amount (assetBalanceToCheck) of type asset on the blockchain
+        public static async Task<bool> hasAssetBalance(MultiChainClient client, int userID, string asset, int assetBalanceToCheck)
+        {
+            string userAddress = await getAddress(client, userID);
+            var getAddressBalances = await client.GetAddressBalancesAsync(userAddress);
+            getAddressBalances.AssertOk();
+            foreach (var balance in getAddressBalances.Result)
+            {
+                if(balance.Name.Equals(asset) && Convert.ToInt32(balance.Qty) >= assetBalanceToCheck)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
     }
 }

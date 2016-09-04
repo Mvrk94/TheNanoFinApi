@@ -31,7 +31,7 @@ namespace MultiChainLib.Controllers
         
         public async void buyBulk(int amount)
         {
-            //check if recipient has the correct permissions, if not grant permissions
+            //check if current user has the correct permissions, if not grant permissions
             user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Send, BlockchainPermissions.Receive);
             //issue reseller bulk voucher of amount specified, transaction contains metadata
             var issueMore = await client.IssueMoreFromWithMetadataAsync(nanoFinAddr, user.propertyUserAddress(), "BulkVoucher", amount, "Issue reseller \'" + user.propertyUserID().ToString() + "\' " + amount.ToString() + " BulkVoucher.");
@@ -42,8 +42,8 @@ namespace MultiChainLib.Controllers
         {
             string recipientAddr = await MUtilityClass.getAddress(client, recipientUserID);
             //spend reseller BulkVoucher inputs
-            string metadata = "Reseller \'" + user.propertyUserID() + "\' spent " + amount.ToString() + " BulkVoucher. " + amount.ToString() + " Voucher of same amount to be issued to user \'" + recipientUserID.ToString() + "\'";
-            var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), burnAddress, "BulkVoucher", amount, MUtilityClass.strToHex(metadata));
+            string metadata = "Reseller \'" + user.propertyUserID() + "\' spent " + amount.ToString() + " BulkVoucher. " + amount.ToString() + " Voucher of same amount to be issued to user \'" + recipientUserID.ToString() + "\'.";
+            var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), burnAddress, "BulkVoucher", amount, MUtilityClass.strToHex(metadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
             sendWithMetaDataFrom.AssertOk();
 
             //check if recipient has the correct permissions, if not grant permissions

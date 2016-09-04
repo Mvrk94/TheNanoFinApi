@@ -34,10 +34,10 @@ namespace NanoFinAPI.Controllers
         public async Task<bool> testBuyBulk()
         {
 
-            MResellerController ctrl = new MResellerController(33);
+            MConsumerController ctrl = new MConsumerController(34);
             ctrl = await ctrl.init();
-            ctrl.buyBulk(5);
-            await ctrl.sendBulk(21,5);
+            await ctrl.sendVoucherToConsumer(21, 5);
+            
 
             return true;
         }
