@@ -201,6 +201,9 @@
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsuranceManagerHandlerController.cs" />
+    <Compile Include="Models\activeproductitemswithdetail.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DTOEnvironment\nanofinEntities.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\productsController.cs" />
