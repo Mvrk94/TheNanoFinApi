@@ -108,6 +108,7 @@ namespace NanofinAPI.Models.DTOEnvironment
     public class DTOactiveProductItemWithDetail
     {
         public int ActiveProductItems_ID { get; set; }
+        public int User_ID { get; set; }
         public int Consumer_ID { get; set; }
         public int Product_ID { get; set; }
         public string activeProductItemPolicyNum { get; set; }
@@ -115,6 +116,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public decimal productValue { get; set; }
         public int duration { get; set; }
         public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
+        public Nullable<System.DateTime> activeProductItemEndDate { get; set;}
 
         public int ProductProvider_ID { get; set; }
         public Nullable<int> ProductType_ID { get; set; }
@@ -136,9 +138,10 @@ namespace NanofinAPI.Models.DTOEnvironment
         public DTOactiveProductItemWithDetail()
         { }
 
-        public DTOactiveProductItemWithDetail(activeproductitem entityObjct, insuranceproduct insPoductEntityObj)
+        public DTOactiveProductItemWithDetail(activeproductitemswithdetail entityObjct)
         {
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            User_ID = entityObjct.User_ID;
             Consumer_ID = entityObjct.Consumer_ID;
             Product_ID = entityObjct.Product_ID;
             activeProductItemPolicyNum = entityObjct.activeProductItemPolicyNum;
@@ -146,23 +149,23 @@ namespace NanofinAPI.Models.DTOEnvironment
             productValue = entityObjct.productValue;
             duration = entityObjct.duration;
             activeProductItemStartDate = entityObjct.activeProductItemStartDate;
+            activeProductItemEndDate = entityObjct.activeProductItemEndDate;
 
+            ProductProvider_ID = entityObjct.ProductProvider_ID;
+            ProductType_ID = entityObjct.ProductType_ID;
+            productName = entityObjct.productName;
+            productDescription = entityObjct.productDescription;
+            productPolicyDocPath = entityObjct.productPolicyDocPath;
+            isAvailableForPurchase = entityObjct.isAvailableForPurchase;
 
-            ProductProvider_ID = entityObjct.product.ProductProvider_ID;
-            ProductType_ID = entityObjct.product.ProductType_ID;
-            productName = entityObjct.product.productName;
-            productDescription = entityObjct.product.productDescription;
-            productPolicyDocPath = entityObjct.product.productPolicyDocPath;
-            isAvailableForPurchase = entityObjct.product.isAvailableForPurchase;
-
-            insuranceTypeID = insPoductEntityObj.InsuranceType_ID;
-            ipCoverAmount = insPoductEntityObj.ipCoverAmount;
-            unitTypeID = insPoductEntityObj.ipUnitType;
-            unitTypeDescription = insPoductEntityObj.unittype.UnitTypeDescription;
-            unitCost = insPoductEntityObj.ipUnitCost;
-            claimTimeFrame = insPoductEntityObj.claimTimeframe;
-            claimContactNo = insPoductEntityObj.claimContactNo;
-            claimtemplate_ID = insPoductEntityObj.claimtemplate_ID;
+            insuranceTypeID = entityObjct.InsuranceType_ID;
+            ipCoverAmount = entityObjct.ipCoverAmount;
+            unitTypeID = entityObjct.ipUnitType;
+            unitTypeDescription = entityObjct.UnitTypeDescription;
+            unitCost = entityObjct.ipUnitCost;
+            claimTimeFrame = entityObjct.claimTimeframe;
+            claimContactNo = entityObjct.claimContactNo;
+            claimtemplate_ID = entityObjct.claimtemplate_ID;
 
 
         }
