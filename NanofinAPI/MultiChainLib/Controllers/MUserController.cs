@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using TheNanoFinAPI.Models;
-using TheNanoFinAPI.Models.DTOEnvironment;
+using NanofinAPI.Models;
+using NanofinAPI.Models.DTOEnvironment;
 using NanoFinAPI_6_07.Controllers.testManager;
 using System.Data.Entity;
+
 
 namespace TheNanoFinAPI.MultiChainLib.Controllers
 {

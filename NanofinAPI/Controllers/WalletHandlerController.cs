@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Web.Http.Description;
 using NanofinAPI.Models;
 using NanofinAPI.Models.DTOEnvironment;
+using MultiChainLib.Controllers;
+using TheNanoFinAPI.MultiChainLib.Controllers;
 
 namespace NanoFinAPI.Controllers
 {
@@ -95,7 +97,7 @@ namespace NanoFinAPI.Controllers
         }
 
 
-        public IHttpActionResult buyBulkVoucher(int userID, decimal BulkVoucherAmount , DateTime date)
+        public async Task<IHttpActionResult> buyBulkVoucher(int userID, decimal BulkVoucherAmount, DateTime date)
         {
             if (isUserReseller(userID))
             {
@@ -108,9 +110,13 @@ namespace NanoFinAPI.Controllers
                 newVoucher.VoucherType_ID = 1;
                 newVoucher.voucherCreationDate = date;
                 db.vouchers.Add(newVoucher);
-                 db.SaveChanges();
+                db.SaveChanges();
 
                 addVoucherTransaction(newVoucher.Voucher_ID, newVoucher.Voucher_ID, userID, 1, BulkVoucherAmount, 1);
+                //buy bulk transaction on blockchain
+                MResellerController resellerCtrl = new MResellerController(userID);
+                resellerCtrl = await resellerCtrl.init();
+                resellerCtrl.buyBulk(Decimal.ToInt32(BulkVoucherAmount));
 
                 return Ok();
             }
@@ -124,7 +130,7 @@ namespace NanoFinAPI.Controllers
 
 
         //Send bulk voucher recipient details unknown
-        public IHttpActionResult sendBulkVoucher_RecipientUnknown(int resellerUserID, string recipientDetails, decimal transferAmount)
+        public async Task<IHttpActionResult> sendBulkVoucher_RecipientUnknown(int resellerUserID, string recipientDetails, decimal transferAmount)
         {
             if (isUserReseller(resellerUserID))
             {
@@ -138,6 +144,10 @@ namespace NanoFinAPI.Controllers
                     else
                     {
                          SendVoucher(resellerUserID, recipientUserID, transferAmount, 2, 2);
+
+                        MResellerController resellerCtrl = new MResellerController(resellerUserID);
+                        resellerCtrl = await resellerCtrl.init();
+                        await resellerCtrl.sendBulk(recipientUserID, Decimal.ToInt32(transferAmount));
                     }
                 }
                 else
@@ -154,7 +164,7 @@ namespace NanoFinAPI.Controllers
         }
 
         //Send bulk voucher recipient details known
-        public IHttpActionResult sendBulkVoucher(int resellerUserID, int recipientID, decimal transferAmount)
+        public async Task<IHttpActionResult> sendBulkVoucher(int resellerUserID, int recipientID, decimal transferAmount)
         {
             if (isUserReseller(resellerUserID))
             {
@@ -166,7 +176,12 @@ namespace NanoFinAPI.Controllers
                     }
                     else
                     {
-                         SendVoucher(resellerUserID, recipientID, transferAmount, 2, 2);
+                        SendVoucher(resellerUserID, recipientID, transferAmount, 2, 2);
+
+                        MResellerController resellerCtrl = new MResellerController(resellerUserID);
+                        resellerCtrl = await resellerCtrl.init();
+                        await resellerCtrl.sendBulk(recipientID, Decimal.ToInt32(transferAmount));
+
                     }
                 }
                 else
@@ -182,7 +197,7 @@ namespace NanoFinAPI.Controllers
             }
         }
 
-        public IHttpActionResult consumerSendVoucher(int consumerUserID, int recipientID, decimal transferAmount)
+        public async Task<IHttpActionResult> consumerSendVoucher(int consumerUserID, int recipientID, decimal transferAmount)
         {
             if (isUserConsumer(consumerUserID) && isUserConsumer(recipientID))
             {
@@ -195,6 +210,11 @@ namespace NanoFinAPI.Controllers
                     else
                     {
                          SendVoucher(consumerUserID, recipientID, transferAmount, 21, 2);
+
+                        MConsumerController consumerCtrl = new MConsumerController(consumerUserID);
+                        consumerCtrl = await consumerCtrl.init();
+                        await consumerCtrl.sendVoucherToConsumer(recipientID, Decimal.ToInt32(transferAmount));
+
                     }
 
 
@@ -212,7 +232,7 @@ namespace NanoFinAPI.Controllers
             }
         }
 
-        public IHttpActionResult consumerSendVoucher_RecipientUnknown(int consumerUserID, string recipientDetails, decimal transferAmount)
+        public async Task<IHttpActionResult> consumerSendVoucher_RecipientUnknown(int consumerUserID, string recipientDetails, decimal transferAmount)
         {
             if (isUserConsumer(consumerUserID))
             {
@@ -220,6 +240,12 @@ namespace NanoFinAPI.Controllers
                 if (isUserConsumer(recipientUserID))
                 {
                      SendVoucher(consumerUserID, recipientUserID, transferAmount, 21, 2);
+
+
+                    MConsumerController consumerCtrl = new MConsumerController(consumerUserID);
+                    consumerCtrl = await consumerCtrl.init();
+                    await consumerCtrl.sendVoucherToConsumer(recipientUserID, Decimal.ToInt32(transferAmount));
+
                     return Ok();
                 }
                 else
