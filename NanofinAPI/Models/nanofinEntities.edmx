@@ -357,6 +357,54 @@ warning 6002: The table/view 'def.database_nanofin.activeproductitemswithdetail'
           <Property Name="claimtemplate_ID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.demographicconsumerproductlocationlastmonthsales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="demographicconsumerproductlocationlastmonthsales">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="numConsumers" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="numMartialStatus" />
+            <PropertyRef Name="numEmploymentStatus" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="datum" Type="varchar" MaxLength="37" />
+          <Property Name="transactionLocation" Type="int" />
+          <Property Name="numConsumers" Type="bigint" Nullable="false" />
+          <Property Name="gender" Type="varchar" MaxLength="10" />
+          <Property Name="maritalStatus" Type="varchar" MaxLength="30" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="numMartialStatus" Type="bigint" Nullable="false" />
+          <Property Name="employmentStatus" Type="varchar" MaxLength="80" />
+          <Property Name="numEmploymentStatus" Type="bigint" Nullable="false" />
+          <Property Name="netIncome" Type="decimal" Precision="12" Scale="6" />
+          <Property Name="NumDependants" Type="decimal" Precision="14" Scale="4" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.demographicconsumerproductlocationmonthlysales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="demographicconsumerproductlocationmonthlysales">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="numConsumers" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="numMartialStatus" />
+            <PropertyRef Name="numEmploymentStatus" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="datum" Type="varchar" MaxLength="37" />
+          <Property Name="transactionLocation" Type="int" />
+          <Property Name="numConsumers" Type="bigint" Nullable="false" />
+          <Property Name="gender" Type="varchar" MaxLength="10" />
+          <Property Name="maritalStatus" Type="varchar" MaxLength="30" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="numMartialStatus" Type="bigint" Nullable="false" />
+          <Property Name="employmentStatus" Type="varchar" MaxLength="80" />
+          <Property Name="numEmploymentStatus" Type="bigint" Nullable="false" />
+          <Property Name="netIncome" Type="decimal" Precision="12" Scale="6" />
+          <Property Name="NumDependants" Type="decimal" Precision="14" Scale="4" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.insuranceproducttypemonthlysales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="insuranceproducttypemonthlysales">
           <Key>
@@ -471,6 +519,21 @@ warning 6002: The table/view 'def.database_nanofin.monthlyprovincesalesview' doe
           <Property Name="ProductProvider_ID" Type="int" Nullable="false" />
           <Property Name="Province" Type="varchar" MaxLength="32" />
           <Property Name="LatLng" Type="varchar" MaxLength="64" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.monthlyprovincialproducttypedistribution' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="monthlyprovincialproducttypedistribution">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="activeProductItemEndDate" Type="datetime" Precision="0" />
+          <Property Name="InsuranceType_ID" Type="int" Nullable="false" />
+          <Property Name="Province" Type="varchar" MaxLength="32" />
+          <Property Name="insuranctTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -1044,6 +1107,40 @@ warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have 
 `activeproductitemswithdetail`.`claimtemplate_ID`
 FROM `activeproductitemswithdetail` AS `activeproductitemswithdetail`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="demographicconsumerproductlocationlastmonthsales" EntityType="Self.demographicconsumerproductlocationlastmonthsales" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`demographicconsumerproductlocationlastmonthsales`.`ActiveProductItems_ID`, 
+`demographicconsumerproductlocationlastmonthsales`.`datum`, 
+`demographicconsumerproductlocationlastmonthsales`.`transactionLocation`, 
+`demographicconsumerproductlocationlastmonthsales`.`numConsumers`, 
+`demographicconsumerproductlocationlastmonthsales`.`gender`, 
+`demographicconsumerproductlocationlastmonthsales`.`maritalStatus`, 
+`demographicconsumerproductlocationlastmonthsales`.`Product_ID`, 
+`demographicconsumerproductlocationlastmonthsales`.`numMartialStatus`, 
+`demographicconsumerproductlocationlastmonthsales`.`employmentStatus`, 
+`demographicconsumerproductlocationlastmonthsales`.`numEmploymentStatus`, 
+`demographicconsumerproductlocationlastmonthsales`.`netIncome`, 
+`demographicconsumerproductlocationlastmonthsales`.`NumDependants`, 
+`demographicconsumerproductlocationlastmonthsales`.`sales`
+FROM `demographicconsumerproductlocationlastmonthsales` AS `demographicconsumerproductlocationlastmonthsales`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="demographicconsumerproductlocationmonthlysales" EntityType="Self.demographicconsumerproductlocationmonthlysales" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`demographicconsumerproductlocationmonthlysales`.`ActiveProductItems_ID`, 
+`demographicconsumerproductlocationmonthlysales`.`datum`, 
+`demographicconsumerproductlocationmonthlysales`.`transactionLocation`, 
+`demographicconsumerproductlocationmonthlysales`.`numConsumers`, 
+`demographicconsumerproductlocationmonthlysales`.`gender`, 
+`demographicconsumerproductlocationmonthlysales`.`maritalStatus`, 
+`demographicconsumerproductlocationmonthlysales`.`Product_ID`, 
+`demographicconsumerproductlocationmonthlysales`.`numMartialStatus`, 
+`demographicconsumerproductlocationmonthlysales`.`employmentStatus`, 
+`demographicconsumerproductlocationmonthlysales`.`numEmploymentStatus`, 
+`demographicconsumerproductlocationmonthlysales`.`netIncome`, 
+`demographicconsumerproductlocationmonthlysales`.`NumDependants`, 
+`demographicconsumerproductlocationmonthlysales`.`sales`
+FROM `demographicconsumerproductlocationmonthlysales` AS `demographicconsumerproductlocationmonthlysales`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="insuranceproducttypemonthlysales" EntityType="Self.insuranceproducttypemonthlysales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `insuranceproducttypemonthlysales`.`ActiveProductItems_ID`, 
@@ -1126,6 +1223,16 @@ FROM `monthlyproductsalesperlocation` AS `monthlyproductsalesperlocation`</Defin
 `monthlyprovincesalesview`.`LatLng`, 
 `monthlyprovincesalesview`.`sales`
 FROM `monthlyprovincesalesview` AS `monthlyprovincesalesview`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="monthlyprovincialproducttypedistribution" EntityType="Self.monthlyprovincialproducttypedistribution" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`monthlyprovincialproducttypedistribution`.`ActiveProductItems_ID`, 
+`monthlyprovincialproducttypedistribution`.`activeProductItemEndDate`, 
+`monthlyprovincialproducttypedistribution`.`InsuranceType_ID`, 
+`monthlyprovincialproducttypedistribution`.`Province`, 
+`monthlyprovincialproducttypedistribution`.`insuranctTypeDescription`, 
+`monthlyprovincialproducttypedistribution`.`sales`
+FROM `monthlyprovincialproducttypedistribution` AS `monthlyprovincialproducttypedistribution`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="productsalespermonth" EntityType="Self.productsalespermonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
@@ -2350,6 +2457,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             <Parameter Name="locationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="activeproductitemswithdetails" EntityType="nanofinEntites.activeproductitemswithdetail" />
+          <EntitySet Name="demographicconsumerproductlocationlastmonthsales" EntityType="nanofinEntites.demographicconsumerproductlocationlastmonthsale" />
+          <EntitySet Name="demographicconsumerproductlocationmonthlysales" EntityType="nanofinEntites.demographicconsumerproductlocationmonthlysale" />
           <EntitySet Name="insuranceproducttypemonthlysales" EntityType="nanofinEntites.insuranceproducttypemonthlysale" />
           <EntitySet Name="lastmonthinsurancetypesales" EntityType="nanofinEntites.lastmonthinsurancetypesale" />
           <EntitySet Name="lastmonthprovincesales" EntityType="nanofinEntites.lastmonthprovincesale" />
@@ -2358,6 +2467,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySet Name="monthlylocationsales" EntityType="nanofinEntites.monthlylocationsale" />
           <EntitySet Name="monthlyproductsalesperlocations" EntityType="nanofinEntites.monthlyproductsalesperlocation" />
           <EntitySet Name="monthlyprovincesalesviews" EntityType="nanofinEntites.monthlyprovincesalesview" />
+          <EntitySet Name="monthlyprovincialproducttypedistributions" EntityType="nanofinEntites.monthlyprovincialproducttypedistribution" />
           <EntitySet Name="productsalespermonths" EntityType="nanofinEntites.productsalespermonth" />
           <EntitySet Name="productswithpurchases" EntityType="nanofinEntites.productswithpurchas" />
           <EntitySet Name="saleslastmonths" EntityType="nanofinEntites.saleslastmonth" />
@@ -2403,6 +2513,50 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="claimTimeframe" Type="DateTime" />
           <Property Name="claimContactNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="claimtemplate_ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="demographicconsumerproductlocationlastmonthsale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="numConsumers" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="numMartialStatus" />
+            <PropertyRef Name="numEmploymentStatus" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="numConsumers" Type="Int64" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="numMartialStatus" Type="Int64" Nullable="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="numEmploymentStatus" Type="Int64" Nullable="false" />
+          <Property Name="netIncome" Type="Decimal" />
+          <Property Name="NumDependants" Type="Decimal" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="demographicconsumerproductlocationmonthlysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="numConsumers" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="numMartialStatus" />
+            <PropertyRef Name="numEmploymentStatus" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="numConsumers" Type="Int64" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="numMartialStatus" Type="Int64" Nullable="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="numEmploymentStatus" Type="Int64" Nullable="false" />
+          <Property Name="netIncome" Type="Decimal" />
+          <Property Name="NumDependants" Type="Decimal" />
+          <Property Name="sales" Type="Decimal" />
         </EntityType>
         <EntityType Name="insuranceproducttypemonthlysale">
           <Key>
@@ -2503,6 +2657,19 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
           <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="monthlyprovincialproducttypedistribution">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemEndDate" Type="DateTime" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
         <EntityType Name="productsalespermonth">
@@ -2933,6 +3100,44 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="demographicconsumerproductlocationlastmonthsales">
+            <EntityTypeMapping TypeName="nanofinEntites.demographicconsumerproductlocationlastmonthsale">
+              <MappingFragment StoreEntitySet="demographicconsumerproductlocationlastmonthsales">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="NumDependants" ColumnName="NumDependants" />
+                <ScalarProperty Name="netIncome" ColumnName="netIncome" />
+                <ScalarProperty Name="numEmploymentStatus" ColumnName="numEmploymentStatus" />
+                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
+                <ScalarProperty Name="numMartialStatus" ColumnName="numMartialStatus" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="numConsumers" ColumnName="numConsumers" />
+                <ScalarProperty Name="transactionLocation" ColumnName="transactionLocation" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="demographicconsumerproductlocationmonthlysales">
+            <EntityTypeMapping TypeName="nanofinEntites.demographicconsumerproductlocationmonthlysale">
+              <MappingFragment StoreEntitySet="demographicconsumerproductlocationmonthlysales">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="NumDependants" ColumnName="NumDependants" />
+                <ScalarProperty Name="netIncome" ColumnName="netIncome" />
+                <ScalarProperty Name="numEmploymentStatus" ColumnName="numEmploymentStatus" />
+                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
+                <ScalarProperty Name="numMartialStatus" ColumnName="numMartialStatus" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="numConsumers" ColumnName="numConsumers" />
+                <ScalarProperty Name="transactionLocation" ColumnName="transactionLocation" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="insuranceproducttypemonthlysales">
             <EntityTypeMapping TypeName="nanofinEntites.insuranceproducttypemonthlysale">
               <MappingFragment StoreEntitySet="insuranceproducttypemonthlysales">
@@ -3029,6 +3234,18 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
                 <ScalarProperty Name="Province" ColumnName="Province" />
                 <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
                 <ScalarProperty Name="datum" ColumnName="datum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="monthlyprovincialproducttypedistributions">
+            <EntityTypeMapping TypeName="nanofinEntites.monthlyprovincialproducttypedistribution">
+              <MappingFragment StoreEntitySet="monthlyprovincialproducttypedistribution">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="insuranctTypeDescription" ColumnName="insuranctTypeDescription" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+                <ScalarProperty Name="activeProductItemEndDate" ColumnName="activeProductItemEndDate" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

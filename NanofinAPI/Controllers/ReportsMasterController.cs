@@ -200,6 +200,23 @@ namespace NanofinAPI.Controllers
 
         #endregion
 
+        #region demograpgic product purchase information
+        [HttpGet]
+        public List<demographicconsumerproductlocationlastmonthsale> getDemographicProductLocationLastMonthSales(int productID, int locationsID)
+        {
+            return (from c in db.demographicconsumerproductlocationlastmonthsales where c.Product_ID == productID && c.transactionLocation == locationsID orderby  c.numConsumers descending select c).ToList();
+        }
+
+        [HttpGet]
+        public List<demographicconsumerproductlocationlastmonthsale> getDemographicLocationLastMonthSales(int locationsID)
+        {
+            return (from c in db.demographicconsumerproductlocationlastmonthsales where c.transactionLocation == locationsID orderby c.numConsumers descending select c).ToList();
+        }
+
+        #endregion
+
+
+
         #region Insurance Type
         [HttpGet]
           public List<lastmonthinsurancetypesale>  getLastMonthInsuranceTypeSales()
