@@ -317,6 +317,46 @@
           <Property Name="voucherTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.activeproductitemswithdetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="activeproductitemswithdetail">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="Consumer_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="activeProductItemPolicyNum" />
+            <PropertyRef Name="productValue" />
+            <PropertyRef Name="duration" />
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="InsuranceType_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Consumer_ID" Type="int" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="activeProductItemPolicyNum" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="isActive" Type="bool" />
+          <Property Name="productValue" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="duration" Type="int" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="date" />
+          <Property Name="activeProductItemEndDate" Type="datetime" Precision="0" />
+          <Property Name="ProductProvider_ID" Type="int" Nullable="false" />
+          <Property Name="ProductType_ID" Type="int" />
+          <Property Name="productName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="productDescription" Type="varchar" MaxLength="1000" />
+          <Property Name="productPolicyDocPath" Type="varchar" MaxLength="100" />
+          <Property Name="isAvailableForPurchase" Type="bool" />
+          <Property Name="InsuranceType_ID" Type="int" Nullable="false" />
+          <Property Name="ipCoverAmount" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="ipUnitType" Type="int" />
+          <Property Name="UnitTypeDescription" Type="varchar" MaxLength="70" />
+          <Property Name="ipUnitCost" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="claimTimeframe" Type="datetime" Precision="0" />
+          <Property Name="claimContactNo" Type="varchar" MaxLength="16" />
+          <Property Name="claimtemplate_ID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.insuranceproducttypemonthlysales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="insuranceproducttypemonthlysales">
           <Key>
@@ -445,6 +485,20 @@ warning 6002: The table/view 'def.database_nanofin.productsalespermonth' does no
           <Property Name="Product_ID" Type="int" Nullable="false" />
           <Property Name="productName" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.productswithpurchases' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="productswithpurchases">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="InsuranceType_ID" Type="int" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.saleslastmonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -962,6 +1016,34 @@ warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have 
           <EntitySet Name="voucher" EntityType="Self.voucher" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertransaction" EntityType="Self.vouchertransaction" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="vouchertype" EntityType="Self.vouchertype" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="activeproductitemswithdetail" EntityType="Self.activeproductitemswithdetail" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`activeproductitemswithdetail`.`ActiveProductItems_ID`, 
+`activeproductitemswithdetail`.`User_ID`, 
+`activeproductitemswithdetail`.`Consumer_ID`, 
+`activeproductitemswithdetail`.`Product_ID`, 
+`activeproductitemswithdetail`.`activeProductItemPolicyNum`, 
+`activeproductitemswithdetail`.`isActive`, 
+`activeproductitemswithdetail`.`productValue`, 
+`activeproductitemswithdetail`.`duration`, 
+`activeproductitemswithdetail`.`activeProductItemStartDate`, 
+`activeproductitemswithdetail`.`activeProductItemEndDate`, 
+`activeproductitemswithdetail`.`ProductProvider_ID`, 
+`activeproductitemswithdetail`.`ProductType_ID`, 
+`activeproductitemswithdetail`.`productName`, 
+`activeproductitemswithdetail`.`productDescription`, 
+`activeproductitemswithdetail`.`productPolicyDocPath`, 
+`activeproductitemswithdetail`.`isAvailableForPurchase`, 
+`activeproductitemswithdetail`.`InsuranceType_ID`, 
+`activeproductitemswithdetail`.`ipCoverAmount`, 
+`activeproductitemswithdetail`.`ipUnitType`, 
+`activeproductitemswithdetail`.`UnitTypeDescription`, 
+`activeproductitemswithdetail`.`ipUnitCost`, 
+`activeproductitemswithdetail`.`claimTimeframe`, 
+`activeproductitemswithdetail`.`claimContactNo`, 
+`activeproductitemswithdetail`.`claimtemplate_ID`
+FROM `activeproductitemswithdetail` AS `activeproductitemswithdetail`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="insuranceproducttypemonthlysales" EntityType="Self.insuranceproducttypemonthlysales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `insuranceproducttypemonthlysales`.`ActiveProductItems_ID`, 
@@ -1053,6 +1135,14 @@ FROM `monthlyprovincesalesview` AS `monthlyprovincesalesview`</DefiningQuery>
 `productsalespermonth`.`productName`, 
 `productsalespermonth`.`sales`
 FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="productswithpurchases" EntityType="Self.productswithpurchases" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`productswithpurchases`.`Product_ID`, 
+`productswithpurchases`.`name`, 
+`productswithpurchases`.`InsuranceType_ID`, 
+`productswithpurchases`.`insuranctTypeDescription`
+FROM `productswithpurchases` AS `productswithpurchases`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="saleslastmonth" EntityType="Self.saleslastmonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
@@ -2259,6 +2349,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             <Parameter Name="productID" Mode="In" Type="Int32" />
             <Parameter Name="locationID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="activeproductitemswithdetails" EntityType="nanofinEntites.activeproductitemswithdetail" />
           <EntitySet Name="insuranceproducttypemonthlysales" EntityType="nanofinEntites.insuranceproducttypemonthlysale" />
           <EntitySet Name="lastmonthinsurancetypesales" EntityType="nanofinEntites.lastmonthinsurancetypesale" />
           <EntitySet Name="lastmonthprovincesales" EntityType="nanofinEntites.lastmonthprovincesale" />
@@ -2268,12 +2359,51 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySet Name="monthlyproductsalesperlocations" EntityType="nanofinEntites.monthlyproductsalesperlocation" />
           <EntitySet Name="monthlyprovincesalesviews" EntityType="nanofinEntites.monthlyprovincesalesview" />
           <EntitySet Name="productsalespermonths" EntityType="nanofinEntites.productsalespermonth" />
+          <EntitySet Name="productswithpurchases" EntityType="nanofinEntites.productswithpurchas" />
           <EntitySet Name="saleslastmonths" EntityType="nanofinEntites.saleslastmonth" />
           <EntitySet Name="salespermonths" EntityType="nanofinEntites.salespermonth" />
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="monthlyProvinceSales_Result" />
         <ComplexType Name="ProductLocationSales_Result" />
         <ComplexType Name="productPredictedSalesPerLocation_Result" />
+        <EntityType Name="activeproductitemswithdetail">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="Consumer_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="activeProductItemPolicyNum" />
+            <PropertyRef Name="productValue" />
+            <PropertyRef Name="duration" />
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="InsuranceType_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemPolicyNum" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="productValue" Type="Decimal" Nullable="false" />
+          <Property Name="duration" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="activeProductItemEndDate" Type="DateTime" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="ProductType_ID" Type="Int32" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="productDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="productPolicyDocPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isAvailableForPurchase" Type="Boolean" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="ipCoverAmount" Type="Decimal" />
+          <Property Name="ipUnitType" Type="Int32" />
+          <Property Name="UnitTypeDescription" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ipUnitCost" Type="Decimal" />
+          <Property Name="claimTimeframe" Type="DateTime" />
+          <Property Name="claimContactNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="claimtemplate_ID" Type="Int32" />
+        </EntityType>
         <EntityType Name="insuranceproducttypemonthlysale">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
@@ -2386,6 +2516,18 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
+        <EntityType Name="productswithpurchas">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="saleslastmonth">
           <Key>
             <PropertyRef Name="Product_ID" />
@@ -2405,7 +2547,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -2761,6 +2903,36 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
               <ComplexTypeMapping TypeName="nanofinEntites.productPredictedSalesPerLocation_Result" />
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="activeproductitemswithdetails">
+            <EntityTypeMapping TypeName="nanofinEntites.activeproductitemswithdetail">
+              <MappingFragment StoreEntitySet="activeproductitemswithdetail">
+                <ScalarProperty Name="claimtemplate_ID" ColumnName="claimtemplate_ID" />
+                <ScalarProperty Name="claimContactNo" ColumnName="claimContactNo" />
+                <ScalarProperty Name="claimTimeframe" ColumnName="claimTimeframe" />
+                <ScalarProperty Name="ipUnitCost" ColumnName="ipUnitCost" />
+                <ScalarProperty Name="UnitTypeDescription" ColumnName="UnitTypeDescription" />
+                <ScalarProperty Name="ipUnitType" ColumnName="ipUnitType" />
+                <ScalarProperty Name="ipCoverAmount" ColumnName="ipCoverAmount" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+                <ScalarProperty Name="isAvailableForPurchase" ColumnName="isAvailableForPurchase" />
+                <ScalarProperty Name="productPolicyDocPath" ColumnName="productPolicyDocPath" />
+                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="ProductType_ID" ColumnName="ProductType_ID" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+                <ScalarProperty Name="activeProductItemEndDate" ColumnName="activeProductItemEndDate" />
+                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="productValue" ColumnName="productValue" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="activeProductItemPolicyNum" ColumnName="activeProductItemPolicyNum" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="insuranceproducttypemonthlysales">
             <EntityTypeMapping TypeName="nanofinEntites.insuranceproducttypemonthlysale">
               <MappingFragment StoreEntitySet="insuranceproducttypemonthlysales">
@@ -2868,6 +3040,16 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
                 <ScalarProperty Name="datum" ColumnName="datum" />
                 <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productswithpurchases">
+            <EntityTypeMapping TypeName="nanofinEntites.productswithpurchas">
+              <MappingFragment StoreEntitySet="productswithpurchases">
+                <ScalarProperty Name="insuranctTypeDescription" ColumnName="insuranctTypeDescription" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

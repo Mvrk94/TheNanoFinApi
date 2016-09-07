@@ -40,24 +40,9 @@ namespace NanofinAPI.Controllers
         }
 
         [HttpGet]
-        public List<productView> getProductList()
+        public List<productswithpurchas> getProductList()
         {
-            var toreturn = new List<productView>();
-            var insuranceProductList = db.insuranceproducts.ToList();
-
-
-            foreach (var  p in insuranceProductList)
-            {
-                toreturn.Add(new productView
-                {
-                    ProductID = p.Product_ID,
-                    name = p.product.productName,
-                    insuranceType = p.InsuranceType_ID
-                });
-
-            }
-
-            return toreturn;
+            return (from c in db.productswithpurchases select c).ToList();
         }
 
         #region Monthly Sales
@@ -187,18 +172,12 @@ namespace NanofinAPI.Controllers
 
 
         [HttpGet]
-        public List<DTOmonthlylocationsale> getCurrentMonthLocationProductSalesDistribution(int locationID)
+        public List<monthlylocationsale> getCurrentMonthLocationProductSalesDistribution(int locationID)
         {
-            var toreturn = new List<DTOmonthlylocationsale>();
             var lowerDate = new DateTime(2016, 08, 1);
             var upperDate = new DateTime(2016, 09, 01);
-            var list = (from c in db.monthlylocationsales where c.datum > lowerDate where c.transactionLocation == locationID  && c.datum < upperDate  select c).ToList();
-
-            foreach( var p  in list)
-            {
-                toreturn.Add(new DTOmonthlylocationsale(p));
-            }
-
+            var toreturn = (from c in db.monthlylocationsales where c.datum > lowerDate where c.transactionLocation == locationID  && c.datum < upperDate  select c).ToList();
+            
             return toreturn;
         }
 
@@ -210,24 +189,16 @@ namespace NanofinAPI.Controllers
         }
 
         [HttpGet]
-        public List<DTOmonthlylocationsale> getProductSalesThisMonth(int productID)
+        public List<monthlylocationsale> getProductSalesThisMonth(int productID)
         {
-            var toreturn = new List<DTOmonthlylocationsale>();
             var lowerDate = new DateTime(2016, 08, 1);
             var upperDate = new DateTime(2016, 09, 01);
-            var list = (from c in db.monthlylocationsales where c.datum > lowerDate where c.Product_ID == productID && c.datum < upperDate select c).ToList();
-
-            foreach (var p in list)
-            {
-                toreturn.Add(new DTOmonthlylocationsale(p));
-            }
+            var toreturn = (from c in db.monthlylocationsales where c.datum > lowerDate where c.Product_ID == productID && c.datum < upperDate select c).ToList();
 
             return toreturn;
-
         }
 
         #endregion
-
 
         #region Insurance Type
         [HttpGet]
