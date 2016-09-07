@@ -366,6 +366,59 @@
     <Compile Include="Models\vouchertype.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="MultiChainLib\Client\AddNodeCommand.cs" />
+    <Compile Include="MultiChainLib\Client\BlockchainPermissions.cs" />
+    <Compile Include="MultiChainLib\Client\CheckBlockType.cs" />
+    <Compile Include="MultiChainLib\Client\EventArgsT.cs" />
+    <Compile Include="MultiChainLib\Client\JsonRpcRequest.cs" />
+    <Compile Include="MultiChainLib\Client\JsonRpcResponse.cs" />
+    <Compile Include="MultiChainLib\Client\MultiChainClient.cs" />
+    <Compile Include="MultiChainLib\Controllers\MConsumerController.cs" />
+    <Compile Include="MultiChainLib\Controllers\MResellerController.cs" />
+    <Compile Include="MultiChainLib\Controllers\MUserController.cs" />
+    <Compile Include="MultiChainLib\Controllers\MUtilityClass.cs" />
+    <Compile Include="MultiChainLib\Model\AddressGroupingResponse.cs" />
+    <Compile Include="MultiChainLib\Model\AddressResponse.cs" />
+    <Compile Include="MultiChainLib\Model\AppendRawExchangeResponse.cs" />
+    <Compile Include="MultiChainLib\Model\AssetBalanceResponse.cs" />
+    <Compile Include="MultiChainLib\Model\AssetResponse.cs" />
+    <Compile Include="MultiChainLib\Model\BlockchainInfoResponse.cs" />
+    <Compile Include="MultiChainLib\Model\BlockResponse.cs" />
+    <Compile Include="MultiChainLib\Model\bulkVoucherJSON.cs" />
+    <Compile Include="MultiChainLib\Model\ChainTipResponse.cs" />
+    <Compile Include="MultiChainLib\Model\DecodeRawExchangeResponse.cs" />
+    <Compile Include="MultiChainLib\Model\GetInfoResponse.cs" />
+    <Compile Include="MultiChainLib\Model\GetServerInfoResponse.cs" />
+    <Compile Include="MultiChainLib\Model\GetTransactionResponse.cs" />
+    <Compile Include="MultiChainLib\Model\IssueAssetParamsJSON.cs" />
+    <Compile Include="MultiChainLib\Model\ListPermissionsResponse.cs" />
+    <Compile Include="MultiChainLib\Model\ListSinceLastBlockResponse.cs" />
+    <Compile Include="MultiChainLib\Model\MempoolInfoResponse.cs" />
+    <Compile Include="MultiChainLib\Model\MempoolResponse.cs" />
+    <Compile Include="MultiChainLib\Model\MetaDataJSON.cs" />
+    <Compile Include="MultiChainLib\Model\MiningInfoResponse.cs" />
+    <Compile Include="MultiChainLib\Model\MultiSigResponse.cs" />
+    <Compile Include="MultiChainLib\Model\NetTotalsResponse.cs" />
+    <Compile Include="MultiChainLib\Model\NetworkInfoResponse.cs" />
+    <Compile Include="MultiChainLib\Model\NetworkResponse.cs" />
+    <Compile Include="MultiChainLib\Model\PeerResponse.cs" />
+    <Compile Include="MultiChainLib\Model\PermissionsResponse.cs" />
+    <Compile Include="MultiChainLib\Model\PrepareLockUnspentFromResponse.cs" />
+    <Compile Include="MultiChainLib\Model\ReceivedResponse.cs" />
+    <Compile Include="MultiChainLib\Model\ScriptPubKeyResponse.cs" />
+    <Compile Include="MultiChainLib\Model\ScriptResponse.cs" />
+    <Compile Include="MultiChainLib\Model\ScriptSigResponse.cs" />
+    <Compile Include="MultiChainLib\Model\TransactionResponse.cs" />
+    <Compile Include="MultiChainLib\Model\TransactionVin.cs" />
+    <Compile Include="MultiChainLib\Model\TransactionVout.cs" />
+    <Compile Include="MultiChainLib\Model\TxAssetResponse.cs" />
+    <Compile Include="MultiChainLib\Model\TxOutResponse.cs" />
+    <Compile Include="MultiChainLib\Model\TxOutSetInfoResponse.cs" />
+    <Compile Include="MultiChainLib\Model\UnspentAssetResponse.cs" />
+    <Compile Include="MultiChainLib\Model\UnspentResponse.cs" />
+    <Compile Include="MultiChainLib\Model\VerboseTransactionResponse.cs" />
+    <Compile Include="MultiChainLib\Model\voucherJSON.cs" />
+    <Compile Include="MultiChainLib\Model\WalletInfoResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +480,7 @@
     <Content Include="Models\nanofinEntities.edmx.diagram">
       <DependentUpon>nanofinEntities.edmx</DependentUpon>
     </Content>
+    <Content Include="MultiChainLib\Solution Items\COPYING" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
