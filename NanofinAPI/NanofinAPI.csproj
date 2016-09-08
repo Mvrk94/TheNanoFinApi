@@ -210,7 +210,31 @@
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsuranceManagerHandlerController.cs" />
+    <Compile Include="Models\activeproductitem.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\activeproductitemswithdetail.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claim.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claimtemplate.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claimuploaddocument.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\consumer.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\demographicconsumerproductlocationlastmonthsale.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\demographicconsumerproductlocationmonthlysale.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\document.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DTOEnvironment\nanofinEntities.cs" />
@@ -226,24 +250,6 @@
     <Compile Include="Controllers\WalletHandlerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\activeproductitem.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\claim.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\claimtemplate.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\claimuploaddocument.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\consumer.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\document.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DTOEnvironment\DTOconsumerEnvironment.cs" />
     <Compile Include="Models\DTOEnvironment\DTOinsuranceManagerEnvironment.cs" />
@@ -291,6 +297,9 @@
     <Compile Include="Models\monthlyProvinceSales_Result.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\monthlyprovincialproducttypedistribution.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\nanofinEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -307,6 +316,9 @@
       <DependentUpon>nanofinEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\notificationlog.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\overallproductlocationsale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\processapplication.cs">
@@ -333,7 +345,13 @@
     <Compile Include="Models\productsalespermonth.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\productswithpurchas.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\producttype.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\provincialinsurancetypesale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\reseller.cs">

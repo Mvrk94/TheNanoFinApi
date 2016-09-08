@@ -219,7 +219,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         {
             if (entityObjct == null) entityObjct = new monthlylocationsale();
 
-            entityObjct.datum = dto.datum;
+            //entityObjct.datum = dto.datum;
             entityObjct.Product_ID = dto.Product_ID;
             entityObjct.transactionLocation = dto.transactionLocation;
             entityObjct.sales = dto.sales;

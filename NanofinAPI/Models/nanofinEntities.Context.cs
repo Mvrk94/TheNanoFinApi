@@ -53,6 +53,9 @@ namespace NanofinAPI.Models
         public virtual DbSet<voucher> vouchers { get; set; }
         public virtual DbSet<vouchertransaction> vouchertransactions { get; set; }
         public virtual DbSet<vouchertype> vouchertypes { get; set; }
+        public virtual DbSet<activeproductitemswithdetail> activeproductitemswithdetails { get; set; }
+        public virtual DbSet<demographicconsumerproductlocationlastmonthsale> demographicconsumerproductlocationlastmonthsales { get; set; }
+        public virtual DbSet<demographicconsumerproductlocationmonthlysale> demographicconsumerproductlocationmonthlysales { get; set; }
         public virtual DbSet<insuranceproducttypemonthlysale> insuranceproducttypemonthlysales { get; set; }
         public virtual DbSet<lastmonthinsurancetypesale> lastmonthinsurancetypesales { get; set; }
         public virtual DbSet<lastmonthprovincesale> lastmonthprovincesales { get; set; }
@@ -61,10 +64,13 @@ namespace NanofinAPI.Models
         public virtual DbSet<monthlylocationsale> monthlylocationsales { get; set; }
         public virtual DbSet<monthlyproductsalesperlocation> monthlyproductsalesperlocations { get; set; }
         public virtual DbSet<monthlyprovincesalesview> monthlyprovincesalesviews { get; set; }
+        public virtual DbSet<monthlyprovincialproducttypedistribution> monthlyprovincialproducttypedistributions { get; set; }
+        public virtual DbSet<overallproductlocationsale> overallproductlocationsales { get; set; }
         public virtual DbSet<productsalespermonth> productsalespermonths { get; set; }
+        public virtual DbSet<productswithpurchas> productswithpurchases { get; set; }
         public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }
         public virtual DbSet<salespermonth> salespermonths { get; set; }
-        public virtual DbSet<activeproductitemswithdetail> activeproductitemswithdetails { get; set; }
+        public virtual DbSet<provincialinsurancetypesale> provincialinsurancetypesales { get; set; }
     
         public virtual ObjectResult<monthlyProvinceSales_Result> monthlyProvinceSales(Nullable<int> providerID)
         {

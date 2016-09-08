@@ -314,26 +314,27 @@ namespace NanofinAPI.Controllers
         {
             var consm = (from c in db.consumers select c).ToArray();
             var res = (from c in db.resellers select c).ToArray();
-            var loc = (from c in db.locations select c).ToArray();
-            var leng = loc.Length;
-            var rand = new Random();
-            var resLeng = res.Length;
-            var conLeng = consm.Length;
+            var loc = (from c in db.locations where c.Location_ID >= 5491 select c).ToArray();
             var locationID = 0;
+            var locationIndex = 0;
 
-            for( int r = 0;  r <  15; r++)
+            for ( int r = 0;  r <  16; r++)
             {
-                locationID = loc[rand.Next(leng)].Location_ID;
+                if (locationIndex == 5) locationIndex = 0;
+                locationID = loc[locationIndex].Location_ID;
                 res[r].LocationID = locationID;
                 for (int c = r*3; c < (r+1)*3; c++)
                 {
                     consm[c].Location_ID = locationID;
                 }
+                locationIndex++;
                 db.SaveChangesAsync();
             }
-
             return true;
         }
+
+
+
 
 
         // GET: api/testManager
