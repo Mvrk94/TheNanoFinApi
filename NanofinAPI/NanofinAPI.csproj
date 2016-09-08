@@ -342,6 +342,9 @@
     <Compile Include="Models\producttype.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\provincialinsurancetypesale.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\reseller.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>

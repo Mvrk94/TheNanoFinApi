@@ -590,6 +590,21 @@ warning 6002: The table/view 'def.database_nanofin.productswithpurchases' does n
           <Property Name="insuranctTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.provincialinsurancetypesales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="provincialinsurancetypesales">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="datum" Type="varchar" MaxLength="37" />
+          <Property Name="InsuranceType_ID" Type="int" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Province" Type="varchar" MaxLength="32" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.saleslastmonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="saleslastmonth">
           <Key>
@@ -1295,6 +1310,16 @@ FROM `productsalespermonth` AS `productsalespermonth`</DefiningQuery>
 `productswithpurchases`.`insuranctTypeDescription`
 FROM `productswithpurchases` AS `productswithpurchases`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="provincialinsurancetypesales" EntityType="Self.provincialinsurancetypesales" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`provincialinsurancetypesales`.`ActiveProductItems_ID`, 
+`provincialinsurancetypesales`.`datum`, 
+`provincialinsurancetypesales`.`InsuranceType_ID`, 
+`provincialinsurancetypesales`.`insuranctTypeDescription`, 
+`provincialinsurancetypesales`.`Province`, 
+`provincialinsurancetypesales`.`sales`
+FROM `provincialinsurancetypesales` AS `provincialinsurancetypesales`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="saleslastmonth" EntityType="Self.saleslastmonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `saleslastmonth`.`activeProductItemStartDate`, 
@@ -1674,6 +1699,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySet Name="productswithpurchases" EntityType="nanofinEntites.productswithpurchas" />
           <EntitySet Name="saleslastmonths" EntityType="nanofinEntites.saleslastmonth" />
           <EntitySet Name="salespermonths" EntityType="nanofinEntites.salespermonth" />
+          <EntitySet Name="provincialinsurancetypesales" EntityType="nanofinEntites.provincialinsurancetypesale" />
           </EntityContainer>
         <ComplexType Name="monthlyProvinceSales_Result" />
         <ComplexType Name="ProductLocationSales_Result" />
@@ -2783,6 +2809,19 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
+        <EntityType Name="provincialinsurancetypesale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3376,6 +3415,18 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
                 <ScalarProperty Name="sales" ColumnName="sales" />
                 <ScalarProperty Name="datum" ColumnName="datum" />
                 <ScalarProperty Name="activeProductItems_ID" ColumnName="activeProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="provincialinsurancetypesales">
+            <EntityTypeMapping TypeName="nanofinEntites.provincialinsurancetypesale">
+              <MappingFragment StoreEntitySet="provincialinsurancetypesales">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="insuranctTypeDescription" ColumnName="insuranctTypeDescription" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

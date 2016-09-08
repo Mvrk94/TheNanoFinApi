@@ -242,8 +242,20 @@ namespace NanofinAPI.Controllers
 
             return toreturn;
         }
+
+        [HttpGet]
+        public List<provincialinsurancetypesale> getProvincialProductType()
+        {
+            return (from c in db.provincialinsurancetypesales where c.datum == "2016-Aug" select c).ToList();
+
+        }
+
         #endregion
-      
+
+
+
+
+
         #region Utils
         private double []  generateTimeData(int size)
         {
