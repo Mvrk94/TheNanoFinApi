@@ -65,6 +65,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<monthlyproductsalesperlocation> monthlyproductsalesperlocations { get; set; }
         public virtual DbSet<monthlyprovincesalesview> monthlyprovincesalesviews { get; set; }
         public virtual DbSet<monthlyprovincialproducttypedistribution> monthlyprovincialproducttypedistributions { get; set; }
+        public virtual DbSet<overallproductlocationsale> overallproductlocationsales { get; set; }
         public virtual DbSet<productsalespermonth> productsalespermonths { get; set; }
         public virtual DbSet<productswithpurchas> productswithpurchases { get; set; }
         public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }
