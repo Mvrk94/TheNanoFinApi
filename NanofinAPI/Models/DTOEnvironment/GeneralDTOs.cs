@@ -333,7 +333,7 @@ namespace NanofinAPI.Models.DTOEnvironment
 
     public class DTOmonthlylocationsale
     {
-        public Nullable<System.DateTime> datum { get; set; }
+        public string datum { get; set; }
         public int Product_ID { get; set; }
         public Nullable<int> transactionLocation { get; set; }
         public Nullable<decimal> sales { get; set; }
@@ -343,7 +343,7 @@ namespace NanofinAPI.Models.DTOEnvironment
 
         public DTOmonthlylocationsale(monthlylocationsale entityObjct)
         {
-            datum = entityObjct.datum;
+           // datum = entityObjct.datum;
             Product_ID = entityObjct.Product_ID;
             productName = entityObjct.productName;
             transactionLocation = entityObjct.transactionLocation;
