@@ -10,6 +10,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using NanofinAPI.Models;
 using NanofinAPI.Models.DTOEnvironment;
+using TheNanoFinAPI.MultiChainLib.Controllers;
 
 namespace NanoFinAPI.Controllers
 {
@@ -18,7 +19,7 @@ namespace NanoFinAPI.Controllers
         private database_nanofinEntities db = new database_nanofinEntities();
 
         #region RedeemProduct Code
-        public IHttpActionResult redeemProduct(int userID, int productID, int numberUnits, DateTime startdate)
+        public async Task<IHttpActionResult> redeemProduct(int userID, int productID, int numberUnits, DateTime startdate)
         {
             //check that the minimum number of units is applied according to what is in db:
             if (!isValidNumUnits(productID,numberUnits))
@@ -92,10 +93,22 @@ namespace NanoFinAPI.Controllers
                     }
 
                 }//for loop
+
+                string productName = await prodIDToProdName(productID);
+                MConsumerController consumerCtrl = new MConsumerController(userID);
+                consumerCtrl = await consumerCtrl.init();
+                await consumerCtrl.redeemVoucher(productName, Decimal.ToInt32(prodTotalPrice));
+
                 return StatusCode(HttpStatusCode.OK);
             }
             return BadRequest("Insufficient voucher total");
         }//RedeemProduct method
+
+        public async Task<string> prodIDToProdName(int productID)
+        {
+            product tmp = await db.products.SingleAsync(l => l.Product_ID == productID);
+            return tmp.productName;
+        }
 
         [HttpGet]
         public bool isValidNumUnits(int productId, int numUnits)
