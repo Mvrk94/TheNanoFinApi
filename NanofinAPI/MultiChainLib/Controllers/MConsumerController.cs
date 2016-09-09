@@ -15,6 +15,8 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
         string nanoFinAddr;
         string burnAddress;
 
+        //invalidate insurance products products
+
         public MConsumerController(int consumerUserID)
         {
             client = new MultiChainClient("188.166.170.248", 6492, false, "multichainrpc", "AYBR44NDe7VdSWXHJCrR2i2xhCcnByorzHy6f6vaczTd", "NanoFinBlockChain");
