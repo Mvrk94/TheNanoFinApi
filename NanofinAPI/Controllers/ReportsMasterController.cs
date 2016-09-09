@@ -232,7 +232,7 @@ namespace NanofinAPI.Controllers
         public overallForeCast PredictInsuranceTypeSales(int insuranceTypeID, int numPredictions, int value1 = 1, int value2 = 5)
         {
             var toreturn = new overallForeCast();
-            var monthlysales = (from c in db.insuranceproducttypemonthlysales where c.InsuranceType_ID == insuranceTypeID select c.monthSales.Value).ToList();
+            var monthlysales = (from c in db.insuranceproducttypemonthlysales where c.InsuranceType_ID == insuranceTypeID select c.sales.Value).ToList();
 
             toreturn.previouse = Array.ConvertAll(monthlysales.ToArray(), c => (double)c);
             ArimaModel model = new ArimaModel(toreturn.previouse, value1, value2);
@@ -241,6 +241,12 @@ namespace NanofinAPI.Controllers
             toreturn.predictions = Array.ConvertAll(model.Forecast(numPredictions).ToArray(), x => (double)x);
 
             return toreturn;
+        }
+
+
+        public List<insuranceproducttypemonthlysale> getinsurancelist()
+        {
+            return db.insuranceproducttypemonthlysales.ToList();
         }
 
         [HttpGet]

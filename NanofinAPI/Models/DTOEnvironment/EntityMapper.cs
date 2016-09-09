@@ -134,10 +134,10 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new insuranceproducttypemonthlysale();
 
             entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
-            entityObjct.activeProductItemStartDate = dto.activeProductItemStartDate;
+            entityObjct.monthDate = dto.activeProductItemStartDate;
             entityObjct.datum = dto.datum;
             entityObjct.InsuranceType_ID = dto.InsuranceType_ID;
-            entityObjct.monthSales = dto.monthSales;
+            entityObjct.sales = dto.monthSales.Value;
 
             return entityObjct;
         }
