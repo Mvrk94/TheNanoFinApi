@@ -234,6 +234,9 @@
     <Compile Include="Models\demographicconsumerproductlocationmonthlysale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\demographicconsumerproductlocationsaleslastmonth.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\document.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -327,6 +330,9 @@
     <Compile Include="Models\product.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\productlocationmonthlysale.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductLocationSales_Result.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -354,7 +360,16 @@
     <Compile Include="Models\provincialinsurancetypesale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\provincialproducttypedistributionlastmonth.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\reseller.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\resellersendmonthlysale.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\resellersendvouchergenderspecific.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\saleslastmonth.cs">

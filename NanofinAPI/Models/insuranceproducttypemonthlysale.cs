@@ -15,9 +15,10 @@ namespace NanofinAPI.Models
     public partial class insuranceproducttypemonthlysale
     {
         public int ActiveProductItems_ID { get; set; }
-        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
-        public string datum { get; set; }
+        public Nullable<System.DateTime> monthDate { get; set; }
         public int InsuranceType_ID { get; set; }
-        public Nullable<decimal> monthSales { get; set; }
+        public string insuranctTypeDescription { get; set; }
+        public string datum { get; set; }
+        public Nullable<decimal> sales { get; set; }
     }
 }

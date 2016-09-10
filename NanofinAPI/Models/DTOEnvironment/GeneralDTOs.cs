@@ -213,10 +213,10 @@ namespace NanofinAPI.Models.DTOEnvironment
         public DTOinsuranceproducttypemonthlysale(insuranceproducttypemonthlysale entityObjct)
         {
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
-            activeProductItemStartDate = entityObjct.activeProductItemStartDate;
+            activeProductItemStartDate = entityObjct.monthDate;
             datum = entityObjct.datum;
             InsuranceType_ID = entityObjct.InsuranceType_ID;
-            monthSales = entityObjct.monthSales;
+            monthSales = entityObjct.sales;
         }
     }
 

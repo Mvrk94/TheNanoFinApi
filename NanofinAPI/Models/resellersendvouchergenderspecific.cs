@@ -12,14 +12,11 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class monthlylocationsale
+    public partial class resellersendvouchergenderspecific
     {
-        public int ActiveProductItems_ID { get; set; }
-        public string dateM { get; set; }
-        public Nullable<System.DateTime> datum { get; set; }
-        public int Product_ID { get; set; }
-        public string productName { get; set; }
-        public Nullable<int> transactionLocation { get; set; }
+        public int VoucherSentTo { get; set; }
+        public string date_format_vouchertransaction_transactionDate___Y__b__ { get; set; }
+        public string gender { get; set; }
         public Nullable<decimal> sales { get; set; }
     }
 }
