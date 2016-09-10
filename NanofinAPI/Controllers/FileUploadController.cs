@@ -18,7 +18,7 @@ namespace NanofinAPI.Controllers
 
             string sPath = "";
 
-            sPath = System.Web.Hosting.HostingEnvironment.MapPath("~/UploadFiles");
+            sPath = System.Web.Hosting.HostingEnvironment.MapPath("/UploadFiles/");
 
             System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
 
@@ -49,7 +49,61 @@ namespace NanofinAPI.Controllers
                 return "Upload Failed";
             }
 
+        }
+
+        [HttpPost()]
+        public string uploadToNewDirectory(string strDirectory)
+        {
+
+            int iUploadedCnt = 0;
+
+            string fileUploadDir = ""; 
+
+            System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
+
+            //if there are actually files to upload, then only create the directory
+            if (((hfc.Count) > 0))
+            {
+                fileUploadDir = System.Web.Hosting.HostingEnvironment.MapPath("/UploadFiles/" + strDirectory + "/");
+                if (!System.IO.Directory.Exists(fileUploadDir))
+                {
+                    System.IO.Directory.CreateDirectory(fileUploadDir);
+                }
+
+            }
+
+
+
+            //check num files:
+            for (int iCnt = 0; iCnt <= hfc.Count - 1; iCnt++)
+            {
+                System.Web.HttpPostedFile hpf = hfc[iCnt];
+
+                if (hpf.ContentLength > 0)
+                {
+                    // CHECK IF THE SELECTED FILE(S) ALREADY EXISTS IN FOLDER. (AVOID DUPLICATE)
+                    if (!File.Exists(fileUploadDir + Path.GetFileName(hpf.FileName)))
+                    {
+                        // SAVE THE FILES IN THE FOLDER.
+                        hpf.SaveAs(fileUploadDir + Path.GetFileName(hpf.FileName));
+                        iUploadedCnt = iUploadedCnt + 1;
+                    }
+                }
+            }
+
+            // RETURN A MESSAGE (OPTIONAL).
+            if (iUploadedCnt > 0)
+            {
+                return iUploadedCnt + " Files Uploaded to new Directory Successfully";
+            }
+            else
+            {
+                return "Upload Failed";
+            }
 
         }
+
+
+
     }
 }
