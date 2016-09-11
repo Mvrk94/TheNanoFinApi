@@ -176,7 +176,7 @@ namespace NanofinAPI.Controllers
         {
             var lowerDate = new DateTime(2016, 08, 1);
             var upperDate = new DateTime(2016, 09, 01);
-            var toreturn = (from c in db.monthlylocationsales where c.datum > lowerDate where c.transactionLocation == locationID  && c.datum < upperDate  select c).ToList();
+            var toreturn = (from c in db.monthlylocationsales where c.datum > lowerDate where c.transactionLocation == locationID  && c.datum < upperDate  orderby c.sales descending select c).ToList();
             
             return toreturn;
         }
