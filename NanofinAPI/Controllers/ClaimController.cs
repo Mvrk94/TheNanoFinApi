@@ -8,6 +8,8 @@ using NanofinAPI.Models;
 using NanofinAPI.Models.DTOEnvironment;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
+using System.Web.Http.Description;
 
 namespace NanofinAPI.Controllers
 {
@@ -83,6 +85,19 @@ namespace NanofinAPI.Controllers
 
         }
 
+
+        // POST: api/claim
+        [HttpPost]
+        [ResponseType(typeof(DTOclaim))]
+        public async Task<DTOclaim> Postclaim(DTOclaim newDTO)
+        {
+
+            claim newProd = EntityMapper.updateEntity(null, newDTO);
+            db.claims.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
 
 
 
