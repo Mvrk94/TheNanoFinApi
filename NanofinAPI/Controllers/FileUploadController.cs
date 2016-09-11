@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace NanofinAPI.Controllers
@@ -100,6 +101,48 @@ namespace NanofinAPI.Controllers
             {
                 return "Upload Failed";
             }
+
+        }
+
+
+        //to download files...Content still to fix
+        [HttpGet]
+        public HttpResponseMessage getFile()
+        {
+            var path = System.Web.HttpContext.Current.Server.MapPath("/UploadFiles/letter.pdf"); ;
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            result.Content = new StreamContent(stream);
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            result.Content.Headers.ContentDisposition.FileName = Path.GetFileName(path);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentLength = stream.Length;
+            return result;
+        }
+
+     
+
+
+       
+        [HttpDelete]
+        public HttpResponseMessage deleteFile(string filePath)
+        {
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+
+            
+
+            var path = System.Web.HttpContext.Current.Server.MapPath("/UploadFiles/"); ;
+            if (File.Exists(path+filePath))
+            {
+                File.Delete(path+filePath);
+                return result;
+            }
+            else
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+            
 
         }
 

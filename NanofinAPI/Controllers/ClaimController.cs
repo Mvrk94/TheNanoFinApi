@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.Web.Http.Description;
+using System.Data.Entity;
 
 namespace NanofinAPI.Controllers
 {
@@ -108,6 +109,50 @@ namespace NanofinAPI.Controllers
             return cl.Claim_ID;
             //DTOclaim toReturn = new DTOclaim(cl);
             //return toReturn;
+        }
+
+
+        [HttpPut]
+        public async Task<IHttpActionResult> setIsActiveToFalse(int activeProductID)
+        {
+            activeproductitem toUpdate = (from c in db.activeproductitems where c.ActiveProductItems_ID == activeProductID select c).SingleOrDefault();
+            DTOactiveproductitem dtoAct = new DTOactiveproductitem(toUpdate);
+            dtoAct.isActive = false;
+            toUpdate = EntityMapper.updateEntity(toUpdate,dtoAct);
+            db.Entry(toUpdate).State = EntityState.Modified;
+           await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
+      
+        [HttpPost]
+        [ResponseType(typeof(DTOclaimuploaddocument))]
+        public async Task<DTOclaimuploaddocument> Postclaimuploaddocument(DTOclaimuploaddocument newDTO)
+        {
+
+            claimuploaddocument newProd = EntityMapper.updateEntity(null, newDTO);
+            db.claimuploaddocuments.Add(newProd);
+            await db.SaveChangesAsync();
+
+            return newDTO;
+        }
+
+
+        private claimuploaddocument createClaimUploadDocumentEntity(int userID, int activeProductItemsID, string policyNum, bool isActive, decimal productValue, int duration, DateTime startDate)
+        {
+
+            claimuploaddocument doc = new claimuploaddocument();
+
+
+            //activeProdItem.activeProductItemPolicyNum = policyNum;
+            //activeProdItem.isActive = isActive;
+            //activeProdItem.productValue = productValue;
+            //activeProdItem.duration = duration;
+            //activeProdItem.activeProductItemStartDate = startDate;
+
+            //return activeProdItem;
+            return doc;
         }
 
 
