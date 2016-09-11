@@ -101,13 +101,13 @@ namespace NanofinAPI.Controllers
 
         [HttpGet]
         // GET: api/testManager
-        public DTOclaim GetClaimID(int activeProductID)
+        public int GetClaimID(int activeProductID)
         {
           
             claim cl = (from c in db.claims where c.ActiveProductItems_ID==activeProductID select c).SingleOrDefault();
-            DTOclaim toReturn = new DTOclaim(cl);
-  
-            return toReturn;
+            return cl.Claim_ID;
+            //DTOclaim toReturn = new DTOclaim(cl);
+            //return toReturn;
         }
 
 
