@@ -125,7 +125,20 @@ namespace NanofinAPI.Controllers
         }
 
 
-      
+        [HttpPut]
+        public async Task<IHttpActionResult> setIsActiveToTrue(int activeProductID)
+        {
+            activeproductitem toUpdate = (from c in db.activeproductitems where c.ActiveProductItems_ID == activeProductID select c).SingleOrDefault();
+            DTOactiveproductitem dtoAct = new DTOactiveproductitem(toUpdate);
+            dtoAct.isActive = true;
+            toUpdate = EntityMapper.updateEntity(toUpdate, dtoAct);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
+
         [HttpPost]
         [ResponseType(typeof(DTOclaimuploaddocument))]
         public async Task<DTOclaimuploaddocument> Postclaimuploaddocument(int userID, int activeProductItemsID, string claimUploadDocPath, int claimID)
