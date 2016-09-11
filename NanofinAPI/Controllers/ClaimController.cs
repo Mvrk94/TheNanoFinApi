@@ -128,30 +128,28 @@ namespace NanofinAPI.Controllers
       
         [HttpPost]
         [ResponseType(typeof(DTOclaimuploaddocument))]
-        public async Task<DTOclaimuploaddocument> Postclaimuploaddocument(DTOclaimuploaddocument newDTO)
+        public async Task<DTOclaimuploaddocument> Postclaimuploaddocument(int userID, int activeProductItemsID, string claimUploadDocPath, int claimID)
         {
-
-            claimuploaddocument newProd = EntityMapper.updateEntity(null, newDTO);
+           
+            claimuploaddocument newProd = createClaimUploadDocumentEntity(userID, activeProductItemsID, claimUploadDocPath, claimID);
+            DTOclaimuploaddocument newDTO = new DTOclaimuploaddocument(newProd);
             db.claimuploaddocuments.Add(newProd);
             await db.SaveChangesAsync();
 
-            return newDTO;
+            return newDTO ;
         }
 
 
-        private claimuploaddocument createClaimUploadDocumentEntity(int userID, int activeProductItemsID, string policyNum, bool isActive, decimal productValue, int duration, DateTime startDate)
+        private claimuploaddocument createClaimUploadDocumentEntity(int userID, int activeProductItemsID,string claimUploadDocPath,int claimID)
         {
 
             claimuploaddocument doc = new claimuploaddocument();
-
-
-            //activeProdItem.activeProductItemPolicyNum = policyNum;
-            //activeProdItem.isActive = isActive;
-            //activeProdItem.productValue = productValue;
-            //activeProdItem.duration = duration;
-            //activeProdItem.activeProductItemStartDate = startDate;
-
-            //return activeProdItem;
+            doc.User_ID = userID;
+            doc.ActiveProductItems_ID = activeProductItemsID;
+            doc.claimUploadDocumentPath = claimUploadDocPath;
+            doc.Claim_ID = claimID;
+           
+          
             return doc;
         }
 
