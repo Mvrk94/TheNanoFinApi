@@ -146,7 +146,27 @@ namespace NanofinAPI.Controllers
 
         }
 
+        //folder path relative to UpoadFiles Directory
+        [HttpDelete]
+        public HttpResponseMessage deleteFolder(string folderPath)
+        {
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
 
 
+            var path = System.Web.HttpContext.Current.Server.MapPath("/UploadFiles/"); ;
+            if (Directory.Exists(path + folderPath))
+            {
+                Directory.Delete(path + folderPath, true);
+                return result;
+            }
+            else
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+
+        }
+
+
+
+        }
     }
-}
