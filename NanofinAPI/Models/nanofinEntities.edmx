@@ -44,7 +44,7 @@
           <Property Name="claimUploadDocument_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_ID" Type="int" Nullable="false" />
           <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
-          <Property Name="document_ID" Type="int" Nullable="false" />
+          <Property Name="document_ID" Type="int" />
           <Property Name="claimUploadDocumentPath" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Claim_ID" Type="int" />
         </EntityType>
@@ -803,7 +803,7 @@ warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="claimuploaddocument_ibfk_3">
-          <End Role="document" Type="Self.document" Multiplicity="1" />
+          <End Role="document" Type="Self.document" Multiplicity="0..1" />
           <End Role="claimuploaddocument" Type="Self.claimuploaddocument" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="document">

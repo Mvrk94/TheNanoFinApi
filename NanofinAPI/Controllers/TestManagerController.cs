@@ -99,6 +99,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
             await db.SaveChangesAsync();
             return StatusCode(HttpStatusCode.NoContent);
         }
+
         // POST: api/testManager
         [HttpPost]
         [ResponseType(typeof(DTOclaim))]

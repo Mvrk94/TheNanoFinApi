@@ -79,7 +79,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public int claimUploadDocument_ID { get; set; }
         public int User_ID { get; set; }
         public int ActiveProductItems_ID { get; set; }
-        public int document_ID { get; set; }
+        public Nullable<int> document_ID { get; set; }
         public string claimUploadDocumentPath { get; set; }
         public Nullable<int> Claim_ID { get; set; }
 

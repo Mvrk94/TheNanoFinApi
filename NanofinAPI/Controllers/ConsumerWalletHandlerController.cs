@@ -280,6 +280,12 @@ namespace NanoFinAPI.Controllers
             return toReturn;
         }
 
+        public DTOactiveProductItemWithDetail GetConsumerSingleActiveProductItemWithDetail(int activeProductitemsID)
+        {
+            activeproductitemswithdetail prod = (from p in db.activeproductitemswithdetails where p.ActiveProductItems_ID == activeProductitemsID select p).SingleOrDefault();
+            DTOactiveProductItemWithDetail toRet = new DTOactiveProductItemWithDetail(prod);
+            return toRet;
+        }
 
 
         //GET specific Product/productID
