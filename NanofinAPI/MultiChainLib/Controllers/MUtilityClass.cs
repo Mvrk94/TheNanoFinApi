@@ -28,6 +28,11 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
                     //get new address, get user for which address does not exist, add address to user record.
                     var newAddress = await client.GetNewAddressAsync();
                     newAddress.AssertOk();
+                    string newAddr = newAddress.Result;
+                    //give permissions
+                    var grant1 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Send);
+                    var grant2 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Receive);
+
                     tmp.blockchainAddress = newAddress.Result;
                     db.Entry(tmp).State = EntityState.Modified;
                     await db.SaveChangesAsync();
@@ -35,6 +40,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
                     if(paramPermissions.Length > 0)
                     {
                         MUserController tmpUser = new MUserController(userID);
+                        tmpUser = await tmpUser.init();
                         await tmpUser.grantPermissions(paramPermissions);
                     }
 

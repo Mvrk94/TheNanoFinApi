@@ -124,7 +124,7 @@ namespace NanofinAPI.Controllers
 
 
         [HttpGet]
-        public Boolean GenerateTransactiions()
+        public async Task<Boolean> GenerateTransactiions()
         {
 
             var res = db.resellers.ToArray();
@@ -138,14 +138,14 @@ namespace NanofinAPI.Controllers
 
 
 
-            int ConsumerIncrement = 3;
+            int ConsumerIncrement = 5;
             int ConsumerThisMonth = 0;
 
             Random random = new Random();
             int resllerCounter;
 
-            DateTime  LASTYear  =  new DateTime (2016,08,01);
-             resllerCounter = 14;
+            DateTime  LASTYear  =  new DateTime (2015,06,01);
+             resllerCounter = 5;
             while(LASTYear < DateTime.Now)
             {
 
@@ -201,7 +201,7 @@ namespace NanofinAPI.Controllers
                             purchaseNo++;
                         }
 
-                        if (medical < 69)
+                        if (medical < 75)
                         {
                             if (salary > 4000)
                             {
@@ -264,25 +264,25 @@ namespace NanofinAPI.Controllers
                         purchases.Add(purchase);
                     }
                     int resID = res.ElementAt(r).User_ID;
-                    wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
+                    await wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
 
 
                     foreach( var s  in purchases)
                     {
-                        wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost +3 );
+                        await wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost +3,  LASTYear.AddHours(24 + random.Next(92)));
                         int count = 0;
                         foreach( var pur  in s.data)
                         {
                             count++;
-                            if (pur != 0) cw.redeemProduct(s.ConsumerID, pur, 1, LASTYear.AddHours(168*count +random.Next(150)));
+                            if (pur != 0) await cw.redeemProduct(s.ConsumerID, pur, 1, LASTYear.AddHours(168*count +random.Next(150)));
                         }
                     }
 
                 }
 
-                if (resllerCounter < 14) resllerCounter++;
+                if (resllerCounter < 29) resllerCounter++;
                 else
-                    resllerCounter =9;
+                    resllerCounter =29;
            
                 LASTYear = LASTYear.AddMonths(1);
             }

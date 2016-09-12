@@ -43,6 +43,7 @@ namespace MultiChainLib.Controllers
         public async Task<int> sendBulk(int recipientUserID, int amount)
         {
             string recipientAddr = await MUtilityClass.getAddress(client, recipientUserID);
+            await user.grantPermissions(BlockchainPermissions.Send);
             //spend reseller BulkVoucher inputs
             string metadata = "Reseller \'" + user.propertyUserID() + "\' spent " + amount.ToString() + " BulkVoucher. " + amount.ToString() + " Voucher of same amount to be issued to user \'" + recipientUserID.ToString() + "\'.";
             var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), burnAddress, "BulkVoucher", amount, MUtilityClass.strToHex(metadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
