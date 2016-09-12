@@ -35,41 +35,52 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
 
         public async Task<MUserController> init()
         {
-            userAddress = await getUserAddress();
+            userAddress = await MUtilityClass.getAddress(client, user_ID, BlockchainPermissions.Receive,BlockchainPermissions.Send);
             return this;
         }
         //returns users associated address. if user has no address -> give user address -> return new address.
-        public async Task<string> getUserAddress()
-        {
-            if (db.users.Where(list => list.User_ID == user_ID).Any())
-            {
-                return db.users.Where(list => list.User_ID == user_ID).Select(list => list.blockchainAddress).FirstOrDefault();
-            }
-            else
-            {
-                //get new address, get user for which address does not exist, add address to user record.
-                var newAddress = await client.GetNewAddressAsync();
-                newAddress.AssertOk();
-                var userToEdit = db.users.Single(o => o.User_ID == user_ID);
-                userToEdit.blockchainAddress = newAddress.Result;
-                db.Entry(userToEdit).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return newAddress.Result;
-            }
-        }
+        //public async Task<string> getUserAddress()
+        //{
+        //    if (db.users.Where(list => list.User_ID == user_ID).Any())
+        //    {
+        //        return db.users.Where(list => list.User_ID == user_ID).Select(list => list.blockchainAddress).FirstOrDefault();
+        //    }
+        //    else
+        //    {
+        //        //get new address, get user for which address does not exist, add address to user record.
+        //        var newAddress = await client.GetNewAddressAsync();
+        //        newAddress.AssertOk();
+        //        var userToEdit = db.users.Single(o => o.User_ID == user_ID);
+        //        userToEdit.blockchainAddress = newAddress.Result;
+        //        db.Entry(userToEdit).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return newAddress.Result;
+        //    }
+        //}
         
         //true if user has specified permission
         public async Task<Boolean> hasPermission(BlockchainPermissions permissionType)
         {
-            var listPermissions = await client.ListPermissions(permissionType);
-            listPermissions.AssertOk();
-            foreach (var permission in listPermissions.Result)
+
+            var permission = await client.ListAddressPermissionType(permissionType, userAddress);
+            permission.AssertOk();
+            if(permission.Result.Count > 0)
             {
-                if(permission.Address.Equals(userAddress) && permission.Type.Equals(permissionType.ToString().ToLower()) ) {
-                    return true;
-                }
+                return true;
+            }else
+            {
+                return false;
             }
-            return false;
+
+            //var listPermissions = await client.ListPermissions(permissionType);
+            //listPermissions.AssertOk();
+            //foreach (var permission in listPermissions.Result)
+            //{
+            //    if(permission.Address.Equals(userAddress) && permission.Type.Equals(permissionType.ToString().ToLower()) ) {
+            //        return true;
+            //    }
+            //}
+            //return false;
         }
         //true if user has all specified permissions
         public async Task<Boolean> hasPermissions(params BlockchainPermissions[] paramPermissions)
@@ -84,7 +95,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             return true;
         }
         //grant user all specified permissions
-        public async void grantPermissions(params BlockchainPermissions[] paramPermissions)
+        public async Task<int> grantPermissions(params BlockchainPermissions[] paramPermissions)
         {
             for (int i = 0; i < paramPermissions.Length; i++)
             {
@@ -94,6 +105,8 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
                     perms.AssertOk();
                 }       
             }
+
+            return 0;
             
         }
 

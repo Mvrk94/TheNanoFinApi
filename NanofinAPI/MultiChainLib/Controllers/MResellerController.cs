@@ -28,14 +28,16 @@ namespace MultiChainLib.Controllers
             burnAddress = await MUtilityClass.getBurnAddress(client);
             return this;
         }
-        
-        public async void buyBulk(int amount)
+
+        public async Task<int> buyBulk(int amount)
         {
             //check if current user has the correct permissions, if not grant permissions
-            user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Send, BlockchainPermissions.Receive);
+            await user.grantPermissions(BlockchainPermissions.Receive);
             //issue reseller bulk voucher of amount specified, transaction contains metadata
             var issueMore = await client.IssueMoreFromWithMetadataAsync(nanoFinAddr, user.propertyUserAddress(), "BulkVoucher", amount, "Issue reseller \'" + user.propertyUserID().ToString() + "\' " + amount.ToString() + " BulkVoucher.");
             issueMore.AssertOk();
+
+            return 0;
         }
 
         public async Task<int> sendBulk(int recipientUserID, int amount)
@@ -49,7 +51,7 @@ namespace MultiChainLib.Controllers
             //check if recipient has the correct permissions, if not grant permissions
             MUserController recipientUser = new MUserController(recipientUserID);
             recipientUser = await recipientUser.init();
-            recipientUser.grantPermissions(BlockchainPermissions.Receive);
+            await recipientUser.grantPermissions(BlockchainPermissions.Receive);
             //issue recipient voucher
             var issueMore = await client.IssueMoreFromWithMetadataAsync(nanoFinAddr, recipientAddr, "Voucher", amount, "Issue consumer \'" + recipientUserID.ToString() + "\' " + amount.ToString() + " Voucher");
             issueMore.AssertOk();

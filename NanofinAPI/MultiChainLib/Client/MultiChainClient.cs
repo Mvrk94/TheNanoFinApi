@@ -243,6 +243,12 @@ namespace MultiChainLib
             return this.ExecuteAsync<List<ListPermissionsResponse>>("listpermissions", 0, permissionsAsString);
         }
 
+        public Task<JsonRpcResponse<List<ListPermissionsResponse>>> ListAddressPermissionType(BlockchainPermissions permissions, string userAddress)
+        {
+            var permissionsAsString = this.FormatPermissions(permissions);
+            return this.ExecuteAsync<List<ListPermissionsResponse>>("listpermissions", 0, permissionsAsString, userAddress);
+        }
+
         public Task<JsonRpcResponse<string>> IssueAsync(string issueAddress, string assetName, int quantity, decimal units, 
             decimal nativeAmount = 0, string comment = null, string commentTo = null, int startBlock = 0, int endBlock = 0)
         {

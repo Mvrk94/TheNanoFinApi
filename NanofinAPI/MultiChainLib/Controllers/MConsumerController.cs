@@ -38,13 +38,13 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             if(await MUtilityClass.hasAssetBalance(client, user.propertyUserID(), "Voucher", amount) == true)
             {
                 //check if current user has the correct permissions, if not grant permissions
-                user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Send);
+                await user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Send);
                 //check recipient user has the correct permissions, if not grant permissions
                 MUserController recipientUser = new MUserController(recipientUserID);
                 recipientUser = await recipientUser.init();
-                recipientUser.grantPermissions(BlockchainPermissions.Receive);
+                await recipientUser.grantPermissions(BlockchainPermissions.Receive);
 
-                string recipientAddr = await MUtilityClass.getAddress(client, recipientUserID);
+                string recipientAddr = await MUtilityClass.getAddress(client, recipientUserID, BlockchainPermissions.Receive);
 
 
                 string metadata = "Consumer \'" + user.propertyUserID() + "\' sent " + amount.ToString() + " Voucher " + " to consumer \'" + recipientUserID.ToString() + "\'";
@@ -60,7 +60,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             string insuranceProductNameNoSpace = MUtilityClass.removeSpaces(insuranceProductName);
 
             string recipientAddr = user.propertyUserAddress();
-            user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Receive, BlockchainPermissions.Send);
+            await user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Receive, BlockchainPermissions.Send);
             //spend consumer voucher
             string metadata = "Consumer \'" + user.propertyUserID() + "\' spent " + amount.ToString() + " Voucher. Voucher to be redeemed for " + amount.ToString() + " " +insuranceProductName;
             var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), burnAddress, "Voucher", amount, MUtilityClass.strToHex(metadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss

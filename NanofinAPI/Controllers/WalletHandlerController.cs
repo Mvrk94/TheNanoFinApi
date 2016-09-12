@@ -29,8 +29,6 @@ namespace NanoFinAPI.Controllers
 
         //PUT...update a voucher: use cases involved:
         //-reseller sends voucher= update reseller's voucher amount
-
-
         public IHttpActionResult SendVoucher(int senderID, int receiverID, decimal amountToSend, int transactionType_ID, int voucherTypeID)
         {
             if (getVoucherAccountBalance(senderID) < amountToSend)
@@ -116,7 +114,7 @@ namespace NanoFinAPI.Controllers
                 //buy bulk transaction on blockchain
                 MResellerController resellerCtrl = new MResellerController(userID);
                 resellerCtrl = await resellerCtrl.init();
-                resellerCtrl.buyBulk(Decimal.ToInt32(BulkVoucherAmount));
+                await resellerCtrl.buyBulk(Decimal.ToInt32(BulkVoucherAmount));
 
                 return Ok();
             }

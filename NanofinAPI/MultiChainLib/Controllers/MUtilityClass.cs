@@ -15,27 +15,42 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
     {
         private static nanofinEntities db = new nanofinEntities();
 
-        //returns users associated address. if user has no address -> give user address -> return new address.
-        public static async Task<string> getAddress(MultiChainClient client, int userID)
+        //returns users associated address. if user has no address -> give user address -> return new address. permission params - assign permissions if new address is created.
+        public static async Task<string> getAddress(MultiChainClient client, int userID, params BlockchainPermissions[] paramPermissions)
         {
-            if (db.users.Where(list => list.User_ID == userID).Any())
+            user tmp = new user();
+            tmp.User_ID = -1;
+            tmp = await db.users.SingleAsync(l => l.User_ID == userID);
+            if (tmp.User_ID != -1)
             {
-                return db.users.Where(list => list.User_ID == userID).Select(list => list.blockchainAddress).FirstOrDefault();
+                if (tmp.blockchainAddress == null)
+                {
+                    //get new address, get user for which address does not exist, add address to user record.
+                    var newAddress = await client.GetNewAddressAsync();
+                    newAddress.AssertOk();
+                    tmp.blockchainAddress = newAddress.Result;
+                    db.Entry(tmp).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+
+                    if(paramPermissions.Length > 0)
+                    {
+                        MUserController tmpUser = new MUserController(userID);
+                        await tmpUser.grantPermissions(paramPermissions);
+                    }
+
+                    return newAddress.Result;
+                }else
+                {
+                    return tmp.blockchainAddress;
+                }
             }
             else
             {
-                //get new address, get user for which address does not exist, add address to user record.
-                var newAddress = await client.GetNewAddressAsync();
-                newAddress.AssertOk();
-                var userToEdit = db.users.Single(o => o.User_ID == userID);
-                userToEdit.blockchainAddress = newAddress.Result;
-                db.Entry(userToEdit).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return newAddress.Result;
+                throw new KeyNotFoundException();
             }
         }
         //exchange assset1 (a serialized json) belonging to user 1, for asset2 belonging to user 2
-        public static async Task atomicExchange(MultiChainClient multiChainCli, int user1, string JsonStrAsset1, int user2, string JsonStrAsset2)
+        public static async Task<int> atomicExchange(MultiChainClient multiChainCli, int user1, string JsonStrAsset1, int user2, string JsonStrAsset2)
         {
             var client = multiChainCli;
             string user1Addr = await getAddress(client, user1);
@@ -70,6 +85,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             var sendRawTransaction = await client.SendRawTransactionAsync(appendRawExchResponse.hex);
             sendRawTransaction.AssertOk();
 
+            return 0;
 
         }// atomic exchange
 
