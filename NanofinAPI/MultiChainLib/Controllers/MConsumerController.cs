@@ -19,7 +19,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
 
         public MConsumerController(int consumerUserID)
         {
-            client = new MultiChainClient("188.166.170.248", 6492, false, "multichainrpc", "AYBR44NDe7VdSWXHJCrR2i2xhCcnByorzHy6f6vaczTd", "NanoFinBlockChain");
+            client = new MultiChainClient("188.166.170.248", 4396, false, "multichainrpc", "HFaiZ1WtPLAnuSNoA7VyTDL4C97D6dgWpcEdjNw1Jhjv", "NanoFinBlockchain");
             user = new MUserController(consumerUserID, client);
         }
 
