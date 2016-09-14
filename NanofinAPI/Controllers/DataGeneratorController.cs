@@ -144,8 +144,8 @@ namespace NanofinAPI.Controllers
             Random random = new Random();
             int resllerCounter;
 
-            DateTime  LASTYear  =  new DateTime (2015,06,01);
-             resllerCounter = 5;
+            DateTime  LASTYear  =  new DateTime (2015,12,23);
+             resllerCounter = 21;
             while(LASTYear < DateTime.Now)
             {
 

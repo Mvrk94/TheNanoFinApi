@@ -35,7 +35,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
 
                     tmp.blockchainAddress = newAddress.Result;
                     db.Entry(tmp).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
+                    db.SaveChanges();
 
                     if(paramPermissions.Length > 0)
                     {
