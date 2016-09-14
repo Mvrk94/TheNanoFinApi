@@ -124,7 +124,7 @@ namespace NanofinAPI.Controllers
 
 
         [HttpGet]
-        public async Task<Boolean> GenerateTransactiions()
+        public async Task<Boolean> GenerateTransactiions(int consumerStart, int resell, int monthStart)
         {
 
             var res = db.resellers.ToArray();
@@ -139,18 +139,18 @@ namespace NanofinAPI.Controllers
 
 
             int ConsumerIncrement = 5;
-            int ConsumerThisMonth = 0;
+       
 
             Random random = new Random();
             int resllerCounter;
-
-            DateTime  LASTYear  =  new DateTime (2015,12,23);
-             resllerCounter = 21;
+            int continueM = consumerStart;
+            DateTime  LASTYear  =  new DateTime (2016,monthStart,01);
+             resllerCounter = resell;
             while(LASTYear < DateTime.Now)
             {
 
                 
-                for (int  r = 0;  r < resllerCounter; r++)
+                for (int  r = continueM;  r < resllerCounter; r++)
                 {
                     
                     List<ConsumerPurchases> purchases = new List<ConsumerPurchases>();
@@ -201,7 +201,7 @@ namespace NanofinAPI.Controllers
                             purchaseNo++;
                         }
 
-                        if (medical < 75)
+                        if (medical < 65)
                         {
                             if (salary > 4000)
                             {
@@ -217,7 +217,7 @@ namespace NanofinAPI.Controllers
                             purchaseNo++;
                         }
 
-                        if (funeral < 95)
+                        if (funeral < 85)
                         {
 
                             if (temp.maritalStatus.CompareTo("Single") == 1)
@@ -269,7 +269,7 @@ namespace NanofinAPI.Controllers
 
                     foreach( var s  in purchases)
                     {
-                        await wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost +3,  LASTYear.AddHours(24 + random.Next(92)));
+                        await wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost + 3,  LASTYear.AddHours(24 + random.Next(92)));
                         int count = 0;
                         foreach( var pur  in s.data)
                         {
@@ -281,8 +281,8 @@ namespace NanofinAPI.Controllers
                 }
 
                 if (resllerCounter < 29) resllerCounter++;
-                else
-                    resllerCounter =29;
+
+                continueM = 0;
            
                 LASTYear = LASTYear.AddMonths(1);
             }
@@ -334,7 +334,11 @@ namespace NanofinAPI.Controllers
         }
 
 
-
+        [HttpGet]
+        public void resetDB()
+        {
+            db = new nanofinEntities();
+        }
 
 
         // GET: api/testManager
