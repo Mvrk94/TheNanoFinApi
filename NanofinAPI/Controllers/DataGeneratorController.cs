@@ -107,12 +107,11 @@ namespace NanofinAPI.Controllers
         public  int DeactivteProducts()
         {
             int toreturn = 0;
-
-            List<activeproductitem> prod = db.activeproductitems.ToList();
+            var date = new DateTime(2016 ,09,01);
+            List<activeproductitem> prod = (from c in db.activeproductitems where c.activeProductItemStartDate < date select c).ToList();
 
             foreach (var temp  in prod)
             {
-                temp.isActive = false;
                 temp.activeProductItemPolicyNum = "PP-IM-" + toreturn;
                 db.SaveChanges();
                 toreturn++;

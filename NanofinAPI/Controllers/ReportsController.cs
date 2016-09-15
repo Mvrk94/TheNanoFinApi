@@ -12,6 +12,16 @@ using System.IO;
 
 namespace NanofinAPI.Controllers
 {
+    public class DashBoardDTO
+    {
+        public decimal monthsales;
+        public decimal yearSale;
+        public decimal numMembers;
+        public decimal claims;
+        public decimal salesToday;
+    }
+
+
     public class ReportsController : ApiController
     {
 
@@ -58,30 +68,62 @@ namespace NanofinAPI.Controllers
             return db.activeproductitems.Where(c => c.product.ProductProvider_ID == ProviderID && c.activeProductItemPolicyNum == "").Count();
         }
 
-        [HttpGet]
-        public IEnumerable<ResellerSales> getBestReseller()
-        {
+        //[HttpGet]
+        //public IEnumerable<ResellerSales> getBestReseller()
+        //{
 
-            List<vouchertransaction> list = (from c in db.vouchertransactions where c.user.userType == 21 && c.TransactionType_ID == 2  select c).ToList();
-            var toreturn = list.GroupBy(d => d.Sender_ID)
-               .Select(
-                        g => new ResellerSales
-                        {
-                            resellerID = g.Key,
-                            voucherSent = g.Sum(s => s.transactionAmount),
-                            address = db.resellers.SingleOrDefault(c => c.User_ID == g.Key).street,
+        //    List<vouchertransaction> list = (from c in db.vouchertransactions where c.user.userType == 21 && c.TransactionType_ID == 2  select c).ToList();
+        //    var toreturn = list.GroupBy(d => d.Sender_ID)
+        //       .Select(
+        //                g => new ResellerSales
+        //                {
+        //                    resellerID = g.Key,
+        //                    voucherSent = g.Sum(s => s.transactionAmount),
+        //                    address = db.resellers.SingleOrDefault(c => c.User_ID == g.Key).street,
                            
-                        });
+        //                });
 
-            string [] addresss;
-            foreach ( ResellerSales p  in toreturn)
+        //    string [] addresss;
+        //    foreach ( ResellerSales p  in toreturn)
+        //    {
+        //        addresss = p.address.Split(':');
+        //        p.lat = addresss[0];
+        //        p.lng = addresss[1];
+        //    }
+
+        //        return toreturn;
+        //}
+
+           [HttpGet]
+           public int getCurrentNumberOfClaims()
             {
-                addresss = p.address.Split(':');
-                p.lat = addresss[0];
-                p.lng = addresss[1];
+                return db.claims.Count();
+            }
+        
+            [HttpGet]
+            public decimal getYearSales(int productProviderID)
+            {
+                return (Decimal)db.productprovideryearlysales.Single(c=> c.ProductProvider_ID == productProviderID).yearSales;
             }
 
-                return toreturn;
+            [HttpGet]
+            public decimal getThisMonthSales()
+            {
+                return (Decimal)(from c in db.salespermonths where c.datum == "2016-09" select c.sales).First();
+            }
+
+        [HttpGet]
+        public DashBoardDTO getDashboard(int productProviderID)
+        {
+            var toreturn = new DashBoardDTO()
+            {
+                claims = getCurrentNumberOfClaims(),
+                yearSale = getYearSales(productProviderID),
+                numMembers = getMembers(productProviderID),
+                monthsales = getThisMonthSales(),
+                salesToday = 0,
+            };
+            return toreturn;
         }
 
         #endregion

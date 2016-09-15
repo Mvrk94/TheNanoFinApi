@@ -348,6 +348,9 @@
     <Compile Include="Models\productproviderpayment.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\productprovideryearlysale.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\productredemptionlog.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>

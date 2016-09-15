@@ -77,6 +77,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<resellersendvouchergenderspecific> resellersendvouchergenderspecifics { get; set; }
         public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }
         public virtual DbSet<salespermonth> salespermonths { get; set; }
+        public virtual DbSet<productprovideryearlysale> productprovideryearlysales { get; set; }
     
         public virtual ObjectResult<monthlyProvinceSales_Result> monthlyProvinceSales(Nullable<int> providerID)
         {
