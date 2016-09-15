@@ -250,17 +250,19 @@ namespace NanoFinAPI.Controllers
         }
 
         //GET consumer's active product items: 
-        public List<DTOactiveproductitem> GetConsumerActiveProductitems(int userID)
+        public List<chrisviewconsumeractiveproduct> GetConsumerActiveProductitems(int userID)
         {
-            List<DTOactiveproductitem> toReturn = new List<DTOactiveproductitem>();
-            List<activeproductitem> list = (from c in db.activeproductitems where c.consumer.User_ID==userID && c.isActive==true select c).ToList();
+            //List<DTOactiveproductitem> toReturn = new List<DTOactiveproductitem>();
+            //List<activeproductitem> list = (from c in db.activeproductitems where c.consumer.User_ID==userID && c.isActive==true select c).ToList();
 
-            foreach (activeproductitem p in list)
-            {
-                toReturn.Add(new DTOactiveproductitem(p));
-            }
+            //foreach (activeproductitem p in list)
+            //{
+            //    toReturn.Add(new DTOactiveproductitem(p));
+            //}
 
-            return toReturn;
+            //return toReturn;
+            var id = db.consumers.Single(x => x.User_ID == userID).Consumer_ID;
+            return (from c in db.chrisviewconsumeractiveproducts where c.Consumer_ID == id select c ).ToList();
         }
 
         //GET consumer's active product items with product details: 

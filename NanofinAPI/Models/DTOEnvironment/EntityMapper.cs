@@ -59,7 +59,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.claimUploadDocument_ID = dto.claimUploadDocument_ID;
             entityObjct.User_ID = dto.User_ID;
             entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
-            entityObjct.document_ID = dto.document_ID;
+            entityObjct.document_ID = (int)dto.document_ID;
             entityObjct.claimUploadDocumentPath = dto.claimUploadDocumentPath;
             entityObjct.Claim_ID = dto.Claim_ID;
 

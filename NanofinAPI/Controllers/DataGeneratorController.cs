@@ -138,7 +138,7 @@ namespace NanofinAPI.Controllers
 
 
 
-            int ConsumerIncrement = 5;
+            int ConsumerIncrement = 8;
        
 
             Random random = new Random();
@@ -280,7 +280,7 @@ namespace NanofinAPI.Controllers
 
                 }
 
-                if (resllerCounter < 29) resllerCounter++;
+                if (resllerCounter < 10) resllerCounter++;
 
                 continueM = 0;
            
