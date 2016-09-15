@@ -12,6 +12,16 @@ using System.IO;
 
 namespace NanofinAPI.Controllers
 {
+    public class DashBoardDTO
+    {
+        public decimal monthsales;
+        public decimal yearSale;
+        public decimal numMembers;
+        public decimal claims;
+        public decimal salesToday;
+    }
+
+
     public class ReportsController : ApiController
     {
 
@@ -96,7 +106,25 @@ namespace NanofinAPI.Controllers
                 return (Decimal)db.productprovideryearlysales.Single(c=> c.ProductProvider_ID == productProviderID).yearSales;
             }
 
-            
+            [HttpGet]
+            public decimal getThisMonthSales()
+            {
+                return (Decimal)(from c in db.salespermonths where c.datum == "2016-09" select c.sales).First();
+            }
+
+        [HttpGet]
+        public DashBoardDTO getDashboard(int productProviderID)
+        {
+            var toreturn = new DashBoardDTO()
+            {
+                claims = getCurrentNumberOfClaims(),
+                yearSale = getYearSales(productProviderID),
+                numMembers = getMembers(productProviderID),
+                monthsales = getThisMonthSales(),
+                salesToday = 0,
+            };
+            return toreturn;
+        }
 
         #endregion
 
