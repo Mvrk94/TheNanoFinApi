@@ -222,7 +222,6 @@ namespace NanofinAPI.Controllers
           public List<lastmonthinsurancetypesale>  getLastMonthInsuranceTypeSales()
         {
             var toreturn = new List<lastmonthinsurancetypesale>();
-
             toreturn = db.lastmonthinsurancetypesales.ToList();
 
             return toreturn;
@@ -259,7 +258,11 @@ namespace NanofinAPI.Controllers
         #endregion
 
 
-
+        [HttpGet]
+        public List<currentmonthdailysale> getCurrentMonthDailySales()
+        {
+            return db.currentmonthdailysales.ToList();
+        }
 
 
         #region Utils

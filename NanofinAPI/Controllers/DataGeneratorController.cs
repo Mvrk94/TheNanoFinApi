@@ -317,12 +317,12 @@ namespace NanofinAPI.Controllers
             var locationID = 0;
             var locationIndex = 0;
 
-            for ( int r = 0;  r <  16; r++)
+            for ( int r = 0;  r <  14; r++)
             {
-                if (locationIndex == 5) locationIndex = 0;
+                if (locationIndex == 8) locationIndex = 0;
                 locationID = loc[locationIndex].Location_ID;
                 res[r].LocationID = locationID;
-                for (int c = r*3; c < (r+1)*3; c++)
+                for (int c = r*8; c < (r+1)*8; c++)
                 {
                     consm[c].Location_ID = locationID;
                 }

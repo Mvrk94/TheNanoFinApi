@@ -112,16 +112,35 @@ namespace NanofinAPI.Controllers
                 return (Decimal)(from c in db.salespermonths where c.datum == "2016-09" select c.sales).First();
             }
 
+
+        private decimal getCurrentDaySales()
+        {
+            var datum = DateTime.Now;
+            
+            datum =  datum.AddHours(datum.TimeOfDay.Hours * -1);
+            var sales = db.currentmonthdailysales.Where(x => x.activeProductItemStartDate > datum).ToList();
+            var str = DateTime.Now.TimeOfDay;
+            decimal toreturn = 0;
+
+            foreach( var r  in sales)
+            {
+                toreturn += (Decimal)r.sales;
+            }
+            
+            return toreturn;
+        }
+
         [HttpGet]
         public DashBoardDTO getDashboard(int productProviderID)
         {
+            
             var toreturn = new DashBoardDTO()
             {
                 claims = getCurrentNumberOfClaims(),
                 yearSale = getYearSales(productProviderID),
                 numMembers = getMembers(productProviderID),
                 monthsales = getThisMonthSales(),
-                salesToday = 0,
+                salesToday = getCurrentDaySales(),
             };
             return toreturn;
         }

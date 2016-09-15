@@ -381,6 +381,16 @@ warning 6002: The table/view 'def.database_nanofin.chrisviewconsumeractiveproduc
           <Property Name="UnitTypeDescription" Type="varchar" MaxLength="70" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.currentmonthdailysale' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="currentmonthdailysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="date" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.demographicconsumerproductlocationlastmonthsales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="demographicconsumerproductlocationlastmonthsales">
           <Key>
@@ -1278,6 +1288,13 @@ FROM `activeproductitemswithdetail` AS `activeproductitemswithdetail`</DefiningQ
 `chrisviewconsumeractiveproducts`.`UnitTypeDescription`
 FROM `chrisviewconsumeractiveproducts` AS `chrisviewconsumeractiveproducts`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="currentmonthdailysale" EntityType="Self.currentmonthdailysale" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`currentmonthdailysale`.`ActiveProductItems_ID`, 
+`currentmonthdailysale`.`activeProductItemStartDate`, 
+`currentmonthdailysale`.`sales`
+FROM `currentmonthdailysale` AS `currentmonthdailysale`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="demographicconsumerproductlocationlastmonthsales" EntityType="Self.demographicconsumerproductlocationlastmonthsales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `demographicconsumerproductlocationlastmonthsales`.`ActiveProductItems_ID`, 
@@ -1876,6 +1893,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </AssociationSet>
           <EntitySet Name="activeproductitemswithdetails" EntityType="nanofinEntites.activeproductitemswithdetail" />
           <EntitySet Name="chrisviewconsumeractiveproducts" EntityType="nanofinEntites.chrisviewconsumeractiveproduct" />
+          <EntitySet Name="currentmonthdailysales" EntityType="nanofinEntites.currentmonthdailysale" />
           <EntitySet Name="demographicconsumerproductlocationlastmonthsales" EntityType="nanofinEntites.demographicconsumerproductlocationlastmonthsale" />
           <EntitySet Name="demographicconsumerproductlocationmonthlysales" EntityType="nanofinEntites.demographicconsumerproductlocationmonthlysale" />
           <EntitySet Name="demographicconsumerproductlocationsaleslastmonths" EntityType="nanofinEntites.demographicconsumerproductlocationsaleslastmonth" />
@@ -1890,6 +1908,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySet Name="monthlyprovincialproducttypedistributions" EntityType="nanofinEntites.monthlyprovincialproducttypedistribution" />
           <EntitySet Name="overallproductlocationsales" EntityType="nanofinEntites.overallproductlocationsale" />
           <EntitySet Name="productlocationmonthlysales" EntityType="nanofinEntites.productlocationmonthlysale" />
+          <EntitySet Name="productprovideryearlysales" EntityType="nanofinEntites.productprovideryearlysale" />
           <EntitySet Name="productsalespermonths" EntityType="nanofinEntites.productsalespermonth" />
           <EntitySet Name="productswithpurchases" EntityType="nanofinEntites.productswithpurchas" />
           <EntitySet Name="provincialinsurancetypesales" EntityType="nanofinEntites.provincialinsurancetypesale" />
@@ -1898,7 +1917,6 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySet Name="resellersendvouchergenderspecifics" EntityType="nanofinEntites.resellersendvouchergenderspecific" />
           <EntitySet Name="saleslastmonths" EntityType="nanofinEntites.saleslastmonth" />
           <EntitySet Name="salespermonths" EntityType="nanofinEntites.salespermonth" />
-          <EntitySet Name="productprovideryearlysales" EntityType="nanofinEntites.productprovideryearlysale" />
           </EntityContainer>
         <ComplexType Name="monthlyProvinceSales_Result" />
         <ComplexType Name="ProductLocationSales_Result" />
@@ -2806,6 +2824,14 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="ipCoverAmount" Type="Decimal" />
           <Property Name="UnitTypeDescription" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="currentmonthdailysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
         <EntityType Name="demographicconsumerproductlocationlastmonthsale">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
@@ -3025,6 +3051,16 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
+        <EntityType Name="productprovideryearlysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="ProductProvider_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="yearSales" Type="Decimal" />
+        </EntityType>
         <EntityType Name="productsalespermonth">
           <Key>
             <PropertyRef Name="Product_ID" />
@@ -3111,16 +3147,6 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="activeProductItems_ID" Type="Int32" Nullable="false" />
           <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="productprovideryearlysale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="ProductProvider_ID" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemStartDate" Type="DateTime" />
-          <Property Name="yearSales" Type="Decimal" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3525,6 +3551,15 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="currentmonthdailysales">
+            <EntityTypeMapping TypeName="nanofinEntites.currentmonthdailysale">
+              <MappingFragment StoreEntitySet="currentmonthdailysale">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="demographicconsumerproductlocationlastmonthsales">
             <EntityTypeMapping TypeName="nanofinEntites.demographicconsumerproductlocationlastmonthsale">
               <MappingFragment StoreEntitySet="demographicconsumerproductlocationlastmonthsales">
@@ -3726,6 +3761,16 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="productprovideryearlysales">
+            <EntityTypeMapping TypeName="nanofinEntites.productprovideryearlysale">
+              <MappingFragment StoreEntitySet="productprovideryearlysales">
+                <ScalarProperty Name="yearSales" ColumnName="yearSales" />
+                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="productsalespermonths">
             <EntityTypeMapping TypeName="nanofinEntites.productsalespermonth">
               <MappingFragment StoreEntitySet="productsalespermonth">
@@ -3808,16 +3853,6 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
                 <ScalarProperty Name="sales" ColumnName="sales" />
                 <ScalarProperty Name="datum" ColumnName="datum" />
                 <ScalarProperty Name="activeProductItems_ID" ColumnName="activeProductItems_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productprovideryearlysales">
-            <EntityTypeMapping TypeName="nanofinEntites.productprovideryearlysale">
-              <MappingFragment StoreEntitySet="productprovideryearlysales">
-                <ScalarProperty Name="yearSales" ColumnName="yearSales" />
-                <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
-                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
-                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
