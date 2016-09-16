@@ -19,6 +19,7 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<productTarget> TargetProgrees(int productProvider, int numMonths)
         {
+
             var toreturn = new List<productTarget>();
             var currentDate = DateTime.Now.AddMonths(numMonths*-1);
             var salesPerProduct = (from c  in db.saleslastmonths where c.datum == "2016-09" select c).ToList() ;
