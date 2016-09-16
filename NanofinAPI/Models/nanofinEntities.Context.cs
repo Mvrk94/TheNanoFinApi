@@ -75,6 +75,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<productswithpurchas> productswithpurchases { get; set; }
         public virtual DbSet<provincialinsurancetypesale> provincialinsurancetypesales { get; set; }
         public virtual DbSet<provincialproducttypedistributionlastmonth> provincialproducttypedistributionlastmonths { get; set; }
+        public virtual DbSet<resellersalespermonth> resellersalespermonths { get; set; }
         public virtual DbSet<resellersendmonthlysale> resellersendmonthlysales { get; set; }
         public virtual DbSet<resellersendvouchergenderspecific> resellersendvouchergenderspecifics { get; set; }
         public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }

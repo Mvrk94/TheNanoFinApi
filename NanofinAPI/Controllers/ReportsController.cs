@@ -204,5 +204,13 @@ namespace NanofinAPI.Controllers
         }
 
         #endregion
+
+
+
+        [HttpGet]
+        public List<resellersalespermonth> getResellerProfitPerMonth(int resellerID)
+        {
+            return (from c in db.resellersalespermonths where c.Sender_ID == resellerID orderby c.transactionDate ascending select c ).ToList();
+        }
     }
 }

@@ -707,6 +707,19 @@ warning 6002: The table/view 'def.database_nanofin.provincialproducttypedistribu
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.resellersalespermonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="resellersalespermonth">
+          <Key>
+            <PropertyRef Name="VoucherSentTo" />
+            <PropertyRef Name="transactionDate" />
+            <PropertyRef Name="Sender_ID" />
+          </Key>
+          <Property Name="VoucherSentTo" Type="int" Nullable="false" />
+          <Property Name="transactionDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Sender_ID" Type="int" Nullable="false" />
+          <Property Name="sold" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.resellersendmonthlysales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="resellersendmonthlysales">
           <Key>
@@ -1513,6 +1526,14 @@ FROM `provincialinsurancetypesales` AS `provincialinsurancetypesales`</DefiningQ
 `provincialproducttypedistributionlastmonth`.`sales`
 FROM `provincialproducttypedistributionlastmonth` AS `provincialproducttypedistributionlastmonth`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="resellersalespermonth" EntityType="Self.resellersalespermonth" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`resellersalespermonth`.`VoucherSentTo`, 
+`resellersalespermonth`.`transactionDate`, 
+`resellersalespermonth`.`Sender_ID`, 
+`resellersalespermonth`.`sold`
+FROM `resellersalespermonth` AS `resellersalespermonth`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="resellersendmonthlysales" EntityType="Self.resellersendmonthlysales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `resellersendmonthlysales`.`VoucherSentTo`, 
@@ -1740,156 +1761,156 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySet Name="vouchertransactions" EntityType="nanofinEntites.vouchertransaction" />
           <EntitySet Name="vouchertypes" EntityType="nanofinEntites.vouchertype" />
           <AssociationSet Name="activeproductitems_ibfk_1" Association="nanofinEntites.activeproductitems_ibfk_1">
-            <End Role="consumer" EntitySet="consumers" />
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End EntitySet="consumers" Role="consumer" />
+            <End EntitySet="activeproductitems" Role="activeproductitem" />
           </AssociationSet>
           <AssociationSet Name="activeproductitems_ibfk_2" Association="nanofinEntites.activeproductitems_ibfk_2">
-            <End Role="product" EntitySet="products" />
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End EntitySet="products" Role="product" />
+            <End EntitySet="activeproductitems" Role="activeproductitem" />
           </AssociationSet>
           <AssociationSet Name="activeproductitems_ibfk_3" Association="nanofinEntites.activeproductitems_ibfk_3">
-            <End Role="location" EntitySet="locations" />
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End EntitySet="locations" Role="location" />
+            <End EntitySet="activeproductitems" Role="activeproductitem" />
           </AssociationSet>
           <AssociationSet Name="ActiveProductItems_ID" Association="nanofinEntites.ActiveProductItems_ID">
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
-            <End Role="claim" EntitySet="claims" />
+            <End EntitySet="activeproductitems" Role="activeproductitem" />
+            <End EntitySet="claims" Role="claim" />
           </AssociationSet>
           <AssociationSet Name="claimuploaddocument_ibfk_2" Association="nanofinEntites.claimuploaddocument_ibfk_2">
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
-            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
+            <End EntitySet="activeproductitems" Role="activeproductitem" />
+            <End EntitySet="claimuploaddocuments" Role="claimuploaddocument" />
           </AssociationSet>
           <AssociationSet Name="fk_transactionlocation" Association="nanofinEntites.fk_transactionlocation">
-            <End Role="location" EntitySet="locations" />
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End EntitySet="locations" Role="location" />
+            <End EntitySet="activeproductitems" Role="activeproductitem" />
           </AssociationSet>
           <AssociationSet Name="productproviderpayment_ibfk_2" Association="nanofinEntites.productproviderpayment_ibfk_2">
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
-            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
+            <End EntitySet="activeproductitems" Role="activeproductitem" />
+            <End EntitySet="productproviderpayments" Role="productproviderpayment" />
           </AssociationSet>
           <AssociationSet Name="productredemptionlog_ibfk_2" Association="nanofinEntites.productredemptionlog_ibfk_2">
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
-            <End Role="productredemptionlog" EntitySet="productredemptionlogs" />
+            <End EntitySet="activeproductitems" Role="activeproductitem" />
+            <End EntitySet="productredemptionlogs" Role="productredemptionlog" />
           </AssociationSet>
           <AssociationSet Name="Claim_ID" Association="nanofinEntites.Claim_ID">
-            <End Role="claim" EntitySet="claims" />
-            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
+            <End EntitySet="claims" Role="claim" />
+            <End EntitySet="claimuploaddocuments" Role="claimuploaddocument" />
           </AssociationSet>
           <AssociationSet Name="claimtemplate_ID" Association="nanofinEntites.claimtemplate_ID">
-            <End Role="claimtemplate" EntitySet="claimtemplates" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+            <End EntitySet="claimtemplates" Role="claimtemplate" />
+            <End EntitySet="insuranceproducts" Role="insuranceproduct" />
           </AssociationSet>
           <AssociationSet Name="claimuploaddocument_ibfk_1" Association="nanofinEntites.claimuploaddocument_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="claimuploaddocuments" Role="claimuploaddocument" />
           </AssociationSet>
           <AssociationSet Name="claimuploaddocument_ibfk_3" Association="nanofinEntites.claimuploaddocument_ibfk_3">
-            <End Role="document" EntitySet="documents" />
-            <End Role="claimuploaddocument" EntitySet="claimuploaddocuments" />
+            <End EntitySet="documents" Role="document" />
+            <End EntitySet="claimuploaddocuments" Role="claimuploaddocument" />
           </AssociationSet>
           <AssociationSet Name="consumer_ibfk_1" Association="nanofinEntites.consumer_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="consumer" EntitySet="consumers" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="consumers" Role="consumer" />
           </AssociationSet>
           <AssociationSet Name="consumer_ibfk_2" Association="nanofinEntites.consumer_ibfk_2">
-            <End Role="location" EntitySet="locations" />
-            <End Role="consumer" EntitySet="consumers" />
+            <End EntitySet="locations" Role="location" />
+            <End EntitySet="consumers" Role="consumer" />
           </AssociationSet>
           <AssociationSet Name="document_ibfk_1" Association="nanofinEntites.document_ibfk_1">
-            <End Role="product" EntitySet="products" />
-            <End Role="document" EntitySet="documents" />
+            <End EntitySet="products" Role="product" />
+            <End EntitySet="documents" Role="document" />
           </AssociationSet>
           <AssociationSet Name="insuranceproduct_ibfk_1" Association="nanofinEntites.insuranceproduct_ibfk_1">
-            <End Role="unittype" EntitySet="unittypes" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+            <End EntitySet="unittypes" Role="unittype" />
+            <End EntitySet="insuranceproducts" Role="insuranceproduct" />
           </AssociationSet>
           <AssociationSet Name="insuranceproduct_ibfk_2" Association="nanofinEntites.insuranceproduct_ibfk_2">
-            <End Role="productprovider" EntitySet="productproviders" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+            <End EntitySet="productproviders" Role="productprovider" />
+            <End EntitySet="insuranceproducts" Role="insuranceproduct" />
           </AssociationSet>
           <AssociationSet Name="insuranceproduct_ibfk_3" Association="nanofinEntites.insuranceproduct_ibfk_3">
-            <End Role="insurancetype" EntitySet="insurancetypes" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+            <End EntitySet="insurancetypes" Role="insurancetype" />
+            <End EntitySet="insuranceproducts" Role="insuranceproduct" />
           </AssociationSet>
           <AssociationSet Name="insuranceproduct_ibfk_4" Association="nanofinEntites.insuranceproduct_ibfk_4">
-            <End Role="product" EntitySet="products" />
-            <End Role="insuranceproduct" EntitySet="insuranceproducts" />
+            <End EntitySet="products" Role="product" />
+            <End EntitySet="insuranceproducts" Role="insuranceproduct" />
           </AssociationSet>
           <AssociationSet Name="reseller_ibfk_2" Association="nanofinEntites.reseller_ibfk_2">
-            <End Role="location" EntitySet="locations" />
-            <End Role="reseller" EntitySet="resellers" />
+            <End EntitySet="locations" Role="location" />
+            <End EntitySet="resellers" Role="reseller" />
           </AssociationSet>
           <AssociationSet Name="notificationlog_ibfk_1" Association="nanofinEntites.notificationlog_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="notificationlog" EntitySet="notificationlogs" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="notificationlogs" Role="notificationlog" />
           </AssociationSet>
           <AssociationSet Name="processapplications_ibfk_1" Association="nanofinEntites.processapplications_ibfk_1">
-            <End Role="product" EntitySet="products" />
-            <End Role="processapplication" EntitySet="processapplications" />
+            <End EntitySet="products" Role="product" />
+            <End EntitySet="processapplications" Role="processapplication" />
           </AssociationSet>
           <AssociationSet Name="product_ibfk_1" Association="nanofinEntites.product_ibfk_1">
-            <End Role="productprovider" EntitySet="productproviders" />
-            <End Role="product" EntitySet="products" />
+            <End EntitySet="productproviders" Role="productprovider" />
+            <End EntitySet="products" Role="product" />
           </AssociationSet>
           <AssociationSet Name="product_ibfk_2" Association="nanofinEntites.product_ibfk_2">
-            <End Role="producttype" EntitySet="producttypes" />
-            <End Role="product" EntitySet="products" />
+            <End EntitySet="producttypes" Role="producttype" />
+            <End EntitySet="products" Role="product" />
           </AssociationSet>
           <AssociationSet Name="productprovider_ibfk_1" Association="nanofinEntites.productprovider_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="productprovider" EntitySet="productproviders" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="productproviders" Role="productprovider" />
           </AssociationSet>
           <AssociationSet Name="productproviderpayment_ibfk_1" Association="nanofinEntites.productproviderpayment_ibfk_1">
-            <End Role="productprovider" EntitySet="productproviders" />
-            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
+            <End EntitySet="productproviders" Role="productprovider" />
+            <End EntitySet="productproviderpayments" Role="productproviderpayment" />
           </AssociationSet>
           <AssociationSet Name="productredemptionlog_ibfk_1" Association="nanofinEntites.productredemptionlog_ibfk_1">
-            <End Role="voucher" EntitySet="vouchers" />
-            <End Role="productredemptionlog" EntitySet="productredemptionlogs" />
+            <End EntitySet="vouchers" Role="voucher" />
+            <End EntitySet="productredemptionlogs" Role="productredemptionlog" />
           </AssociationSet>
           <AssociationSet Name="reseller_ibfk_1" Association="nanofinEntites.reseller_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="reseller" EntitySet="resellers" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="resellers" Role="reseller" />
           </AssociationSet>
           <AssociationSet Name="systemadmin_ibfk_1" Association="nanofinEntites.systemadmin_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="systemadmin" EntitySet="systemadmins" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="systemadmins" Role="systemadmin" />
           </AssociationSet>
           <AssociationSet Name="vouchertransaction_ibfk_5" Association="nanofinEntites.vouchertransaction_ibfk_5">
-            <End Role="transactiontype" EntitySet="transactiontypes" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+            <End EntitySet="transactiontypes" Role="transactiontype" />
+            <End EntitySet="vouchertransactions" Role="vouchertransaction" />
           </AssociationSet>
           <AssociationSet Name="user_ibfk_1" Association="nanofinEntites.user_ibfk_1">
-            <End Role="usertype" EntitySet="usertypes" />
-            <End Role="user" EntitySet="users" />
+            <End EntitySet="usertypes" Role="usertype" />
+            <End EntitySet="users" Role="user" />
           </AssociationSet>
           <AssociationSet Name="validator_ibfk_1" Association="nanofinEntites.validator_ibfk_1">
-            <End Role="user" EntitySet="users" />
-            <End Role="validator" EntitySet="validators" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="validators" Role="validator" />
           </AssociationSet>
           <AssociationSet Name="voucher_ibfk_2" Association="nanofinEntites.voucher_ibfk_2">
-            <End Role="user" EntitySet="users" />
-            <End Role="voucher" EntitySet="vouchers" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="vouchers" Role="voucher" />
           </AssociationSet>
           <AssociationSet Name="vouchertransaction_ibfk_3" Association="nanofinEntites.vouchertransaction_ibfk_3">
-            <End Role="user" EntitySet="users" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="vouchertransactions" Role="vouchertransaction" />
           </AssociationSet>
           <AssociationSet Name="vouchertransaction_ibfk_4" Association="nanofinEntites.vouchertransaction_ibfk_4">
-            <End Role="user" EntitySet="users" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+            <End EntitySet="users" Role="user" />
+            <End EntitySet="vouchertransactions" Role="vouchertransaction" />
           </AssociationSet>
           <AssociationSet Name="voucher_ibfk_1" Association="nanofinEntites.voucher_ibfk_1">
-            <End Role="vouchertype" EntitySet="vouchertypes" />
-            <End Role="voucher" EntitySet="vouchers" />
+            <End EntitySet="vouchertypes" Role="vouchertype" />
+            <End EntitySet="vouchers" Role="voucher" />
           </AssociationSet>
           <AssociationSet Name="vouchertransaction_ibfk_1" Association="nanofinEntites.vouchertransaction_ibfk_1">
-            <End Role="voucher" EntitySet="vouchers" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+            <End EntitySet="vouchers" Role="voucher" />
+            <End EntitySet="vouchertransactions" Role="vouchertransaction" />
           </AssociationSet>
           <AssociationSet Name="vouchertransaction_ibfk_2" Association="nanofinEntites.vouchertransaction_ibfk_2">
-            <End Role="voucher" EntitySet="vouchers" />
-            <End Role="vouchertransaction" EntitySet="vouchertransactions" />
+            <End EntitySet="vouchers" Role="voucher" />
+            <End EntitySet="vouchertransactions" Role="vouchertransaction" />
           </AssociationSet>
           <EntitySet Name="activeproductitemswithdetails" EntityType="nanofinEntites.activeproductitemswithdetail" />
           <EntitySet Name="chrisviewconsumeractiveproducts" EntityType="nanofinEntites.chrisviewconsumeractiveproduct" />
@@ -1913,6 +1934,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySet Name="productswithpurchases" EntityType="nanofinEntites.productswithpurchas" />
           <EntitySet Name="provincialinsurancetypesales" EntityType="nanofinEntites.provincialinsurancetypesale" />
           <EntitySet Name="provincialproducttypedistributionlastmonths" EntityType="nanofinEntites.provincialproducttypedistributionlastmonth" />
+          <EntitySet Name="resellersalespermonths" EntityType="nanofinEntites.resellersalespermonth" />
           <EntitySet Name="resellersendmonthlysales" EntityType="nanofinEntites.resellersendmonthlysale" />
           <EntitySet Name="resellersendvouchergenderspecifics" EntityType="nanofinEntites.resellersendvouchergenderspecific" />
           <EntitySet Name="saleslastmonths" EntityType="nanofinEntites.saleslastmonth" />
@@ -1925,17 +1947,17 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
           </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemPolicyNum" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ActiveProductItems_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Consumer_ID" Nullable="false" Type="Int32" />
+          <Property Name="Product_ID" Nullable="false" Type="Int32" />
+          <Property Name="activeProductItemPolicyNum" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="isActive" Type="Boolean" />
-          <Property Name="productValue" Type="Decimal" Nullable="false" />
-          <Property Name="duration" Type="Int32" Nullable="false" />
+          <Property Name="productValue" Nullable="false" Type="Decimal" />
+          <Property Name="duration" Nullable="false" Type="Int32" />
           <Property Name="activeProductItemStartDate" Type="DateTime" />
           <Property Name="transactionlocation" Type="Int32" />
           <Property Name="activeProductItemEndDate" Type="DateTime" />
-          <Property Name="PurchaseConfirmationDocPath" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="PurchaseConfirmationDocPath" MaxLength="1024" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="consumer" Relationship="nanofinEntites.activeproductitems_ibfk_1" FromRole="activeproductitem" ToRole="consumer" />
           <NavigationProperty Name="product" Relationship="nanofinEntites.activeproductitems_ibfk_2" FromRole="activeproductitem" ToRole="product" />
           <NavigationProperty Name="location" Relationship="nanofinEntites.activeproductitems_ibfk_3" FromRole="activeproductitem" ToRole="location" />
@@ -1949,9 +1971,9 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="Claim_ID" />
           </Key>
-          <Property Name="Claim_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Claim_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <Property Name="ActiveProductItems_ID" Type="Int32" />
-          <Property Name="capturedClaimFormDataJson" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="capturedClaimFormDataJson" MaxLength="1073741823" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="activeproductitem" Relationship="nanofinEntites.ActiveProductItems_ID" FromRole="claim" ToRole="activeproductitem" />
           <NavigationProperty Name="claimuploaddocuments" Relationship="nanofinEntites.Claim_ID" FromRole="claim" ToRole="claimuploaddocument" />
         </EntityType>
@@ -1959,20 +1981,20 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="claimtemplate_ID" />
           </Key>
-          <Property Name="claimtemplate_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="templateName" Type="String" MaxLength="65" FixedLength="false" Unicode="false" />
-          <Property Name="formDataRequiredJson" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="claimtemplate_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="templateName" MaxLength="65" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="formDataRequiredJson" MaxLength="1073741823" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="insuranceproducts" Relationship="nanofinEntites.claimtemplate_ID" FromRole="claimtemplate" ToRole="insuranceproduct" />
         </EntityType>
         <EntityType Name="claimuploaddocument">
           <Key>
             <PropertyRef Name="claimUploadDocument_ID" />
           </Key>
-          <Property Name="claimUploadDocument_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="document_ID" Type="Int32" Nullable="false" />
-          <Property Name="claimUploadDocumentPath" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="claimUploadDocument_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="User_ID" Nullable="false" Type="Int32" />
+          <Property Name="ActiveProductItems_ID" Nullable="false" Type="Int32" />
+          <Property Name="document_ID" Nullable="false" Type="Int32" />
+          <Property Name="claimUploadDocumentPath" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="Claim_ID" Type="Int32" />
           <NavigationProperty Name="activeproductitem" Relationship="nanofinEntites.claimuploaddocument_ibfk_2" FromRole="claimuploaddocument" ToRole="activeproductitem" />
           <NavigationProperty Name="claim" Relationship="nanofinEntites.Claim_ID" FromRole="claimuploaddocument" ToRole="claim" />
@@ -1983,15 +2005,15 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="Consumer_ID" />
           </Key>
-          <Property Name="Consumer_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="consumerDateOfBirth" Type="DateTime" Nullable="false" />
-          <Property Name="consumerAddress" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="topProductCategoriesInterestedIn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="homeOwnerType" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Consumer_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="User_ID" Nullable="false" Type="Int32" />
+          <Property Name="consumerDateOfBirth" Nullable="false" Type="DateTime" />
+          <Property Name="consumerAddress" MaxLength="80" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="gender" MaxLength="10" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="maritalStatus" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="topProductCategoriesInterestedIn" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="homeOwnerType" MaxLength="80" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="employmentStatus" MaxLength="80" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="grossMonthlyIncome" Type="Decimal" />
           <Property Name="nettMonthlyIncome" Type="Decimal" />
           <Property Name="totalMonthlyExpenses" Type="Decimal" />
@@ -2005,12 +2027,12 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="document_ID" />
           </Key>
-          <Property Name="document_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="documentName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="documentDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="docPreferredFormat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="docPreparationRequired" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="document_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Product_ID" Nullable="false" Type="Int32" />
+          <Property Name="documentName" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="documentDescription" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="docPreferredFormat" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="docPreparationRequired" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="claimuploaddocuments" Relationship="nanofinEntites.claimuploaddocument_ibfk_3" FromRole="document" ToRole="claimuploaddocument" />
           <NavigationProperty Name="product" Relationship="nanofinEntites.document_ibfk_1" FromRole="document" ToRole="product" />
         </EntityType>
@@ -2018,20 +2040,20 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="InsuranceProduct_ID" />
           </Key>
-          <Property Name="InsuranceProduct_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="InsuranceProduct_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="ProductProvider_ID" Nullable="false" Type="Int32" />
+          <Property Name="InsuranceType_ID" Nullable="false" Type="Int32" />
+          <Property Name="Product_ID" Nullable="false" Type="Int32" />
           <Property Name="ipCoverAmount" Type="Decimal" />
           <Property Name="ipUnitCost" Type="Decimal" />
           <Property Name="ipUnitType" Type="Int32" />
           <Property Name="ipMinimunNoOfUnits" Type="Int32" />
-          <Property Name="ipClaimInfoPath" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ipClaimInfoPath" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="claimTimeframe" Type="DateTime" />
-          <Property Name="policyNumberApiLink" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="ApiKey" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
-          <Property Name="claimContactNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="claimFormPath" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="policyNumberApiLink" MaxLength="1000" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="ApiKey" MaxLength="2000" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="claimContactNo" MaxLength="16" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="claimFormPath" MaxLength="1024" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="claimtemplate_ID" Type="Int32" />
           <NavigationProperty Name="claimtemplate" Relationship="nanofinEntites.claimtemplate_ID" FromRole="insuranceproduct" ToRole="claimtemplate" />
           <NavigationProperty Name="unittype" Relationship="nanofinEntites.insuranceproduct_ibfk_1" FromRole="insuranceproduct" ToRole="unittype" />
@@ -2043,19 +2065,19 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="InsuranceType_ID" />
           </Key>
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InsuranceType_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="insuranctTypeDescription" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="insuranceproducts" Relationship="nanofinEntites.insuranceproduct_ibfk_3" FromRole="insurancetype" ToRole="insuranceproduct" />
         </EntityType>
         <EntityType Name="location">
           <Key>
             <PropertyRef Name="Location_ID" />
           </Key>
-          <Property Name="Location_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="PostalCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Location_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Province" MaxLength="32" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="City" MaxLength="32" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="LatLng" MaxLength="64" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="PostalCode" MaxLength="45" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="GDP" Type="Int32" />
           <Property Name="UnemploymentRate" Type="Decimal" />
           <NavigationProperty Name="activeproductitems" Relationship="nanofinEntites.activeproductitems_ibfk_3" FromRole="location" ToRole="activeproductitem" />
@@ -2067,20 +2089,20 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="NotificationLog_ID" />
           </Key>
-          <Property Name="NotificationLog_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="notificationType" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="notificationReceiver" Type="Int32" Nullable="false" />
-          <Property Name="notificationDateSent" Type="DateTime" Nullable="false" />
+          <Property Name="NotificationLog_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="notificationType" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="notificationReceiver" Nullable="false" Type="Int32" />
+          <Property Name="notificationDateSent" Nullable="false" Type="DateTime" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.notificationlog_ibfk_1" FromRole="notificationlog" ToRole="user" />
         </EntityType>
         <EntityType Name="processapplication">
           <Key>
             <PropertyRef Name="ProcessApplication_ID" />
           </Key>
-          <Property Name="ProcessApplication_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="OperationType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="value1" Type="Decimal" Nullable="false" />
+          <Property Name="ProcessApplication_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Product_ID" Nullable="false" Type="Int32" />
+          <Property Name="OperationType" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="value1" Nullable="false" Type="Decimal" />
           <Property Name="value2" Type="DateTime" />
           <NavigationProperty Name="product" Relationship="nanofinEntites.processapplications_ibfk_1" FromRole="processapplication" ToRole="product" />
         </EntityType>
@@ -2088,13 +2110,13 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="Product_ID" />
           </Key>
-          <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="ProductProvider_ID" Nullable="false" Type="Int32" />
           <Property Name="ProductType_ID" Type="Int32" />
-          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="productDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="detailedDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
-          <Property Name="productPolicyDocPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="productName" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="productDescription" MaxLength="1000" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="detailedDescription" MaxLength="2000" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="productPolicyDocPath" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="isAvailableForPurchase" Type="Boolean" />
           <Property Name="salesTargetAmount" Type="Decimal" />
           <Property Name="ratingAverage" Type="Decimal" />
@@ -2110,12 +2132,12 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="ProductProvider_ID" />
           </Key>
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="ppCompanyName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ppVATnumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ppFaxNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ppAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProductProvider_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="User_ID" Nullable="false" Type="Int32" />
+          <Property Name="ppCompanyName" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="ppVATnumber" MaxLength="20" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="ppFaxNumber" MaxLength="20" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="ppAddress" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="insuranceproducts" Relationship="nanofinEntites.insuranceproduct_ibfk_2" FromRole="productprovider" ToRole="insuranceproduct" />
           <NavigationProperty Name="products" Relationship="nanofinEntites.product_ibfk_1" FromRole="productprovider" ToRole="product" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.productprovider_ibfk_1" FromRole="productprovider" ToRole="user" />
@@ -2125,10 +2147,10 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="Productproviderpayment_ID" />
           </Key>
-          <Property Name="Productproviderpayment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Productproviderpayment_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <Property Name="ProductProvider_ID" Type="Int32" />
           <Property Name="ActiveProductItems_ID" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Description" MaxLength="45" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="AmountToPay" Type="Decimal" />
           <Property Name="hasBeenPayed" Type="Boolean" />
           <NavigationProperty Name="activeproductitem" Relationship="nanofinEntites.productproviderpayment_ibfk_2" FromRole="productproviderpayment" ToRole="activeproductitem" />
@@ -2139,9 +2161,9 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             <PropertyRef Name="Voucher_ID" />
             <PropertyRef Name="ActiveProductItems_ID" />
           </Key>
-          <Property Name="Voucher_ID" Type="Int32" Nullable="false" />
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="transactionAmount" Type="Decimal" Nullable="false" />
+          <Property Name="Voucher_ID" Nullable="false" Type="Int32" />
+          <Property Name="ActiveProductItems_ID" Nullable="false" Type="Int32" />
+          <Property Name="transactionAmount" Nullable="false" Type="Decimal" />
           <NavigationProperty Name="activeproductitem" Relationship="nanofinEntites.productredemptionlog_ibfk_2" FromRole="productredemptionlog" ToRole="activeproductitem" />
           <NavigationProperty Name="voucher" Relationship="nanofinEntites.productredemptionlog_ibfk_1" FromRole="productredemptionlog" ToRole="voucher" />
         </EntityType>
@@ -2149,29 +2171,29 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="ProductType_ID" />
           </Key>
-          <Property Name="ProductType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductTypeName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ProductType_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="ProductTypeName" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="products" Relationship="nanofinEntites.product_ibfk_2" FromRole="producttype" ToRole="product" />
         </EntityType>
         <EntityType Name="reseller">
           <Key>
             <PropertyRef Name="Reseller_ID" />
           </Key>
-          <Property Name="Reseller_ID" Type="Int32" Nullable="false" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Reseller_ID" Nullable="false" Type="Int32" />
+          <Property Name="User_ID" Nullable="false" Type="Int32" />
           <Property Name="resellerIsValidated" Type="Boolean" />
-          <Property Name="resellerBankBranchName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="resellerBankAccountNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="resellerBankName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="resellerBankBranchCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="resellerBankBranchName" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="resellerBankAccountNumber" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="resellerBankName" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="resellerBankBranchCode" MaxLength="10" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="resellerDateOfBirth" Type="DateTime" />
-          <Property Name="street" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="city" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="postalCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="country" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="sellingLocation" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="isSharingLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="street" MaxLength="32" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="city" MaxLength="32" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="postalCode" MaxLength="32" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="province" MaxLength="32" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="country" MaxLength="32" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="sellingLocation" MaxLength="32" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="isSharingLocation" MaxLength="64" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="StartedSharingTime" Type="DateTime" />
           <Property Name="minutesAvailable" Type="Int32" />
           <Property Name="LocationID" Type="Int32" />
@@ -2182,9 +2204,9 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="SystemAdmin_ID" />
           </Key>
-          <Property Name="SystemAdmin_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="systemAdminOTP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SystemAdmin_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="User_ID" Nullable="false" Type="Int32" />
+          <Property Name="systemAdminOTP" MaxLength="20" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="systemAdminHasTwoPartAuth" Type="Boolean" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.systemadmin_ibfk_1" FromRole="systemadmin" ToRole="user" />
         </EntityType>
@@ -2192,38 +2214,38 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="TransactionType_ID" />
           </Key>
-          <Property Name="TransactionType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="transactionTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionType_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="transactionTypeDescription" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="vouchertransactions" Relationship="nanofinEntites.vouchertransaction_ibfk_5" FromRole="transactiontype" ToRole="vouchertransaction" />
         </EntityType>
         <EntityType Name="unittype">
           <Key>
             <PropertyRef Name="UnitType_ID" />
           </Key>
-          <Property Name="UnitType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UnitTypeDescription" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="UnitType_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="UnitTypeDescription" MaxLength="70" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="insuranceproducts" Relationship="nanofinEntites.insuranceproduct_ibfk_1" FromRole="unittype" ToRole="insuranceproduct" />
         </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="User_ID" />
           </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userFirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="userLastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="userName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="userEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="userContactNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="userPassword" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="User_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="userFirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="userLastName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="userName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="userEmail" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="userContactNumber" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="userPassword" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="userIsActive" Type="Boolean" />
           <Property Name="userType" Type="Int32" />
-          <Property Name="userActivationType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="IDnumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="IdDocumentPath" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="userActivationType" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="IDnumber" MaxLength="15" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="IdDocumentPath" MaxLength="1000" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="IdDocumentLastUpdated" Type="DateTime" />
           <Property Name="timeStap" Type="DateTime" />
-          <Property Name="resetPasswordKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="blockchainAddress" Type="String" MaxLength="20000" FixedLength="false" Unicode="false" />
+          <Property Name="resetPasswordKey" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="blockchainAddress" MaxLength="20000" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="claimuploaddocuments" Relationship="nanofinEntites.claimuploaddocument_ibfk_1" FromRole="user" ToRole="claimuploaddocument" />
           <NavigationProperty Name="consumers" Relationship="nanofinEntites.consumer_ibfk_1" FromRole="user" ToRole="consumer" />
           <NavigationProperty Name="notificationlogs" Relationship="nanofinEntites.notificationlog_ibfk_1" FromRole="user" ToRole="notificationlog" />
@@ -2240,40 +2262,40 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="UserType_ID" />
           </Key>
-          <Property Name="UserType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="UserType_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="UserTypeDescription" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="users" Relationship="nanofinEntites.user_ibfk_1" FromRole="usertype" ToRole="user" />
         </EntityType>
         <EntityType Name="validator">
           <Key>
             <PropertyRef Name="Validator_ID" />
           </Key>
-          <Property Name="Validator_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="validatiorCompany" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="validatorLicenseNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="validatorLicenseProvider" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Validator_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="User_ID" Nullable="false" Type="Int32" />
+          <Property Name="validatiorCompany" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="validatorLicenseNumber" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="validatorLicenseProvider" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="validatorValidUntil" Type="DateTime" />
-          <Property Name="validatorVATNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="validatorAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="validatorBankName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="validatorBankAccNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="validatorBankBranchName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="validatorBankBranchCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="validatorVATNumber" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="validatorAddress" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="validatorBankName" MaxLength="30" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="validatorBankAccNumber" MaxLength="20" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="validatorBankBranchName" MaxLength="20" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="validatorBankBranchCode" MaxLength="10" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.validator_ibfk_1" FromRole="validator" ToRole="user" />
         </EntityType>
         <EntityType Name="voucher">
           <Key>
             <PropertyRef Name="Voucher_ID" />
           </Key>
-          <Property Name="Voucher_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VoucherType_ID" Type="Int32" Nullable="false" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="voucherValue" Type="Decimal" Nullable="false" />
+          <Property Name="Voucher_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="VoucherType_ID" Nullable="false" Type="Int32" />
+          <Property Name="User_ID" Nullable="false" Type="Int32" />
+          <Property Name="voucherValue" Nullable="false" Type="Decimal" />
           <Property Name="voucherCreationDate" Type="DateTime" />
           <Property Name="OTP" Type="Int32" />
           <Property Name="OTPtimeStap" Type="DateTime" />
-          <Property Name="QRdata" Type="String" MaxLength="7000" FixedLength="false" Unicode="false" />
+          <Property Name="QRdata" MaxLength="7000" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="QRtimeStap" Type="DateTime" />
           <NavigationProperty Name="productredemptionlogs" Relationship="nanofinEntites.productredemptionlog_ibfk_1" FromRole="voucher" ToRole="productredemptionlog" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.voucher_ibfk_2" FromRole="voucher" ToRole="user" />
@@ -2286,14 +2308,14 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             <PropertyRef Name="Voucher_ID" />
             <PropertyRef Name="VoucherSentTo" />
           </Key>
-          <Property Name="Voucher_ID" Type="Int32" Nullable="false" />
-          <Property Name="VoucherSentTo" Type="Int32" Nullable="false" />
-          <Property Name="Sender_ID" Type="Int32" Nullable="false" />
-          <Property Name="Receiver_ID" Type="Int32" Nullable="false" />
-          <Property Name="TransactionType_ID" Type="Int32" Nullable="false" />
-          <Property Name="transactionAmount" Type="Decimal" Nullable="false" />
-          <Property Name="transactionDescription" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="transactionDate" Type="DateTime" Nullable="false" />
+          <Property Name="Voucher_ID" Nullable="false" Type="Int32" />
+          <Property Name="VoucherSentTo" Nullable="false" Type="Int32" />
+          <Property Name="Sender_ID" Nullable="false" Type="Int32" />
+          <Property Name="Receiver_ID" Nullable="false" Type="Int32" />
+          <Property Name="TransactionType_ID" Nullable="false" Type="Int32" />
+          <Property Name="transactionAmount" Nullable="false" Type="Decimal" />
+          <Property Name="transactionDescription" MaxLength="40" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="transactionDate" Nullable="false" Type="DateTime" />
           <NavigationProperty Name="transactiontype" Relationship="nanofinEntites.vouchertransaction_ibfk_5" FromRole="vouchertransaction" ToRole="transactiontype" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.vouchertransaction_ibfk_3" FromRole="vouchertransaction" ToRole="user" />
           <NavigationProperty Name="user1" Relationship="nanofinEntites.vouchertransaction_ibfk_4" FromRole="vouchertransaction" ToRole="user" />
@@ -2304,13 +2326,13 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Key>
             <PropertyRef Name="VoucherType_ID" />
           </Key>
-          <Property Name="VoucherType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="voucherTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VoucherType_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="voucherTypeDescription" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="vouchers" Relationship="nanofinEntites.voucher_ibfk_1" FromRole="vouchertype" ToRole="voucher" />
         </EntityType>
         <Association Name="activeproductitems_ibfk_1">
-          <End Type="nanofinEntites.consumer" Role="consumer" Multiplicity="1" />
-          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="*" />
+          <End Type="nanofinEntites.consumer" Multiplicity="1" Role="consumer" />
+          <End Type="nanofinEntites.activeproductitem" Multiplicity="*" Role="activeproductitem" />
           <ReferentialConstraint>
             <Principal Role="consumer">
               <PropertyRef Name="Consumer_ID" />
@@ -2321,8 +2343,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="activeproductitems_ibfk_2">
-          <End Type="nanofinEntites.product" Role="product" Multiplicity="1" />
-          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="*" />
+          <End Type="nanofinEntites.product" Multiplicity="1" Role="product" />
+          <End Type="nanofinEntites.activeproductitem" Multiplicity="*" Role="activeproductitem" />
           <ReferentialConstraint>
             <Principal Role="product">
               <PropertyRef Name="Product_ID" />
@@ -2333,8 +2355,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="activeproductitems_ibfk_3">
-          <End Type="nanofinEntites.location" Role="location" Multiplicity="0..1" />
-          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="*" />
+          <End Type="nanofinEntites.location" Multiplicity="0..1" Role="location" />
+          <End Type="nanofinEntites.activeproductitem" Multiplicity="*" Role="activeproductitem" />
           <ReferentialConstraint>
             <Principal Role="location">
               <PropertyRef Name="Location_ID" />
@@ -2345,8 +2367,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="ActiveProductItems_ID">
-          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="0..1" />
-          <End Type="nanofinEntites.claim" Role="claim" Multiplicity="*" />
+          <End Type="nanofinEntites.activeproductitem" Multiplicity="0..1" Role="activeproductitem" />
+          <End Type="nanofinEntites.claim" Multiplicity="*" Role="claim" />
           <ReferentialConstraint>
             <Principal Role="activeproductitem">
               <PropertyRef Name="ActiveProductItems_ID" />
@@ -2357,8 +2379,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="claimuploaddocument_ibfk_2">
-          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="1" />
-          <End Type="nanofinEntites.claimuploaddocument" Role="claimuploaddocument" Multiplicity="*" />
+          <End Type="nanofinEntites.activeproductitem" Multiplicity="1" Role="activeproductitem" />
+          <End Type="nanofinEntites.claimuploaddocument" Multiplicity="*" Role="claimuploaddocument" />
           <ReferentialConstraint>
             <Principal Role="activeproductitem">
               <PropertyRef Name="ActiveProductItems_ID" />
@@ -2369,8 +2391,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_transactionlocation">
-          <End Type="nanofinEntites.location" Role="location" Multiplicity="0..1" />
-          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="*" />
+          <End Type="nanofinEntites.location" Multiplicity="0..1" Role="location" />
+          <End Type="nanofinEntites.activeproductitem" Multiplicity="*" Role="activeproductitem" />
           <ReferentialConstraint>
             <Principal Role="location">
               <PropertyRef Name="Location_ID" />
@@ -2381,8 +2403,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="productproviderpayment_ibfk_2">
-          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="0..1" />
-          <End Type="nanofinEntites.productproviderpayment" Role="productproviderpayment" Multiplicity="*" />
+          <End Type="nanofinEntites.activeproductitem" Multiplicity="0..1" Role="activeproductitem" />
+          <End Type="nanofinEntites.productproviderpayment" Multiplicity="*" Role="productproviderpayment" />
           <ReferentialConstraint>
             <Principal Role="activeproductitem">
               <PropertyRef Name="ActiveProductItems_ID" />
@@ -2393,8 +2415,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="productredemptionlog_ibfk_2">
-          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="1" />
-          <End Type="nanofinEntites.productredemptionlog" Role="productredemptionlog" Multiplicity="*" />
+          <End Type="nanofinEntites.activeproductitem" Multiplicity="1" Role="activeproductitem" />
+          <End Type="nanofinEntites.productredemptionlog" Multiplicity="*" Role="productredemptionlog" />
           <ReferentialConstraint>
             <Principal Role="activeproductitem">
               <PropertyRef Name="ActiveProductItems_ID" />
@@ -2405,8 +2427,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="Claim_ID">
-          <End Type="nanofinEntites.claim" Role="claim" Multiplicity="0..1" />
-          <End Type="nanofinEntites.claimuploaddocument" Role="claimuploaddocument" Multiplicity="*" />
+          <End Type="nanofinEntites.claim" Multiplicity="0..1" Role="claim" />
+          <End Type="nanofinEntites.claimuploaddocument" Multiplicity="*" Role="claimuploaddocument" />
           <ReferentialConstraint>
             <Principal Role="claim">
               <PropertyRef Name="Claim_ID" />
@@ -2417,8 +2439,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="claimtemplate_ID">
-          <End Type="nanofinEntites.claimtemplate" Role="claimtemplate" Multiplicity="0..1" />
-          <End Type="nanofinEntites.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <End Type="nanofinEntites.claimtemplate" Multiplicity="0..1" Role="claimtemplate" />
+          <End Type="nanofinEntites.insuranceproduct" Multiplicity="*" Role="insuranceproduct" />
           <ReferentialConstraint>
             <Principal Role="claimtemplate">
               <PropertyRef Name="claimtemplate_ID" />
@@ -2429,8 +2451,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="claimuploaddocument_ibfk_1">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.claimuploaddocument" Role="claimuploaddocument" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.claimuploaddocument" Multiplicity="*" Role="claimuploaddocument" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2441,8 +2463,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="claimuploaddocument_ibfk_3">
-          <End Type="nanofinEntites.document" Role="document" Multiplicity="1" />
-          <End Type="nanofinEntites.claimuploaddocument" Role="claimuploaddocument" Multiplicity="*" />
+          <End Type="nanofinEntites.document" Multiplicity="1" Role="document" />
+          <End Type="nanofinEntites.claimuploaddocument" Multiplicity="*" Role="claimuploaddocument" />
           <ReferentialConstraint>
             <Principal Role="document">
               <PropertyRef Name="document_ID" />
@@ -2453,8 +2475,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="consumer_ibfk_1">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.consumer" Role="consumer" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.consumer" Multiplicity="*" Role="consumer" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2465,8 +2487,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="consumer_ibfk_2">
-          <End Type="nanofinEntites.location" Role="location" Multiplicity="0..1" />
-          <End Type="nanofinEntites.consumer" Role="consumer" Multiplicity="*" />
+          <End Type="nanofinEntites.location" Multiplicity="0..1" Role="location" />
+          <End Type="nanofinEntites.consumer" Multiplicity="*" Role="consumer" />
           <ReferentialConstraint>
             <Principal Role="location">
               <PropertyRef Name="Location_ID" />
@@ -2477,8 +2499,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="document_ibfk_1">
-          <End Type="nanofinEntites.product" Role="product" Multiplicity="1" />
-          <End Type="nanofinEntites.document" Role="document" Multiplicity="*" />
+          <End Type="nanofinEntites.product" Multiplicity="1" Role="product" />
+          <End Type="nanofinEntites.document" Multiplicity="*" Role="document" />
           <ReferentialConstraint>
             <Principal Role="product">
               <PropertyRef Name="Product_ID" />
@@ -2489,8 +2511,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="insuranceproduct_ibfk_1">
-          <End Type="nanofinEntites.unittype" Role="unittype" Multiplicity="0..1" />
-          <End Type="nanofinEntites.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <End Type="nanofinEntites.unittype" Multiplicity="0..1" Role="unittype" />
+          <End Type="nanofinEntites.insuranceproduct" Multiplicity="*" Role="insuranceproduct" />
           <ReferentialConstraint>
             <Principal Role="unittype">
               <PropertyRef Name="UnitType_ID" />
@@ -2501,8 +2523,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="insuranceproduct_ibfk_2">
-          <End Type="nanofinEntites.productprovider" Role="productprovider" Multiplicity="1" />
-          <End Type="nanofinEntites.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <End Type="nanofinEntites.productprovider" Multiplicity="1" Role="productprovider" />
+          <End Type="nanofinEntites.insuranceproduct" Multiplicity="*" Role="insuranceproduct" />
           <ReferentialConstraint>
             <Principal Role="productprovider">
               <PropertyRef Name="ProductProvider_ID" />
@@ -2513,8 +2535,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="insuranceproduct_ibfk_3">
-          <End Type="nanofinEntites.insurancetype" Role="insurancetype" Multiplicity="1" />
-          <End Type="nanofinEntites.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <End Type="nanofinEntites.insurancetype" Multiplicity="1" Role="insurancetype" />
+          <End Type="nanofinEntites.insuranceproduct" Multiplicity="*" Role="insuranceproduct" />
           <ReferentialConstraint>
             <Principal Role="insurancetype">
               <PropertyRef Name="InsuranceType_ID" />
@@ -2525,8 +2547,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="insuranceproduct_ibfk_4">
-          <End Type="nanofinEntites.product" Role="product" Multiplicity="1" />
-          <End Type="nanofinEntites.insuranceproduct" Role="insuranceproduct" Multiplicity="*" />
+          <End Type="nanofinEntites.product" Multiplicity="1" Role="product" />
+          <End Type="nanofinEntites.insuranceproduct" Multiplicity="*" Role="insuranceproduct" />
           <ReferentialConstraint>
             <Principal Role="product">
               <PropertyRef Name="Product_ID" />
@@ -2537,8 +2559,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="reseller_ibfk_2">
-          <End Type="nanofinEntites.location" Role="location" Multiplicity="0..1" />
-          <End Type="nanofinEntites.reseller" Role="reseller" Multiplicity="*" />
+          <End Type="nanofinEntites.location" Multiplicity="0..1" Role="location" />
+          <End Type="nanofinEntites.reseller" Multiplicity="*" Role="reseller" />
           <ReferentialConstraint>
             <Principal Role="location">
               <PropertyRef Name="Location_ID" />
@@ -2549,8 +2571,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="notificationlog_ibfk_1">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.notificationlog" Role="notificationlog" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.notificationlog" Multiplicity="*" Role="notificationlog" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2561,8 +2583,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="processapplications_ibfk_1">
-          <End Type="nanofinEntites.product" Role="product" Multiplicity="1" />
-          <End Type="nanofinEntites.processapplication" Role="processapplication" Multiplicity="*" />
+          <End Type="nanofinEntites.product" Multiplicity="1" Role="product" />
+          <End Type="nanofinEntites.processapplication" Multiplicity="*" Role="processapplication" />
           <ReferentialConstraint>
             <Principal Role="product">
               <PropertyRef Name="Product_ID" />
@@ -2573,8 +2595,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="product_ibfk_1">
-          <End Type="nanofinEntites.productprovider" Role="productprovider" Multiplicity="1" />
-          <End Type="nanofinEntites.product" Role="product" Multiplicity="*" />
+          <End Type="nanofinEntites.productprovider" Multiplicity="1" Role="productprovider" />
+          <End Type="nanofinEntites.product" Multiplicity="*" Role="product" />
           <ReferentialConstraint>
             <Principal Role="productprovider">
               <PropertyRef Name="ProductProvider_ID" />
@@ -2585,8 +2607,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="product_ibfk_2">
-          <End Type="nanofinEntites.producttype" Role="producttype" Multiplicity="0..1" />
-          <End Type="nanofinEntites.product" Role="product" Multiplicity="*" />
+          <End Type="nanofinEntites.producttype" Multiplicity="0..1" Role="producttype" />
+          <End Type="nanofinEntites.product" Multiplicity="*" Role="product" />
           <ReferentialConstraint>
             <Principal Role="producttype">
               <PropertyRef Name="ProductType_ID" />
@@ -2597,8 +2619,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="productprovider_ibfk_1">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.productprovider" Role="productprovider" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.productprovider" Multiplicity="*" Role="productprovider" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2609,8 +2631,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="productproviderpayment_ibfk_1">
-          <End Type="nanofinEntites.productprovider" Role="productprovider" Multiplicity="0..1" />
-          <End Type="nanofinEntites.productproviderpayment" Role="productproviderpayment" Multiplicity="*" />
+          <End Type="nanofinEntites.productprovider" Multiplicity="0..1" Role="productprovider" />
+          <End Type="nanofinEntites.productproviderpayment" Multiplicity="*" Role="productproviderpayment" />
           <ReferentialConstraint>
             <Principal Role="productprovider">
               <PropertyRef Name="ProductProvider_ID" />
@@ -2621,8 +2643,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="productredemptionlog_ibfk_1">
-          <End Type="nanofinEntites.voucher" Role="voucher" Multiplicity="1" />
-          <End Type="nanofinEntites.productredemptionlog" Role="productredemptionlog" Multiplicity="*" />
+          <End Type="nanofinEntites.voucher" Multiplicity="1" Role="voucher" />
+          <End Type="nanofinEntites.productredemptionlog" Multiplicity="*" Role="productredemptionlog" />
           <ReferentialConstraint>
             <Principal Role="voucher">
               <PropertyRef Name="Voucher_ID" />
@@ -2633,8 +2655,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="reseller_ibfk_1">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.reseller" Role="reseller" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.reseller" Multiplicity="*" Role="reseller" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2645,8 +2667,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="systemadmin_ibfk_1">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.systemadmin" Role="systemadmin" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.systemadmin" Multiplicity="*" Role="systemadmin" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2657,8 +2679,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="vouchertransaction_ibfk_5">
-          <End Type="nanofinEntites.transactiontype" Role="transactiontype" Multiplicity="1" />
-          <End Type="nanofinEntites.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <End Type="nanofinEntites.transactiontype" Multiplicity="1" Role="transactiontype" />
+          <End Type="nanofinEntites.vouchertransaction" Multiplicity="*" Role="vouchertransaction" />
           <ReferentialConstraint>
             <Principal Role="transactiontype">
               <PropertyRef Name="TransactionType_ID" />
@@ -2669,8 +2691,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="user_ibfk_1">
-          <End Type="nanofinEntites.usertype" Role="usertype" Multiplicity="0..1" />
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="*" />
+          <End Type="nanofinEntites.usertype" Multiplicity="0..1" Role="usertype" />
+          <End Type="nanofinEntites.user" Multiplicity="*" Role="user" />
           <ReferentialConstraint>
             <Principal Role="usertype">
               <PropertyRef Name="UserType_ID" />
@@ -2681,8 +2703,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="validator_ibfk_1">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.validator" Role="validator" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.validator" Multiplicity="*" Role="validator" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2693,8 +2715,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="voucher_ibfk_2">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.voucher" Role="voucher" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.voucher" Multiplicity="*" Role="voucher" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2705,8 +2727,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="vouchertransaction_ibfk_3">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.vouchertransaction" Multiplicity="*" Role="vouchertransaction" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2717,8 +2739,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="vouchertransaction_ibfk_4">
-          <End Type="nanofinEntites.user" Role="user" Multiplicity="1" />
-          <End Type="nanofinEntites.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <End Type="nanofinEntites.user" Multiplicity="1" Role="user" />
+          <End Type="nanofinEntites.vouchertransaction" Multiplicity="*" Role="vouchertransaction" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="User_ID" />
@@ -2729,8 +2751,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="voucher_ibfk_1">
-          <End Type="nanofinEntites.vouchertype" Role="vouchertype" Multiplicity="1" />
-          <End Type="nanofinEntites.voucher" Role="voucher" Multiplicity="*" />
+          <End Type="nanofinEntites.vouchertype" Multiplicity="1" Role="vouchertype" />
+          <End Type="nanofinEntites.voucher" Multiplicity="*" Role="voucher" />
           <ReferentialConstraint>
             <Principal Role="vouchertype">
               <PropertyRef Name="VoucherType_ID" />
@@ -2741,8 +2763,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="vouchertransaction_ibfk_1">
-          <End Type="nanofinEntites.voucher" Role="voucher" Multiplicity="1" />
-          <End Type="nanofinEntites.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <End Type="nanofinEntites.voucher" Multiplicity="1" Role="voucher" />
+          <End Type="nanofinEntites.vouchertransaction" Multiplicity="*" Role="vouchertransaction" />
           <ReferentialConstraint>
             <Principal Role="voucher">
               <PropertyRef Name="Voucher_ID" />
@@ -2753,8 +2775,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="vouchertransaction_ibfk_2">
-          <End Type="nanofinEntites.voucher" Role="voucher" Multiplicity="1" />
-          <End Type="nanofinEntites.vouchertransaction" Role="vouchertransaction" Multiplicity="*" />
+          <End Type="nanofinEntites.voucher" Multiplicity="1" Role="voucher" />
+          <End Type="nanofinEntites.vouchertransaction" Multiplicity="*" Role="vouchertransaction" />
           <ReferentialConstraint>
             <Principal Role="voucher">
               <PropertyRef Name="Voucher_ID" />
@@ -3109,6 +3131,17 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="resellersalespermonth">
+          <Key>
+            <PropertyRef Name="VoucherSentTo" />
+            <PropertyRef Name="transactionDate" />
+            <PropertyRef Name="Sender_ID" />
+          </Key>
+          <Property Name="VoucherSentTo" Type="Int32" Nullable="false" />
+          <Property Name="transactionDate" Type="DateTime" Nullable="false" />
+          <Property Name="Sender_ID" Type="Int32" Nullable="false" />
+          <Property Name="sold" Type="Decimal" />
         </EntityType>
         <EntityType Name="resellersendmonthlysale">
           <Key>
@@ -3813,6 +3846,16 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
                 <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
                 <ScalarProperty Name="activeProductItemEndDate" ColumnName="activeProductItemEndDate" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resellersalespermonths">
+            <EntityTypeMapping TypeName="nanofinEntites.resellersalespermonth">
+              <MappingFragment StoreEntitySet="resellersalespermonth">
+                <ScalarProperty Name="sold" ColumnName="sold" />
+                <ScalarProperty Name="Sender_ID" ColumnName="Sender_ID" />
+                <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
+                <ScalarProperty Name="VoucherSentTo" ColumnName="VoucherSentTo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

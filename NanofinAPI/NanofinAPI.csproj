@@ -375,6 +375,9 @@
     <Compile Include="Models\reseller.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\resellersalespermonth.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\resellersendmonthlysale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
