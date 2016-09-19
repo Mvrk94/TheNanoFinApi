@@ -22,7 +22,8 @@ namespace NanofinAPI.Controllers
 
             var toreturn = new List<productTarget>();
             var currentDate = DateTime.Now.AddMonths(numMonths*-1);
-            var salesPerProduct = (from c  in db.saleslastmonths where c.datum == "2016-"+ numMonths.ToString("00") select c).ToList() ;
+            var datum = "2016-" + numMonths.ToString("00");
+            var salesPerProduct = (from c  in db.saleslastmonths where c.datum == datum select c).ToList() ;
             
 
             foreach (var  p in salesPerProduct)
