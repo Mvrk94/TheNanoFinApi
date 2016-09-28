@@ -32,7 +32,8 @@ namespace NanofinAPI.Models
         public virtual DbSet<claimtemplate> claimtemplates { get; set; }
         public virtual DbSet<claimuploaddocument> claimuploaddocuments { get; set; }
         public virtual DbSet<consumer> consumers { get; set; }
-        public virtual DbSet<document> documents { get; set; }
+        public virtual DbSet<contactlist> contactlists { get; set; }
+        public virtual DbSet<documentspecification> documentspecifications { get; set; }
         public virtual DbSet<insuranceproduct> insuranceproducts { get; set; }
         public virtual DbSet<insurancetype> insurancetypes { get; set; }
         public virtual DbSet<location> locations { get; set; }
@@ -55,10 +56,12 @@ namespace NanofinAPI.Models
         public virtual DbSet<vouchertype> vouchertypes { get; set; }
         public virtual DbSet<activeproductitemswithdetail> activeproductitemswithdetails { get; set; }
         public virtual DbSet<chrisviewconsumeractiveproduct> chrisviewconsumeractiveproducts { get; set; }
+        public virtual DbSet<consumernumclaim> consumernumclaims { get; set; }
         public virtual DbSet<currentmonthdailysale> currentmonthdailysales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationlastmonthsale> demographicconsumerproductlocationlastmonthsales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationmonthlysale> demographicconsumerproductlocationmonthlysales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationsaleslastmonth> demographicconsumerproductlocationsaleslastmonths { get; set; }
+        public virtual DbSet<individualconsumerprofilerrawdata> individualconsumerprofilerrawdatas { get; set; }
         public virtual DbSet<insuranceproducttypemonthlysale> insuranceproducttypemonthlysales { get; set; }
         public virtual DbSet<lastmonthinsurancetypesale> lastmonthinsurancetypesales { get; set; }
         public virtual DbSet<lastmonthprovincesale> lastmonthprovincesales { get; set; }
