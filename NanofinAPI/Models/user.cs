@@ -19,6 +19,8 @@ namespace NanofinAPI.Models
         {
             this.claimuploaddocuments = new HashSet<claimuploaddocument>();
             this.consumers = new HashSet<consumer>();
+            this.contactlists = new HashSet<contactlist>();
+            this.contactlists1 = new HashSet<contactlist>();
             this.notificationlogs = new HashSet<notificationlog>();
             this.productproviders = new HashSet<productprovider>();
             this.resellers = new HashSet<reseller>();
@@ -50,6 +52,10 @@ namespace NanofinAPI.Models
         public virtual ICollection<claimuploaddocument> claimuploaddocuments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<consumer> consumers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<contactlist> contactlists { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<contactlist> contactlists1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<notificationlog> notificationlogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

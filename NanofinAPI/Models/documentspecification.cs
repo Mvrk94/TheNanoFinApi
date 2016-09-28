@@ -12,10 +12,10 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class document
+    public partial class documentspecification
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public document()
+        public documentspecification()
         {
             this.claimuploaddocuments = new HashSet<claimuploaddocument>();
         }

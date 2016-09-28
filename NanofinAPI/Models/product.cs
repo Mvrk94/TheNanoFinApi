@@ -18,7 +18,7 @@ namespace NanofinAPI.Models
         public product()
         {
             this.activeproductitems = new HashSet<activeproductitem>();
-            this.documents = new HashSet<document>();
+            this.documentspecifications = new HashSet<documentspecification>();
             this.insuranceproducts = new HashSet<insuranceproduct>();
             this.processapplications = new HashSet<processapplication>();
         }
@@ -38,7 +38,7 @@ namespace NanofinAPI.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<activeproductitem> activeproductitems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<document> documents { get; set; }
+        public virtual ICollection<documentspecification> documentspecifications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<insuranceproduct> insuranceproducts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

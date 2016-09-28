@@ -231,6 +231,12 @@
     <Compile Include="Models\consumer.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\consumernumclaim.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\contactlist.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\currentmonthdailysale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -243,7 +249,7 @@
     <Compile Include="Models\demographicconsumerproductlocationsaleslastmonth.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\document.cs">
+    <Compile Include="Models\documentspecification.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DTOEnvironment\nanofinEntities.cs" />
@@ -270,6 +276,9 @@
     <Compile Include="Models\DTOEnvironment\Reports.cs" />
     <Compile Include="Models\DTOEnvironment\reportsMaster.cs" />
     <Compile Include="Models\DTOEnvironment\ValidatorDTO.cs" />
+    <Compile Include="Models\individualconsumerprofilerrawdata.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\insuranceproduct.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
