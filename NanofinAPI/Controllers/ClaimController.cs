@@ -166,7 +166,12 @@ namespace NanofinAPI.Controllers
             return doc;
         }
 
-
+        public int getCustomerID(int UserID)
+        {
+            consumer cons = (from c in db.consumers where c.User_ID == UserID select c).SingleOrDefault();
+            int consumerId = cons.Consumer_ID;
+            return consumerId;
+        }
 
     }
 }
