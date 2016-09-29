@@ -173,5 +173,18 @@ namespace NanofinAPI.Controllers
             return consumerId;
         }
 
+        [HttpPut]
+        public async Task<IHttpActionResult> incrementConsumerNumClaims(int consumerID)
+        {
+
+            consumer toUpdate = (from c in db.consumers where c.Consumer_ID == consumerID select c).SingleOrDefault();
+            DTOconsumer dtoCons = new DTOconsumer(toUpdate);
+            dtoCons.numClaims = dtoCons.numClaims + 1;
+            toUpdate = EntityMapper.updateEntity(toUpdate,dtoCons);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
     }
 }
