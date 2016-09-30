@@ -71,6 +71,27 @@
           <Property Name="Location_ID" Type="int" />
           <Property Name="numDependant" Type="int" />
           <Property Name="numClaims" Type="int" />
+          <Property Name="ageGroup_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="consumerriskvalues">
+          <Key>
+            <PropertyRef Name="idConsumer" />
+          </Key>
+          <Property Name="idConsumer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="age" Type="int" />
+          <Property Name="ageGroup" Type="varchar" MaxLength="45" />
+          <Property Name="ageRiskValue" Type="int" />
+          <Property Name="gender" Type="varchar" MaxLength="45" />
+          <Property Name="genderRiskValue" Type="int" />
+          <Property Name="maritalStatus" Type="varchar" MaxLength="45" />
+          <Property Name="maritalStatusRiskValue" Type="int" />
+          <Property Name="employmentStatus" Type="varchar" MaxLength="45" />
+          <Property Name="employmentStatusRiskValue" Type="int" />
+          <Property Name="claimRate" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="claimRiskValue" Type="int" />
+          <Property Name="RiskCategory" Type="varchar" MaxLength="45" />
+          <Property Name="OverallRiskValue" Type="int" />
+          <Property Name="Consumer_ID" Type="int" />
         </EntityType>
         <EntityType Name="contactlist">
           <Key>
@@ -79,6 +100,16 @@
           <Property Name="idcontactlist" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="ContactsUserID" Type="int" />
+        </EntityType>
+        <EntityType Name="demographicriskvalues">
+          <Key>
+            <PropertyRef Name="DRV_ID" />
+          </Key>
+          <Property Name="DRV_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="45" />
+          <Property Name="value" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="riskvalue" Type="int" />
+          <Property Name="riskvalues" Type="decimal" Precision="10" Scale="0" />
         </EntityType>
         <EntityType Name="documentspecification">
           <Key>
@@ -225,6 +256,17 @@
           <Property Name="StartedSharingTime" Type="datetime" Precision="0" />
           <Property Name="minutesAvailable" Type="int" />
           <Property Name="LocationID" Type="int" />
+          <Property Name="location" Type="varchar" MaxLength="200" />
+          <Property Name="isLocationAvailable" Type="bool" />
+        </EntityType>
+        <EntityType Name="risk_agegroup">
+          <Key>
+            <PropertyRef Name="ageGroup_ID" />
+          </Key>
+          <Property Name="ageGroup_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="45" />
+          <Property Name="lowest" Type="int" />
+          <Property Name="highest" Type="int" />
         </EntityType>
         <EntityType Name="systemadmin">
           <Key>
@@ -269,6 +311,11 @@
           <Property Name="timeStap" Type="datetime" Precision="0" />
           <Property Name="resetPasswordKey" Type="varchar" MaxLength="50" />
           <Property Name="blockchainAddress" Type="varchar" MaxLength="20000" />
+          <Property Name="otpCode" Type="varchar" MaxLength="45" />
+          <Property Name="otpRetryCount" Type="int" />
+          <Property Name="otpExpirationTime" Type="datetime" Precision="0" />
+          <Property Name="otpNextAllowedTime" Type="datetime" Precision="0" />
+          <Property Name="otpRecordCreated" Type="datetime" Precision="0" />
         </EntityType>
         <EntityType Name="usertype">
           <Key>
@@ -641,6 +688,19 @@ warning 6002: The table/view 'def.database_nanofin.monthlyprovincialproducttyped
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.otpview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="otpview">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="otpCode" Type="varchar" MaxLength="45" />
+          <Property Name="otpRetryCount" Type="int" />
+          <Property Name="otpExpirationTime" Type="datetime" Precision="0" />
+          <Property Name="otpNextAllowedTime" Type="datetime" Precision="0" />
+          <Property Name="otpRecordCreated" Type="datetime" Precision="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.overallproductlocationsales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="overallproductlocationsales">
           <Key>
@@ -947,6 +1007,30 @@ warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have 
             </Principal>
             <Dependent Role="consumer">
               <PropertyRef Name="Location_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="consumer_ibfk_3">
+          <End Role="risk_agegroup" Type="Self.risk_agegroup" Multiplicity="0..1" />
+          <End Role="consumer" Type="Self.consumer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="risk_agegroup">
+              <PropertyRef Name="ageGroup_ID" />
+            </Principal>
+            <Dependent Role="consumer">
+              <PropertyRef Name="ageGroup_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="consumerriskvalues_ibfk_1">
+          <End Role="consumer" Type="Self.consumer" Multiplicity="0..1" />
+          <End Role="consumerriskvalues" Type="Self.consumerriskvalues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="consumer">
+              <PropertyRef Name="Consumer_ID" />
+            </Principal>
+            <Dependent Role="consumerriskvalues">
+              <PropertyRef Name="Consumer_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1308,13 +1392,16 @@ warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have 
           <Parameter Name="productID" Type="int" Mode="In" />
           <Parameter Name="locationID" Type="int" Mode="In" />
         </Function>
+        <Function Name="updateDemographicRiskValues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="database_nanofin" />
         <EntityContainer Name="nanofinEntitesStoreContainer">
           <EntitySet Name="activeproductitems" EntityType="Self.activeproductitems" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="claim" EntityType="Self.claim" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="claimtemplate" EntityType="Self.claimtemplate" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="claimuploaddocument" EntityType="Self.claimuploaddocument" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="consumer" EntityType="Self.consumer" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="consumerriskvalues" EntityType="Self.consumerriskvalues" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="contactlist" EntityType="Self.contactlist" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="demographicriskvalues" EntityType="Self.demographicriskvalues" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="documentspecification" EntityType="Self.documentspecification" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="insuranceproduct" EntityType="Self.insuranceproduct" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="insurancetype" EntityType="Self.insurancetype" Schema="database_nanofin" store:Type="Tables" />
@@ -1327,6 +1414,7 @@ warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have 
           <EntitySet Name="productredemptionlog" EntityType="Self.productredemptionlog" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="producttype" EntityType="Self.producttype" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="reseller" EntityType="Self.reseller" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="risk_agegroup" EntityType="Self.risk_agegroup" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="systemadmin" EntityType="Self.systemadmin" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="transactiontype" EntityType="Self.transactiontype" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="unittype" EntityType="Self.unittype" Schema="database_nanofin" store:Type="Tables" />
@@ -1552,6 +1640,16 @@ FROM `monthlyprovincesalesview` AS `monthlyprovincesalesview`</DefiningQuery>
 `monthlyprovincialproducttypedistribution`.`sales`
 FROM `monthlyprovincialproducttypedistribution` AS `monthlyprovincialproducttypedistribution`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="otpview" EntityType="Self.otpview" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`otpview`.`User_ID`, 
+`otpview`.`otpCode`, 
+`otpview`.`otpRetryCount`, 
+`otpview`.`otpExpirationTime`, 
+`otpview`.`otpNextAllowedTime`, 
+`otpview`.`otpRecordCreated`
+FROM `otpview` AS `otpview`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="overallproductlocationsales" EntityType="Self.overallproductlocationsales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `overallproductlocationsales`.`ActiveProductItems_ID`, 
@@ -1711,6 +1809,14 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             <End Role="locations" EntitySet="locations" />
             <End Role="consumer" EntitySet="consumer" />
           </AssociationSet>
+          <AssociationSet Name="consumer_ibfk_3" Association="Self.consumer_ibfk_3">
+            <End Role="risk_agegroup" EntitySet="risk_agegroup" />
+            <End Role="consumer" EntitySet="consumer" />
+          </AssociationSet>
+          <AssociationSet Name="consumerriskvalues_ibfk_1" Association="Self.consumerriskvalues_ibfk_1">
+            <End Role="consumer" EntitySet="consumer" />
+            <End Role="consumerriskvalues" EntitySet="consumerriskvalues" />
+          </AssociationSet>
           <AssociationSet Name="ContactsUserID" Association="Self.ContactsUserID">
             <End Role="user" EntitySet="user" />
             <End Role="contactlist" EntitySet="contactlist" />
@@ -1843,12 +1949,15 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             <Parameter Name="productID" Mode="In" Type="Int32" />
             <Parameter Name="locationID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="updateDemographicRiskValues" />
           <EntitySet Name="activeproductitems" EntityType="nanofinEntites.activeproductitem" />
           <EntitySet Name="claims" EntityType="nanofinEntites.claim" />
           <EntitySet Name="claimtemplates" EntityType="nanofinEntites.claimtemplate" />
           <EntitySet Name="claimuploaddocuments" EntityType="nanofinEntites.claimuploaddocument" />
           <EntitySet Name="consumers" EntityType="nanofinEntites.consumer" />
+          <EntitySet Name="consumerriskvalues" EntityType="nanofinEntites.consumerriskvalue" />
           <EntitySet Name="contactlists" EntityType="nanofinEntites.contactlist" />
+          <EntitySet Name="demographicriskvalues" EntityType="nanofinEntites.demographicriskvalue" />
           <EntitySet Name="documentspecifications" EntityType="nanofinEntites.documentspecification" />
           <EntitySet Name="insuranceproducts" EntityType="nanofinEntites.insuranceproduct" />
           <EntitySet Name="insurancetypes" EntityType="nanofinEntites.insurancetype" />
@@ -1861,6 +1970,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySet Name="productredemptionlogs" EntityType="nanofinEntites.productredemptionlog" />
           <EntitySet Name="producttypes" EntityType="nanofinEntites.producttype" />
           <EntitySet Name="resellers" EntityType="nanofinEntites.reseller" />
+          <EntitySet Name="risk_agegroup" EntityType="nanofinEntites.risk_agegroup" />
           <EntitySet Name="systemadmins" EntityType="nanofinEntites.systemadmin" />
           <EntitySet Name="transactiontypes" EntityType="nanofinEntites.transactiontype" />
           <EntitySet Name="unittypes" EntityType="nanofinEntites.unittype" />
@@ -1887,6 +1997,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySet Name="monthlyproductsalesperlocations" EntityType="nanofinEntites.monthlyproductsalesperlocation" />
           <EntitySet Name="monthlyprovincesalesviews" EntityType="nanofinEntites.monthlyprovincesalesview" />
           <EntitySet Name="monthlyprovincialproducttypedistributions" EntityType="nanofinEntites.monthlyprovincialproducttypedistribution" />
+          <EntitySet Name="otpviews" EntityType="nanofinEntites.otpview" />
           <EntitySet Name="overallproductlocationsales" EntityType="nanofinEntites.overallproductlocationsale" />
           <EntitySet Name="productlocationmonthlysales" EntityType="nanofinEntites.productlocationmonthlysale" />
           <EntitySet Name="productprovideryearlysales" EntityType="nanofinEntites.productprovideryearlysale" />
@@ -1958,6 +2069,14 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <AssociationSet Name="consumer_ibfk_2" Association="nanofinEntites.consumer_ibfk_2">
             <End Role="location" EntitySet="locations" />
             <End Role="consumer" EntitySet="consumers" />
+          </AssociationSet>
+          <AssociationSet Name="consumer_ibfk_3" Association="nanofinEntites.consumer_ibfk_3">
+            <End Role="risk_agegroup" EntitySet="risk_agegroup" />
+            <End Role="consumer" EntitySet="consumers" />
+          </AssociationSet>
+          <AssociationSet Name="consumerriskvalues_ibfk_1" Association="nanofinEntites.consumerriskvalues_ibfk_1">
+            <End Role="consumer" EntitySet="consumers" />
+            <End Role="consumerriskvalue" EntitySet="consumerriskvalues" />
           </AssociationSet>
           <AssociationSet Name="ContactsUserID" Association="nanofinEntites.ContactsUserID">
             <End Role="user" EntitySet="users" />
@@ -2149,10 +2268,34 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="Location_ID" Type="Int32" />
           <Property Name="numDependant" Type="Int32" />
           <Property Name="numClaims" Type="Int32" />
+          <Property Name="ageGroup_ID" Type="Int32" />
           <NavigationProperty Name="activeproductitems" Relationship="nanofinEntites.activeproductitems_ibfk_1" FromRole="consumer" ToRole="activeproductitem" />
           <NavigationProperty Name="claims" Relationship="nanofinEntites.claim_ibfk_1" FromRole="consumer" ToRole="claim" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.consumer_ibfk_1" FromRole="consumer" ToRole="user" />
           <NavigationProperty Name="location" Relationship="nanofinEntites.consumer_ibfk_2" FromRole="consumer" ToRole="location" />
+          <NavigationProperty Name="risk_agegroup" Relationship="nanofinEntites.consumer_ibfk_3" FromRole="consumer" ToRole="risk_agegroup" />
+          <NavigationProperty Name="consumerriskvalues" Relationship="nanofinEntites.consumerriskvalues_ibfk_1" FromRole="consumer" ToRole="consumerriskvalue" />
+        </EntityType>
+        <EntityType Name="consumerriskvalue">
+          <Key>
+            <PropertyRef Name="idConsumer" />
+          </Key>
+          <Property Name="idConsumer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="ageGroup" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="ageRiskValue" Type="Int32" />
+          <Property Name="gender" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="genderRiskValue" Type="Int32" />
+          <Property Name="maritalStatus" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatusRiskValue" Type="Int32" />
+          <Property Name="employmentStatus" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="employmentStatusRiskValue" Type="Int32" />
+          <Property Name="claimRate" Type="Decimal" />
+          <Property Name="claimRiskValue" Type="Int32" />
+          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="OverallRiskValue" Type="Int32" />
+          <Property Name="Consumer_ID" Type="Int32" />
+          <NavigationProperty Name="consumer" Relationship="nanofinEntites.consumerriskvalues_ibfk_1" FromRole="consumerriskvalue" ToRole="consumer" />
         </EntityType>
         <EntityType Name="contactlist">
           <Key>
@@ -2163,6 +2306,16 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="ContactsUserID" Type="Int32" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.ContactsUserID" FromRole="contactlist" ToRole="user" />
           <NavigationProperty Name="user1" Relationship="nanofinEntites.UserID" FromRole="contactlist" ToRole="user" />
+        </EntityType>
+        <EntityType Name="demographicriskvalue">
+          <Key>
+            <PropertyRef Name="DRV_ID" />
+          </Key>
+          <Property Name="DRV_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="Decimal" />
+          <Property Name="riskvalue" Type="Int32" />
+          <Property Name="riskvalues" Type="Decimal" />
         </EntityType>
         <EntityType Name="documentspecification">
           <Key>
@@ -2338,8 +2491,20 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="StartedSharingTime" Type="DateTime" />
           <Property Name="minutesAvailable" Type="Int32" />
           <Property Name="LocationID" Type="Int32" />
-          <NavigationProperty Name="location" Relationship="nanofinEntites.reseller_ibfk_2" FromRole="reseller" ToRole="location" />
+          <Property Name="location" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="isLocationAvailable" Type="Boolean" />
+          <NavigationProperty Name="location1" Relationship="nanofinEntites.reseller_ibfk_2" FromRole="reseller" ToRole="location" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.reseller_ibfk_1" FromRole="reseller" ToRole="user" />
+        </EntityType>
+        <EntityType Name="risk_agegroup">
+          <Key>
+            <PropertyRef Name="ageGroup_ID" />
+          </Key>
+          <Property Name="ageGroup_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="lowest" Type="Int32" />
+          <Property Name="highest" Type="Int32" />
+          <NavigationProperty Name="consumers" Relationship="nanofinEntites.consumer_ibfk_3" FromRole="risk_agegroup" ToRole="consumer" />
         </EntityType>
         <EntityType Name="systemadmin">
           <Key>
@@ -2387,6 +2552,11 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="timeStap" Type="DateTime" />
           <Property Name="resetPasswordKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="blockchainAddress" Type="String" MaxLength="20000" FixedLength="false" Unicode="false" />
+          <Property Name="otpCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="otpRetryCount" Type="Int32" />
+          <Property Name="otpExpirationTime" Type="DateTime" />
+          <Property Name="otpNextAllowedTime" Type="DateTime" />
+          <Property Name="otpRecordCreated" Type="DateTime" />
           <NavigationProperty Name="claimuploaddocuments" Relationship="nanofinEntites.claimuploaddocument_ibfk_1" FromRole="user" ToRole="claimuploaddocument" />
           <NavigationProperty Name="consumers" Relationship="nanofinEntites.consumer_ibfk_1" FromRole="user" ToRole="consumer" />
           <NavigationProperty Name="contactlists" Relationship="nanofinEntites.ContactsUserID" FromRole="user" ToRole="contactlist" />
@@ -2750,6 +2920,17 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
+        <EntityType Name="otpview">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="otpCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="otpRetryCount" Type="Int32" />
+          <Property Name="otpExpirationTime" Type="DateTime" />
+          <Property Name="otpNextAllowedTime" Type="DateTime" />
+          <Property Name="otpRecordCreated" Type="DateTime" />
+        </EntityType>
         <EntityType Name="overallproductlocationsale">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
@@ -3069,6 +3250,30 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
             </Principal>
             <Dependent Role="consumer">
               <PropertyRef Name="Location_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="consumer_ibfk_3">
+          <End Type="nanofinEntites.risk_agegroup" Role="risk_agegroup" Multiplicity="0..1" />
+          <End Type="nanofinEntites.consumer" Role="consumer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="risk_agegroup">
+              <PropertyRef Name="ageGroup_ID" />
+            </Principal>
+            <Dependent Role="consumer">
+              <PropertyRef Name="ageGroup_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="consumerriskvalues_ibfk_1">
+          <End Type="nanofinEntites.consumer" Role="consumer" Multiplicity="0..1" />
+          <End Type="nanofinEntites.consumerriskvalue" Role="consumerriskvalue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="consumer">
+              <PropertyRef Name="Consumer_ID" />
+            </Principal>
+            <Dependent Role="consumerriskvalue">
+              <PropertyRef Name="Consumer_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3405,6 +3610,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
               <ComplexTypeMapping TypeName="nanofinEntites.productPredictedSalesPerLocation_Result" />
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="updateDemographicRiskValues" FunctionName="nanofinEntites.Store.updateDemographicRiskValues" />
           <EntitySetMapping Name="activeproductitems">
             <EntityTypeMapping TypeName="nanofinEntites.activeproductitem">
               <MappingFragment StoreEntitySet="activeproductitems">
@@ -3459,6 +3665,7 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySetMapping Name="consumers">
             <EntityTypeMapping TypeName="nanofinEntites.consumer">
               <MappingFragment StoreEntitySet="consumer">
+                <ScalarProperty Name="ageGroup_ID" ColumnName="ageGroup_ID" />
                 <ScalarProperty Name="numClaims" ColumnName="numClaims" />
                 <ScalarProperty Name="numDependant" ColumnName="numDependant" />
                 <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
@@ -3477,12 +3684,44 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="consumerriskvalues">
+            <EntityTypeMapping TypeName="nanofinEntites.consumerriskvalue">
+              <MappingFragment StoreEntitySet="consumerriskvalues">
+                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
+                <ScalarProperty Name="OverallRiskValue" ColumnName="OverallRiskValue" />
+                <ScalarProperty Name="RiskCategory" ColumnName="RiskCategory" />
+                <ScalarProperty Name="claimRiskValue" ColumnName="claimRiskValue" />
+                <ScalarProperty Name="claimRate" ColumnName="claimRate" />
+                <ScalarProperty Name="employmentStatusRiskValue" ColumnName="employmentStatusRiskValue" />
+                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
+                <ScalarProperty Name="maritalStatusRiskValue" ColumnName="maritalStatusRiskValue" />
+                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
+                <ScalarProperty Name="genderRiskValue" ColumnName="genderRiskValue" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="ageRiskValue" ColumnName="ageRiskValue" />
+                <ScalarProperty Name="ageGroup" ColumnName="ageGroup" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="idConsumer" ColumnName="idConsumer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="contactlists">
             <EntityTypeMapping TypeName="nanofinEntites.contactlist">
               <MappingFragment StoreEntitySet="contactlist">
                 <ScalarProperty Name="ContactsUserID" ColumnName="ContactsUserID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="idcontactlist" ColumnName="idcontactlist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="demographicriskvalues">
+            <EntityTypeMapping TypeName="nanofinEntites.demographicriskvalue">
+              <MappingFragment StoreEntitySet="demographicriskvalues">
+                <ScalarProperty Name="riskvalues" ColumnName="riskvalues" />
+                <ScalarProperty Name="riskvalue" ColumnName="riskvalue" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="DRV_ID" ColumnName="DRV_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3622,6 +3861,8 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySetMapping Name="resellers">
             <EntityTypeMapping TypeName="nanofinEntites.reseller">
               <MappingFragment StoreEntitySet="reseller">
+                <ScalarProperty Name="isLocationAvailable" ColumnName="isLocationAvailable" />
+                <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="minutesAvailable" ColumnName="minutesAvailable" />
                 <ScalarProperty Name="StartedSharingTime" ColumnName="StartedSharingTime" />
@@ -3640,6 +3881,16 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
                 <ScalarProperty Name="resellerIsValidated" ColumnName="resellerIsValidated" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="Reseller_ID" ColumnName="Reseller_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="risk_agegroup">
+            <EntityTypeMapping TypeName="nanofinEntites.risk_agegroup">
+              <MappingFragment StoreEntitySet="risk_agegroup">
+                <ScalarProperty Name="highest" ColumnName="highest" />
+                <ScalarProperty Name="lowest" ColumnName="lowest" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="ageGroup_ID" ColumnName="ageGroup_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3672,6 +3923,11 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="nanofinEntites.user">
               <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="otpRecordCreated" ColumnName="otpRecordCreated" />
+                <ScalarProperty Name="otpNextAllowedTime" ColumnName="otpNextAllowedTime" />
+                <ScalarProperty Name="otpExpirationTime" ColumnName="otpExpirationTime" />
+                <ScalarProperty Name="otpRetryCount" ColumnName="otpRetryCount" />
+                <ScalarProperty Name="otpCode" ColumnName="otpCode" />
                 <ScalarProperty Name="blockchainAddress" ColumnName="blockchainAddress" />
                 <ScalarProperty Name="resetPasswordKey" ColumnName="resetPasswordKey" />
                 <ScalarProperty Name="timeStap" ColumnName="timeStap" />
@@ -4001,6 +4257,18 @@ FROM `salespermonth` AS `salespermonth`</DefiningQuery>
                 <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
                 <ScalarProperty Name="activeProductItemEndDate" ColumnName="activeProductItemEndDate" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="otpviews">
+            <EntityTypeMapping TypeName="nanofinEntites.otpview">
+              <MappingFragment StoreEntitySet="otpview">
+                <ScalarProperty Name="otpRecordCreated" ColumnName="otpRecordCreated" />
+                <ScalarProperty Name="otpNextAllowedTime" ColumnName="otpNextAllowedTime" />
+                <ScalarProperty Name="otpExpirationTime" ColumnName="otpExpirationTime" />
+                <ScalarProperty Name="otpRetryCount" ColumnName="otpRetryCount" />
+                <ScalarProperty Name="otpCode" ColumnName="otpCode" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

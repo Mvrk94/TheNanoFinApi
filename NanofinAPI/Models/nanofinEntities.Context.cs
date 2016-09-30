@@ -32,7 +32,9 @@ namespace NanofinAPI.Models
         public virtual DbSet<claimtemplate> claimtemplates { get; set; }
         public virtual DbSet<claimuploaddocument> claimuploaddocuments { get; set; }
         public virtual DbSet<consumer> consumers { get; set; }
+        public virtual DbSet<consumerriskvalue> consumerriskvalues { get; set; }
         public virtual DbSet<contactlist> contactlists { get; set; }
+        public virtual DbSet<demographicriskvalue> demographicriskvalues { get; set; }
         public virtual DbSet<documentspecification> documentspecifications { get; set; }
         public virtual DbSet<insuranceproduct> insuranceproducts { get; set; }
         public virtual DbSet<insurancetype> insurancetypes { get; set; }
@@ -45,6 +47,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<productredemptionlog> productredemptionlogs { get; set; }
         public virtual DbSet<producttype> producttypes { get; set; }
         public virtual DbSet<reseller> resellers { get; set; }
+        public virtual DbSet<risk_agegroup> risk_agegroup { get; set; }
         public virtual DbSet<systemadmin> systemadmins { get; set; }
         public virtual DbSet<transactiontype> transactiontypes { get; set; }
         public virtual DbSet<unittype> unittypes { get; set; }
@@ -71,6 +74,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<monthlyproductsalesperlocation> monthlyproductsalesperlocations { get; set; }
         public virtual DbSet<monthlyprovincesalesview> monthlyprovincesalesviews { get; set; }
         public virtual DbSet<monthlyprovincialproducttypedistribution> monthlyprovincialproducttypedistributions { get; set; }
+        public virtual DbSet<otpview> otpviews { get; set; }
         public virtual DbSet<overallproductlocationsale> overallproductlocationsales { get; set; }
         public virtual DbSet<productlocationmonthlysale> productlocationmonthlysales { get; set; }
         public virtual DbSet<productprovideryearlysale> productprovideryearlysales { get; set; }
@@ -113,6 +117,11 @@ namespace NanofinAPI.Models
                 new ObjectParameter("locationID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<productPredictedSalesPerLocation_Result>("productPredictedSalesPerLocation", productIDParameter, locationIDParameter);
+        }
+    
+        public virtual int updateDemographicRiskValues()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateDemographicRiskValues");
         }
     }
 }

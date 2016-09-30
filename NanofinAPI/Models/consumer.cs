@@ -19,6 +19,7 @@ namespace NanofinAPI.Models
         {
             this.activeproductitems = new HashSet<activeproductitem>();
             this.claims = new HashSet<claim>();
+            this.consumerriskvalues = new HashSet<consumerriskvalue>();
         }
     
         public int Consumer_ID { get; set; }
@@ -36,6 +37,7 @@ namespace NanofinAPI.Models
         public Nullable<int> Location_ID { get; set; }
         public Nullable<int> numDependant { get; set; }
         public Nullable<int> numClaims { get; set; }
+        public Nullable<int> ageGroup_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<activeproductitem> activeproductitems { get; set; }
@@ -43,5 +45,8 @@ namespace NanofinAPI.Models
         public virtual ICollection<claim> claims { get; set; }
         public virtual user user { get; set; }
         public virtual location location { get; set; }
+        public virtual risk_agegroup risk_agegroup { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<consumerriskvalue> consumerriskvalues { get; set; }
     }
 }

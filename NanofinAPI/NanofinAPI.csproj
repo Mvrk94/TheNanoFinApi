@@ -235,6 +235,9 @@
     <Compile Include="Models\consumernumclaim.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\consumerriskvalue.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\contactlist.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -248,6 +251,9 @@
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\demographicconsumerproductlocationsaleslastmonth.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\demographicriskvalue.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\documentspecification.cs">
@@ -337,6 +343,9 @@
     <Compile Include="Models\notificationlog.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\otpview.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\overallproductlocationsale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -392,6 +401,9 @@
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\resellersendvouchergenderspecific.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\risk_agegroup.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\saleslastmonth.cs">

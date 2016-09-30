@@ -47,6 +47,11 @@ namespace NanofinAPI.Models
         public Nullable<System.DateTime> timeStap { get; set; }
         public string resetPasswordKey { get; set; }
         public string blockchainAddress { get; set; }
+        public string otpCode { get; set; }
+        public Nullable<int> otpRetryCount { get; set; }
+        public Nullable<System.DateTime> otpExpirationTime { get; set; }
+        public Nullable<System.DateTime> otpNextAllowedTime { get; set; }
+        public Nullable<System.DateTime> otpRecordCreated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<claimuploaddocument> claimuploaddocuments { get; set; }
