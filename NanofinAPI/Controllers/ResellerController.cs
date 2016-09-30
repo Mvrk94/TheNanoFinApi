@@ -50,7 +50,7 @@ namespace NanofinAPI.Controllers
             return toreturn;
         }
 
-
+        [HttpGet]
         public  void setResellerLocation(int userID, string latlng)
         {
             var res = (from c in db.resellers where userID == c.User_ID select c).ToArray()[0];
@@ -62,7 +62,7 @@ namespace NanofinAPI.Controllers
 
         }
 
-
+        [HttpGet]
         public void deactivateLocation(int userID)
         {
             var res = (from c in db.resellers where userID == c.User_ID select c).ToArray()[0];

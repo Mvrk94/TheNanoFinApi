@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -143,6 +144,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.Location_ID = dto.Location_ID;
             entityObjct.numDependant = dto.numDependant;
             entityObjct.numClaims = dto.numClaims;
+            entityObjct.ageGroup_ID = dto.ageGroup_ID;
 
             return entityObjct;
         }
@@ -154,6 +156,30 @@ namespace NanofinAPI.Models.DTOEnvironment
 
             entityObjct.Consumer_ID = dto.Consumer_ID;
             entityObjct.numClaims = dto.numClaims;
+
+            return entityObjct;
+        }
+
+
+        public static consumerriskvalue updateEntity(consumerriskvalue entityObjct, DTOconsumerriskvalue dto)
+        {
+            if (entityObjct == null) entityObjct = new consumerriskvalue();
+
+            entityObjct.idConsumer = dto.idConsumer;
+            entityObjct.age = dto.age;
+            entityObjct.ageGroup = dto.ageGroup;
+            entityObjct.ageRiskValue = dto.ageRiskValue;
+            entityObjct.gender = dto.gender;
+            entityObjct.genderRiskValue = dto.genderRiskValue;
+            entityObjct.maritalStatus = dto.maritalStatus;
+            entityObjct.maritalStatusRiskValue = dto.maritalStatusRiskValue;
+            entityObjct.employmentStatus = dto.employmentStatus;
+            entityObjct.employmentStatusRiskValue = dto.employmentStatusRiskValue;
+            entityObjct.claimRate = dto.claimRate;
+            entityObjct.claimRiskValue = dto.claimRiskValue;
+            entityObjct.RiskCategory = dto.RiskCategory;
+            entityObjct.OverallRiskValue = dto.OverallRiskValue;
+            entityObjct.Consumer_ID = dto.Consumer_ID;
 
             return entityObjct;
         }
@@ -244,6 +270,20 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.netIncome = dto.netIncome;
             entityObjct.NumDependants = dto.NumDependants;
             entityObjct.sales = dto.sales;
+
+            return entityObjct;
+        }
+
+
+        public static demographicriskvalue updateEntity(demographicriskvalue entityObjct, DTOdemographicriskvalue dto)
+        {
+            if (entityObjct == null) entityObjct = new demographicriskvalue();
+
+            entityObjct.DRV_ID = dto.DRV_ID;
+            entityObjct.type = dto.type;
+            entityObjct.value = dto.value;
+            entityObjct.riskvalue = dto.riskvalue;
+            entityObjct.riskvalues = dto.riskvalues;
 
             return entityObjct;
         }
@@ -483,6 +523,15 @@ namespace NanofinAPI.Models.DTOEnvironment
         }
 
 
+        public static nanofinEntities updateEntity(nanofinEntities entityObjct, DTOnanofinEntities dto)
+        {
+            if (entityObjct == null) entityObjct = new nanofinEntities();
+
+
+            return entityObjct;
+        }
+
+
         public static notificationlog updateEntity(notificationlog entityObjct, DTOnotificationlog dto)
         {
             if (entityObjct == null) entityObjct = new notificationlog();
@@ -491,6 +540,21 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.notificationType = dto.notificationType;
             entityObjct.notificationReceiver = dto.notificationReceiver;
             entityObjct.notificationDateSent = dto.notificationDateSent;
+
+            return entityObjct;
+        }
+
+
+        public static otpview updateEntity(otpview entityObjct, DTOotpview dto)
+        {
+            if (entityObjct == null) entityObjct = new otpview();
+
+            entityObjct.User_ID = dto.User_ID;
+            entityObjct.otpCode = dto.otpCode;
+            entityObjct.otpRetryCount = dto.otpRetryCount;
+            entityObjct.otpExpirationTime = dto.otpExpirationTime;
+            entityObjct.otpNextAllowedTime = dto.otpNextAllowedTime;
+            entityObjct.otpRecordCreated = dto.otpRecordCreated;
 
             return entityObjct;
         }
@@ -729,6 +793,8 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.StartedSharingTime = dto.StartedSharingTime;
             entityObjct.minutesAvailable = dto.minutesAvailable;
             entityObjct.LocationID = dto.LocationID;
+            entityObjct.location = dto.location;
+            entityObjct.isLocationAvailable = dto.isLocationAvailable;
 
             return entityObjct;
         }
@@ -768,6 +834,19 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.date_format_vouchertransaction_transactionDate___Y__b__ = dto.date_format_vouchertransaction_transactionDate___Y__b__;
             entityObjct.gender = dto.gender;
             entityObjct.sales = dto.sales;
+
+            return entityObjct;
+        }
+
+
+        public static risk_agegroup updateEntity(risk_agegroup entityObjct, DTOrisk_agegroup dto)
+        {
+            if (entityObjct == null) entityObjct = new risk_agegroup();
+
+            entityObjct.ageGroup_ID = dto.ageGroup_ID;
+            entityObjct.description = dto.description;
+            entityObjct.lowest = dto.lowest;
+            entityObjct.highest = dto.highest;
 
             return entityObjct;
         }
@@ -854,6 +933,11 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.timeStap = dto.timeStap;
             entityObjct.resetPasswordKey = dto.resetPasswordKey;
             entityObjct.blockchainAddress = dto.blockchainAddress;
+            entityObjct.otpCode = dto.otpCode;
+            entityObjct.otpRetryCount = dto.otpRetryCount;
+            entityObjct.otpExpirationTime = dto.otpExpirationTime;
+            entityObjct.otpNextAllowedTime = dto.otpNextAllowedTime;
+            entityObjct.otpRecordCreated = dto.otpRecordCreated;
 
             return entityObjct;
         }
@@ -935,6 +1019,8 @@ namespace NanofinAPI.Models.DTOEnvironment
 
             return entityObjct;
         }
+
+
 
 
 

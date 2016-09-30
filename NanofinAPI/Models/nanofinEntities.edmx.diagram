@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6e2d27c8992549a4b12377b36951034c" Name="Diagram1" ZoomLevel="52">
+      <Diagram DiagramId="6e2d27c8992549a4b12377b36951034c" Name="Diagram1" ZoomLevel="101">
         <EntityTypeShape EntityType="nanofinEntites.consumerriskvalue" Width="1.5" PointX="13.5" PointY="23.875" />
         <EntityTypeShape EntityType="nanofinEntites.otpview" Width="1.5" PointX="15.375" PointY="11.75" />
         <AssociationConnector Association="nanofinEntites.consumerriskvalues_ibfk_1" />
@@ -82,7 +82,6 @@
         <AssociationConnector Association="nanofinEntites.consumer_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.consumer_ibfk_2" />
         <AssociationConnector Association="nanofinEntites.consumer_ibfk_3" />
-        <AssociationConnector Association="nanofinEntites.consumerriskvalues_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.ContactsUserID" />
         <AssociationConnector Association="nanofinEntites.UserID" />
         <AssociationConnector Association="nanofinEntites.documentspecification_ibfk_1" />
