@@ -8,7 +8,6 @@ namespace NanofinAPI.Models.DTOEnvironment
 {
    public static class EntityMapper
     {
-
         public static activeproductitem updateEntity(activeproductitem entityObjct, DTOactiveproductitem dto)
         {
             if (entityObjct == null) entityObjct = new activeproductitem();
@@ -166,6 +165,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new consumerriskvalue();
 
             entityObjct.idConsumer = dto.idConsumer;
+            entityObjct.Consumer_ID = dto.Consumer_ID;
             entityObjct.age = dto.age;
             entityObjct.ageGroup = dto.ageGroup;
             entityObjct.ageRiskValue = dto.ageRiskValue;
@@ -179,7 +179,8 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.claimRiskValue = dto.claimRiskValue;
             entityObjct.RiskCategory = dto.RiskCategory;
             entityObjct.OverallRiskValue = dto.OverallRiskValue;
-            entityObjct.Consumer_ID = dto.Consumer_ID;
+            entityObjct.purchasedProducts = dto.purchasedProducts;
+            entityObjct.numUnprocessed = dto.numUnprocessed;
 
             return entityObjct;
         }
@@ -280,7 +281,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new demographicriskvalue();
 
             entityObjct.DRV_ID = dto.DRV_ID;
-            entityObjct.type = dto.type;
+            entityObjct.demoType = dto.demoType;
             entityObjct.value = dto.value;
             entityObjct.riskvalue = dto.riskvalue;
             entityObjct.riskvalues = dto.riskvalues;
@@ -658,6 +659,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.ppVATnumber = dto.ppVATnumber;
             entityObjct.ppFaxNumber = dto.ppFaxNumber;
             entityObjct.ppAddress = dto.ppAddress;
+            entityObjct.lastAssignedPolicyNumber = dto.lastAssignedPolicyNumber;
 
             return entityObjct;
         }
@@ -913,6 +915,24 @@ namespace NanofinAPI.Models.DTOEnvironment
         }
 
 
+        public static unprocessedapplication updateEntity(unprocessedapplication entityObjct, DTOunprocessedapplication dto)
+        {
+            if (entityObjct == null) entityObjct = new unprocessedapplication();
+
+            entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
+            entityObjct.age = dto.age;
+            entityObjct.Consumer_ID = dto.Consumer_ID;
+            entityObjct.gender = dto.gender;
+            entityObjct.maritalStatus = dto.maritalStatus;
+            entityObjct.productName = dto.productName;
+            entityObjct.numPurchases = dto.numPurchases;
+            entityObjct.numClaims = dto.numClaims;
+            entityObjct.claimRate = dto.claimRate;
+
+            return entityObjct;
+        }
+
+
         public static user updateEntity(user entityObjct, DTOuser dto)
         {
             if (entityObjct == null) entityObjct = new user();
@@ -1019,12 +1039,6 @@ namespace NanofinAPI.Models.DTOEnvironment
 
             return entityObjct;
         }
-
-
-
-
-
-
 
 
     }

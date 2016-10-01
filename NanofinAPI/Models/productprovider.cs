@@ -28,6 +28,7 @@ namespace NanofinAPI.Models
         public string ppVATnumber { get; set; }
         public string ppFaxNumber { get; set; }
         public string ppAddress { get; set; }
+        public Nullable<int> lastAssignedPolicyNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<insuranceproduct> insuranceproducts { get; set; }
