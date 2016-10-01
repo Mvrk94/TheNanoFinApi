@@ -138,7 +138,7 @@ namespace NanofinAPI.Controllers
                     toUpdate = EntityMapper.updateEntity(toUpdate, dtoOtpView);
                     db.Entry(toUpdate).State = EntityState.Modified;
                     db.SaveChanges();
-                    return StatusCode(HttpStatusCode.OK);
+                    return Content(HttpStatusCode.OK, "OTP Resent Successfully");
 
                 }
                 if (dtoOtpView.otpRetryCount == 3)//too many attempts: user can request new OTP after a defined time=>blocked
@@ -152,7 +152,7 @@ namespace NanofinAPI.Controllers
                     toUpdate = EntityMapper.updateEntity(toUpdate, dtoOtpView);
                     db.Entry(toUpdate).State = EntityState.Modified;
                     db.SaveChanges();
-                    return StatusCode(HttpStatusCode.NoContent);
+                    return Content(HttpStatusCode.Forbidden, "User blocked, OTP not Resent");
                 }
                 return StatusCode(HttpStatusCode.NoContent);
             }
@@ -172,12 +172,12 @@ namespace NanofinAPI.Controllers
                     toUpdate = EntityMapper.updateEntity(toUpdate, dtoOtpView);
                     db.Entry(toUpdate).State = EntityState.Modified;
                     db.SaveChanges();
-                    return StatusCode(HttpStatusCode.OK);
+                    return Content(HttpStatusCode.OK,"OTP Sent sucessfully first time");
                 }
                 else //user is still blocked
                 {
-                    return StatusCode(HttpStatusCode.Forbidden);
-
+                    return Content(HttpStatusCode.Forbidden, "User is still blocked");
+                    
                 }
 
             }
@@ -208,10 +208,16 @@ namespace NanofinAPI.Controllers
                 }
                 else
                 {   //generate new otp??
-                    sendUserOTPAndSaveOTP(UserID, true);
-                    return "OTP Invalid";
-                    
-
+                    sendUserOTPAndSaveOTP(UserID, true);//resend-has 2 paths
+                    if (otpView.otpRetryCount < 3)
+                    {
+                        return "OTP Invalid: New OTP Resent";
+                    }
+                    else
+                    {
+                        return "User blocked, OTP not resent";
+                    }
+                            
                    
                 }
 
