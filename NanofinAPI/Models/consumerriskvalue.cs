@@ -15,6 +15,7 @@ namespace NanofinAPI.Models
     public partial class consumerriskvalue
     {
         public int idConsumer { get; set; }
+        public Nullable<int> Consumer_ID { get; set; }
         public Nullable<int> age { get; set; }
         public string ageGroup { get; set; }
         public Nullable<int> ageRiskValue { get; set; }
@@ -28,7 +29,8 @@ namespace NanofinAPI.Models
         public Nullable<int> claimRiskValue { get; set; }
         public string RiskCategory { get; set; }
         public Nullable<int> OverallRiskValue { get; set; }
-        public Nullable<int> Consumer_ID { get; set; }
+        public string purchasedProducts { get; set; }
+        public Nullable<int> numUnprocessed { get; set; }
     
         public virtual consumer consumer { get; set; }
     }
