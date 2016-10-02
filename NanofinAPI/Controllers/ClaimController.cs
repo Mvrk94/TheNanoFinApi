@@ -18,6 +18,8 @@ namespace NanofinAPI.Controllers
     {
 
         database_nanofinEntities db = new database_nanofinEntities();
+
+
         //get claim template object for a specific productID
         public DTOclaimtemplate getClaimTemplateForProduct(int productID)
         {
@@ -63,29 +65,6 @@ namespace NanofinAPI.Controllers
 
         }
 
-        //still to fix
-        public string getPrincipalMemberSectionJson(int productID)
-        {
-            DTOclaimtemplate claimTemp = getClaimTemplateForProduct(productID);
-
-            
-
-            if (claimTemp != null)
-            {
-                string allJson = claimTemp.formDataRequiredJson;
-
-                dynamic data = JObject.Parse(allJson);
-
-                string PrincipalMemberSection = data.Principal_Member_Details;
-                return PrincipalMemberSection;
-            }
-            else
-            {
-                return "No template available";
-            }
-
-        }
-
 
         // POST: api/claim
         [HttpPost]
@@ -101,7 +80,7 @@ namespace NanofinAPI.Controllers
         }
 
         [HttpGet]
-        // GET: api/testManager
+   
         public int GetClaimID(int activeProductID)
         {
           
@@ -138,7 +117,7 @@ namespace NanofinAPI.Controllers
         }
 
 
-
+        //claim docs path:  "/UploadFiles/IM_id/productName/year/month/consumerUserID/activeProd_ID;
         [HttpPost]
         [ResponseType(typeof(DTOclaimuploaddocument))]
         public async Task<DTOclaimuploaddocument> Postclaimuploaddocument(int userID, int activeProductItemsID, string claimUploadDocPath, int claimID)
@@ -185,6 +164,64 @@ namespace NanofinAPI.Controllers
             await db.SaveChangesAsync();
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+        #region Insurance Manager Claim Side Code
+
+     
+        [HttpGet]
+        //Get list of all claim templates and info
+        public List<DTOclaimtemplate> Getclaimtemplates()
+        {
+            List<DTOclaimtemplate> toReturn = new List<DTOclaimtemplate>();
+            List<claimtemplate> list = (from c in db.claimtemplates select c).ToList();
+
+            foreach (claimtemplate p in list)
+            {
+                toReturn.Add(new DTOclaimtemplate(p));
+            }
+
+            return toReturn;
+        }
+
+        [HttpGet]
+        //View a specific claim for an active product
+        public DTOclaim getClaim(int activeProductItem_ID)
+        {
+            claim cl = (from c in db.claims where c.ActiveProductItems_ID == activeProductItem_ID select c).SingleOrDefault();
+            DTOclaim dtoClaim = new DTOclaim(cl);
+            return dtoClaim;
+
+        }
+
+        //View all claims for this consumerID = ConsumerClaimHistory
+        public List<DTOclaim> getCustomerClaims(int CustomerID)
+        {
+            List<claim> list = (from c in db.claims where c.Consumer_ID == CustomerID select c).ToList();
+
+            List<DTOclaim> toReturn = new List<DTOclaim>();
+
+            foreach (claim cl in list)
+            {
+                toReturn.Add(new DTOclaim(cl));
+            }
+
+            return toReturn;
+        }
+
+        //GetClaimFormCapturedData for this specific claim:
+        public string getClaimCapturedData(int ClaimID)
+        {
+            claim cl = (from c in db.claims where c.Claim_ID == ClaimID select c).SingleOrDefault();
+            return cl.capturedClaimFormDataJson;
+
+        }
+
+
+        //GetClaimDocuments
+
+
+        #endregion
+
 
     }
 }

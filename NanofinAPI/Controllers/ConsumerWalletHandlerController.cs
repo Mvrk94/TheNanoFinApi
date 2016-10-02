@@ -104,6 +104,58 @@ namespace NanoFinAPI.Controllers
             return BadRequest("Insufficient voucher total");
         }//RedeemProduct method
 
+        //getactiveProductItem's unitType-string.
+        [HttpGet]
+        public string getActiveProductItemUnitType(int activeProductItemID)
+        {          
+            activeproductitemswithdetail activeProd = (from c in db.activeproductitemswithdetails where c.ActiveProductItems_ID == activeProductItemID select c).SingleOrDefault();
+            return activeProd.UnitTypeDescription;
+        }
+
+     
+        //update the end date of this product based on unitType.
+        [HttpGet]
+        public IHttpActionResult UpdateActiveProductEndDate(int activProdID, DateTime startDate, string productUnitType, int numUnits)
+        {
+            activeproductitem toUpdate = (from c in db.activeproductitems where c.ActiveProductItems_ID == activProdID select c).SingleOrDefault();
+            //calculate the end date based on the UnitType
+            DTOactiveproductitem dtoActProdItem = new DTOactiveproductitem(toUpdate);
+
+            switch (productUnitType)
+            {
+                case "per min":
+                    dtoActProdItem.activeProductItemEndDate = startDate.AddMinutes(numUnits);
+                    break;
+                case "per hour":
+                    dtoActProdItem.activeProductItemEndDate = startDate.AddHours(numUnits);
+                    break;
+                case "per day":
+                    dtoActProdItem.activeProductItemEndDate = startDate.AddDays(numUnits);
+                    break;
+                case "per week":
+                    dtoActProdItem.activeProductItemEndDate = startDate.AddDays(numUnits * 7);
+                    break;
+                case "per month":
+                    dtoActProdItem.activeProductItemEndDate = startDate.AddMonths(numUnits);
+                    break;
+                case "per year":
+                    dtoActProdItem.activeProductItemEndDate = startDate.AddYears(numUnits);
+                    break;
+                default:
+                    dtoActProdItem.activeProductItemEndDate = startDate;
+                    break;
+            }
+
+            toUpdate = EntityMapper.updateEntity(toUpdate, dtoActProdItem);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Content(HttpStatusCode.OK,dtoActProdItem.activeProductItemEndDate);
+           
+        }
+
+
+
         public async Task<string> prodIDToProdName(int productID)
         {
             product tmp = await db.products.SingleAsync(l => l.Product_ID == productID);
@@ -155,9 +207,10 @@ namespace NanoFinAPI.Controllers
             activeProdItem.productValue = productValue;
             activeProdItem.duration = duration;
             activeProdItem.activeProductItemStartDate = startDate;
-
             return activeProdItem;
         }
+
+        
 
         private void addProductRedemptionLog(int activeProductItemID, int voucherID, decimal transactionAmount)
         {
