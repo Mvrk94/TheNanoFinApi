@@ -30,7 +30,7 @@ namespace NanofinAPI.Controllers
         [HttpPost]
         public Boolean ProcessBatchApplication(int [] consumerList)
         {
-
+          
             foreach( var  i  in consumerList)
             {
                 db.processApplications1(i);

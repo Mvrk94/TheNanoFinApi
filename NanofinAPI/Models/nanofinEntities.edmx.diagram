@@ -5,67 +5,67 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="6e2d27c8992549a4b12377b36951034c" Name="Diagram1" ZoomLevel="88">
-        <EntityTypeShape EntityType="nanofinEntites.unprocessedapplication" Width="1.5" PointX="14.5" PointY="12.5" />
-        <EntityTypeShape EntityType="nanofinEntites.activeproductitem" Width="1.5" PointX="12.75" PointY="38.125" />
-        <EntityTypeShape EntityType="nanofinEntites.claim" Width="1.5" PointX="15" PointY="33.75" />
-        <EntityTypeShape EntityType="nanofinEntites.claimtemplate" Width="1.5" PointX="5.25" PointY="43.625" />
-        <EntityTypeShape EntityType="nanofinEntites.claimuploaddocument" Width="1.5" PointX="8.25" PointY="22" />
-        <EntityTypeShape EntityType="nanofinEntites.consumer" Width="1.5" PointX="5.25" PointY="27.875" />
-        <EntityTypeShape EntityType="nanofinEntites.consumerriskvalue" Width="1.5" PointX="7.5" PointY="36.25" />
-        <EntityTypeShape EntityType="nanofinEntites.contactlist" Width="1.5" PointX="5.25" PointY="25" />
+        <EntityTypeShape EntityType="nanofinEntites.activeproductitem" Width="1.5" PointX="12.75" PointY="34.5" />
+        <EntityTypeShape EntityType="nanofinEntites.claim" Width="1.5" PointX="15" PointY="28" />
+        <EntityTypeShape EntityType="nanofinEntites.claimtemplate" Width="1.5" PointX="5.25" PointY="37.375" />
+        <EntityTypeShape EntityType="nanofinEntites.claimuploaddocument" Width="1.5" PointX="5.25" PointY="23" />
+        <EntityTypeShape EntityType="nanofinEntites.consumer" Width="1.5" PointX="8.25" PointY="25.875" />
+        <EntityTypeShape EntityType="nanofinEntites.consumerriskvalue" Width="1.5" PointX="10.5" PointY="31.375" />
+        <EntityTypeShape EntityType="nanofinEntites.contactlist" Width="1.5" PointX="5.25" PointY="50.375" />
         <EntityTypeShape EntityType="nanofinEntites.demographicriskvalue" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="nanofinEntites.documentspecification" Width="1.5" PointX="12.75" PointY="48.125" />
-        <EntityTypeShape EntityType="nanofinEntites.insuranceproduct" Width="1.5" PointX="7.5" PointY="48.5" />
-        <EntityTypeShape EntityType="nanofinEntites.insurancetype" Width="1.5" PointX="5.25" PointY="58.25" />
-        <EntityTypeShape EntityType="nanofinEntites.location" Width="1.5" PointX="3" PointY="33.5" />
-        <EntityTypeShape EntityType="nanofinEntites.notificationlog" Width="1.5" PointX="5.25" PointY="52.875" />
-        <EntityTypeShape EntityType="nanofinEntites.processapplication" Width="1.5" PointX="12.75" PointY="51.25" />
-        <EntityTypeShape EntityType="nanofinEntites.product" Width="1.5" PointX="10.5" PointY="48.75" />
-        <EntityTypeShape EntityType="nanofinEntites.productprovider" Width="1.5" PointX="5.25" PointY="49.25" />
-        <EntityTypeShape EntityType="nanofinEntites.productproviderpayment" Width="1.5" PointX="15" PointY="44" />
-        <EntityTypeShape EntityType="nanofinEntites.productredemptionlog" Width="1.5" PointX="15" PointY="38.125" />
-        <EntityTypeShape EntityType="nanofinEntites.producttype" Width="1.5" PointX="8.25" PointY="46" />
-        <EntityTypeShape EntityType="nanofinEntites.reseller" Width="1.5" PointX="8.25" PointY="25.875" />
-        <EntityTypeShape EntityType="nanofinEntites.risk_agegroup" Width="1.5" PointX="3" PointY="37.25" />
-        <EntityTypeShape EntityType="nanofinEntites.systemadmin" Width="1.5" PointX="5.25" PointY="46.625" />
-        <EntityTypeShape EntityType="nanofinEntites.transactiontype" Width="1.5" PointX="8.25" PointY="19.125" />
-        <EntityTypeShape EntityType="nanofinEntites.unittype" Width="1.5" PointX="5.25" PointY="56" />
+        <EntityTypeShape EntityType="nanofinEntites.documentspecification" Width="1.5" PointX="12.75" PointY="45.625" />
+        <EntityTypeShape EntityType="nanofinEntites.insuranceproduct" Width="1.5" PointX="7.5" PointY="43.25" />
+        <EntityTypeShape EntityType="nanofinEntites.insurancetype" Width="1.5" PointX="5.25" PointY="55.75" />
+        <EntityTypeShape EntityType="nanofinEntites.location" Width="1.5" PointX="6" PointY="15.125" />
+        <EntityTypeShape EntityType="nanofinEntites.notificationlog" Width="1.5" PointX="5.25" PointY="47.75" />
+        <EntityTypeShape EntityType="nanofinEntites.processapplication" Width="1.5" PointX="12.75" PointY="42.875" />
+        <EntityTypeShape EntityType="nanofinEntites.product" Width="1.5" PointX="10.5" PointY="43.5" />
+        <EntityTypeShape EntityType="nanofinEntites.productprovider" Width="1.5" PointX="5.25" PointY="44" />
+        <EntityTypeShape EntityType="nanofinEntites.productproviderpayment" Width="1.5" PointX="15" PointY="39.5" />
+        <EntityTypeShape EntityType="nanofinEntites.productredemptionlog" Width="1.5" PointX="15" PointY="31.75" />
+        <EntityTypeShape EntityType="nanofinEntites.producttype" Width="1.5" PointX="8.25" PointY="40.75" />
+        <EntityTypeShape EntityType="nanofinEntites.reseller" Width="1.5" PointX="5.25" PointY="30.875" />
+        <EntityTypeShape EntityType="nanofinEntites.risk_agegroup" Width="1.5" PointX="6" PointY="19.5" />
+        <EntityTypeShape EntityType="nanofinEntites.systemadmin" Width="1.5" PointX="5.25" PointY="52.875" />
+        <EntityTypeShape EntityType="nanofinEntites.transactiontype" Width="1.5" PointX="8.25" PointY="23.625" />
+        <EntityTypeShape EntityType="nanofinEntites.unittype" Width="1.5" PointX="5.25" PointY="58.125" />
         <EntityTypeShape EntityType="nanofinEntites.user" Width="1.5" PointX="3" PointY="24.875" />
         <EntityTypeShape EntityType="nanofinEntites.usertype" Width="1.5" PointX="0.75" PointY="27.625" />
-        <EntityTypeShape EntityType="nanofinEntites.validator" Width="1.5" PointX="5.25" PointY="20.875" />
-        <EntityTypeShape EntityType="nanofinEntites.voucher" Width="1.5" PointX="8.25" PointY="31.625" />
-        <EntityTypeShape EntityType="nanofinEntites.vouchertransaction" Width="1.5" PointX="10.5" PointY="28.25" />
-        <EntityTypeShape EntityType="nanofinEntites.vouchertype" Width="1.5" PointX="6" PointY="33.625" />
+        <EntityTypeShape EntityType="nanofinEntites.validator" Width="1.5" PointX="5.25" PointY="40" />
+        <EntityTypeShape EntityType="nanofinEntites.voucher" Width="1.5" PointX="5.25" PointY="26.625" />
+        <EntityTypeShape EntityType="nanofinEntites.vouchertransaction" Width="1.5" PointX="10.5" PointY="26.625" />
+        <EntityTypeShape EntityType="nanofinEntites.vouchertype" Width="1.5" PointX="3" PointY="21.625" />
         <EntityTypeShape EntityType="nanofinEntites.activeproductitemswithdetail" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="nanofinEntites.chrisviewconsumeractiveproduct" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="nanofinEntites.consumernumclaim" Width="1.5" PointX="4.75" PointY="4.75" />
         <EntityTypeShape EntityType="nanofinEntites.currentmonthdailysale" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="nanofinEntites.demographicconsumerproductlocationlastmonthsale" Width="1.5" PointX="6.75" PointY="2.625" />
-        <EntityTypeShape EntityType="nanofinEntites.demographicconsumerproductlocationmonthlysale" Width="1.5" PointX="0.875" PointY="3" />
-        <EntityTypeShape EntityType="nanofinEntites.demographicconsumerproductlocationsaleslastmonth" Width="1.5" PointX="2.75" PointY="6.5" />
+        <EntityTypeShape EntityType="nanofinEntites.demographicconsumerproductlocationlastmonthsale" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="nanofinEntites.demographicconsumerproductlocationmonthlysale" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="nanofinEntites.demographicconsumerproductlocationsaleslastmonth" Width="1.5" PointX="2.75" PointY="7.75" />
         <EntityTypeShape EntityType="nanofinEntites.individualconsumerprofilerrawdata" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="nanofinEntites.insuranceproducttypemonthlysale" Width="1.5" PointX="8.75" PointY="3.875" />
+        <EntityTypeShape EntityType="nanofinEntites.insuranceproducttypemonthlysale" Width="1.5" PointX="8.75" PointY="4.75" />
         <EntityTypeShape EntityType="nanofinEntites.lastmonthinsurancetypesale" Width="1.5" PointX="4.75" PointY="8.75" />
-        <EntityTypeShape EntityType="nanofinEntites.lastmonthprovincesale" Width="1.5" PointX="6.75" PointY="6.375" />
+        <EntityTypeShape EntityType="nanofinEntites.lastmonthprovincesale" Width="1.5" PointX="6.75" PointY="8.75" />
         <EntityTypeShape EntityType="nanofinEntites.locationsaleslastmonth" Width="1.5" PointX="8.75" PointY="7.75" />
         <EntityTypeShape EntityType="nanofinEntites.monlthlocationsalessum" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="nanofinEntites.monthlylocationsale" Width="1.5" PointX="10.625" PointY="3.75" />
+        <EntityTypeShape EntityType="nanofinEntites.monthlylocationsale" Width="1.5" PointX="10.75" PointY="4.75" />
         <EntityTypeShape EntityType="nanofinEntites.monthlyproductsalesperlocation" Width="1.5" PointX="10.75" PointY="7.75" />
-        <EntityTypeShape EntityType="nanofinEntites.monthlyprovincesalesview" Width="1.5" PointX="4.75" PointY="6.5" />
-        <EntityTypeShape EntityType="nanofinEntites.monthlyprovincialproducttypedistribution" Width="1.5" PointX="6.75" PointY="8.75" />
-        <EntityTypeShape EntityType="nanofinEntites.otpview" Width="1.5" PointX="8.625" PointY="11" />
-        <EntityTypeShape EntityType="nanofinEntites.overallproductlocationsale" Width="1.5" PointX="10.75" PointY="10.875" />
+        <EntityTypeShape EntityType="nanofinEntites.monthlyprovincesalesview" Width="1.5" PointX="4.75" PointY="11.75" />
+        <EntityTypeShape EntityType="nanofinEntites.monthlyprovincialproducttypedistribution" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="nanofinEntites.otpview" Width="1.5" PointX="8.75" PointY="11.75" />
+        <EntityTypeShape EntityType="nanofinEntites.overallproductlocationsale" Width="1.5" PointX="10.75" PointY="11.75" />
         <EntityTypeShape EntityType="nanofinEntites.productlocationmonthlysale" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="nanofinEntites.productprovideryearlysale" Width="1.5" PointX="0.875" PointY="6.75" />
+        <EntityTypeShape EntityType="nanofinEntites.productprovideryearlysale" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="nanofinEntites.productsalespermonth" Width="1.5" PointX="12.75" PointY="3.75" />
-        <EntityTypeShape EntityType="nanofinEntites.productswithpurchas" Width="1.5" PointX="12.75" PointY="5.875" />
+        <EntityTypeShape EntityType="nanofinEntites.productswithpurchas" Width="1.5" PointX="12.75" PointY="6.75" />
         <EntityTypeShape EntityType="nanofinEntites.provincialinsurancetypesale" Width="1.5" PointX="12.75" PointY="9.75" />
-        <EntityTypeShape EntityType="nanofinEntites.provincialproducttypedistributionlastmonth" Width="1.5" PointX="12.75" PointY="12" />
+        <EntityTypeShape EntityType="nanofinEntites.provincialproducttypedistributionlastmonth" Width="1.5" PointX="12.75" PointY="12.75" />
         <EntityTypeShape EntityType="nanofinEntites.resellersalespermonth" Width="1.5" PointX="14.75" PointY="0.75" />
-        <EntityTypeShape EntityType="nanofinEntites.resellersendmonthlysale" Width="1.5" PointX="0.75" PointY="9" />
-        <EntityTypeShape EntityType="nanofinEntites.resellersendvouchergenderspecific" Width="1.5" PointX="12.75" PointY="7.875" />
-        <EntityTypeShape EntityType="nanofinEntites.saleslastmonth" Width="1.5" PointX="5" PointY="11" />
-        <EntityTypeShape EntityType="nanofinEntites.salespermonth" Width="1.5" PointX="14.875" PointY="3.125" />
+        <EntityTypeShape EntityType="nanofinEntites.resellersendmonthlysale" Width="1.5" PointX="2.75" PointY="14.75" />
+        <EntityTypeShape EntityType="nanofinEntites.resellersendvouchergenderspecific" Width="1.5" PointX="14.75" PointY="3.75" />
+        <EntityTypeShape EntityType="nanofinEntites.saleslastmonth" Width="1.5" PointX="14.75" PointY="6.75" />
+        <EntityTypeShape EntityType="nanofinEntites.salespermonth" Width="1.5" PointX="14.75" PointY="9.75" />
+        <EntityTypeShape EntityType="nanofinEntites.unprocessedapplication" Width="1.5" PointX="14.75" PointY="12.75" />
         <AssociationConnector Association="nanofinEntites.activeproductitems_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.activeproductitems_ibfk_2" />
         <AssociationConnector Association="nanofinEntites.activeproductitems_ibfk_3" />
@@ -109,7 +109,7 @@
         <AssociationConnector Association="nanofinEntites.voucher_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_2" />
-        </Diagram>
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

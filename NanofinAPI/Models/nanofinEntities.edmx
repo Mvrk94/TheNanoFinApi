@@ -254,7 +254,7 @@
           <Property Name="postalCode" Type="varchar" MaxLength="32" />
           <Property Name="province" Type="varchar" MaxLength="32" />
           <Property Name="country" Type="varchar" MaxLength="32" />
-          <Property Name="sellingLocation" Type="varchar" MaxLength="32" />
+          <Property Name="sellingLocation" Type="text" />
           <Property Name="isSharingLocation" Type="varchar" MaxLength="64" />
           <Property Name="StartedSharingTime" Type="datetime" Precision="0" />
           <Property Name="minutesAvailable" Type="int" />
@@ -1997,6 +1997,10 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             <Parameter Name="locationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="updateDemographicRiskValues" />
+          <FunctionImport Name="processApplications1">
+          <Parameter Name="consumerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateConsumerRiskValues" />
           <EntitySet Name="activeproductitems" EntityType="nanofinEntites.activeproductitem" />
           <EntitySet Name="claims" EntityType="nanofinEntites.claim" />
           <EntitySet Name="claimtemplates" EntityType="nanofinEntites.claimtemplate" />
@@ -2230,10 +2234,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             <End Role="voucher" EntitySet="vouchers" />
             <End Role="vouchertransaction" EntitySet="vouchertransactions" />
           </AssociationSet>
-          <FunctionImport Name="processApplications1">
-            <Parameter Name="consumerID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateConsumerRiskValues" />
           </EntityContainer>
         <ComplexType Name="monthlyProvinceSales_Result" />
         <ComplexType Name="ProductLocationSales_Result" />
@@ -2541,7 +2541,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="postalCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="country" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="sellingLocation" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="sellingLocation" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="isSharingLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="StartedSharingTime" Type="DateTime" />
           <Property Name="minutesAvailable" Type="Int32" />
@@ -3683,6 +3683,8 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="updateDemographicRiskValues" FunctionName="nanofinEntites.Store.updateDemographicRiskValues" />
+          <FunctionImportMapping FunctionImportName="processApplications1" FunctionName="nanofinEntites.Store.processApplications1" />
+          <FunctionImportMapping FunctionImportName="UpdateConsumerRiskValues" FunctionName="nanofinEntites.Store.UpdateConsumerRiskValues" />
           <EntitySetMapping Name="activeproductitems">
             <EntityTypeMapping TypeName="nanofinEntites.activeproductitem">
               <MappingFragment StoreEntitySet="activeproductitems">
@@ -4497,8 +4499,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="processApplications1" FunctionName="nanofinEntites.Store.processApplications1" />
-          <FunctionImportMapping FunctionImportName="UpdateConsumerRiskValues" FunctionName="nanofinEntites.Store.UpdateConsumerRiskValues" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
