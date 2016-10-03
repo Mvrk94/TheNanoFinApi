@@ -47,7 +47,9 @@ namespace NanoFinAPI.Controllers
             {
                 //Add activeProductItem to db table
                 var consumerID = (from c in db.consumers where c.User_ID == userID select c.Consumer_ID).FirstOrDefault();
-                activeproductitem activeProdItem = createActiveProductItem(consumerID, productID, "", true, prodTotalPrice, numberUnits, startdate);
+                string prodUnitType = getProductUnitType(productID);//get the string eg 'per day'
+                DateTime endDate = getEndDateForProduct(prodUnitType, startdate, numberUnits); //calculate the end date
+                activeproductitem activeProdItem = createActiveProductItem(consumerID, productID, "", true, prodTotalPrice, numberUnits, startdate,endDate);
                 db.activeproductitems.Add(activeProdItem);
                 db.SaveChanges();
 
@@ -99,10 +101,57 @@ namespace NanoFinAPI.Controllers
                 consumerCtrl = await consumerCtrl.init();
                 await consumerCtrl.redeemVoucher(productName, Decimal.ToInt32(prodTotalPrice));
 
-                return StatusCode(HttpStatusCode.OK);
+                return Content(HttpStatusCode.OK,activeProdItem.ActiveProductItems_ID);
             }
             return BadRequest("Insufficient voucher total");
         }//RedeemProduct method
+
+        //getactiveProductItem's unitType-string.
+        [HttpGet]
+        public string getProductUnitType(int ProductID)
+        {
+            insuranceproduct insProd = (from c in db.insuranceproducts where c.Product_ID == ProductID select c).SingleOrDefault();
+            return insProd.unittype.UnitTypeDescription; 
+           
+        }
+
+        //method to return a legitimate End date based on: unitType, start date numUnits
+        public DateTime getEndDateForProduct(string productUnitType, DateTime startDate, int numUnits)
+        {
+            DateTime dnow = DateTime.Now;
+           
+            //set the time of startdate to the current time as it is set to 00:00:00 by default : need time for endDate.
+            DateTime newStartDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, dnow.Hour, dnow.Minute, dnow.Second);
+
+            DateTime endDate = new DateTime();
+            switch (productUnitType)
+            {
+                
+                case "per min":
+                    endDate = newStartDate.AddMinutes(numUnits);
+                    break;
+                case "per hour":
+                    endDate = newStartDate.AddHours(numUnits);
+                    break;
+                case "per day":
+                    endDate = newStartDate.AddDays(numUnits);
+                    break;
+                case "per week":
+                    endDate = newStartDate.AddDays(numUnits * 7);
+                    break;
+                case "per month":
+                    endDate = newStartDate.AddMonths(numUnits);
+                    break;
+                case "per year":
+                    endDate = newStartDate.AddYears(numUnits);
+                    break;
+                default:
+                    endDate = newStartDate;
+                    break;
+            }
+            return endDate;
+        }
+
 
         public async Task<string> prodIDToProdName(int productID)
         {
@@ -145,7 +194,7 @@ namespace NanoFinAPI.Controllers
             return vouchTotValues;
         }
 
-        private activeproductitem createActiveProductItem(int ConsumerID, int ProductID, string policyNum, bool isActive, decimal productValue, int duration, DateTime startDate)
+        private activeproductitem createActiveProductItem(int ConsumerID, int ProductID, string policyNum, bool isActive, decimal productValue, int duration, DateTime startDate, DateTime endDate)
         {
             activeproductitem activeProdItem = new activeproductitem();
             activeProdItem.Consumer_ID = ConsumerID;
@@ -155,9 +204,11 @@ namespace NanoFinAPI.Controllers
             activeProdItem.productValue = productValue;
             activeProdItem.duration = duration;
             activeProdItem.activeProductItemStartDate = startDate;
-
+            activeProdItem.activeProductItemEndDate = endDate;
             return activeProdItem;
         }
+
+        
 
         private void addProductRedemptionLog(int activeProductItemID, int voucherID, decimal transactionAmount)
         {
@@ -465,6 +516,35 @@ namespace NanoFinAPI.Controllers
 
         #endregion
 
+        //update the isActive based on Expiries
+        [HttpPut]
+        public IHttpActionResult updateExpiredProductsStatus()
+        {
+            DateTime dateNow = DateTime.Now;
+            activeproductitem[] activProducts = (from c in db.activeproductitems where c.activeProductItemEndDate != null && (DateTime.Compare(c.activeProductItemEndDate.Value, dateNow) > 0) select c).ToArray();
+            List<DTOactiveproductitem> dtoActProds = new List<DTOactiveproductitem>();
+            foreach (activeproductitem a in activProducts)
+            {
+                dtoActProds.Add(new DTOactiveproductitem(a)); //copy over
+            }
+
+            foreach (DTOactiveproductitem d in dtoActProds)
+            {
+                d.isActive = false;//set isactive to false
+            }
+
+            for(int i = 0;i<activProducts.Length;i++)
+            {
+                activProducts[i] = EntityMapper.updateEntity(activProducts[i], dtoActProds[i]);
+                db.Entry(activProducts[i]).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return StatusCode(HttpStatusCode.OK);
+        }
+
+
+       
 
 
     }
