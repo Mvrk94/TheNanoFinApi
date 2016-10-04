@@ -274,6 +274,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public string purchasedProducts { get; set; }
         public Nullable<int> numUnprocessed { get; set; }
         public string icon { get; set; }
+        public string options { get; set; }
 
         public DTOconsumerriskvalue() { }
 
@@ -297,6 +298,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             purchasedProducts = entityObjct.purchasedProducts;
             numUnprocessed = entityObjct.numUnprocessed;
             icon = " ";
+            options = " ";
         }
     }
 
