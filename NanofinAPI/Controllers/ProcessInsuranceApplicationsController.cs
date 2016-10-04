@@ -85,16 +85,16 @@ namespace NanofinAPI.Controllers
             //notify user push Notification            
             var NC = new NotificationController();
 
-            var message = "NanoFin: Your purchase for product ";
+            var message = "NanoFin: Your purchase for '";
             message += prodIDToProdName(rejectProd.Product_ID);
-            message += " has been rejected. Your Account has been refunded with R";
+            message += "; has been rejected. Your Account has been refunded with R";
             message += rejectProd.productValue.ToString() + ".";
             NC.SendSMS(tempUser.userContactNumber, message);
         }
 
-        public async Task<string> prodIDToProdName(int productID)
+        public string prodIDToProdName(int productID)
         {
-            product tmp = await db.products.SingleAsync(l => l.Product_ID == productID);
+            product tmp =  db.products.Find(productID);
             return tmp.productName;
         }
 
