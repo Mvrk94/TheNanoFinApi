@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using NanofinAPI.Models;
 using NanofinAPI.Models.DTOEnvironment;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace NanofinAPI.Controllers
 {
@@ -67,6 +69,66 @@ namespace NanofinAPI.Controllers
             return db.consumerinfosummaries.Where(c => c.Consumer_ID == consumerID).ToList();
         }
 
+        [HttpGet]
+        public void RejectedApplication(int ActiveProductID)
+        {
+            var rejectProd = db.activeproductitems.Find(ActiveProductID);
+            var prodValue = rejectProd.productValue;
+            var tempCons = db.consumers.Find(rejectProd.Consumer_ID);
+            var tempUser = db.users.Find(tempCons.User_ID);
 
+            refundConsumer(tempCons.User_ID, rejectProd.productValue);
+
+            //deactive product from active
+
+            //notify user push Notification            
+            var NC = new NotificationController();
+
+            var message = "NanoFin: Your purchase for product ";
+            message += prodIDToProdName(rejectProd.Product_ID);
+            message += " has been rejected. Your Account has been refunded with R";
+            message += rejectProd.productValue.ToString() + ".";
+            NC.SendSMS(tempUser.userContactNumber, message);
+        }
+
+        public async Task<string> prodIDToProdName(int productID)
+        {
+            product tmp = await db.products.SingleAsync(l => l.Product_ID == productID);
+            return tmp.productName;
+        }
+
+        public void refundConsumer(int userID, decimal BulkVoucherAmount)
+        {
+            voucher newVoucher = new voucher();
+            newVoucher.User_ID = userID;
+            newVoucher.voucherValue = BulkVoucherAmount;
+            newVoucher.VoucherType_ID = 2;
+            newVoucher.voucherCreationDate = DateTime.Now;
+            db.vouchers.Add(newVoucher);
+            db.SaveChanges();
+
+            addVoucherTransaction(newVoucher.Voucher_ID, newVoucher.Voucher_ID, userID, 1, BulkVoucherAmount, 41);
+        }
+
+        private void addVoucherTransaction(int newVoucherID, int voucherID, int receiverID, int senderID, decimal Amount, int transactionTypeID)
+        {
+            vouchertransaction newTransaction = new vouchertransaction();
+            newTransaction.VoucherSentTo = newVoucherID;
+            newTransaction.Voucher_ID = voucherID;
+            newTransaction.Receiver_ID = receiverID;
+            newTransaction.Sender_ID = senderID;
+            newTransaction.transactionAmount = Amount;
+            newTransaction.TransactionType_ID = transactionTypeID;
+            DateTime now = DateTime.Now;
+            now.ToString("yyyy-MM-dd H:mm:ss");
+            newTransaction.transactionDate = now;
+            //newTransaction.transactionDate = DateTime.Now;
+
+            transactiontype transactionTypeString = (from list in db.transactiontypes where list.TransactionType_ID == transactionTypeID select list).Single();
+            newTransaction.transactionDescription = transactionTypeString.transactionTypeDescription;
+
+            db.vouchertransactions.Add(newTransaction);
+            db.SaveChanges();
+        }
     }
 }

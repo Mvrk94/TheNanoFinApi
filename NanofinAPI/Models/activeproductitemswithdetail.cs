@@ -20,6 +20,7 @@ namespace NanofinAPI.Models
         public int Product_ID { get; set; }
         public string activeProductItemPolicyNum { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public Nullable<bool> Accepted { get; set; }
         public decimal productValue { get; set; }
         public int duration { get; set; }
         public Nullable<System.DateTime> activeProductItemStartDate { get; set; }

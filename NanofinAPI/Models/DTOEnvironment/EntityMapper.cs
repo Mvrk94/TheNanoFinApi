@@ -17,6 +17,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.Product_ID = dto.Product_ID;
             entityObjct.activeProductItemPolicyNum = dto.activeProductItemPolicyNum;
             entityObjct.isActive = dto.isActive;
+            entityObjct.Accepted = dto.Accepted;
             entityObjct.productValue = dto.productValue;
             entityObjct.duration = dto.duration;
             entityObjct.activeProductItemStartDate = dto.activeProductItemStartDate;
@@ -38,6 +39,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.Product_ID = dto.Product_ID;
             entityObjct.activeProductItemPolicyNum = dto.activeProductItemPolicyNum;
             entityObjct.isActive = dto.isActive;
+            entityObjct.Accepted = dto.Accepted;
             entityObjct.productValue = dto.productValue;
             entityObjct.duration = dto.duration;
             entityObjct.activeProductItemStartDate = dto.activeProductItemStartDate;
@@ -154,6 +156,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new consumerinfosummary();
 
             entityObjct.idConsumer = dto.idConsumer;
+            entityObjct.Consumer_ID = dto.Consumer_ID;
             entityObjct.userFirstName = dto.userFirstName;
             entityObjct.userLastName = dto.userLastName;
             entityObjct.IDnumber = dto.IDnumber;
@@ -393,6 +396,7 @@ namespace NanofinAPI.Models.DTOEnvironment
 
             entityObjct.InsuranceType_ID = dto.InsuranceType_ID;
             entityObjct.insuranctTypeDescription = dto.insuranctTypeDescription;
+            entityObjct.RequirementsForPurchase = dto.RequirementsForPurchase;
 
             return entityObjct;
         }
@@ -805,6 +809,10 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.Reseller_ID = dto.Reseller_ID;
             entityObjct.User_ID = dto.User_ID;
             entityObjct.resellerIsValidated = dto.resellerIsValidated;
+            entityObjct.cardNumber = dto.cardNumber;
+            entityObjct.cardExpirationMonth_Year = dto.cardExpirationMonth_Year;
+            entityObjct.cardCVV = dto.cardCVV;
+            entityObjct.nameOnCard = dto.nameOnCard;
             entityObjct.resellerBankBranchName = dto.resellerBankBranchName;
             entityObjct.resellerBankAccountNumber = dto.resellerBankAccountNumber;
             entityObjct.resellerBankName = dto.resellerBankName;
@@ -1061,6 +1069,7 @@ namespace NanofinAPI.Models.DTOEnvironment
 
             return entityObjct;
         }
+
 
     }
 }

@@ -14,6 +14,7 @@
           <Property Name="Product_ID" Type="int" Nullable="false" />
           <Property Name="activeProductItemPolicyNum" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="isActive" Type="bool" />
+          <Property Name="Accepted" Type="bool" />
           <Property Name="productValue" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="duration" Type="int" Nullable="false" />
           <Property Name="activeProductItemStartDate" Type="date" />
@@ -407,6 +408,7 @@ warning 6002: The table/view 'def.database_nanofin.activeproductitemswithdetail'
           <Property Name="Product_ID" Type="int" Nullable="false" />
           <Property Name="activeProductItemPolicyNum" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="isActive" Type="bool" />
+          <Property Name="Accepted" Type="bool" />
           <Property Name="productValue" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="duration" Type="int" Nullable="false" />
           <Property Name="activeProductItemStartDate" Type="date" />
@@ -450,6 +452,14 @@ warning 6002: The table/view 'def.database_nanofin.chrisviewconsumeractiveproduc
           <Property Name="ipCoverAmount" Type="decimal" Precision="8" Scale="2" />
           <Property Name="UnitTypeDescription" Type="varchar" MaxLength="70" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'def.database_nanofin.consumeragegroupclaimrate' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="consumeragegroupclaimrate">
+          <Property Name="ageGroup_ID" Type="int" />
+          <Property Name="numPurchase" Type="decimal" Precision="42" Scale="0" />
+          <Property Name="numClaims" Type="decimal" Precision="32" Scale="0" />
+          <Property Name="ratio" Type="decimal" Precision="39" Scale="4" />
+        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.consumerinfosummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="consumerinfosummary">
@@ -1490,6 +1500,7 @@ warning 6002: The table/view 'def.database_nanofin.unprocessedapplications' does
 `activeproductitemswithdetail`.`Product_ID`, 
 `activeproductitemswithdetail`.`activeProductItemPolicyNum`, 
 `activeproductitemswithdetail`.`isActive`, 
+`activeproductitemswithdetail`.`Accepted`, 
 `activeproductitemswithdetail`.`productValue`, 
 `activeproductitemswithdetail`.`duration`, 
 `activeproductitemswithdetail`.`activeProductItemStartDate`, 
@@ -2041,6 +2052,9 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Parameter Name="consumerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateConsumerRiskValues" />
+          <FunctionImport Name="processSingleApplication">
+          <Parameter Name="ActiveProductID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="activeproductitems" EntityType="nanofinEntites.activeproductitem" />
           <EntitySet Name="claims" EntityType="nanofinEntites.claim" />
           <EntitySet Name="claimtemplates" EntityType="nanofinEntites.claimtemplate" />
@@ -2073,6 +2087,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <EntitySet Name="vouchertypes" EntityType="nanofinEntites.vouchertype" />
           <EntitySet Name="activeproductitemswithdetails" EntityType="nanofinEntites.activeproductitemswithdetail" />
           <EntitySet Name="chrisviewconsumeractiveproducts" EntityType="nanofinEntites.chrisviewconsumeractiveproduct" />
+          <EntitySet Name="consumerinfosummaries" EntityType="nanofinEntites.consumerinfosummary" />
           <EntitySet Name="consumernumclaims" EntityType="nanofinEntites.consumernumclaim" />
           <EntitySet Name="currentmonthdailysales" EntityType="nanofinEntites.currentmonthdailysale" />
           <EntitySet Name="demographicconsumerproductlocationlastmonthsales" EntityType="nanofinEntites.demographicconsumerproductlocationlastmonthsale" />
@@ -2274,10 +2289,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             <End Role="voucher" EntitySet="vouchers" />
             <End Role="vouchertransaction" EntitySet="vouchertransactions" />
           </AssociationSet>
-          <FunctionImport Name="processSingleApplication">
-          <Parameter Name="ActiveProductID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="consumerinfosummaries" EntityType="nanofinEntites.consumerinfosummary" />
           </EntityContainer>
         <ComplexType Name="monthlyProvinceSales_Result" />
         <ComplexType Name="ProductLocationSales_Result" />
@@ -2291,6 +2302,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
           <Property Name="activeProductItemPolicyNum" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="isActive" Type="Boolean" />
+          <Property Name="Accepted" Type="Boolean" />
           <Property Name="productValue" Type="Decimal" Nullable="false" />
           <Property Name="duration" Type="Int32" Nullable="false" />
           <Property Name="activeProductItemStartDate" Type="DateTime" />
@@ -2461,8 +2473,8 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           </Key>
           <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="insuranceproducts" Relationship="nanofinEntites.insuranceproduct_ibfk_3" FromRole="insurancetype" ToRole="insuranceproduct" />
           <Property Name="RequirementsForPurchase" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="insuranceproducts" Relationship="nanofinEntites.insuranceproduct_ibfk_3" FromRole="insurancetype" ToRole="insuranceproduct" />
         </EntityType>
         <EntityType Name="location">
           <Key>
@@ -2578,6 +2590,10 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="Reseller_ID" Type="Int32" Nullable="false" />
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <Property Name="resellerIsValidated" Type="Boolean" />
+          <Property Name="cardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cardExpirationMonth_Year" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cardCVV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="nameOnCard" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="resellerBankBranchName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="resellerBankAccountNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="resellerBankName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -2597,10 +2613,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="isLocationAvailable" Type="Boolean" />
           <NavigationProperty Name="location1" Relationship="nanofinEntites.reseller_ibfk_2" FromRole="reseller" ToRole="location" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.reseller_ibfk_1" FromRole="reseller" ToRole="user" />
-          <Property Name="cardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="cardExpirationMonth_Year" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="cardCVV" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="nameOnCard" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="risk_agegroup">
           <Key>
@@ -2768,6 +2780,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
           <Property Name="activeProductItemPolicyNum" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="isActive" Type="Boolean" />
+          <Property Name="Accepted" Type="Boolean" />
           <Property Name="productValue" Type="Decimal" Nullable="false" />
           <Property Name="duration" Type="Int32" Nullable="false" />
           <Property Name="activeProductItemStartDate" Type="DateTime" />
@@ -2808,6 +2821,29 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
           <Property Name="ipCoverAmount" Type="Decimal" />
           <Property Name="UnitTypeDescription" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="consumerinfosummary">
+          <Key>
+            <PropertyRef Name="idConsumer" />
+            <PropertyRef Name="Consumer_ID" />
+            <PropertyRef Name="userFirstName" />
+            <PropertyRef Name="userLastName" />
+          </Key>
+          <Property Name="idConsumer" Type="Int32" Nullable="false" />
+          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
+          <Property Name="userFirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userLastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDnumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="claimRate" Type="Decimal" />
+          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="numUnprocessed" Type="Int32" />
+          <Property Name="purchasedProducts" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="purchasedProductIDs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="consumernumclaim">
           <Key>
@@ -3709,29 +3745,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="consumerinfosummary">
-          <Key>
-            <PropertyRef Name="idConsumer" />
-            <PropertyRef Name="Consumer_ID" />
-            <PropertyRef Name="userFirstName" />
-            <PropertyRef Name="userLastName" />
-          </Key>
-          <Property Name="idConsumer" Type="Int32" Nullable="false" />
-          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
-          <Property Name="userFirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="userLastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IDnumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="claimRate" Type="Decimal" />
-          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="numUnprocessed" Type="Int32" />
-          <Property Name="purchasedProducts" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="purchasedProductIDs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3756,6 +3769,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <FunctionImportMapping FunctionImportName="updateDemographicRiskValues" FunctionName="nanofinEntites.Store.updateDemographicRiskValues" />
           <FunctionImportMapping FunctionImportName="processApplications1" FunctionName="nanofinEntites.Store.processApplications1" />
           <FunctionImportMapping FunctionImportName="UpdateConsumerRiskValues" FunctionName="nanofinEntites.Store.UpdateConsumerRiskValues" />
+          <FunctionImportMapping FunctionImportName="processSingleApplication" FunctionName="nanofinEntites.Store.processSingleApplication" />
           <EntitySetMapping Name="activeproductitems">
             <EntityTypeMapping TypeName="nanofinEntites.activeproductitem">
               <MappingFragment StoreEntitySet="activeproductitems">
@@ -3765,6 +3779,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
                 <ScalarProperty Name="duration" ColumnName="duration" />
                 <ScalarProperty Name="productValue" ColumnName="productValue" />
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="activeProductItemPolicyNum" ColumnName="activeProductItemPolicyNum" />
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
@@ -4012,10 +4027,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <EntitySetMapping Name="resellers">
             <EntityTypeMapping TypeName="nanofinEntites.reseller">
               <MappingFragment StoreEntitySet="reseller">
-                <ScalarProperty Name="nameOnCard" ColumnName="nameOnCard" />
-                <ScalarProperty Name="cardCVV" ColumnName="cardCVV" />
-                <ScalarProperty Name="cardExpirationMonth_Year" ColumnName="cardExpirationMonth/Year" />
-                <ScalarProperty Name="cardNumber" ColumnName="cardNumber" />
                 <ScalarProperty Name="isLocationAvailable" ColumnName="isLocationAvailable" />
                 <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
@@ -4033,6 +4044,10 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="resellerBankName" ColumnName="resellerBankName" />
                 <ScalarProperty Name="resellerBankAccountNumber" ColumnName="resellerBankAccountNumber" />
                 <ScalarProperty Name="resellerBankBranchName" ColumnName="resellerBankBranchName" />
+                <ScalarProperty Name="nameOnCard" ColumnName="nameOnCard" />
+                <ScalarProperty Name="cardCVV" ColumnName="cardCVV" />
+                <ScalarProperty Name="cardExpirationMonth_Year" ColumnName="cardExpirationMonth/Year" />
+                <ScalarProperty Name="cardNumber" ColumnName="cardNumber" />
                 <ScalarProperty Name="resellerIsValidated" ColumnName="resellerIsValidated" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="Reseller_ID" ColumnName="Reseller_ID" />
@@ -4186,6 +4201,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
                 <ScalarProperty Name="duration" ColumnName="duration" />
                 <ScalarProperty Name="productValue" ColumnName="productValue" />
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="activeProductItemPolicyNum" ColumnName="activeProductItemPolicyNum" />
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
@@ -4209,6 +4225,27 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
                 <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="consumerinfosummaries">
+            <EntityTypeMapping TypeName="nanofinEntites.consumerinfosummary">
+              <MappingFragment StoreEntitySet="consumerinfosummary">
+                <ScalarProperty Name="purchasedProductIDs" ColumnName="purchasedProductIDs" />
+                <ScalarProperty Name="purchasedProducts" ColumnName="purchasedProducts" />
+                <ScalarProperty Name="numUnprocessed" ColumnName="numUnprocessed" />
+                <ScalarProperty Name="RiskCategory" ColumnName="RiskCategory" />
+                <ScalarProperty Name="claimRate" ColumnName="claimRate" />
+                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
+                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="IDnumber" ColumnName="IDnumber" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
+                <ScalarProperty Name="idConsumer" ColumnName="idConsumer" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4571,28 +4608,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="productName" ColumnName="productName" />
                 <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="processSingleApplication" FunctionName="nanofinEntites.Store.processSingleApplication" />
-          <EntitySetMapping Name="consumerinfosummaries">
-            <EntityTypeMapping TypeName="nanofinEntites.consumerinfosummary">
-              <MappingFragment StoreEntitySet="consumerinfosummary">
-                <ScalarProperty Name="purchasedProductIDs" ColumnName="purchasedProductIDs" />
-                <ScalarProperty Name="purchasedProducts" ColumnName="purchasedProducts" />
-                <ScalarProperty Name="numUnprocessed" ColumnName="numUnprocessed" />
-                <ScalarProperty Name="RiskCategory" ColumnName="RiskCategory" />
-                <ScalarProperty Name="claimRate" ColumnName="claimRate" />
-                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
-                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="Province" ColumnName="Province" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="IDnumber" ColumnName="IDnumber" />
-                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
-                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
-                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
-                <ScalarProperty Name="idConsumer" ColumnName="idConsumer" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

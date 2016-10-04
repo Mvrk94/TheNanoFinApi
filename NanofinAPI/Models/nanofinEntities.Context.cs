@@ -59,6 +59,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<vouchertype> vouchertypes { get; set; }
         public virtual DbSet<activeproductitemswithdetail> activeproductitemswithdetails { get; set; }
         public virtual DbSet<chrisviewconsumeractiveproduct> chrisviewconsumeractiveproducts { get; set; }
+        public virtual DbSet<consumerinfosummary> consumerinfosummaries { get; set; }
         public virtual DbSet<consumernumclaim> consumernumclaims { get; set; }
         public virtual DbSet<currentmonthdailysale> currentmonthdailysales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationlastmonthsale> demographicconsumerproductlocationlastmonthsales { get; set; }
@@ -88,7 +89,6 @@ namespace NanofinAPI.Models
         public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }
         public virtual DbSet<salespermonth> salespermonths { get; set; }
         public virtual DbSet<unprocessedapplication> unprocessedapplications { get; set; }
-        public virtual DbSet<consumerinfosummary> consumerinfosummaries { get; set; }
     
         public virtual ObjectResult<monthlyProvinceSales_Result> monthlyProvinceSales(Nullable<int> providerID)
         {
