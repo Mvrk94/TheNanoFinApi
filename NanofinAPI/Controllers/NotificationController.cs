@@ -194,7 +194,6 @@ namespace NanofinAPI.Controllers
             Nullable<DateTime> nowTime = DateTime.Now;
 
 
-
             if (Nullable.Compare(nowTime, expiryDate) > 0) //now is later than expiry: so OTP has expired!
             {
                 return "Your OTP has expired, please retry the transaction"; //access denied?
