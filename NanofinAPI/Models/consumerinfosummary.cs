@@ -12,28 +12,22 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class consumerriskvalue
+    public partial class consumerinfosummary
     {
         public int idConsumer { get; set; }
-        public Nullable<int> Consumer_ID { get; set; }
-        public Nullable<int> age { get; set; }
-        public string ageGroup { get; set; }
-        public Nullable<int> ageRiskValue { get; set; }
+        public int Consumer_ID { get; set; }
+        public string userFirstName { get; set; }
+        public string userLastName { get; set; }
+        public string IDnumber { get; set; }
+        public string City { get; set; }
+        public string Province { get; set; }
         public string gender { get; set; }
-        public Nullable<int> genderRiskValue { get; set; }
         public string maritalStatus { get; set; }
-        public Nullable<int> maritalStatusRiskValue { get; set; }
         public string employmentStatus { get; set; }
-        public Nullable<int> employmentStatusRiskValue { get; set; }
         public Nullable<decimal> claimRate { get; set; }
-        public Nullable<int> claimRiskValue { get; set; }
         public string RiskCategory { get; set; }
-        public Nullable<int> OverallRiskValue { get; set; }
-        public string purchasedProducts { get; set; }
         public Nullable<int> numUnprocessed { get; set; }
-        public string consumerName { get; set; }
+        public string purchasedProducts { get; set; }
         public string purchasedProductIDs { get; set; }
-    
-        public virtual consumer consumer { get; set; }
     }
 }

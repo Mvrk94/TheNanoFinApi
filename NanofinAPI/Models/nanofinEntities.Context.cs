@@ -59,6 +59,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<vouchertype> vouchertypes { get; set; }
         public virtual DbSet<activeproductitemswithdetail> activeproductitemswithdetails { get; set; }
         public virtual DbSet<chrisviewconsumeractiveproduct> chrisviewconsumeractiveproducts { get; set; }
+        public virtual DbSet<consumerinfosummary> consumerinfosummaries { get; set; }
         public virtual DbSet<consumernumclaim> consumernumclaims { get; set; }
         public virtual DbSet<currentmonthdailysale> currentmonthdailysales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationlastmonthsale> demographicconsumerproductlocationlastmonthsales { get; set; }
@@ -137,6 +138,15 @@ namespace NanofinAPI.Models
         public virtual int UpdateConsumerRiskValues()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateConsumerRiskValues");
+        }
+    
+        public virtual int processSingleApplication(Nullable<int> activeProductID)
+        {
+            var activeProductIDParameter = activeProductID.HasValue ?
+                new ObjectParameter("ActiveProductID", activeProductID) :
+                new ObjectParameter("ActiveProductID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("processSingleApplication", activeProductIDParameter);
         }
     }
 }

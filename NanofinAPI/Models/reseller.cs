@@ -17,6 +17,10 @@ namespace NanofinAPI.Models
         public int Reseller_ID { get; set; }
         public int User_ID { get; set; }
         public Nullable<bool> resellerIsValidated { get; set; }
+        public string cardNumber { get; set; }
+        public string cardExpirationMonth_Year { get; set; }
+        public string cardCVV { get; set; }
+        public string nameOnCard { get; set; }
         public string resellerBankBranchName { get; set; }
         public string resellerBankAccountNumber { get; set; }
         public string resellerBankName { get; set; }
