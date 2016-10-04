@@ -80,7 +80,8 @@ namespace NanofinAPI.Controllers
             refundConsumer(tempCons.User_ID, rejectProd.productValue);
 
             //deactive product from active
-
+            rejectProd.isActive = false;
+            rejectProd.Accepted = false;
             //notify user push Notification            
             var NC = new NotificationController();
 
