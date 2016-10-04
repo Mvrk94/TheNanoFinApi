@@ -53,6 +53,18 @@ namespace NanoFinAPI.Controllers
                 db.activeproductitems.Add(activeProdItem);
                 db.SaveChanges();
 
+               
+                //Add productProviderPayment-right now it is for 2 help 1: PP_ID 11         
+                productproviderpayment ppPaymentRec = new productproviderpayment();
+                ppPaymentRec.ProductProvider_ID = 11;
+                ppPaymentRec.ActiveProductItems_ID = activeProdItem.ActiveProductItems_ID;
+                ppPaymentRec.Description = "Payment to Product Provider";
+                ppPaymentRec.AmountToPay = activeProdItem.productValue;
+                ppPaymentRec.hasBeenPayed = false; //initially false
+                db.productproviderpayments.Add(ppPaymentRec);
+                db.SaveChanges();
+
+
                 //Update the 1 voucher table, 2 voucherTransaction table-not anymore and the 3 productRedemptionLog table
                 for (int i = 0; (i < vouchersList.Count) && (amountToDeduct > 0); i++)
                 {
@@ -106,9 +118,15 @@ namespace NanoFinAPI.Controllers
             return BadRequest("Insufficient voucher total");
         }//RedeemProduct method
 
+
+        
+
+
+
+
         //getactiveProductItem's unitType-string.
         [HttpGet]
-        public string getProductUnitType(int ProductID)
+        private string getProductUnitType(int ProductID)//called inside redeem method
         {
             insuranceproduct insProd = (from c in db.insuranceproducts where c.Product_ID == ProductID select c).SingleOrDefault();
             return insProd.unittype.UnitTypeDescription; 
@@ -116,7 +134,7 @@ namespace NanoFinAPI.Controllers
         }
 
         //method to return a legitimate End date based on: unitType, start date numUnits
-        public DateTime getEndDateForProduct(string productUnitType, DateTime startDate, int numUnits)
+        public DateTime getEndDateForProduct(string productUnitType, DateTime startDate, int numUnits)//called inside redeem method
         {
             DateTime dnow = DateTime.Now;
            
@@ -516,12 +534,59 @@ namespace NanoFinAPI.Controllers
 
         #endregion
 
+
+        #region scripts for: ProductProvider Payment, Update of Expired Products
+        //Pay the insurance provider for products that have been accepted:
+        [HttpPut]
+        public IHttpActionResult updateInsuranceProviderPaymentStatus(int ppID)
+        {
+            //list of what has not been paid to this productProvider:
+            List<productproviderpayment> paymentsNotMadeList = (from c in db.productproviderpayments where c.hasBeenPayed == false && c.ProductProvider_ID == ppID select c).ToList();
+            //Note isActive and Expiry are not too relevant here: should still pay if a product has expired.
+            //never be paid if a refund was made: ie purchase rejected.
+
+            foreach (productproviderpayment p in paymentsNotMadeList)
+            {
+                activeproductitem activeProdRelatedToPayment = (from a in db.activeproductitems where a.ActiveProductItems_ID == p.ActiveProductItems_ID select a).SingleOrDefault();
+                if (activeProdRelatedToPayment.Accepted == true)//this product purchase has gone through so the IM should get paid
+                {
+                    p.hasBeenPayed = true;
+                    db.Entry(p).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else //product purchase rejected: Refund so the IM won't get paid
+                {
+                    p.hasBeenPayed = false;
+                    db.Entry(p).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+            }
+
+            return StatusCode(HttpStatusCode.OK);
+        }
+
+        //Show list of payments to still make to this PP
+        [HttpGet]
+        public List<DTOproductproviderpayment> ppPaymentsToStillMake(int productProviderID)
+        {
+            List<DTOproductproviderpayment> toReturn = new List<DTOproductproviderpayment>();
+            List<productproviderpayment> list = (from l in db.productproviderpayments where l.ProductProvider_ID == productProviderID && l.hasBeenPayed == false select l).ToList();
+
+            foreach(productproviderpayment p in list)
+            {
+                toReturn.Add(new DTOproductproviderpayment(p));
+            }
+            return toReturn;
+        }
+
+
         //update the isActive based on Expiries
         [HttpPut]
-        public IHttpActionResult updateExpiredProductsStatus()
+        public IHttpActionResult updateExpiredProductsIsActiveStatus()
         {
             DateTime dateNow = DateTime.Now;
-            activeproductitem[] activProducts = (from c in db.activeproductitems where c.activeProductItemEndDate != null && (DateTime.Compare(c.activeProductItemEndDate.Value, dateNow) > 0) select c).ToArray();
+            activeproductitem[] activProducts = (from c in db.activeproductitems where c.activeProductItemEndDate != null && (DateTime.Compare(c.activeProductItemEndDate.Value, dateNow)<0) select c).ToArray(); //t1 < t2, endDate is earlier than Now <0
             List<DTOactiveproductitem> dtoActProds = new List<DTOactiveproductitem>();
             foreach (activeproductitem a in activProducts)
             {
@@ -543,8 +608,8 @@ namespace NanoFinAPI.Controllers
             return StatusCode(HttpStatusCode.OK);
         }
 
+        #endregion
 
-       
 
 
     }
