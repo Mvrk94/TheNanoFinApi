@@ -233,6 +233,9 @@
     <Compile Include="Models\consumer.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\consumerinfosummary.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\consumernumclaim.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
