@@ -149,6 +149,29 @@ namespace NanofinAPI.Models.DTOEnvironment
         }
 
 
+        public static consumerinfosummary updateEntity(consumerinfosummary entityObjct, DTOconsumerinfosummary dto)
+        {
+            if (entityObjct == null) entityObjct = new consumerinfosummary();
+
+            entityObjct.idConsumer = dto.idConsumer;
+            entityObjct.userFirstName = dto.userFirstName;
+            entityObjct.userLastName = dto.userLastName;
+            entityObjct.IDnumber = dto.IDnumber;
+            entityObjct.City = dto.City;
+            entityObjct.Province = dto.Province;
+            entityObjct.gender = dto.gender;
+            entityObjct.maritalStatus = dto.maritalStatus;
+            entityObjct.employmentStatus = dto.employmentStatus;
+            entityObjct.claimRate = dto.claimRate;
+            entityObjct.RiskCategory = dto.RiskCategory;
+            entityObjct.numUnprocessed = dto.numUnprocessed;
+            entityObjct.purchasedProducts = dto.purchasedProducts;
+            entityObjct.purchasedProductIDs = dto.purchasedProductIDs;
+
+            return entityObjct;
+        }
+
+
         public static consumernumclaim updateEntity(consumernumclaim entityObjct, DTOconsumernumclaim dto)
         {
             if (entityObjct == null) entityObjct = new consumernumclaim();
@@ -181,6 +204,8 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.OverallRiskValue = dto.OverallRiskValue;
             entityObjct.purchasedProducts = dto.purchasedProducts;
             entityObjct.numUnprocessed = dto.numUnprocessed;
+            entityObjct.consumerName = dto.consumerName;
+            entityObjct.purchasedProductIDs = dto.purchasedProductIDs;
 
             return entityObjct;
         }
@@ -920,10 +945,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new unprocessedapplication();
 
             entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
-            entityObjct.age = dto.age;
             entityObjct.Consumer_ID = dto.Consumer_ID;
-            entityObjct.gender = dto.gender;
-            entityObjct.maritalStatus = dto.maritalStatus;
             entityObjct.productName = dto.productName;
             entityObjct.numPurchases = dto.numPurchases;
             entityObjct.numClaims = dto.numClaims;
@@ -1039,7 +1061,6 @@ namespace NanofinAPI.Models.DTOEnvironment
 
             return entityObjct;
         }
-
 
     }
 }

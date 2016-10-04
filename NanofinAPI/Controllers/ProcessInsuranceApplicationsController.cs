@@ -48,5 +48,25 @@ namespace NanofinAPI.Controllers
             return true;
         }
 
+        [HttpGet]
+        public List<unprocessedapplication> getConsummerUnProccessedPurchases(int ConsumerID)
+        {
+            return (from c in db.unprocessedapplications where c.Consumer_ID == ConsumerID select c).ToList();
+        }
+
+        [HttpPost]
+        public Boolean ProcessSingleApplication(int activeProductID)
+        {
+            db.processSingleApplication(activeProductID);
+            return true;
+        }
+
+        [HttpGet]
+        public  List<consumerinfosummary> getUserInformation(int consumerID)
+        {
+            return db.consumerinfosummaries.Where(c => c.Consumer_ID == consumerID).ToList();
+        }
+
+
     }
 }
