@@ -116,7 +116,10 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             return input.Replace("\"", string.Empty);
         }
 
-        public string propertyUserAddress() { return userAddress; }
+        public string propertyUserAddress() {
+
+            return userAddress;
+        }
         public int propertyUserID() { return user_ID; }
 
 
