@@ -64,9 +64,9 @@ namespace NanofinAPI.Controllers
         }
 
         [HttpGet]
-        public  List<consumerinfosummary> getUserInformation(int consumerID)
+        public  List<consumerinfosummary> getUserInformation(int idConsumer)
         {
-            return db.consumerinfosummaries.Where(c => c.Consumer_ID == consumerID).ToList();
+            return db.consumerinfosummaries.Where(c => c.idConsumer == idConsumer).ToList();
         }
 
         [HttpGet]

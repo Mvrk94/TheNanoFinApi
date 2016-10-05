@@ -36,10 +36,10 @@ namespace NanofinAPI.Models
         public Nullable<System.DateTime> StartedSharingTime { get; set; }
         public Nullable<int> minutesAvailable { get; set; }
         public Nullable<int> LocationID { get; set; }
-        public string location { get; set; }
+        public string location1 { get; set; }
         public Nullable<bool> isLocationAvailable { get; set; }
     
-        public virtual location location1 { get; set; }
+        public virtual location location { get; set; }
         public virtual user user { get; set; }
     }
 }

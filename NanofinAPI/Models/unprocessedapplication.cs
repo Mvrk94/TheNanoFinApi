@@ -17,8 +17,7 @@ namespace NanofinAPI.Models
         public int ActiveProductItems_ID { get; set; }
         public int Consumer_ID { get; set; }
         public string productName { get; set; }
-        public long numPurchases { get; set; }
-        public Nullable<int> numClaims { get; set; }
-        public Nullable<decimal> claimRate { get; set; }
+        public string datum { get; set; }
+        public decimal productValue { get; set; }
     }
 }
