@@ -51,8 +51,10 @@ namespace NanofinAPI.Controllers
         }
 
         [HttpPost]
-        public List<unprocessedapplication> getConsummerUnProccessedPurchases(int ConsumerID)
+        public List<unprocessedapplication> getConsummerUnProccessedPurchases(int idConsumer)
         {
+            var ConsumerID = db.consumerriskvalues.Single(c => c.idConsumer == idConsumer).Consumer_ID;
+
             return (from c in db.unprocessedapplications where c.Consumer_ID == ConsumerID select c).ToList();
         }
 
@@ -60,6 +62,7 @@ namespace NanofinAPI.Controllers
         public Boolean ProcessSingleApplication(int activeProductID)
         {
             db.processSingleApplication(activeProductID);
+            db.UpdateConsumerRiskValues();
             return true;
         }
 
@@ -90,6 +93,7 @@ namespace NanofinAPI.Controllers
             message += prodIDToProdName(rejectProd.Product_ID);
             message += "; has been rejected. Your Account has been refunded with R";
             message += rejectProd.productValue.ToString() + ".";
+            db.UpdateConsumerRiskValues();
             NC.SendSMS(tempUser.userContactNumber, message);
         }
 
@@ -99,17 +103,17 @@ namespace NanofinAPI.Controllers
             return tmp.productName;
         }
 
-        private void refundConsumer(int userID, decimal BulkVoucherAmount)
+        private void refundConsumer(int userID, decimal voucherAmout)
         {
             voucher newVoucher = new voucher();
             newVoucher.User_ID = userID;
-            newVoucher.voucherValue = BulkVoucherAmount;
+            newVoucher.voucherValue = voucherAmout;
             newVoucher.VoucherType_ID = 2;
             newVoucher.voucherCreationDate = DateTime.Now;
             db.vouchers.Add(newVoucher);
             db.SaveChanges();
 
-            addVoucherTransaction(newVoucher.Voucher_ID, newVoucher.Voucher_ID, userID, 1, BulkVoucherAmount, 41);
+            addVoucherTransaction(newVoucher.Voucher_ID, newVoucher.Voucher_ID, userID, 1, voucherAmout, 41);
         }
 
         private void addVoucherTransaction(int newVoucherID, int voucherID, int receiverID, int senderID, decimal Amount, int transactionTypeID)
