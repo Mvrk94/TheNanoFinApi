@@ -12,18 +12,13 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class claimuploaddocument
+    public partial class unprocessedapplication
     {
-        public int claimUploadDocument_ID { get; set; }
-        public int User_ID { get; set; }
         public int ActiveProductItems_ID { get; set; }
-        public Nullable<int> document_ID { get; set; }
-        public string claimUploadDocumentPath { get; set; }
-        public Nullable<int> Claim_ID { get; set; }
-    
-        public virtual activeproductitem activeproductitem { get; set; }
-        public virtual claim claim { get; set; }
-        public virtual user user { get; set; }
-        public virtual documentspecification documentspecification { get; set; }
+        public int Consumer_ID { get; set; }
+        public string productName { get; set; }
+        public long numPurchases { get; set; }
+        public Nullable<int> numClaims { get; set; }
+        public Nullable<decimal> claimRate { get; set; }
     }
 }

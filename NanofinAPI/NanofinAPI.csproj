@@ -44,10 +44,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BCrypt.Net, Version=0.1.4141.31969, Culture=neutral, PublicKeyToken=f3bc8f8c31beeb49, processorArchitecture=MSIL">
-      <HintPath>..\packages\BCrypt.Net.0.1.0\lib\net35\BCrypt.Net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -67,19 +63,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\MySql.Data.dll</HintPath>
+      <HintPath>References\EFdll6.9.8\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF5, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\MySql.Data.Entity.EF5.dll</HintPath>
+      <HintPath>References\EFdll6.9.8\MySql.Data.Entity.EF5.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>References\EFdll6.9.8\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\MySql.Web.dll</HintPath>
+      <HintPath>References\EFdll6.9.8\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.4.0\lib\net40\Swashbuckle.Core.dll</HintPath>
@@ -172,7 +168,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadFiles\" />
-    <Folder Include="Views\BCTest\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -208,15 +203,16 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\BCTestController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\ConsumerWalletHandlerController.cs" />
+    <Compile Include="Controllers\ContactListController.cs" />
     <Compile Include="Controllers\DataGeneratorController.cs" />
     <Compile Include="Controllers\ExtremeReportsController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsuranceManagerHandlerController.cs" />
-    <Compile Include="Controllers\signupController.cs" />
+    <Compile Include="Controllers\ProcessInsuranceApplicationsController.cs" />
+    <Compile Include="Controllers\ResellerController.cs" />
     <Compile Include="Models\activeproductitem.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -238,6 +234,18 @@
     <Compile Include="Models\consumer.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\consumerinfosummary.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\consumernumclaim.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\consumerriskvalue.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\contactlist.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\currentmonthdailysale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -250,7 +258,10 @@
     <Compile Include="Models\demographicconsumerproductlocationsaleslastmonth.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\document.cs">
+    <Compile Include="Models\demographicriskvalue.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\documentspecification.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DTOEnvironment\nanofinEntities.cs" />
@@ -277,6 +288,9 @@
     <Compile Include="Models\DTOEnvironment\Reports.cs" />
     <Compile Include="Models\DTOEnvironment\reportsMaster.cs" />
     <Compile Include="Models\DTOEnvironment\ValidatorDTO.cs" />
+    <Compile Include="Models\individualconsumerprofilerrawdata.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\insuranceproduct.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -332,6 +346,9 @@
       <DependentUpon>nanofinEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\notificationlog.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\otpview.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\overallproductlocationsale.cs">
@@ -391,6 +408,9 @@
     <Compile Include="Models\resellersendvouchergenderspecific.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\risk_agegroup.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\saleslastmonth.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -404,6 +424,9 @@
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\unittype.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\unprocessedapplication.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">

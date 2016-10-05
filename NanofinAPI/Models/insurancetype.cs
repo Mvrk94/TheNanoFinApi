@@ -22,6 +22,7 @@ namespace NanofinAPI.Models
     
         public int InsuranceType_ID { get; set; }
         public string insuranctTypeDescription { get; set; }
+        public string RequirementsForPurchase { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<insuranceproduct> insuranceproducts { get; set; }

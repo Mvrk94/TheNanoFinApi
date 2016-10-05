@@ -47,9 +47,23 @@ namespace NanoFinAPI.Controllers
             {
                 //Add activeProductItem to db table
                 var consumerID = (from c in db.consumers where c.User_ID == userID select c.Consumer_ID).FirstOrDefault();
-                activeproductitem activeProdItem = createActiveProductItem(consumerID, productID, "", true, prodTotalPrice, numberUnits, startdate);
+                string prodUnitType = getProductUnitType(productID);//get the string eg 'per day'
+                DateTime endDate = getEndDateForProduct(prodUnitType, startdate, numberUnits); //calculate the end date
+                activeproductitem activeProdItem = createActiveProductItem(consumerID, productID, "", true, prodTotalPrice, numberUnits, startdate,endDate);
                 db.activeproductitems.Add(activeProdItem);
                 db.SaveChanges();
+
+               
+                //Add productProviderPayment-right now it is for 2 help 1: PP_ID 11         
+                productproviderpayment ppPaymentRec = new productproviderpayment();
+                ppPaymentRec.ProductProvider_ID = 11;
+                ppPaymentRec.ActiveProductItems_ID = activeProdItem.ActiveProductItems_ID;
+                ppPaymentRec.Description = "Payment to Product Provider";
+                ppPaymentRec.AmountToPay = activeProdItem.productValue;
+                ppPaymentRec.hasBeenPayed = false; //initially false
+                db.productproviderpayments.Add(ppPaymentRec);
+                db.SaveChanges();
+
 
                 //Update the 1 voucher table, 2 voucherTransaction table-not anymore and the 3 productRedemptionLog table
                 for (int i = 0; (i < vouchersList.Count) && (amountToDeduct > 0); i++)
@@ -99,10 +113,63 @@ namespace NanoFinAPI.Controllers
                 consumerCtrl = await consumerCtrl.init();
                 await consumerCtrl.redeemVoucher(productName, Decimal.ToInt32(prodTotalPrice));
 
-                return StatusCode(HttpStatusCode.OK);
+                return Content(HttpStatusCode.OK,activeProdItem.ActiveProductItems_ID);
             }
             return BadRequest("Insufficient voucher total");
         }//RedeemProduct method
+
+
+        
+
+
+
+
+        //getactiveProductItem's unitType-string.
+        [HttpGet]
+        private string getProductUnitType(int ProductID)//called inside redeem method
+        {
+            insuranceproduct insProd = (from c in db.insuranceproducts where c.Product_ID == ProductID select c).SingleOrDefault();
+            return insProd.unittype.UnitTypeDescription; 
+           
+        }
+
+        //method to return a legitimate End date based on: unitType, start date numUnits
+        public DateTime getEndDateForProduct(string productUnitType, DateTime startDate, int numUnits)//called inside redeem method
+        {
+            DateTime dnow = DateTime.Now;
+           
+            //set the time of startdate to the current time as it is set to 00:00:00 by default : need time for endDate.
+            DateTime newStartDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, dnow.Hour, dnow.Minute, dnow.Second);
+
+            DateTime endDate = new DateTime();
+            switch (productUnitType)
+            {
+                
+                case "per min":
+                    endDate = newStartDate.AddMinutes(numUnits);
+                    break;
+                case "per hour":
+                    endDate = newStartDate.AddHours(numUnits);
+                    break;
+                case "per day":
+                    endDate = newStartDate.AddDays(numUnits);
+                    break;
+                case "per week":
+                    endDate = newStartDate.AddDays(numUnits * 7);
+                    break;
+                case "per month":
+                    endDate = newStartDate.AddMonths(numUnits);
+                    break;
+                case "per year":
+                    endDate = newStartDate.AddYears(numUnits);
+                    break;
+                default:
+                    endDate = newStartDate;
+                    break;
+            }
+            return endDate;
+        }
+
 
         public async Task<string> prodIDToProdName(int productID)
         {
@@ -145,7 +212,7 @@ namespace NanoFinAPI.Controllers
             return vouchTotValues;
         }
 
-        private activeproductitem createActiveProductItem(int ConsumerID, int ProductID, string policyNum, bool isActive, decimal productValue, int duration, DateTime startDate)
+        private activeproductitem createActiveProductItem(int ConsumerID, int ProductID, string policyNum, bool isActive, decimal productValue, int duration, DateTime startDate, DateTime endDate)
         {
             activeproductitem activeProdItem = new activeproductitem();
             activeProdItem.Consumer_ID = ConsumerID;
@@ -155,9 +222,11 @@ namespace NanoFinAPI.Controllers
             activeProdItem.productValue = productValue;
             activeProdItem.duration = duration;
             activeProdItem.activeProductItemStartDate = startDate;
-
+            activeProdItem.activeProductItemEndDate = endDate;
             return activeProdItem;
         }
+
+        
 
         private void addProductRedemptionLog(int activeProductItemID, int voucherID, decimal transactionAmount)
         {
@@ -462,6 +531,82 @@ namespace NanoFinAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
+        #endregion
+
+
+        #region scripts for: ProductProvider Payment, Update of Expired Products
+        //Pay the insurance provider for products that have been accepted:
+        [HttpPut]
+        public IHttpActionResult updateInsuranceProviderPaymentStatus(int ppID)
+        {
+            //list of what has not been paid to this productProvider:
+            List<productproviderpayment> paymentsNotMadeList = (from c in db.productproviderpayments where c.hasBeenPayed == false && c.ProductProvider_ID == ppID select c).ToList();
+            //Note isActive and Expiry are not too relevant here: should still pay if a product has expired.
+            //never be paid if a refund was made: ie purchase rejected.
+
+            foreach (productproviderpayment p in paymentsNotMadeList)
+            {
+                activeproductitem activeProdRelatedToPayment = (from a in db.activeproductitems where a.ActiveProductItems_ID == p.ActiveProductItems_ID select a).SingleOrDefault();
+                if (activeProdRelatedToPayment.Accepted == true)//this product purchase has gone through so the IM should get paid
+                {
+                    p.hasBeenPayed = true;
+                    db.Entry(p).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else //product purchase rejected: Refund so the IM won't get paid
+                {
+                    p.hasBeenPayed = false;
+                    db.Entry(p).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+            }
+
+            return StatusCode(HttpStatusCode.OK);
+        }
+
+        //Show list of payments to still make to this PP
+        [HttpGet]
+        public List<DTOproductproviderpayment> ppPaymentsToStillMake(int productProviderID)
+        {
+            List<DTOproductproviderpayment> toReturn = new List<DTOproductproviderpayment>();
+            List<productproviderpayment> list = (from l in db.productproviderpayments where l.ProductProvider_ID == productProviderID && l.hasBeenPayed == false select l).ToList();
+
+            foreach(productproviderpayment p in list)
+            {
+                toReturn.Add(new DTOproductproviderpayment(p));
+            }
+            return toReturn;
+        }
+
+
+        //update the isActive based on Expiries
+        [HttpPut]
+        public IHttpActionResult updateExpiredProductsIsActiveStatus()
+        {
+            DateTime dateNow = DateTime.Now;
+            activeproductitem[] activProducts = (from c in db.activeproductitems where c.activeProductItemEndDate != null && (DateTime.Compare(c.activeProductItemEndDate.Value, dateNow)<0) select c).ToArray(); //t1 < t2, endDate is earlier than Now <0
+            List<DTOactiveproductitem> dtoActProds = new List<DTOactiveproductitem>();
+            foreach (activeproductitem a in activProducts)
+            {
+                dtoActProds.Add(new DTOactiveproductitem(a)); //copy over
+            }
+
+            foreach (DTOactiveproductitem d in dtoActProds)
+            {
+                d.isActive = false;//set isactive to false
+            }
+
+            for(int i = 0;i<activProducts.Length;i++)
+            {
+                activProducts[i] = EntityMapper.updateEntity(activProducts[i], dtoActProds[i]);
+                db.Entry(activProducts[i]).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return StatusCode(HttpStatusCode.OK);
+        }
 
         #endregion
 

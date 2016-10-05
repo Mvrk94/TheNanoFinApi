@@ -12,25 +12,20 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class claim
+    public partial class risk_agegroup
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public claim()
+        public risk_agegroup()
         {
-            this.claimuploaddocuments = new HashSet<claimuploaddocument>();
+            this.consumers = new HashSet<consumer>();
         }
     
-        public int Claim_ID { get; set; }
-        public Nullable<int> Consumer_ID { get; set; }
-        public Nullable<int> ActiveProductItems_ID { get; set; }
-        public string capturedClaimFormDataJson { get; set; }
-        public Nullable<System.DateTime> claimDate { get; set; }
-        public string claimStatus { get; set; }
-        public string claimPaymentFinalised { get; set; }
+        public int ageGroup_ID { get; set; }
+        public string description { get; set; }
+        public Nullable<int> lowest { get; set; }
+        public Nullable<int> highest { get; set; }
     
-        public virtual activeproductitem activeproductitem { get; set; }
-        public virtual consumer consumer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<claimuploaddocument> claimuploaddocuments { get; set; }
+        public virtual ICollection<consumer> consumers { get; set; }
     }
 }

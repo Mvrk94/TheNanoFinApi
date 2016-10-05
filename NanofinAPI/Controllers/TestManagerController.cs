@@ -223,48 +223,7 @@ namespace NanoFinAPI_6_07.Controllers.testManager
             await db.SaveChangesAsync();
             return StatusCode(HttpStatusCode.NoContent);
         }
-        // POST: api/testManager
-        [HttpPost]
-        [ResponseType(typeof(DTOdocument))]
-        public async Task<DTOdocument> Postdocument(DTOdocument newDTO)
-        {
-
-            document newProd = EntityMapper.updateEntity(null, newDTO);
-            db.documents.Add(newProd);
-            await db.SaveChangesAsync();
-
-            return newDTO;
-        }
-
-
-        [HttpGet]
-        // GET: api/testManager
-        public List<DTOdocument> Getdocument()
-        {
-            List<DTOdocument> toReturn = new List<DTOdocument>();
-            List<document> list = (from c in db.documents select c).ToList();
-
-            foreach (document p in list)
-            {
-                toReturn.Add(new DTOdocument(p));
-            }
-
-            return toReturn;
-        }
-
-
-        // PUT: api/document/5
-        [HttpPut]
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putdocument(int ID, DTOdocument editedDTO)
-        {
-            document toUpdate = db.documents.Find(ID);
-            toUpdate = EntityMapper.updateEntity(toUpdate, editedDTO);
-            db.Entry(toUpdate).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-        // POST: api/testManager
+        
         [HttpPost]
         [ResponseType(typeof(DTOinsuranceproduct))]
         public async Task<DTOinsuranceproduct> Postinsuranceproduct(DTOinsuranceproduct newDTO)

@@ -19,9 +19,11 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<productTarget> TargetProgrees(int productProvider, int numMonths)
         {
+
             var toreturn = new List<productTarget>();
             var currentDate = DateTime.Now.AddMonths(numMonths*-1);
-            var salesPerProduct = (from c  in db.saleslastmonths where c.datum == "2016-08" select c).ToList() ;
+            var datum = "2016-" + numMonths.ToString("00");
+            var salesPerProduct = (from c  in db.saleslastmonths where c.datum == datum select c).ToList() ;
             
 
             foreach (var  p in salesPerProduct)
@@ -174,8 +176,8 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<monthlylocationsale> getCurrentMonthLocationProductSalesDistribution(int locationID)
         {
-            var lowerDate = new DateTime(2016, 08, 1);
-            var upperDate = new DateTime(2016, 09, 01);
+            var lowerDate = new DateTime(2016, 09, 1);
+            var upperDate = new DateTime(2016, 09, 30);
             var toreturn = (from c in db.monthlylocationsales where c.datum > lowerDate where c.transactionLocation == locationID  && c.datum < upperDate  orderby c.sales descending select c).ToList();
             
             return toreturn;

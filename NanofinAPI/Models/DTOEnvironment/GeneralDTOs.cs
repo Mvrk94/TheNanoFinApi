@@ -6,7 +6,6 @@ using NanofinAPI.Models;
 
 namespace NanofinAPI.Models.DTOEnvironment
 {
-
     public class DTOactiveproductitem
     {
         public int ActiveProductItems_ID { get; set; }
@@ -14,6 +13,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public int Product_ID { get; set; }
         public string activeProductItemPolicyNum { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public Nullable<bool> Accepted { get; set; }
         public decimal productValue { get; set; }
         public int duration { get; set; }
         public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
@@ -30,6 +30,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             Product_ID = entityObjct.Product_ID;
             activeProductItemPolicyNum = entityObjct.activeProductItemPolicyNum;
             isActive = entityObjct.isActive;
+            Accepted = entityObjct.Accepted;
             productValue = entityObjct.productValue;
             duration = entityObjct.duration;
             activeProductItemStartDate = entityObjct.activeProductItemStartDate;
@@ -40,19 +41,121 @@ namespace NanofinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOactiveproductitemswithdetail
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public int User_ID { get; set; }
+        public int Consumer_ID { get; set; }
+        public int Product_ID { get; set; }
+        public string activeProductItemPolicyNum { get; set; }
+        public Nullable<bool> isActive { get; set; }
+        public Nullable<bool> Accepted { get; set; }
+        public decimal productValue { get; set; }
+        public int duration { get; set; }
+        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
+        public Nullable<System.DateTime> activeProductItemEndDate { get; set; }
+        public int ProductProvider_ID { get; set; }
+        public Nullable<int> ProductType_ID { get; set; }
+        public string productName { get; set; }
+        public string productDescription { get; set; }
+        public string productPolicyDocPath { get; set; }
+        public Nullable<bool> isAvailableForPurchase { get; set; }
+        public int InsuranceType_ID { get; set; }
+        public Nullable<decimal> ipCoverAmount { get; set; }
+        public Nullable<int> ipUnitType { get; set; }
+        public string UnitTypeDescription { get; set; }
+        public Nullable<decimal> ipUnitCost { get; set; }
+        public Nullable<System.DateTime> claimTimeframe { get; set; }
+        public string claimContactNo { get; set; }
+        public Nullable<int> claimtemplate_ID { get; set; }
+
+        public DTOactiveproductitemswithdetail() { }
+
+        public DTOactiveproductitemswithdetail(activeproductitemswithdetail entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            User_ID = entityObjct.User_ID;
+            Consumer_ID = entityObjct.Consumer_ID;
+            Product_ID = entityObjct.Product_ID;
+            activeProductItemPolicyNum = entityObjct.activeProductItemPolicyNum;
+            isActive = entityObjct.isActive;
+            Accepted = entityObjct.Accepted;
+            productValue = entityObjct.productValue;
+            duration = entityObjct.duration;
+            activeProductItemStartDate = entityObjct.activeProductItemStartDate;
+            activeProductItemEndDate = entityObjct.activeProductItemEndDate;
+            ProductProvider_ID = entityObjct.ProductProvider_ID;
+            ProductType_ID = entityObjct.ProductType_ID;
+            productName = entityObjct.productName;
+            productDescription = entityObjct.productDescription;
+            productPolicyDocPath = entityObjct.productPolicyDocPath;
+            isAvailableForPurchase = entityObjct.isAvailableForPurchase;
+            InsuranceType_ID = entityObjct.InsuranceType_ID;
+            ipCoverAmount = entityObjct.ipCoverAmount;
+            ipUnitType = entityObjct.ipUnitType;
+            UnitTypeDescription = entityObjct.UnitTypeDescription;
+            ipUnitCost = entityObjct.ipUnitCost;
+            claimTimeframe = entityObjct.claimTimeframe;
+            claimContactNo = entityObjct.claimContactNo;
+            claimtemplate_ID = entityObjct.claimtemplate_ID;
+        }
+    }
+
+
+    public class DTOchrisviewconsumeractiveproduct
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
+        public int Consumer_ID { get; set; }
+        public int Product_ID { get; set; }
+        public int duration { get; set; }
+        public decimal productValue { get; set; }
+        public string productName { get; set; }
+        public string productDescription { get; set; }
+        public int InsuranceType_ID { get; set; }
+        public Nullable<decimal> ipCoverAmount { get; set; }
+        public string UnitTypeDescription { get; set; }
+
+        public DTOchrisviewconsumeractiveproduct() { }
+
+        public DTOchrisviewconsumeractiveproduct(chrisviewconsumeractiveproduct entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            activeProductItemStartDate = entityObjct.activeProductItemStartDate;
+            Consumer_ID = entityObjct.Consumer_ID;
+            Product_ID = entityObjct.Product_ID;
+            duration = entityObjct.duration;
+            productValue = entityObjct.productValue;
+            productName = entityObjct.productName;
+            productDescription = entityObjct.productDescription;
+            InsuranceType_ID = entityObjct.InsuranceType_ID;
+            ipCoverAmount = entityObjct.ipCoverAmount;
+            UnitTypeDescription = entityObjct.UnitTypeDescription;
+        }
+    }
+
+
     public class DTOclaim
     {
         public int Claim_ID { get; set; }
+        public Nullable<int> Consumer_ID { get; set; }
         public Nullable<int> ActiveProductItems_ID { get; set; }
         public string capturedClaimFormDataJson { get; set; }
+        public Nullable<System.DateTime> claimDate { get; set; }
+        public string claimStatus { get; set; }
+        public string claimPaymentFinalised { get; set; }
 
         public DTOclaim() { }
 
         public DTOclaim(claim entityObjct)
         {
             Claim_ID = entityObjct.Claim_ID;
+            Consumer_ID = entityObjct.Consumer_ID;
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
             capturedClaimFormDataJson = entityObjct.capturedClaimFormDataJson;
+            claimDate = entityObjct.claimDate;
+            claimStatus = entityObjct.claimStatus;
+            claimPaymentFinalised = entityObjct.claimPaymentFinalised;
         }
     }
 
@@ -113,6 +216,8 @@ namespace NanofinAPI.Models.DTOEnvironment
         public Nullable<decimal> totalMonthlyExpenses { get; set; }
         public Nullable<int> Location_ID { get; set; }
         public Nullable<int> numDependant { get; set; }
+        public Nullable<int> numClaims { get; set; }
+        public Nullable<int> ageGroup_ID { get; set; }
 
         public DTOconsumer() { }
 
@@ -132,11 +237,284 @@ namespace NanofinAPI.Models.DTOEnvironment
             totalMonthlyExpenses = entityObjct.totalMonthlyExpenses;
             Location_ID = entityObjct.Location_ID;
             numDependant = entityObjct.numDependant;
+            numClaims = entityObjct.numClaims;
+            ageGroup_ID = entityObjct.ageGroup_ID;
         }
     }
 
 
-    public class DTOdocument
+    public class DTOconsumerinfosummary
+    {
+        public int idConsumer { get; set; }
+        public int Consumer_ID { get; set; }
+        public string userFirstName { get; set; }
+        public string userLastName { get; set; }
+        public string IDnumber { get; set; }
+        public string City { get; set; }
+        public string Province { get; set; }
+        public string gender { get; set; }
+        public string maritalStatus { get; set; }
+        public string employmentStatus { get; set; }
+        public Nullable<decimal> claimRate { get; set; }
+        public string RiskCategory { get; set; }
+        public Nullable<int> numUnprocessed { get; set; }
+        public string purchasedProducts { get; set; }
+        public string purchasedProductIDs { get; set; }
+
+        public DTOconsumerinfosummary() { }
+
+        public DTOconsumerinfosummary(consumerinfosummary entityObjct)
+        {
+            idConsumer = entityObjct.idConsumer;
+            Consumer_ID = entityObjct.Consumer_ID;
+            userFirstName = entityObjct.userFirstName;
+            userLastName = entityObjct.userLastName;
+            IDnumber = entityObjct.IDnumber;
+            City = entityObjct.City;
+            Province = entityObjct.Province;
+            gender = entityObjct.gender;
+            maritalStatus = entityObjct.maritalStatus;
+            employmentStatus = entityObjct.employmentStatus;
+            claimRate = entityObjct.claimRate;
+            RiskCategory = entityObjct.RiskCategory;
+            numUnprocessed = entityObjct.numUnprocessed;
+            purchasedProducts = entityObjct.purchasedProducts;
+            purchasedProductIDs = entityObjct.purchasedProductIDs;
+        }
+    }
+
+
+    public class DTOconsumernumclaim
+    {
+        public int Consumer_ID { get; set; }
+        public long numClaims { get; set; }
+
+        public DTOconsumernumclaim() { }
+
+        public DTOconsumernumclaim(consumernumclaim entityObjct)
+        {
+            Consumer_ID = entityObjct.Consumer_ID;
+            numClaims = entityObjct.numClaims;
+        }
+    }
+
+
+    public class DTOconsumerriskvalue
+    {
+        public int idConsumer { get; set; }
+        public Nullable<int> Consumer_ID { get; set; }
+        public Nullable<int> age { get; set; }
+        public string ageGroup { get; set; }
+        public Nullable<int> ageRiskValue { get; set; }
+        public string gender { get; set; }
+        public Nullable<int> genderRiskValue { get; set; }
+        public string maritalStatus { get; set; }
+        public Nullable<int> maritalStatusRiskValue { get; set; }
+        public string employmentStatus { get; set; }
+        public Nullable<int> employmentStatusRiskValue { get; set; }
+        public Nullable<decimal> claimRate { get; set; }
+        public Nullable<int> claimRiskValue { get; set; }
+        public string RiskCategory { get; set; }
+        public Nullable<int> OverallRiskValue { get; set; }
+        public string purchasedProducts { get; set; }
+        public Nullable<int> numUnprocessed { get; set; }
+        public string consumerName { get; set; }
+        public string purchasedProductIDs { get; set; }
+
+        public DTOconsumerriskvalue() { }
+
+        public DTOconsumerriskvalue(consumerriskvalue entityObjct)
+        {
+            idConsumer = entityObjct.idConsumer;
+            Consumer_ID = entityObjct.Consumer_ID;
+            age = entityObjct.age;
+            ageGroup = entityObjct.ageGroup;
+            ageRiskValue = entityObjct.ageRiskValue;
+            gender = entityObjct.gender;
+            genderRiskValue = entityObjct.genderRiskValue;
+            maritalStatus = entityObjct.maritalStatus;
+            maritalStatusRiskValue = entityObjct.maritalStatusRiskValue;
+            employmentStatus = entityObjct.employmentStatus;
+            employmentStatusRiskValue = entityObjct.employmentStatusRiskValue;
+            claimRate = entityObjct.claimRate;
+            claimRiskValue = entityObjct.claimRiskValue;
+            RiskCategory = entityObjct.RiskCategory;
+            OverallRiskValue = entityObjct.OverallRiskValue;
+            purchasedProducts = entityObjct.purchasedProducts;
+            numUnprocessed = entityObjct.numUnprocessed;
+            consumerName = entityObjct.consumerName;
+            purchasedProductIDs = entityObjct.purchasedProductIDs;
+        }
+    }
+
+
+    public class DTOcontactlist
+    {
+        public int idcontactlist { get; set; }
+        public Nullable<int> UserID { get; set; }
+        public Nullable<int> ContactsUserID { get; set; }
+
+        public DTOcontactlist() { }
+
+        public DTOcontactlist(contactlist entityObjct)
+        {
+            idcontactlist = entityObjct.idcontactlist;
+            UserID = entityObjct.UserID;
+            ContactsUserID = entityObjct.ContactsUserID;
+        }
+    }
+
+
+    public class DTOcurrentmonthdailysale
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOcurrentmonthdailysale() { }
+
+        public DTOcurrentmonthdailysale(currentmonthdailysale entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            activeProductItemStartDate = entityObjct.activeProductItemStartDate;
+            sales = entityObjct.sales;
+        }
+    }
+
+
+    public class DTOdemographicconsumerproductlocationlastmonthsale
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public string datum { get; set; }
+        public Nullable<int> transactionLocation { get; set; }
+        public long numConsumers { get; set; }
+        public string gender { get; set; }
+        public string maritalStatus { get; set; }
+        public int Product_ID { get; set; }
+        public long numMartialStatus { get; set; }
+        public string employmentStatus { get; set; }
+        public long numEmploymentStatus { get; set; }
+        public Nullable<decimal> netIncome { get; set; }
+        public Nullable<decimal> NumDependants { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOdemographicconsumerproductlocationlastmonthsale() { }
+
+        public DTOdemographicconsumerproductlocationlastmonthsale(demographicconsumerproductlocationlastmonthsale entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            datum = entityObjct.datum;
+            transactionLocation = entityObjct.transactionLocation;
+            numConsumers = entityObjct.numConsumers;
+            gender = entityObjct.gender;
+            maritalStatus = entityObjct.maritalStatus;
+            Product_ID = entityObjct.Product_ID;
+            numMartialStatus = entityObjct.numMartialStatus;
+            employmentStatus = entityObjct.employmentStatus;
+            numEmploymentStatus = entityObjct.numEmploymentStatus;
+            netIncome = entityObjct.netIncome;
+            NumDependants = entityObjct.NumDependants;
+            sales = entityObjct.sales;
+        }
+    }
+
+
+    public class DTOdemographicconsumerproductlocationmonthlysale
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public string datum { get; set; }
+        public Nullable<int> transactionLocation { get; set; }
+        public long numConsumers { get; set; }
+        public string gender { get; set; }
+        public string maritalStatus { get; set; }
+        public int Product_ID { get; set; }
+        public long numMartialStatus { get; set; }
+        public string employmentStatus { get; set; }
+        public long numEmploymentStatus { get; set; }
+        public Nullable<decimal> netIncome { get; set; }
+        public Nullable<decimal> NumDependants { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOdemographicconsumerproductlocationmonthlysale() { }
+
+        public DTOdemographicconsumerproductlocationmonthlysale(demographicconsumerproductlocationmonthlysale entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            datum = entityObjct.datum;
+            transactionLocation = entityObjct.transactionLocation;
+            numConsumers = entityObjct.numConsumers;
+            gender = entityObjct.gender;
+            maritalStatus = entityObjct.maritalStatus;
+            Product_ID = entityObjct.Product_ID;
+            numMartialStatus = entityObjct.numMartialStatus;
+            employmentStatus = entityObjct.employmentStatus;
+            numEmploymentStatus = entityObjct.numEmploymentStatus;
+            netIncome = entityObjct.netIncome;
+            NumDependants = entityObjct.NumDependants;
+            sales = entityObjct.sales;
+        }
+    }
+
+
+    public class DTOdemographicconsumerproductlocationsaleslastmonth
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public string datum { get; set; }
+        public Nullable<int> transactionLocation { get; set; }
+        public long numConsumers { get; set; }
+        public string gender { get; set; }
+        public string maritalStatus { get; set; }
+        public int Product_ID { get; set; }
+        public long numMartialStatus { get; set; }
+        public string employmentStatus { get; set; }
+        public long numEmploymentStatus { get; set; }
+        public Nullable<decimal> netIncome { get; set; }
+        public Nullable<decimal> NumDependants { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOdemographicconsumerproductlocationsaleslastmonth() { }
+
+        public DTOdemographicconsumerproductlocationsaleslastmonth(demographicconsumerproductlocationsaleslastmonth entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            datum = entityObjct.datum;
+            transactionLocation = entityObjct.transactionLocation;
+            numConsumers = entityObjct.numConsumers;
+            gender = entityObjct.gender;
+            maritalStatus = entityObjct.maritalStatus;
+            Product_ID = entityObjct.Product_ID;
+            numMartialStatus = entityObjct.numMartialStatus;
+            employmentStatus = entityObjct.employmentStatus;
+            numEmploymentStatus = entityObjct.numEmploymentStatus;
+            netIncome = entityObjct.netIncome;
+            NumDependants = entityObjct.NumDependants;
+            sales = entityObjct.sales;
+        }
+    }
+
+
+    public class DTOdemographicriskvalue
+    {
+        public int DRV_ID { get; set; }
+        public string demoType { get; set; }
+        public Nullable<decimal> value { get; set; }
+        public Nullable<int> riskvalue { get; set; }
+        public Nullable<decimal> riskvalues { get; set; }
+
+        public DTOdemographicriskvalue() { }
+
+        public DTOdemographicriskvalue(demographicriskvalue entityObjct)
+        {
+            DRV_ID = entityObjct.DRV_ID;
+            demoType = entityObjct.demoType;
+            value = entityObjct.value;
+            riskvalue = entityObjct.riskvalue;
+            riskvalues = entityObjct.riskvalues;
+        }
+    }
+
+
+    public class DTOdocumentspecification
     {
         public int document_ID { get; set; }
         public int Product_ID { get; set; }
@@ -145,9 +523,9 @@ namespace NanofinAPI.Models.DTOEnvironment
         public string docPreferredFormat { get; set; }
         public string docPreparationRequired { get; set; }
 
-        public DTOdocument() { }
+        public DTOdocumentspecification() { }
 
-        public DTOdocument(document entityObjct)
+        public DTOdocumentspecification(documentspecification entityObjct)
         {
             document_ID = entityObjct.document_ID;
             Product_ID = entityObjct.Product_ID;
@@ -155,6 +533,35 @@ namespace NanofinAPI.Models.DTOEnvironment
             documentDescription = entityObjct.documentDescription;
             docPreferredFormat = entityObjct.docPreferredFormat;
             docPreparationRequired = entityObjct.docPreparationRequired;
+        }
+    }
+
+
+    public class DTOindividualconsumerprofilerrawdata
+    {
+        public int Consumer_ID { get; set; }
+        public int User_ID { get; set; }
+        public string gender { get; set; }
+        public string maritalStatus { get; set; }
+        public string employmentStatus { get; set; }
+        public long numPurchases { get; set; }
+        public Nullable<int> age { get; set; }
+        public Nullable<int> numClaims { get; set; }
+        public Nullable<decimal> ratio { get; set; }
+
+        public DTOindividualconsumerprofilerrawdata() { }
+
+        public DTOindividualconsumerprofilerrawdata(individualconsumerprofilerrawdata entityObjct)
+        {
+            Consumer_ID = entityObjct.Consumer_ID;
+            User_ID = entityObjct.User_ID;
+            gender = entityObjct.gender;
+            maritalStatus = entityObjct.maritalStatus;
+            employmentStatus = entityObjct.employmentStatus;
+            numPurchases = entityObjct.numPurchases;
+            age = entityObjct.age;
+            numClaims = entityObjct.numClaims;
+            ratio = entityObjct.ratio;
         }
     }
 
@@ -203,20 +610,22 @@ namespace NanofinAPI.Models.DTOEnvironment
     public class DTOinsuranceproducttypemonthlysale
     {
         public int ActiveProductItems_ID { get; set; }
-        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
-        public string datum { get; set; }
+        public Nullable<System.DateTime> monthDate { get; set; }
         public int InsuranceType_ID { get; set; }
-        public Nullable<decimal> monthSales { get; set; }
+        public string insuranctTypeDescription { get; set; }
+        public string datum { get; set; }
+        public Nullable<decimal> sales { get; set; }
 
         public DTOinsuranceproducttypemonthlysale() { }
 
         public DTOinsuranceproducttypemonthlysale(insuranceproducttypemonthlysale entityObjct)
         {
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
-            activeProductItemStartDate = entityObjct.monthDate;
-            datum = entityObjct.datum;
+            monthDate = entityObjct.monthDate;
             InsuranceType_ID = entityObjct.InsuranceType_ID;
-            monthSales = entityObjct.sales;
+            insuranctTypeDescription = entityObjct.insuranctTypeDescription;
+            datum = entityObjct.datum;
+            sales = entityObjct.sales;
         }
     }
 
@@ -225,6 +634,7 @@ namespace NanofinAPI.Models.DTOEnvironment
     {
         public int InsuranceType_ID { get; set; }
         public string insuranctTypeDescription { get; set; }
+        public string RequirementsForPurchase { get; set; }
 
         public DTOinsurancetype() { }
 
@@ -232,6 +642,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         {
             InsuranceType_ID = entityObjct.InsuranceType_ID;
             insuranctTypeDescription = entityObjct.insuranctTypeDescription;
+            RequirementsForPurchase = entityObjct.RequirementsForPurchase;
         }
     }
 
@@ -321,7 +732,33 @@ namespace NanofinAPI.Models.DTOEnvironment
             datum = entityObjct.datum;
             ProductProvider_ID = entityObjct.ProductProvider_ID;
             Product_ID = entityObjct.Product_ID;
-            
+            Location_ID = entityObjct.Location_ID;
+            Province = entityObjct.Province;
+            city = entityObjct.city;
+            LatLng = entityObjct.LatLng;
+            sales = entityObjct.sales;
+        }
+    }
+
+
+    public class DTOmonlthlocationsalessum
+    {
+        public Nullable<System.DateTime> purchaseDate { get; set; }
+        public string datum { get; set; }
+        public int ProductProvider_ID { get; set; }
+        public int Location_ID { get; set; }
+        public string Province { get; set; }
+        public string city { get; set; }
+        public string LatLng { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOmonlthlocationsalessum() { }
+
+        public DTOmonlthlocationsalessum(monlthlocationsalessum entityObjct)
+        {
+            purchaseDate = entityObjct.purchaseDate;
+            datum = entityObjct.datum;
+            ProductProvider_ID = entityObjct.ProductProvider_ID;
             Location_ID = entityObjct.Location_ID;
             Province = entityObjct.Province;
             city = entityObjct.city;
@@ -333,17 +770,21 @@ namespace NanofinAPI.Models.DTOEnvironment
 
     public class DTOmonthlylocationsale
     {
-        public string datum { get; set; }
+        public int ActiveProductItems_ID { get; set; }
+        public string dateM { get; set; }
+        public Nullable<System.DateTime> datum { get; set; }
         public int Product_ID { get; set; }
+        public string productName { get; set; }
         public Nullable<int> transactionLocation { get; set; }
         public Nullable<decimal> sales { get; set; }
-        public string productName { get; set; }
 
         public DTOmonthlylocationsale() { }
 
         public DTOmonthlylocationsale(monthlylocationsale entityObjct)
         {
-           // datum = entityObjct.datum;
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            dateM = entityObjct.dateM;
+            datum = entityObjct.datum;
             Product_ID = entityObjct.Product_ID;
             productName = entityObjct.productName;
             transactionLocation = entityObjct.transactionLocation;
@@ -358,7 +799,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public string datum { get; set; }
         public int ProductProvider_ID { get; set; }
         public int Product_ID { get; set; }
-        public string productName { get; set;}
+        public string productName { get; set; }
         public int Location_ID { get; set; }
         public string Province { get; set; }
         public string city { get; set; }
@@ -404,6 +845,40 @@ namespace NanofinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOmonthlyProvinceSales_Result
+    {
+
+        public DTOmonthlyProvinceSales_Result() { }
+
+        public DTOmonthlyProvinceSales_Result(monthlyProvinceSales_Result entityObjct)
+        {
+        }
+    }
+
+
+    public class DTOmonthlyprovincialproducttypedistribution
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public Nullable<System.DateTime> activeProductItemEndDate { get; set; }
+        public int InsuranceType_ID { get; set; }
+        public string Province { get; set; }
+        public string insuranctTypeDescription { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOmonthlyprovincialproducttypedistribution() { }
+
+        public DTOmonthlyprovincialproducttypedistribution(monthlyprovincialproducttypedistribution entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            activeProductItemEndDate = entityObjct.activeProductItemEndDate;
+            InsuranceType_ID = entityObjct.InsuranceType_ID;
+            Province = entityObjct.Province;
+            insuranctTypeDescription = entityObjct.insuranctTypeDescription;
+            sales = entityObjct.sales;
+        }
+    }
+
+
     public class DTOnanofinEntities
     {
 
@@ -430,6 +905,64 @@ namespace NanofinAPI.Models.DTOEnvironment
             notificationType = entityObjct.notificationType;
             notificationReceiver = entityObjct.notificationReceiver;
             notificationDateSent = entityObjct.notificationDateSent;
+        }
+    }
+
+
+    public class DTOotpview
+    {
+        public int User_ID { get; set; }
+        public string otpCode { get; set; }
+        public Nullable<int> otpRetryCount { get; set; }
+        public Nullable<System.DateTime> otpExpirationTime { get; set; }
+        public Nullable<System.DateTime> otpNextAllowedTime { get; set; }
+        public Nullable<System.DateTime> otpRecordCreated { get; set; }
+
+        public DTOotpview() { }
+
+        public DTOotpview(otpview entityObjct)
+        {
+            User_ID = entityObjct.User_ID;
+            otpCode = entityObjct.otpCode;
+            otpRetryCount = entityObjct.otpRetryCount;
+            otpExpirationTime = entityObjct.otpExpirationTime;
+            otpNextAllowedTime = entityObjct.otpNextAllowedTime;
+            otpRecordCreated = entityObjct.otpRecordCreated;
+        }
+    }
+
+
+    public class DTOoverallproductlocationsale
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public Nullable<int> transactionLocation { get; set; }
+        public long numConsumers { get; set; }
+        public string gender { get; set; }
+        public string maritalStatus { get; set; }
+        public int Product_ID { get; set; }
+        public long numMartialStatus { get; set; }
+        public string employmentStatus { get; set; }
+        public long numEmploymentStatus { get; set; }
+        public Nullable<decimal> netIncome { get; set; }
+        public Nullable<decimal> NumDependants { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOoverallproductlocationsale() { }
+
+        public DTOoverallproductlocationsale(overallproductlocationsale entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            transactionLocation = entityObjct.transactionLocation;
+            numConsumers = entityObjct.numConsumers;
+            gender = entityObjct.gender;
+            maritalStatus = entityObjct.maritalStatus;
+            Product_ID = entityObjct.Product_ID;
+            numMartialStatus = entityObjct.numMartialStatus;
+            employmentStatus = entityObjct.employmentStatus;
+            numEmploymentStatus = entityObjct.numEmploymentStatus;
+            netIncome = entityObjct.netIncome;
+            NumDependants = entityObjct.NumDependants;
+            sales = entityObjct.sales;
         }
     }
 
@@ -488,6 +1021,51 @@ namespace NanofinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOproductlocationmonthlysale
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public string date_format_activeProductItemStartDate___Y__b__ { get; set; }
+        public Nullable<int> transactionLocation { get; set; }
+        public string productName { get; set; }
+        public int Product_ID { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOproductlocationmonthlysale() { }
+
+        public DTOproductlocationmonthlysale(productlocationmonthlysale entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            date_format_activeProductItemStartDate___Y__b__ = entityObjct.date_format_activeProductItemStartDate___Y__b__;
+            transactionLocation = entityObjct.transactionLocation;
+            productName = entityObjct.productName;
+            Product_ID = entityObjct.Product_ID;
+            sales = entityObjct.sales;
+        }
+    }
+
+
+    public class DTOProductLocationSales_Result
+    {
+
+        public DTOProductLocationSales_Result() { }
+
+        public DTOProductLocationSales_Result(ProductLocationSales_Result entityObjct)
+        {
+        }
+    }
+
+
+    public class DTOproductPredictedSalesPerLocation_Result
+    {
+
+        public DTOproductPredictedSalesPerLocation_Result() { }
+
+        public DTOproductPredictedSalesPerLocation_Result(productPredictedSalesPerLocation_Result entityObjct)
+        {
+        }
+    }
+
+
     public class DTOproductprovider
     {
         public int ProductProvider_ID { get; set; }
@@ -496,6 +1074,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public string ppVATnumber { get; set; }
         public string ppFaxNumber { get; set; }
         public string ppAddress { get; set; }
+        public Nullable<int> lastAssignedPolicyNumber { get; set; }
 
         public DTOproductprovider() { }
 
@@ -507,6 +1086,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             ppVATnumber = entityObjct.ppVATnumber;
             ppFaxNumber = entityObjct.ppFaxNumber;
             ppAddress = entityObjct.ppAddress;
+            lastAssignedPolicyNumber = entityObjct.lastAssignedPolicyNumber;
         }
     }
 
@@ -530,6 +1110,25 @@ namespace NanofinAPI.Models.DTOEnvironment
             Description = entityObjct.Description;
             AmountToPay = entityObjct.AmountToPay;
             hasBeenPayed = entityObjct.hasBeenPayed;
+        }
+    }
+
+
+    public class DTOproductprovideryearlysale
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public int ProductProvider_ID { get; set; }
+        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
+        public Nullable<decimal> yearSales { get; set; }
+
+        public DTOproductprovideryearlysale() { }
+
+        public DTOproductprovideryearlysale(productprovideryearlysale entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            ProductProvider_ID = entityObjct.ProductProvider_ID;
+            activeProductItemStartDate = entityObjct.activeProductItemStartDate;
+            yearSales = entityObjct.yearSales;
         }
     }
 
@@ -572,6 +1171,25 @@ namespace NanofinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOproductswithpurchas
+    {
+        public int Product_ID { get; set; }
+        public string name { get; set; }
+        public int InsuranceType_ID { get; set; }
+        public string insuranctTypeDescription { get; set; }
+
+        public DTOproductswithpurchas() { }
+
+        public DTOproductswithpurchas(productswithpurchas entityObjct)
+        {
+            Product_ID = entityObjct.Product_ID;
+            name = entityObjct.name;
+            InsuranceType_ID = entityObjct.InsuranceType_ID;
+            insuranctTypeDescription = entityObjct.insuranctTypeDescription;
+        }
+    }
+
+
     public class DTOproducttype
     {
         public int ProductType_ID { get; set; }
@@ -587,11 +1205,61 @@ namespace NanofinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOprovincialinsurancetypesale
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public string datum { get; set; }
+        public int InsuranceType_ID { get; set; }
+        public string insuranctTypeDescription { get; set; }
+        public string Province { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOprovincialinsurancetypesale() { }
+
+        public DTOprovincialinsurancetypesale(provincialinsurancetypesale entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            datum = entityObjct.datum;
+            InsuranceType_ID = entityObjct.InsuranceType_ID;
+            insuranctTypeDescription = entityObjct.insuranctTypeDescription;
+            Province = entityObjct.Province;
+            sales = entityObjct.sales;
+        }
+    }
+
+
+    public class DTOprovincialproducttypedistributionlastmonth
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public Nullable<System.DateTime> activeProductItemEndDate { get; set; }
+        public int InsuranceType_ID { get; set; }
+        public string Province { get; set; }
+        public string insuranctTypeDescription { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOprovincialproducttypedistributionlastmonth() { }
+
+        public DTOprovincialproducttypedistributionlastmonth(provincialproducttypedistributionlastmonth entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            activeProductItemEndDate = entityObjct.activeProductItemEndDate;
+            InsuranceType_ID = entityObjct.InsuranceType_ID;
+            Province = entityObjct.Province;
+            insuranctTypeDescription = entityObjct.insuranctTypeDescription;
+            sales = entityObjct.sales;
+        }
+    }
+
+
     public class DTOreseller
     {
         public int Reseller_ID { get; set; }
         public int User_ID { get; set; }
         public Nullable<bool> resellerIsValidated { get; set; }
+        public string cardNumber { get; set; }
+        public string cardExpirationMonth_Year { get; set; }
+        public string cardCVV { get; set; }
+        public string nameOnCard { get; set; }
         public string resellerBankBranchName { get; set; }
         public string resellerBankAccountNumber { get; set; }
         public string resellerBankName { get; set; }
@@ -607,6 +1275,8 @@ namespace NanofinAPI.Models.DTOEnvironment
         public Nullable<System.DateTime> StartedSharingTime { get; set; }
         public Nullable<int> minutesAvailable { get; set; }
         public Nullable<int> LocationID { get; set; }
+        public string location { get; set; }
+        public Nullable<bool> isLocationAvailable { get; set; }
 
         public DTOreseller() { }
 
@@ -615,6 +1285,10 @@ namespace NanofinAPI.Models.DTOEnvironment
             Reseller_ID = entityObjct.Reseller_ID;
             User_ID = entityObjct.User_ID;
             resellerIsValidated = entityObjct.resellerIsValidated;
+            cardNumber = entityObjct.cardNumber;
+            cardExpirationMonth_Year = entityObjct.cardExpirationMonth_Year;
+            cardCVV = entityObjct.cardCVV;
+            nameOnCard = entityObjct.nameOnCard;
             resellerBankBranchName = entityObjct.resellerBankBranchName;
             resellerBankAccountNumber = entityObjct.resellerBankAccountNumber;
             resellerBankName = entityObjct.resellerBankName;
@@ -630,6 +1304,84 @@ namespace NanofinAPI.Models.DTOEnvironment
             StartedSharingTime = entityObjct.StartedSharingTime;
             minutesAvailable = entityObjct.minutesAvailable;
             LocationID = entityObjct.LocationID;
+            location = entityObjct.location;
+            isLocationAvailable = entityObjct.isLocationAvailable;
+        }
+    }
+
+
+    public class DTOresellersalespermonth
+    {
+        public int VoucherSentTo { get; set; }
+        public System.DateTime transactionDate { get; set; }
+        public int Sender_ID { get; set; }
+        public Nullable<decimal> sold { get; set; }
+
+        public DTOresellersalespermonth() { }
+
+        public DTOresellersalespermonth(resellersalespermonth entityObjct)
+        {
+            VoucherSentTo = entityObjct.VoucherSentTo;
+            transactionDate = entityObjct.transactionDate;
+            Sender_ID = entityObjct.Sender_ID;
+            sold = entityObjct.sold;
+        }
+    }
+
+
+    public class DTOresellersendmonthlysale
+    {
+        public int VoucherSentTo { get; set; }
+        public int Sender_ID { get; set; }
+        public string date_format_vouchertransaction_transactionDate___Y__b__ { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOresellersendmonthlysale() { }
+
+        public DTOresellersendmonthlysale(resellersendmonthlysale entityObjct)
+        {
+            VoucherSentTo = entityObjct.VoucherSentTo;
+            Sender_ID = entityObjct.Sender_ID;
+            date_format_vouchertransaction_transactionDate___Y__b__ = entityObjct.date_format_vouchertransaction_transactionDate___Y__b__;
+            sales = entityObjct.sales;
+        }
+    }
+
+
+    public class DTOresellersendvouchergenderspecific
+    {
+        public int VoucherSentTo { get; set; }
+        public string date_format_vouchertransaction_transactionDate___Y__b__ { get; set; }
+        public string gender { get; set; }
+        public Nullable<decimal> sales { get; set; }
+
+        public DTOresellersendvouchergenderspecific() { }
+
+        public DTOresellersendvouchergenderspecific(resellersendvouchergenderspecific entityObjct)
+        {
+            VoucherSentTo = entityObjct.VoucherSentTo;
+            date_format_vouchertransaction_transactionDate___Y__b__ = entityObjct.date_format_vouchertransaction_transactionDate___Y__b__;
+            gender = entityObjct.gender;
+            sales = entityObjct.sales;
+        }
+    }
+
+
+    public class DTOrisk_agegroup
+    {
+        public int ageGroup_ID { get; set; }
+        public string description { get; set; }
+        public Nullable<int> lowest { get; set; }
+        public Nullable<int> highest { get; set; }
+
+        public DTOrisk_agegroup() { }
+
+        public DTOrisk_agegroup(risk_agegroup entityObjct)
+        {
+            ageGroup_ID = entityObjct.ageGroup_ID;
+            description = entityObjct.description;
+            lowest = entityObjct.lowest;
+            highest = entityObjct.highest;
         }
     }
 
@@ -721,6 +1473,29 @@ namespace NanofinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOunprocessedapplication
+    {
+        public int ActiveProductItems_ID { get; set; }
+        public int Consumer_ID { get; set; }
+        public string productName { get; set; }
+        public long numPurchases { get; set; }
+        public Nullable<int> numClaims { get; set; }
+        public Nullable<decimal> claimRate { get; set; }
+
+        public DTOunprocessedapplication() { }
+
+        public DTOunprocessedapplication(unprocessedapplication entityObjct)
+        {
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            Consumer_ID = entityObjct.Consumer_ID;
+            productName = entityObjct.productName;
+            numPurchases = entityObjct.numPurchases;
+            numClaims = entityObjct.numClaims;
+            claimRate = entityObjct.claimRate;
+        }
+    }
+
+
     public class DTOuser
     {
         public int User_ID { get; set; }
@@ -739,6 +1514,11 @@ namespace NanofinAPI.Models.DTOEnvironment
         public Nullable<System.DateTime> timeStap { get; set; }
         public string resetPasswordKey { get; set; }
         public string blockchainAddress { get; set; }
+        public string otpCode { get; set; }
+        public Nullable<int> otpRetryCount { get; set; }
+        public Nullable<System.DateTime> otpExpirationTime { get; set; }
+        public Nullable<System.DateTime> otpNextAllowedTime { get; set; }
+        public Nullable<System.DateTime> otpRecordCreated { get; set; }
 
         public DTOuser() { }
 
@@ -760,6 +1540,11 @@ namespace NanofinAPI.Models.DTOEnvironment
             timeStap = entityObjct.timeStap;
             resetPasswordKey = entityObjct.resetPasswordKey;
             blockchainAddress = entityObjct.blockchainAddress;
+            otpCode = entityObjct.otpCode;
+            otpRetryCount = entityObjct.otpRetryCount;
+            otpExpirationTime = entityObjct.otpExpirationTime;
+            otpNextAllowedTime = entityObjct.otpNextAllowedTime;
+            otpRecordCreated = entityObjct.otpRecordCreated;
         }
     }
 

@@ -32,7 +32,10 @@ namespace NanofinAPI.Models
         public virtual DbSet<claimtemplate> claimtemplates { get; set; }
         public virtual DbSet<claimuploaddocument> claimuploaddocuments { get; set; }
         public virtual DbSet<consumer> consumers { get; set; }
-        public virtual DbSet<document> documents { get; set; }
+        public virtual DbSet<consumerriskvalue> consumerriskvalues { get; set; }
+        public virtual DbSet<contactlist> contactlists { get; set; }
+        public virtual DbSet<demographicriskvalue> demographicriskvalues { get; set; }
+        public virtual DbSet<documentspecification> documentspecifications { get; set; }
         public virtual DbSet<insuranceproduct> insuranceproducts { get; set; }
         public virtual DbSet<insurancetype> insurancetypes { get; set; }
         public virtual DbSet<location> locations { get; set; }
@@ -44,6 +47,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<productredemptionlog> productredemptionlogs { get; set; }
         public virtual DbSet<producttype> producttypes { get; set; }
         public virtual DbSet<reseller> resellers { get; set; }
+        public virtual DbSet<risk_agegroup> risk_agegroup { get; set; }
         public virtual DbSet<systemadmin> systemadmins { get; set; }
         public virtual DbSet<transactiontype> transactiontypes { get; set; }
         public virtual DbSet<unittype> unittypes { get; set; }
@@ -55,10 +59,13 @@ namespace NanofinAPI.Models
         public virtual DbSet<vouchertype> vouchertypes { get; set; }
         public virtual DbSet<activeproductitemswithdetail> activeproductitemswithdetails { get; set; }
         public virtual DbSet<chrisviewconsumeractiveproduct> chrisviewconsumeractiveproducts { get; set; }
+        public virtual DbSet<consumerinfosummary> consumerinfosummaries { get; set; }
+        public virtual DbSet<consumernumclaim> consumernumclaims { get; set; }
         public virtual DbSet<currentmonthdailysale> currentmonthdailysales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationlastmonthsale> demographicconsumerproductlocationlastmonthsales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationmonthlysale> demographicconsumerproductlocationmonthlysales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationsaleslastmonth> demographicconsumerproductlocationsaleslastmonths { get; set; }
+        public virtual DbSet<individualconsumerprofilerrawdata> individualconsumerprofilerrawdatas { get; set; }
         public virtual DbSet<insuranceproducttypemonthlysale> insuranceproducttypemonthlysales { get; set; }
         public virtual DbSet<lastmonthinsurancetypesale> lastmonthinsurancetypesales { get; set; }
         public virtual DbSet<lastmonthprovincesale> lastmonthprovincesales { get; set; }
@@ -68,6 +75,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<monthlyproductsalesperlocation> monthlyproductsalesperlocations { get; set; }
         public virtual DbSet<monthlyprovincesalesview> monthlyprovincesalesviews { get; set; }
         public virtual DbSet<monthlyprovincialproducttypedistribution> monthlyprovincialproducttypedistributions { get; set; }
+        public virtual DbSet<otpview> otpviews { get; set; }
         public virtual DbSet<overallproductlocationsale> overallproductlocationsales { get; set; }
         public virtual DbSet<productlocationmonthlysale> productlocationmonthlysales { get; set; }
         public virtual DbSet<productprovideryearlysale> productprovideryearlysales { get; set; }
@@ -80,6 +88,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<resellersendvouchergenderspecific> resellersendvouchergenderspecifics { get; set; }
         public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }
         public virtual DbSet<salespermonth> salespermonths { get; set; }
+        public virtual DbSet<unprocessedapplication> unprocessedapplications { get; set; }
     
         public virtual ObjectResult<monthlyProvinceSales_Result> monthlyProvinceSales(Nullable<int> providerID)
         {
@@ -110,6 +119,34 @@ namespace NanofinAPI.Models
                 new ObjectParameter("locationID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<productPredictedSalesPerLocation_Result>("productPredictedSalesPerLocation", productIDParameter, locationIDParameter);
+        }
+    
+        public virtual int updateDemographicRiskValues()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateDemographicRiskValues");
+        }
+    
+        public virtual int processApplications1(Nullable<int> consumerID)
+        {
+            var consumerIDParameter = consumerID.HasValue ?
+                new ObjectParameter("consumerID", consumerID) :
+                new ObjectParameter("consumerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("processApplications1", consumerIDParameter);
+        }
+    
+        public virtual int UpdateConsumerRiskValues()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateConsumerRiskValues");
+        }
+    
+        public virtual int processSingleApplication(Nullable<int> activeProductID)
+        {
+            var activeProductIDParameter = activeProductID.HasValue ?
+                new ObjectParameter("ActiveProductID", activeProductID) :
+                new ObjectParameter("ActiveProductID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("processSingleApplication", activeProductIDParameter);
         }
     }
 }
