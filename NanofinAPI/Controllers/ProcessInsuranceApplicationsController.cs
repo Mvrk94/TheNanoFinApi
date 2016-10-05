@@ -15,7 +15,7 @@ namespace NanofinAPI.Controllers
     {
         database_nanofinEntities db = new database_nanofinEntities();
 
-        [HttpGet]
+        [HttpPost]
         public List<DTOconsumerriskvalue> getUnprocessedApplications()
         {
             var toreturn = new List<DTOconsumerriskvalue>();
@@ -50,9 +50,11 @@ namespace NanofinAPI.Controllers
             return true;
         }
 
-        [HttpGet]
-        public List<unprocessedapplication> getConsummerUnProccessedPurchases(int ConsumerID)
+        [HttpPost]
+        public List<unprocessedapplication> getConsummerUnProccessedPurchases(int idConsumer)
         {
+            var ConsumerID = db.consumerriskvalues.Single(c => c.idConsumer == idConsumer).Consumer_ID;
+
             return (from c in db.unprocessedapplications where c.Consumer_ID == ConsumerID select c).ToList();
         }
 
@@ -60,16 +62,17 @@ namespace NanofinAPI.Controllers
         public Boolean ProcessSingleApplication(int activeProductID)
         {
             db.processSingleApplication(activeProductID);
+            db.UpdateConsumerRiskValues();
             return true;
         }
 
-        [HttpGet]
-        public  List<consumerinfosummary> getUserInformation(int consumerID)
+        [HttpPost]
+        public  List<consumerinfosummary> getUserInformation(int idConsumer)
         {
-            return db.consumerinfosummaries.Where(c => c.Consumer_ID == consumerID).ToList();
+            return db.consumerinfosummaries.Where(c => c.idConsumer == idConsumer).ToList();
         }
 
-        [HttpGet]
+        [HttpPost]
         public void RejectedApplication(int ActiveProductID)
         {
             var rejectProd = db.activeproductitems.Find(ActiveProductID);
@@ -82,6 +85,7 @@ namespace NanofinAPI.Controllers
             //deactive product from active
             rejectProd.isActive = false;
             rejectProd.Accepted = false;
+            rejectProd.activeProductItemPolicyNum = "Rejected";
             //notify user push Notification            
             var NC = new NotificationController();
 
@@ -89,26 +93,27 @@ namespace NanofinAPI.Controllers
             message += prodIDToProdName(rejectProd.Product_ID);
             message += "; has been rejected. Your Account has been refunded with R";
             message += rejectProd.productValue.ToString() + ".";
+            db.UpdateConsumerRiskValues();
             NC.SendSMS(tempUser.userContactNumber, message);
         }
 
-        public string prodIDToProdName(int productID)
+        private string prodIDToProdName(int productID)
         {
             product tmp =  db.products.Find(productID);
             return tmp.productName;
         }
 
-        public void refundConsumer(int userID, decimal BulkVoucherAmount)
+        private void refundConsumer(int userID, decimal voucherAmout)
         {
             voucher newVoucher = new voucher();
             newVoucher.User_ID = userID;
-            newVoucher.voucherValue = BulkVoucherAmount;
+            newVoucher.voucherValue = voucherAmout;
             newVoucher.VoucherType_ID = 2;
             newVoucher.voucherCreationDate = DateTime.Now;
             db.vouchers.Add(newVoucher);
             db.SaveChanges();
 
-            addVoucherTransaction(newVoucher.Voucher_ID, newVoucher.Voucher_ID, userID, 1, BulkVoucherAmount, 41);
+            addVoucherTransaction(newVoucher.Voucher_ID, newVoucher.Voucher_ID, userID, 1, voucherAmout, 41);
         }
 
         private void addVoucherTransaction(int newVoucherID, int voucherID, int receiverID, int senderID, decimal Amount, int transactionTypeID)

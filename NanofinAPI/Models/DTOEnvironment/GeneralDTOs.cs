@@ -138,24 +138,24 @@ namespace NanofinAPI.Models.DTOEnvironment
     public class DTOclaim
     {
         public int Claim_ID { get; set; }
-        public Nullable<int> Consumer_ID { get; set; }
         public Nullable<int> ActiveProductItems_ID { get; set; }
         public string capturedClaimFormDataJson { get; set; }
         public Nullable<System.DateTime> claimDate { get; set; }
         public string claimStatus { get; set; }
         public string claimPaymentFinalised { get; set; }
+        public Nullable<int> Consumer_ID { get; set; }
 
         public DTOclaim() { }
 
         public DTOclaim(claim entityObjct)
         {
             Claim_ID = entityObjct.Claim_ID;
-            Consumer_ID = entityObjct.Consumer_ID;
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
             capturedClaimFormDataJson = entityObjct.capturedClaimFormDataJson;
             claimDate = entityObjct.claimDate;
             claimStatus = entityObjct.claimStatus;
             claimPaymentFinalised = entityObjct.claimPaymentFinalised;
+            Consumer_ID = entityObjct.Consumer_ID;
         }
     }
 
@@ -246,7 +246,6 @@ namespace NanofinAPI.Models.DTOEnvironment
     public class DTOconsumerinfosummary
     {
         public int idConsumer { get; set; }
-        public int Consumer_ID { get; set; }
         public string userFirstName { get; set; }
         public string userLastName { get; set; }
         public string IDnumber { get; set; }
@@ -258,15 +257,17 @@ namespace NanofinAPI.Models.DTOEnvironment
         public Nullable<decimal> claimRate { get; set; }
         public string RiskCategory { get; set; }
         public Nullable<int> numUnprocessed { get; set; }
-        public string purchasedProducts { get; set; }
-        public string purchasedProductIDs { get; set; }
+        public Nullable<int> ageRiskValue { get; set; }
+        public Nullable<int> genderRiskValue { get; set; }
+        public Nullable<int> maritalStatusRiskValue { get; set; }
+        public Nullable<int> employmentStatusRiskValue { get; set; }
+        public Nullable<decimal> UnemploymentRate { get; set; }
 
         public DTOconsumerinfosummary() { }
 
         public DTOconsumerinfosummary(consumerinfosummary entityObjct)
         {
             idConsumer = entityObjct.idConsumer;
-            Consumer_ID = entityObjct.Consumer_ID;
             userFirstName = entityObjct.userFirstName;
             userLastName = entityObjct.userLastName;
             IDnumber = entityObjct.IDnumber;
@@ -278,8 +279,11 @@ namespace NanofinAPI.Models.DTOEnvironment
             claimRate = entityObjct.claimRate;
             RiskCategory = entityObjct.RiskCategory;
             numUnprocessed = entityObjct.numUnprocessed;
-            purchasedProducts = entityObjct.purchasedProducts;
-            purchasedProductIDs = entityObjct.purchasedProductIDs;
+            ageRiskValue = entityObjct.ageRiskValue;
+            genderRiskValue = entityObjct.genderRiskValue;
+            maritalStatusRiskValue = entityObjct.maritalStatusRiskValue;
+            employmentStatusRiskValue = entityObjct.employmentStatusRiskValue;
+            UnemploymentRate = entityObjct.UnemploymentRate;
         }
     }
 
@@ -496,20 +500,21 @@ namespace NanofinAPI.Models.DTOEnvironment
     public class DTOdemographicriskvalue
     {
         public int DRV_ID { get; set; }
-        public string demoType { get; set; }
+        public string type { get; set; }
         public Nullable<decimal> value { get; set; }
         public Nullable<int> riskvalue { get; set; }
         public Nullable<decimal> riskvalues { get; set; }
+        public string demoType { get; set; }
 
         public DTOdemographicriskvalue() { }
 
         public DTOdemographicriskvalue(demographicriskvalue entityObjct)
         {
             DRV_ID = entityObjct.DRV_ID;
-            demoType = entityObjct.demoType;
             value = entityObjct.value;
             riskvalue = entityObjct.riskvalue;
             riskvalues = entityObjct.riskvalues;
+            demoType = entityObjct.demoType;
         }
     }
 
@@ -771,8 +776,8 @@ namespace NanofinAPI.Models.DTOEnvironment
     public class DTOmonthlylocationsale
     {
         public int ActiveProductItems_ID { get; set; }
-        public string dateM { get; set; }
         public Nullable<System.DateTime> datum { get; set; }
+        public string dateM { get; set; }
         public int Product_ID { get; set; }
         public string productName { get; set; }
         public Nullable<int> transactionLocation { get; set; }
@@ -783,8 +788,8 @@ namespace NanofinAPI.Models.DTOEnvironment
         public DTOmonthlylocationsale(monthlylocationsale entityObjct)
         {
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
-            dateM = entityObjct.dateM;
             datum = entityObjct.datum;
+            dateM = entityObjct.dateM;
             Product_ID = entityObjct.Product_ID;
             productName = entityObjct.productName;
             transactionLocation = entityObjct.transactionLocation;
@@ -1275,7 +1280,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public Nullable<System.DateTime> StartedSharingTime { get; set; }
         public Nullable<int> minutesAvailable { get; set; }
         public Nullable<int> LocationID { get; set; }
-        public string location { get; set; }
+        public string location1 { get; set; }
         public Nullable<bool> isLocationAvailable { get; set; }
 
         public DTOreseller() { }
@@ -1304,7 +1309,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             StartedSharingTime = entityObjct.StartedSharingTime;
             minutesAvailable = entityObjct.minutesAvailable;
             LocationID = entityObjct.LocationID;
-            location = entityObjct.location;
+            location1 = entityObjct.location1;
             isLocationAvailable = entityObjct.isLocationAvailable;
         }
     }
@@ -1481,6 +1486,8 @@ namespace NanofinAPI.Models.DTOEnvironment
         public long numPurchases { get; set; }
         public Nullable<int> numClaims { get; set; }
         public Nullable<decimal> claimRate { get; set; }
+        public string datum { get; set; }
+        public decimal productValue { get; set; }
 
         public DTOunprocessedapplication() { }
 
@@ -1489,9 +1496,8 @@ namespace NanofinAPI.Models.DTOEnvironment
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
             Consumer_ID = entityObjct.Consumer_ID;
             productName = entityObjct.productName;
-            numPurchases = entityObjct.numPurchases;
-            numClaims = entityObjct.numClaims;
-            claimRate = entityObjct.claimRate;
+            datum = entityObjct.datum;
+            productValue = entityObjct.productValue;
         }
     }
 
@@ -1668,6 +1674,12 @@ namespace NanofinAPI.Models.DTOEnvironment
             voucherTypeDescription = entityObjct.voucherTypeDescription;
         }
     }
+
+
+
+
+
+
 
 
 

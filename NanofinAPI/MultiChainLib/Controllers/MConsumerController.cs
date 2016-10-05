@@ -84,6 +84,24 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             return true;
         }
 
+        //refund - cancels the transaction by sending the inverse of each transaction
+        public async Task<bool> refundConsumer(string insuranceProductName, int amount)
+        {
+            string insuranceProductNameNoSpace = MUtilityClass.removeSpaces(insuranceProductName);
+
+            string recipientAddr = user.propertyUserAddress();
+            await user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Receive, BlockchainPermissions.Send);
+            //refund consumer voucher balance 
+            string consMetadata = "Consumer \'" + user.propertyUserID() + "\' received " + amount.ToString() + " Voucher. *Voucher refund -  " + insuranceProductName + " was rejected by the product provider.* ";
+            var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(burnAddress, user.propertyUserAddress(), "Voucher", amount, MUtilityClass.strToHex(consMetadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
+            sendWithMetaDataFrom.AssertOk();
+
+            //spend (insurance) asset belonging to consumer
+            string InsMetadata = "Refund consumer\'" + user.propertyUserID() + "\' - consumer rejected to redeem" + insuranceProductName + ". Spend " + amount.ToString() + " " + insuranceProductName + ".";
+            var insSendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), burnAddress, insuranceProductName, amount, MUtilityClass.strToHex(InsMetadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
+            sendWithMetaDataFrom.AssertOk();
+            return true;
+        }
 
         public async Task<bool> isProductOnBlockchain(string insuranceProductName)
         {
