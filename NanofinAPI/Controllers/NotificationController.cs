@@ -203,7 +203,14 @@ namespace NanofinAPI.Controllers
                 //check if OTP is valid:
                 if (enteredOTP.Equals(otpView.otpCode))
                 {
+                    //need to update the database so that the expiry becomes now
+                    otpView.otpExpirationTime = DateTime.Now;
+                    db.Entry(otpView).State = EntityState.Modified;
+                    db.SaveChanges();
                     return "OTP Valid";
+
+                  
+
                 }
                 else
                 {   //generate new otp??
