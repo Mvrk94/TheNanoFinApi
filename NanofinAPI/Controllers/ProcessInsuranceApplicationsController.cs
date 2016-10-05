@@ -15,7 +15,7 @@ namespace NanofinAPI.Controllers
     {
         database_nanofinEntities db = new database_nanofinEntities();
 
-        [HttpGet]
+        [HttpPost]
         public List<DTOconsumerriskvalue> getUnprocessedApplications()
         {
             var toreturn = new List<DTOconsumerriskvalue>();
@@ -50,7 +50,7 @@ namespace NanofinAPI.Controllers
             return true;
         }
 
-        [HttpGet]
+        [HttpPost]
         public List<unprocessedapplication> getConsummerUnProccessedPurchases(int ConsumerID)
         {
             return (from c in db.unprocessedapplications where c.Consumer_ID == ConsumerID select c).ToList();
@@ -63,13 +63,13 @@ namespace NanofinAPI.Controllers
             return true;
         }
 
-        [HttpGet]
+        [HttpPost]
         public  List<consumerinfosummary> getUserInformation(int idConsumer)
         {
             return db.consumerinfosummaries.Where(c => c.idConsumer == idConsumer).ToList();
         }
 
-        [HttpGet]
+        [HttpPost]
         public void RejectedApplication(int ActiveProductID)
         {
             var rejectProd = db.activeproductitems.Find(ActiveProductID);
@@ -82,6 +82,7 @@ namespace NanofinAPI.Controllers
             //deactive product from active
             rejectProd.isActive = false;
             rejectProd.Accepted = false;
+            rejectProd.activeProductItemPolicyNum = "Rejected";
             //notify user push Notification            
             var NC = new NotificationController();
 
@@ -92,13 +93,13 @@ namespace NanofinAPI.Controllers
             NC.SendSMS(tempUser.userContactNumber, message);
         }
 
-        public string prodIDToProdName(int productID)
+        private string prodIDToProdName(int productID)
         {
             product tmp =  db.products.Find(productID);
             return tmp.productName;
         }
 
-        public void refundConsumer(int userID, decimal BulkVoucherAmount)
+        private void refundConsumer(int userID, decimal BulkVoucherAmount)
         {
             voucher newVoucher = new voucher();
             newVoucher.User_ID = userID;
