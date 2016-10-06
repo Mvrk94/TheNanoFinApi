@@ -31,7 +31,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             return this;
         }
 
-
+        //consumer send amount voucher to consumer.
         public async Task<bool> sendVoucherToConsumer(int recipientUserID, int amount)
         {
             //check if current user has enough to send
@@ -53,7 +53,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             }
             return false;
         }
-
+        //spend consumer voucher by sending it to nanofin voucher pool. issue consumer insurance product
         public async Task<bool> redeemVoucher(string insuranceProductName, int amount)
         {
             //if consumer has enough money - explicitly checked in consumer wallet handler
@@ -61,14 +61,14 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
 
             string recipientAddr = user.propertyUserAddress();
             await user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Receive, BlockchainPermissions.Send);
-            //spend consumer voucher
-            string metadata = "Consumer \'" + user.propertyUserID() + "\' spent " + amount.ToString() + " Voucher. Voucher to be redeemed for " + amount.ToString() + " " +insuranceProductName;
-            var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), burnAddress, "Voucher", amount, MUtilityClass.strToHex(metadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
+            //SPEND CONSUMER VOUCHER. Voucher goes to NanoFin pool - Voucher dealt with further once product expires (spent - burn addr) or is refunded (nack to consumer)
+            string metadata = "Consumer \'" + user.propertyUserID() + "\' spent " + amount.ToString() + " Voucher. Voucher to be redeemed for " + amount.ToString() + " " + insuranceProductNameNoSpace;
+            var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), nanoFinAddr, "Voucher", amount, MUtilityClass.strToHex(metadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
             sendWithMetaDataFrom.AssertOk();
 
             
 
-            if (await isProductOnBlockchain(insuranceProductName) == true)
+            if (await isProductOnBlockchain(insuranceProductNameNoSpace) == true)
             {
                 //issue of insurance product to consumer
                 var issueMore = await client.IssueMoreFromWithMetadataAsync(nanoFinAddr, recipientAddr, insuranceProductNameNoSpace, amount, "Issue consumer \'" + user.propertyUserID().ToString() + "\' " + amount.ToString() + " " + insuranceProductNameNoSpace);
@@ -77,31 +77,80 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             else
             {
                 //issue new asset to user
-                var issue = await client.IssueOpenWithMetadataFromAsync(nanoFinAddr, recipientAddr, insuranceProductNameNoSpace, amount, "Create insurance product asset " + insuranceProductNameNoSpace + ". This represents a product belonging to: 2Help1"); //get product proider name and maybe some 
+                string issuanceMetadata = "Create insurance product " + insuranceProductNameNoSpace + " asset on the NanoFin blockchain. This asset represents a product belonging to: " + await MUtilityClass.getProductProviderName(insuranceProductNameNoSpace);
+                var issue = await client.IssueOpenWithMetadataFromAsync(nanoFinAddr, recipientAddr, insuranceProductNameNoSpace, amount, issuanceMetadata); 
                 issue.AssertOk();
             }
 
             return true;
         }
 
-        //refund - cancels the transaction by sending the inverse of each transaction
+        //send voucher from nanofin voucher pool back to consumer. burn insurance product asset customer currently owns
         public async Task<bool> refundConsumer(string insuranceProductName, int amount)
         {
             string insuranceProductNameNoSpace = MUtilityClass.removeSpaces(insuranceProductName);
 
-            string recipientAddr = user.propertyUserAddress();
             await user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Receive, BlockchainPermissions.Send);
-            //refund consumer voucher balance 
-            string consMetadata = "Consumer \'" + user.propertyUserID() + "\' received " + amount.ToString() + " Voucher. *Voucher refund -  " + insuranceProductName + " was rejected by the product provider.* ";
-            var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(burnAddress, user.propertyUserAddress(), "Voucher", amount, MUtilityClass.strToHex(consMetadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
+            //refund consumer voucher balance - send asset from nanoFin pool
+            string consMetadata = "Consumer \'" + user.propertyUserID() + "\' received " + amount.ToString() + " Voucher. *Voucher refund -  " + insuranceProductNameNoSpace + " was rejected by the product provider.* ";
+            var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(nanoFinAddr, user.propertyUserAddress(), "Voucher", amount, MUtilityClass.strToHex(consMetadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
             sendWithMetaDataFrom.AssertOk();
 
-            //spend (insurance) asset belonging to consumer
-            string InsMetadata = "Refund consumer\'" + user.propertyUserID() + "\' - consumer rejected to redeem" + insuranceProductName + ". Spend " + amount.ToString() + " " + insuranceProductName + ".";
-            var insSendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), burnAddress, insuranceProductName, amount, MUtilityClass.strToHex(InsMetadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
+            //spend (insurance) asset belonging to consumer. Insurance asset burned
+            string InsMetadata = "Refund consumer\'" + user.propertyUserID() + "\' - consumer rejected to redeem" + insuranceProductNameNoSpace + ". Burn " + amount.ToString() + " " + insuranceProductNameNoSpace + ".";
+            var insSendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), burnAddress, insuranceProductNameNoSpace, amount, MUtilityClass.strToHex(InsMetadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
             sendWithMetaDataFrom.AssertOk();
             return true;
         }
+
+        //product expiration: burn consumer insurance product asset. STILL TODO check if IM has been paid - if not send voucher from nanofin voucher pool to IM.
+        public async Task<bool> invalidateProduct(string insuranceProductName, int amount)
+        {
+            string insuranceProductNameNoSpace = MUtilityClass.removeSpaces(insuranceProductName);
+
+            await user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Receive, BlockchainPermissions.Send);
+
+            ////NOTE CHECK IF IM HAS BEEN PAID
+            ////spend product worth of voucher from NanoFin pool
+            //string consMetadata = "Product " + insuranceProductNameNoSpace + " expired. Burn " + amount.ToString() + " Voucher - from general NanoFin Voucher Asset pool. " + amount.ToString() ;
+            //var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(nanoFinAddr, burnAddress, "Voucher", amount, MUtilityClass.strToHex(consMetadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
+            //sendWithMetaDataFrom.AssertOk();
+
+            //spend (insurance) asset belonging to consumer. Insurance asset burned
+            string InsMetadata = "Product " + insuranceProductNameNoSpace + " expired. Burn " + amount.ToString() + " " + insuranceProductNameNoSpace + " - from consumer \'" + user.propertyUserID() + "\'. ";
+            var insSendWithMetaDataFrom = await client.SendWithMetadataFromAsync(user.propertyUserAddress(), burnAddress, insuranceProductNameNoSpace, amount, MUtilityClass.strToHex(InsMetadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
+            insSendWithMetaDataFrom.AssertOk();
+            return true;
+        }
+        //redeem accepted by insurance manager: Burn  voucher from NanoFin Voucher pool. issue product provider (amount) ie represent IM payment on Blockchain
+        public async Task<bool> acceptRedeem(string insuranceProductName, int amount)
+        {
+            string insuranceProductNameNoSpace = MUtilityClass.removeSpaces(insuranceProductName);
+            string productProvider =  MUtilityClass.removeSpaces(await MUtilityClass.getProductProviderName(insuranceProductName)); // product provider name is the name of the asset on the blockchain.
+            string productProviderAddress = await MUtilityClass.getProductProviderAddress(client, productProvider);
+            await user.grantPermissions(BlockchainPermissions.Connect, BlockchainPermissions.Receive, BlockchainPermissions.Send);
+
+            //burn amount worth of voucher from NanoFin pool
+            string consMetadata = "Product " + insuranceProductNameNoSpace + " (belonging to consumer\'" + user.propertyUserID() + "\' - for amount "+amount.ToString() +") accepted by " + productProvider + ". Burn " + amount.ToString() + " Voucher - from general NanoFin Voucher Asset pool. " + amount.ToString()+ " to be paid to " + productProvider;
+            var sendWithMetaDataFrom = await client.SendWithMetadataFromAsync(nanoFinAddr, burnAddress, "Voucher", amount, MUtilityClass.strToHex(consMetadata));  //metadata has to be converted to hex. convert back to string online or with MUtilityClasss
+            sendWithMetaDataFrom.AssertOk();
+
+            //issue more asset belonging to product provier - represents how much Rand (Zar) NanoFin has paid to the product provider.
+            if (await isProductOnBlockchain(productProvider) == true)
+            {
+                string metadata = "Issue product provider " + productProvider + " " + amount + " of asset: " + productProvider + ". This asset represents the amount of money (South African - Zar) NanoFin has paid the company " + productProvider;
+                var issueMore = await client.IssueMoreFromWithMetadataAsync(nanoFinAddr, productProviderAddress, productProvider, amount, metadata );
+                issueMore.AssertOk();
+            }
+            else
+            {
+                string metadata = "Issue product provider " + productProvider + " asset: " + productProvider + ". This asset represents the amount of money (South African - Zar) NanoFin has paid the company " + productProvider;
+                var issue = await client.IssueOpenWithMetadataFromAsync(nanoFinAddr, productProviderAddress, productProvider, amount, metadata);
+                issue.AssertOk();
+            }
+            return true;
+        }
+
 
         public async Task<bool> isProductOnBlockchain(string insuranceProductName)
         {
