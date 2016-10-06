@@ -1309,7 +1309,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             StartedSharingTime = entityObjct.StartedSharingTime;
             minutesAvailable = entityObjct.minutesAvailable;
             LocationID = entityObjct.LocationID;
-            location1 = entityObjct.location1;
             isLocationAvailable = entityObjct.isLocationAvailable;
         }
     }
