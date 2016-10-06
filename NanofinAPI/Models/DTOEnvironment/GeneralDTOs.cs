@@ -497,26 +497,7 @@ namespace NanofinAPI.Models.DTOEnvironment
     }
 
 
-    public class DTOdemographicriskvalue
-    {
-        public int DRV_ID { get; set; }
-        public string type { get; set; }
-        public Nullable<decimal> value { get; set; }
-        public Nullable<int> riskvalue { get; set; }
-        public Nullable<decimal> riskvalues { get; set; }
-        public string demoType { get; set; }
-
-        public DTOdemographicriskvalue() { }
-
-        public DTOdemographicriskvalue(demographicriskvalue entityObjct)
-        {
-            DRV_ID = entityObjct.DRV_ID;
-            value = entityObjct.value;
-            riskvalue = entityObjct.riskvalue;
-            riskvalues = entityObjct.riskvalues;
-            demoType = entityObjct.demoType;
-        }
-    }
+    
 
 
     public class DTOdocumentspecification
@@ -1309,7 +1290,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             StartedSharingTime = entityObjct.StartedSharingTime;
             minutesAvailable = entityObjct.minutesAvailable;
             LocationID = entityObjct.LocationID;
-            location1 = entityObjct.location1;
             isLocationAvailable = entityObjct.isLocationAvailable;
         }
     }

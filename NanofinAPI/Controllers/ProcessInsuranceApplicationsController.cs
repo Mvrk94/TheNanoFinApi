@@ -30,6 +30,8 @@ namespace NanofinAPI.Controllers
             return toreturn;
         }
 
+
+
         [HttpPost]
         public Boolean ProcessBatchApplication(int [] consumerList)
         {
@@ -62,8 +64,7 @@ namespace NanofinAPI.Controllers
         [HttpPost]
         public Boolean ProcessSingleApplication(int activeProductID)
         {
-            db.processSingleApplication(activeProductID);
-            db.UpdateConsumerRiskValues();
+            db.processSingleApplication2(activeProductID);
             return true;
         }
 
