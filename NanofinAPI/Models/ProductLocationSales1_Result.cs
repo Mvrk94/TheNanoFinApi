@@ -10,14 +10,8 @@
 namespace NanofinAPI.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class demographicriskvalue
+    public partial class ProductLocationSales1_Result
     {
-        public int DRV_ID { get; set; }
-        public string demoType { get; set; }
-        public Nullable<decimal> value { get; set; }
-        public Nullable<int> riskvalue { get; set; }
-        public Nullable<decimal> riskvalues { get; set; }
     }
 }

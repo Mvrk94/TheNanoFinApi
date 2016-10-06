@@ -16,7 +16,8 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
         private static nanofinEntities db = new nanofinEntities();
 
         //returns users associated address. if user has no address -> give user address -> return new address. permission params - assign permissions if new address is created.
-        public static async Task<string> getAddress(MultiChainClient client, int userID, params BlockchainPermissions[] paramPermissions)
+       // public static async Task<string> getAddress(MultiChainClient client, int userID, params BlockchainPermissions[] paramPermissions)
+       public static async Task<string> getAddress(MultiChainClient client, int userID)
         {
             user tmp = new user();
             tmp.User_ID = -1;
@@ -30,19 +31,19 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
                     newAddress.AssertOk();
                     string newAddr = newAddress.Result;
                     //give permissions
-                    var grant1 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Send);
-                    var grant2 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Receive);
+                   // var grant1 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Send);
+                    //var grant2 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Receive);
 
                     tmp.blockchainAddress = newAddress.Result;
                     db.Entry(tmp).State = EntityState.Modified;
                     db.SaveChanges();
 
-                    if(paramPermissions.Length > 0)
-                    {
-                        MUserController tmpUser = new MUserController(userID);
-                        tmpUser = await tmpUser.init();
-                        await tmpUser.grantPermissions(paramPermissions);
-                    }
+                    //if(paramPermissions.Length > 0)
+                    //{
+                    //    MUserController tmpUser = new MUserController(userID);
+                    //    tmpUser = await tmpUser.init();
+                    //    await tmpUser.grantPermissions(paramPermissions);
+                    //}
 
                     return newAddress.Result;
                 }else
@@ -151,6 +152,41 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             noSpaces = noSpaces.Replace(" ", string.Empty); // kill spaces
             noSpaces = noSpaces.Replace("	", string.Empty); //kill tabs
             return noSpaces;
+        }
+
+        public static async Task<string> getProductProviderName(string insuranceProductName)
+        {
+            insuranceProductName = removeSpaces(insuranceProductName);
+            List<product> productList = (from l in db.products select l).ToList();
+
+            foreach (product prod in productList)
+            {
+                string tmpName = removeSpaces(prod.productName);
+                if (insuranceProductName.Equals(tmpName))
+                {
+                    productprovider prodProvider = await db.productproviders.SingleAsync(l => l.ProductProvider_ID == prod.ProductProvider_ID);
+                    return removeSpaces(prodProvider.ppCompanyName);
+                }
+            }
+
+            return "";
+        }
+
+        public static async Task<string> getProductProviderAddress(MultiChainClient client, string productProviderName)
+        {
+            productProviderName = removeSpaces(productProviderName);
+            List<productprovider> providerList = (from l in db.productproviders select l).ToList();
+
+            foreach (productprovider p in providerList)
+            {
+                string tmpName = removeSpaces(p.ppCompanyName);
+                if (productProviderName.Equals(tmpName))
+                {
+                    return await getAddress(client, p.User_ID);
+                }
+            }
+
+            return "";
         }
 
 

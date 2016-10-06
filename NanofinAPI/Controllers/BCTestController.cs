@@ -17,8 +17,8 @@ namespace NanofinAPI.Controllers
     public class BCTestController : ApiController
     {
         database_nanofinEntities db = new database_nanofinEntities();
+        //redeem  -> accept / reject(refund)
 
-        //post user - return true if user created. userType - 11 for consumer & 21 for reseller
         [HttpPost]
         [ResponseType(typeof(bool))]
         public async Task<bool> consumerRedeem(int productID, int userID, int amount)
@@ -52,6 +52,34 @@ namespace NanofinAPI.Controllers
 
             return true;
         }
+
+
+        [HttpPost]
+        [ResponseType(typeof(bool))]
+        public async Task<bool> acceptRedeem(int productID, int userID, int amount)
+        {
+            string productName = MUtilityClass.removeSpaces(await prodIDToProdName(productID));
+
+            MConsumerController consumerCtrl = new MConsumerController(userID);
+            consumerCtrl = await consumerCtrl.init();
+            await consumerCtrl.acceptRedeem(productName, amount);
+            return true;
+        }
+
+
+        [HttpPost]
+        [ResponseType(typeof(bool))]
+        public async Task<bool> invalidateProduct(int productID, int userID, int amount)
+        {
+            string productName = MUtilityClass.removeSpaces(await prodIDToProdName(productID));
+
+            MConsumerController consumerCtrl = new MConsumerController(userID);
+            consumerCtrl = await consumerCtrl.init();
+            await consumerCtrl.invalidateProduct(productName, amount);
+            return true;
+        }
+
+
 
 
     }
