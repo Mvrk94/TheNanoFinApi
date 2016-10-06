@@ -76,6 +76,7 @@ namespace NanofinAPI.Controllers
 
         //Get a user's contactList
 
+        //Check if a contact already exists for this user..true/false?
 
     }
 }

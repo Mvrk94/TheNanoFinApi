@@ -29,7 +29,7 @@ namespace MultiChainLib.Controllers
             burnAddress = await MUtilityClass.getBurnAddress(client);
             return this;
         }
-
+        //issue reseller more bulkvoucher  
         public async Task<int> buyBulk(int amount)
         {
             //check if current user has the correct permissions, if not grant permissions
@@ -40,7 +40,7 @@ namespace MultiChainLib.Controllers
 
             return 0;
         }
-
+        //burn reseller bulk voucher. issue consumer voucher
         public async Task<int> sendBulk(int recipientUserID, int amount)
         {
             string recipientAddr = await MUtilityClass.getAddress(client, recipientUserID);

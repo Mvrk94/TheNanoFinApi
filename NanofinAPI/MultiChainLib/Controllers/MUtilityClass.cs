@@ -153,6 +153,41 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
             return noSpaces;
         }
 
+        public static async Task<string> getProductProviderName(string insuranceProductName)
+        {
+            insuranceProductName = removeSpaces(insuranceProductName);
+            List<product> productList = (from l in db.products select l).ToList();
+
+            foreach (product prod in productList)
+            {
+                string tmpName = removeSpaces(prod.productName);
+                if (insuranceProductName.Equals(tmpName))
+                {
+                    productprovider prodProvider = await db.productproviders.SingleAsync(l => l.ProductProvider_ID == prod.ProductProvider_ID);
+                    return removeSpaces(prodProvider.ppCompanyName);
+                }
+            }
+
+            return "";
+        }
+
+        public static async Task<string> getProductProviderAddress(MultiChainClient client, string productProviderName)
+        {
+            productProviderName = removeSpaces(productProviderName);
+            List<productprovider> providerList = (from l in db.productproviders select l).ToList();
+
+            foreach (productprovider p in providerList)
+            {
+                string tmpName = removeSpaces(p.ppCompanyName);
+                if (productProviderName.Equals(tmpName))
+                {
+                    return await getAddress(client, p.User_ID);
+                }
+            }
+
+            return "";
+        }
+
 
     }
 }
