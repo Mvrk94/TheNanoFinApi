@@ -76,6 +76,15 @@ namespace NanofinAPI.Controllers
 
         //Get a user's contactList
 
+        [HttpGet]
+        public List<DTOcontactlist> getUsersContactList(int UserID)
+        {
+            List<DTOcontactlist> dtoContactList = new List<DTOcontactlist>();
+            return dtoContactList;
+
+
+        }
+
         //Check if a contact already exists for this user..true/false?
 
     }

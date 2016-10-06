@@ -184,6 +184,7 @@ namespace NanofinAPI.Controllers
 
         }
 
+        [HttpGet]
         public string checkEnteredOTP(int UserID, string enteredOTP)
         {
             //cases: 1. expired OTP, 2. Valid OTP, 3. Invalid OTP
@@ -196,7 +197,7 @@ namespace NanofinAPI.Controllers
 
             if (Nullable.Compare(nowTime, expiryDate) > 0) //now is later than expiry: so OTP has expired!
             {
-                return "Your OTP has expired, please retry the transaction"; //access denied?
+                return "OTP has expired, please retry the transaction"; //access denied?
             }
             else //OTP has not expired
             {
@@ -217,11 +218,11 @@ namespace NanofinAPI.Controllers
                     sendUserOTPAndSaveOTP(UserID, true);//resend-has 2 paths
                     if (otpView.otpRetryCount < 3)
                     {
-                        return "OTP Invalid: New OTP Resent";
+                        return "OTP Invalid";
                     }
                     else
                     {
-                        return "User blocked, OTP not resent";
+                        return "User Blocked";
                     }
                             
                    
