@@ -88,12 +88,12 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new claim();
 
             entityObjct.Claim_ID = dto.Claim_ID;
-            entityObjct.Consumer_ID = dto.Consumer_ID;
             entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
             entityObjct.capturedClaimFormDataJson = dto.capturedClaimFormDataJson;
             entityObjct.claimDate = dto.claimDate;
             entityObjct.claimStatus = dto.claimStatus;
             entityObjct.claimPaymentFinalised = dto.claimPaymentFinalised;
+            entityObjct.Consumer_ID = dto.Consumer_ID;
 
             return entityObjct;
         }
@@ -156,7 +156,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new consumerinfosummary();
 
             entityObjct.idConsumer = dto.idConsumer;
-            entityObjct.Consumer_ID = dto.Consumer_ID;
             entityObjct.userFirstName = dto.userFirstName;
             entityObjct.userLastName = dto.userLastName;
             entityObjct.IDnumber = dto.IDnumber;
@@ -168,8 +167,11 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.claimRate = dto.claimRate;
             entityObjct.RiskCategory = dto.RiskCategory;
             entityObjct.numUnprocessed = dto.numUnprocessed;
-            entityObjct.purchasedProducts = dto.purchasedProducts;
-            entityObjct.purchasedProductIDs = dto.purchasedProductIDs;
+            entityObjct.ageRiskValue = dto.ageRiskValue;
+            entityObjct.genderRiskValue = dto.genderRiskValue;
+            entityObjct.maritalStatusRiskValue = dto.maritalStatusRiskValue;
+            entityObjct.employmentStatusRiskValue = dto.employmentStatusRiskValue;
+            entityObjct.UnemploymentRate = dto.UnemploymentRate;
 
             return entityObjct;
         }
@@ -309,10 +311,10 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new demographicriskvalue();
 
             entityObjct.DRV_ID = dto.DRV_ID;
-            entityObjct.demoType = dto.demoType;
             entityObjct.value = dto.value;
             entityObjct.riskvalue = dto.riskvalue;
             entityObjct.riskvalues = dto.riskvalues;
+            entityObjct.demoType = dto.demoType;
 
             return entityObjct;
         }
@@ -485,8 +487,8 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new monthlylocationsale();
 
             entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
-            entityObjct.dateM = dto.dateM;
             entityObjct.datum = dto.datum;
+            entityObjct.dateM = dto.dateM;
             entityObjct.Product_ID = dto.Product_ID;
             entityObjct.productName = dto.productName;
             entityObjct.transactionLocation = dto.transactionLocation;
@@ -828,7 +830,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.StartedSharingTime = dto.StartedSharingTime;
             entityObjct.minutesAvailable = dto.minutesAvailable;
             entityObjct.LocationID = dto.LocationID;
-            entityObjct.location = dto.location;
+            entityObjct.location1 = dto.location1;
             entityObjct.isLocationAvailable = dto.isLocationAvailable;
 
             return entityObjct;
@@ -955,9 +957,8 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
             entityObjct.Consumer_ID = dto.Consumer_ID;
             entityObjct.productName = dto.productName;
-            entityObjct.numPurchases = dto.numPurchases;
-            entityObjct.numClaims = dto.numClaims;
-            entityObjct.claimRate = dto.claimRate;
+            entityObjct.datum = dto.datum;
+            entityObjct.productValue = dto.productValue;
 
             return entityObjct;
         }
@@ -1069,6 +1070,7 @@ namespace NanofinAPI.Models.DTOEnvironment
 
             return entityObjct;
         }
+
 
 
     }
