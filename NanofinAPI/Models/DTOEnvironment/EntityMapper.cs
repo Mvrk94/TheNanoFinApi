@@ -306,18 +306,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         }
 
 
-        public static demographicriskvalue updateEntity(demographicriskvalue entityObjct, DTOdemographicriskvalue dto)
-        {
-            if (entityObjct == null) entityObjct = new demographicriskvalue();
-
-            entityObjct.DRV_ID = dto.DRV_ID;
-            entityObjct.value = dto.value;
-            entityObjct.riskvalue = dto.riskvalue;
-            entityObjct.riskvalues = dto.riskvalues;
-            entityObjct.demoType = dto.demoType;
-
-            return entityObjct;
-        }
+       
 
 
         public static documentspecification updateEntity(documentspecification entityObjct, DTOdocumentspecification dto)

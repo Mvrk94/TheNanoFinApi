@@ -63,7 +63,7 @@ namespace NanofinAPI.Controllers
         [HttpPost]
         public Boolean ProcessSingleApplication(int activeProductID)
         {
-            db.processSingleApplication(activeProductID);
+            db.processSingleApplication2(activeProductID);
             return true;
         }
 

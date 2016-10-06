@@ -264,9 +264,6 @@
     <Compile Include="Models\demographicconsumerproductlocationsaleslastmonth.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\demographicriskvalue.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\documentspecification.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -327,6 +324,9 @@
     <Compile Include="Models\monthlyproductsalesperlocation.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\monthlyProvinceSales1_Result.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\monthlyprovincesalesview.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -369,7 +369,13 @@
     <Compile Include="Models\productlocationmonthlysale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductLocationSales1_Result.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductLocationSales_Result.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\productPredictedSalesPerLocation1_Result.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\productPredictedSalesPerLocation_Result.cs">

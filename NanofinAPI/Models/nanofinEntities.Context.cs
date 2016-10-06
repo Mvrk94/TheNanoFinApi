@@ -32,9 +32,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<claimtemplate> claimtemplates { get; set; }
         public virtual DbSet<claimuploaddocument> claimuploaddocuments { get; set; }
         public virtual DbSet<consumer> consumers { get; set; }
-        public virtual DbSet<consumerriskvalue> consumerriskvalues { get; set; }
         public virtual DbSet<contactlist> contactlists { get; set; }
-        public virtual DbSet<demographicriskvalue> demographicriskvalues { get; set; }
         public virtual DbSet<documentspecification> documentspecifications { get; set; }
         public virtual DbSet<insuranceproduct> insuranceproducts { get; set; }
         public virtual DbSet<insurancetype> insurancetypes { get; set; }
@@ -59,8 +57,6 @@ namespace NanofinAPI.Models
         public virtual DbSet<vouchertype> vouchertypes { get; set; }
         public virtual DbSet<activeproductitemswithdetail> activeproductitemswithdetails { get; set; }
         public virtual DbSet<chrisviewconsumeractiveproduct> chrisviewconsumeractiveproducts { get; set; }
-        public virtual DbSet<consumerinfosummary> consumerinfosummaries { get; set; }
-        public virtual DbSet<consumernumclaim> consumernumclaims { get; set; }
         public virtual DbSet<currentmonthdailysale> currentmonthdailysales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationlastmonthsale> demographicconsumerproductlocationlastmonthsales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationmonthlysale> demographicconsumerproductlocationmonthlysales { get; set; }
@@ -75,7 +71,6 @@ namespace NanofinAPI.Models
         public virtual DbSet<monthlyproductsalesperlocation> monthlyproductsalesperlocations { get; set; }
         public virtual DbSet<monthlyprovincesalesview> monthlyprovincesalesviews { get; set; }
         public virtual DbSet<monthlyprovincialproducttypedistribution> monthlyprovincialproducttypedistributions { get; set; }
-        public virtual DbSet<otpview> otpviews { get; set; }
         public virtual DbSet<overallproductlocationsale> overallproductlocationsales { get; set; }
         public virtual DbSet<productlocationmonthlysale> productlocationmonthlysales { get; set; }
         public virtual DbSet<productprovideryearlysale> productprovideryearlysales { get; set; }
@@ -89,6 +84,10 @@ namespace NanofinAPI.Models
         public virtual DbSet<saleslastmonth> saleslastmonths { get; set; }
         public virtual DbSet<salespermonth> salespermonths { get; set; }
         public virtual DbSet<unprocessedapplication> unprocessedapplications { get; set; }
+        public virtual DbSet<consumerriskvalue> consumerriskvalues { get; set; }
+        public virtual DbSet<consumerinfosummary> consumerinfosummaries { get; set; }
+        public virtual DbSet<consumernumclaim> consumernumclaims { get; set; }
+        public virtual DbSet<otpview> otpviews { get; set; }
     
         public virtual ObjectResult<monthlyProvinceSales_Result> monthlyProvinceSales(Nullable<int> providerID)
         {
@@ -166,6 +165,65 @@ namespace NanofinAPI.Models
         public virtual int updateDemographicRiskValues1()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateDemographicRiskValues1");
+        }
+    
+        public virtual ObjectResult<monthlyProvinceSales1_Result> monthlyProvinceSales1(Nullable<int> providerID)
+        {
+            var providerIDParameter = providerID.HasValue ?
+                new ObjectParameter("providerID", providerID) :
+                new ObjectParameter("providerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<monthlyProvinceSales1_Result>("monthlyProvinceSales1", providerIDParameter);
+        }
+    
+        public virtual int processApplications11(Nullable<int> consumerID)
+        {
+            var consumerIDParameter = consumerID.HasValue ?
+                new ObjectParameter("consumerID", consumerID) :
+                new ObjectParameter("consumerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("processApplications11", consumerIDParameter);
+        }
+    
+        public virtual int processSingleApplication2(Nullable<int> activeProductID)
+        {
+            var activeProductIDParameter = activeProductID.HasValue ?
+                new ObjectParameter("ActiveProductID", activeProductID) :
+                new ObjectParameter("ActiveProductID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("processSingleApplication2", activeProductIDParameter);
+        }
+    
+        public virtual ObjectResult<ProductLocationSales1_Result> ProductLocationSales1(Nullable<int> productID)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductLocationSales1_Result>("ProductLocationSales1", productIDParameter);
+        }
+    
+        public virtual ObjectResult<productPredictedSalesPerLocation1_Result> productPredictedSalesPerLocation1(Nullable<int> productID, Nullable<int> locationID)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("locationID", locationID) :
+                new ObjectParameter("locationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<productPredictedSalesPerLocation1_Result>("productPredictedSalesPerLocation1", productIDParameter, locationIDParameter);
+        }
+    
+        public virtual int UpdateConsumerRiskValues2()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateConsumerRiskValues2");
+        }
+    
+        public virtual int updateDemographicRiskValues2()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateDemographicRiskValues2");
         }
     }
 }
