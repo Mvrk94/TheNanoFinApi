@@ -146,7 +146,7 @@ namespace NanofinAPI.Controllers
                     dtoOtpView.otpCode = null;
                     dtoOtpView.otpRetryCount = 3;
                     dtoOtpView.otpExpirationTime = null;
-                    dtoOtpView.otpNextAllowedTime = DateTime.Now.AddMinutes(5);
+                    dtoOtpView.otpNextAllowedTime = DateTime.Now.AddMinutes(2);//block time
                     dtoOtpView.otpRecordCreated = DateTime.Now;
 
                     toUpdate = EntityMapper.updateEntity(toUpdate, dtoOtpView);
@@ -165,7 +165,7 @@ namespace NanofinAPI.Controllers
                     sendEmailViaWebApi(correctPhoneNum, "Hello from Nanofin! Your OTP for your transaction is: " + newOTP);
                     dtoOtpView.otpCode = newOTP;
                     dtoOtpView.otpRetryCount = 0;
-                    dtoOtpView.otpExpirationTime = DateTime.Now.AddMinutes(3);
+                    dtoOtpView.otpExpirationTime = DateTime.Now.AddMinutes(1);//expiry time
                     dtoOtpView.otpNextAllowedTime = null; //remains null as long as the user isn't blocked
                     dtoOtpView.otpRecordCreated = DateTime.Now;
 
