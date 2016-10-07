@@ -152,7 +152,7 @@ namespace NanofinAPI.Controllers
                     toUpdate = EntityMapper.updateEntity(toUpdate, dtoOtpView);
                     db.Entry(toUpdate).State = EntityState.Modified;
                     db.SaveChanges();
-                    return Content(HttpStatusCode.Forbidden, "User blocked, OTP not Resent");
+                    return Content(HttpStatusCode.OK, "User blocked, OTP not Resent");
                 }
                 return StatusCode(HttpStatusCode.NoContent);
             }
@@ -176,7 +176,7 @@ namespace NanofinAPI.Controllers
                 }
                 else //user is still blocked
                 {
-                    return Content(HttpStatusCode.Forbidden, "User is still blocked");
+                    return Content(HttpStatusCode.OK, "User is still blocked");
                     
                 }
 
