@@ -19,8 +19,8 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public DTOuser getUserFromContactNumberAndUserNameOrEmail(string userNameOrEmail,string contactNum)
         {
-            //check that a matching userName/Email AND with matching contactNumber is registered
-            if(db.users.Any(u => (u.userName == userNameOrEmail || u.userEmail == userNameOrEmail)&& u.userContactNumber==contactNum))
+            //check that a matching userName/Email AND with matching contactNumber is registered, AS A CONSUMER (usertypeID 11) - not resellers.
+            if(db.users.Any(u => (u.userName == userNameOrEmail || u.userEmail == userNameOrEmail)&& u.userContactNumber==contactNum && u.userType==11))
             {
                 user usr = (from c in db.users where( c.userName == userNameOrEmail||c.userEmail==userNameOrEmail) && c.userContactNumber==contactNum select c).FirstOrDefault();
                 DTOuser toReturn = new DTOuser(usr);
@@ -57,9 +57,9 @@ namespace NanofinAPI.Controllers
         
         [ResponseType(typeof(DTOcontactlist))]
         [HttpDelete]
-        public async Task<IHttpActionResult> deleteContact(int ContactUserID)
+        public async Task<IHttpActionResult> deleteContact(int UserID, int ContactUserID)
         {
-            var contactToDel = (from c in db.contactlists where c.ContactsUserID==ContactUserID select c).SingleOrDefault();
+            var contactToDel = (from c in db.contactlists where c.UserID == UserID && c.ContactsUserID==ContactUserID select c).SingleOrDefault();
 
             if (contactToDel == null)
             {
@@ -75,17 +75,45 @@ namespace NanofinAPI.Controllers
         }
 
         //Get a user's contactList
-
         [HttpGet]
-        public List<DTOcontactlist> getUsersContactList(int UserID)
+        public List<DTOcontactlist> getUsersContactList_IDsOnly(int UserID)
         {
             List<DTOcontactlist> dtoContactList = new List<DTOcontactlist>();
+            List<contactlist> list = (from l in db.contactlists where l.UserID == UserID select l).ToList();
+            if (list == null)
+            {
+                return null;
+            }
+
+            foreach (contactlist l in list)
+            {
+                dtoContactList.Add(new DTOcontactlist(l));
+            }
             return dtoContactList;
-
-
         }
 
-        //Check if a contact already exists for this user..true/false?
+        public List<DTOuser> getUsersContactListWithDetails(int UserID)
+        {
+            List<DTOuser> dtoContactDetailsList = new List<DTOuser>();
+            List<contactlist> list = (from l in db.contactlists where l.UserID == UserID select l).ToList();
+            foreach (contactlist l in list)
+            {
+                user entityUser = (from u in db.users where u.User_ID == l.ContactsUserID select u).SingleOrDefault();
+                dtoContactDetailsList.Add(new DTOuser(entityUser));
+            }
 
+            return dtoContactDetailsList;
+        }
+
+        //Check if a contact already exists for this user..true/false? -been added to postContact method logic
+        [HttpGet]
+        public bool contactAlreadyExists(Nullable<int> UserID, Nullable<int> contactID)
+        {           
+            if(db.contactlists.Any(c=> c.UserID ==UserID && c.ContactsUserID == contactID))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
