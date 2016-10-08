@@ -178,7 +178,7 @@ namespace NanofinAPI.Controllers
                 {
                     return Content(HttpStatusCode.OK, "User is still blocked");
                     
-                }
+                } 
 
             }
 
