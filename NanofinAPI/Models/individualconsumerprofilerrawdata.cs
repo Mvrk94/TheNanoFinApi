@@ -16,9 +16,6 @@ namespace NanofinAPI.Models
     {
         public int Consumer_ID { get; set; }
         public int User_ID { get; set; }
-        public string gender { get; set; }
-        public string maritalStatus { get; set; }
-        public string employmentStatus { get; set; }
         public long numPurchases { get; set; }
         public Nullable<int> age { get; set; }
         public Nullable<int> numClaims { get; set; }

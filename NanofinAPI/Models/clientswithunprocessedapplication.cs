@@ -10,8 +10,15 @@
 namespace NanofinAPI.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class productPredictedSalesPerLocation1_Result
+    public partial class clientswithunprocessedapplication
     {
+        public int idConsumer { get; set; }
+        public string clientName { get; set; }
+        public Nullable<int> Consumer_ID { get; set; }
+        public Nullable<decimal> claimRate { get; set; }
+        public string RiskCategory { get; set; }
+        public long numUnprocessed { get; set; }
     }
 }

@@ -12,12 +12,11 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class saleslastmonth
+    public partial class demographicriskvalue
     {
-        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
-        public string datum { get; set; }
-        public int Product_ID { get; set; }
-        public string productName { get; set; }
-        public Nullable<decimal> sales { get; set; }
+        public int DRV_ID { get; set; }
+        public string demoType { get; set; }
+        public Nullable<int> riskvalue { get; set; }
+        public Nullable<decimal> riskvalues { get; set; }
     }
 }

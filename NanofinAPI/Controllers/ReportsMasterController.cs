@@ -23,19 +23,19 @@ namespace NanofinAPI.Controllers
             var toreturn = new List<productTarget>();
             var currentDate = DateTime.Now.AddMonths(numMonths*-1);
             var datum = "2016-" + numMonths.ToString("00");
-            var salesPerProduct = (from c  in db.saleslastmonths where c.datum == datum select c).ToList() ;
+            var salesPerProduct = (from c  in db.salespermonths where c.datum == datum select c).ToList() ;
             
 
             foreach (var  p in salesPerProduct)
             {
-                toreturn.Add(new productTarget
-                {
-                    name = p.productName, 
-                    ProductID = p.Product_ID,
-                    currentSales = p.sales,
-                    targetSales = db.products.Find(p.Product_ID).salesTargetAmount,
-                    monthSate = p.datum,
-                });
+                //toreturn.Add(new productTarget
+                //{
+                //    name = p.productName, 
+                //    ProductID = p.Product_ID,
+                //    currentSales = p.sales,
+                //    targetSales = db.products.Find(p.Product_ID).salesTargetAmount,
+                //    monthSate = p.datum,
+                //});
             }
 
             return toreturn;
@@ -216,9 +216,7 @@ namespace NanofinAPI.Controllers
         }
 
         #endregion
-
-
-
+        
         #region Insurance Type
         [HttpGet]
           public List<lastmonthinsurancetypesale>  getLastMonthInsuranceTypeSales()
@@ -266,6 +264,14 @@ namespace NanofinAPI.Controllers
             return db.currentmonthdailysales.ToList();
         }
 
+        [HttpPost]
+        public Boolean processApplicationNativeImp(int activeProductID)
+        {
+            var toDeactivate  = db.activeproductitems.Find(activeProductID);
+            toDeactivate.activeProductItemPolicyNum = "PP_IM_" + activeProductID.ToString();
+            db.SaveChanges();
+            return true;
+        }
 
         #region Utils
         private double []  generateTimeData(int size)

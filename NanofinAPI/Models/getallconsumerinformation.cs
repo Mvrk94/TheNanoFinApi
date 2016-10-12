@@ -12,7 +12,7 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class consumerinfosummary
+    public partial class getallconsumerinformation
     {
         public int idConsumer { get; set; }
         public string clientName { get; set; }
@@ -20,12 +20,15 @@ namespace NanofinAPI.Models
         public string maritalStatus { get; set; }
         public string employmentStatus { get; set; }
         public Nullable<decimal> claimRate { get; set; }
-        public string RiskCategory { get; set; }
         public Nullable<int> numUnprocessed { get; set; }
         public Nullable<int> ageRiskValue { get; set; }
         public Nullable<int> genderRiskValue { get; set; }
         public Nullable<int> maritalStatusRiskValue { get; set; }
         public Nullable<int> employmentStatusRiskValue { get; set; }
-        public Nullable<decimal> UnemploymentRate { get; set; }
+        public Nullable<decimal> locationClaimRate { get; set; }
+        public string residentTown { get; set; }
+        public Nullable<int> age { get; set; }
+        public string userContactNumber { get; set; }
+        public string consumerAddress { get; set; }
     }
 }
