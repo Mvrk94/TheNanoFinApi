@@ -27,5 +27,8 @@ namespace NanofinAPI.Models
         public Nullable<decimal> locationClaimRate { get; set; }
         public string topProductCategoriesInterestedIn { get; set; }
         public string monthPurchases { get; set; }
+        public int Consumer_ID { get; set; }
+        public string RiskCategory { get; set; }
+        public string ageGroup { get; set; }
     }
 }

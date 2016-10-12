@@ -256,6 +256,9 @@
     <Compile Include="Models\consumerpreference.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\consumerpreferencesreport.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\consumerprofiledata.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>

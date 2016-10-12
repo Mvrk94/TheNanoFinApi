@@ -8,6 +8,7 @@ using NanofinAPI.Models;
 using NanofinAPI.Models.DTOEnvironment;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using TheNanoFinAPI.MultiChainLib.Controllers;
 
 namespace NanofinAPI.Controllers
 {
@@ -76,7 +77,7 @@ namespace NanofinAPI.Controllers
 
 
         [HttpPost]
-        public void RejectedApplication(int ActiveProductID)
+        public async Task RejectedApplication(int ActiveProductID)
         {
             var rejectProd = db.activeproductitems.Find(ActiveProductID);
             var prodValue = rejectProd.productValue;
@@ -98,6 +99,12 @@ namespace NanofinAPI.Controllers
             message += rejectProd.productValue.ToString() + ".";
             //db.UpdateConsumerRiskValues();
             NC.SendSMS(tempUser.userContactNumber, message);
+
+            //reflect on blockchain
+            string productName = prodIDToProdName(rejectProd.Product_ID);
+            MConsumerController consumerCtrl = new MConsumerController(tempUser.User_ID);
+            consumerCtrl = await consumerCtrl.init();
+            await consumerCtrl.refundConsumer(productName, Decimal.ToInt32(prodValue));
         }
 
         private string prodIDToProdName(int productID)

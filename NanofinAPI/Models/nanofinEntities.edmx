@@ -522,18 +522,34 @@ warning 6002: The table/view 'def.database_nanofin.consumerpreferences' does not
           <Property Name="numPurchase" Type="bigint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.consumerpreferencesreport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="consumerpreferencesreport">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="count" />
+          </Key>
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="productName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="count" Type="bigint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.consumerprofiledata' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="consumerprofiledata">
           <Key>
             <PropertyRef Name="idConsumer" />
+            <PropertyRef Name="Consumer_ID" />
           </Key>
           <Property Name="idConsumer" Type="int" Nullable="false" />
+          <Property Name="Consumer_ID" Type="int" Nullable="false" />
           <Property Name="gender" Type="varchar" MaxLength="10" />
           <Property Name="maritalStatus" Type="varchar" MaxLength="30" />
           <Property Name="employmentStatus" Type="varchar" MaxLength="80" />
           <Property Name="claimRate" Type="decimal" Precision="10" Scale="0" />
           <Property Name="numUnprocessed" Type="int" />
           <Property Name="ageRiskValue" Type="int" />
+          <Property Name="RiskCategory" Type="varchar" MaxLength="45" />
+          <Property Name="ageGroup" Type="varchar" MaxLength="45" />
           <Property Name="genderRiskValue" Type="int" />
           <Property Name="maritalStatusRiskValue" Type="int" />
           <Property Name="employmentStatusRiskValue" Type="int" />
@@ -1639,15 +1655,25 @@ FROM `consumernumclaims` AS `consumernumclaims`</DefiningQuery>
 `consumerpreferences`.`numPurchase`
 FROM `consumerpreferences` AS `consumerpreferences`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="consumerpreferencesreport" EntityType="Self.consumerpreferencesreport" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`consumerpreferencesreport`.`Product_ID`, 
+`consumerpreferencesreport`.`productName`, 
+`consumerpreferencesreport`.`count`
+FROM `consumerpreferencesreport` AS `consumerpreferencesreport`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="consumerprofiledata" EntityType="Self.consumerprofiledata" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `consumerprofiledata`.`idConsumer`, 
+`consumerprofiledata`.`Consumer_ID`, 
 `consumerprofiledata`.`gender`, 
 `consumerprofiledata`.`maritalStatus`, 
 `consumerprofiledata`.`employmentStatus`, 
 `consumerprofiledata`.`claimRate`, 
 `consumerprofiledata`.`numUnprocessed`, 
 `consumerprofiledata`.`ageRiskValue`, 
+`consumerprofiledata`.`RiskCategory`, 
+`consumerprofiledata`.`ageGroup`, 
 `consumerprofiledata`.`genderRiskValue`, 
 `consumerprofiledata`.`maritalStatusRiskValue`, 
 `consumerprofiledata`.`employmentStatusRiskValue`, 
@@ -2395,6 +2421,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <FunctionImport Name="UpdateConsumerRiskProfiles" />
           <FunctionImport Name="updateDemographicRiskValues" />
           <EntitySet Name="clientswithunprocessedapplications" EntityType="nanofinEntites.clientswithunprocessedapplication" />
+          <EntitySet Name="consumerpreferencesreports" EntityType="nanofinEntites.consumerpreferencesreport" />
           <EntitySet Name="getallconsumerinformations" EntityType="nanofinEntites.getallconsumerinformation" />
         </EntityContainer>
         <EntityType Name="activeproductitem">
@@ -3492,6 +3519,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
         <EntityType Name="consumerprofiledata">
           <Key>
             <PropertyRef Name="idConsumer" />
+            <PropertyRef Name="Consumer_ID" />
           </Key>
           <Property Name="idConsumer" Type="Int32" Nullable="false" />
           <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -3506,6 +3534,9 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="locationClaimRate" Type="Decimal" />
           <Property Name="topProductCategoriesInterestedIn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="monthPurchases" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
+          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="ageGroup" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="currentmonthdailysale">
           <Key>
@@ -3882,6 +3913,16 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="claimRate" Type="Decimal" />
           <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="numUnprocessed" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consumerpreferencesreport">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="count" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="count" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="getallconsumerinformation">
           <Key>
@@ -4418,6 +4459,9 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <EntitySetMapping Name="consumerprofiledatas">
             <EntityTypeMapping TypeName="nanofinEntites.consumerprofiledata">
               <MappingFragment StoreEntitySet="consumerprofiledata">
+                <ScalarProperty Name="ageGroup" ColumnName="ageGroup" />
+                <ScalarProperty Name="RiskCategory" ColumnName="RiskCategory" />
+                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
                 <ScalarProperty Name="monthPurchases" ColumnName="monthPurchases" />
                 <ScalarProperty Name="topProductCategoriesInterestedIn" ColumnName="topProductCategoriesInterestedIn" />
                 <ScalarProperty Name="locationClaimRate" ColumnName="locationClaimRate" />
@@ -4802,6 +4846,15 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
                 <ScalarProperty Name="clientName" ColumnName="clientName" />
                 <ScalarProperty Name="idConsumer" ColumnName="idConsumer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="consumerpreferencesreports">
+            <EntityTypeMapping TypeName="nanofinEntites.consumerpreferencesreport">
+              <MappingFragment StoreEntitySet="consumerpreferencesreport">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
