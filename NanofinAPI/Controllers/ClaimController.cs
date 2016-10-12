@@ -220,8 +220,19 @@ namespace NanofinAPI.Controllers
         }
 
 
-        //View Claims to be processed
-        
+        //View Claims to be processed: "In progess" and Payment "false"
+        [HttpGet]
+        public List<dtoViewClaimApplication> viewClaimsToBeProcessed()
+        {
+            List<claim> list = (from c in db.claims where c.claimStatus == "In Progress" && c.claimPaymentFinalised == "false" select c).ToList();
+            List<dtoViewClaimApplication> toReturn = new List<dtoViewClaimApplication>();
+
+            foreach (claim c in list)
+            {
+                toReturn.Add(new dtoViewClaimApplication(c));
+            }
+            return toReturn;
+        }
 
         //Accept/Reject Claim
 
