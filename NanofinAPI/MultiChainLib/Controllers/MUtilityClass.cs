@@ -16,7 +16,8 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
         private static nanofinEntities db = new nanofinEntities();
 
         //returns users associated address. if user has no address -> give user address -> return new address. permission params - assign permissions if new address is created.
-        public static async Task<string> getAddress(MultiChainClient client, int userID, params BlockchainPermissions[] paramPermissions)
+       // public static async Task<string> getAddress(MultiChainClient client, int userID, params BlockchainPermissions[] paramPermissions)
+       public static async Task<string> getAddress(MultiChainClient client, int userID)
         {
             user tmp = new user();
             tmp.User_ID = -1;
@@ -30,19 +31,19 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
                     newAddress.AssertOk();
                     string newAddr = newAddress.Result;
                     //give permissions
-                    var grant1 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Send);
-                    var grant2 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Receive);
+                   // var grant1 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Send);
+                    //var grant2 = client.GrantAsync(new List<string>() { newAddr }, BlockchainPermissions.Receive);
 
                     tmp.blockchainAddress = newAddress.Result;
                     db.Entry(tmp).State = EntityState.Modified;
                     db.SaveChanges();
 
-                    if(paramPermissions.Length > 0)
-                    {
-                        MUserController tmpUser = new MUserController(userID);
-                        tmpUser = await tmpUser.init();
-                        await tmpUser.grantPermissions(paramPermissions);
-                    }
+                    //if(paramPermissions.Length > 0)
+                    //{
+                    //    MUserController tmpUser = new MUserController(userID);
+                    //    tmpUser = await tmpUser.init();
+                    //    await tmpUser.grantPermissions(paramPermissions);
+                    //}
 
                     return newAddress.Result;
                 }else

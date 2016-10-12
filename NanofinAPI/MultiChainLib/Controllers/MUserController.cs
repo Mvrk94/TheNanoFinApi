@@ -22,7 +22,7 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
 
         public MUserController(int user_ID)
         {
-            client = new MultiChainClient("188.166.170.248", 4396, false, "multichainrpc", "HFaiZ1WtPLAnuSNoA7VyTDL4C97D6dgWpcEdjNw1Jhjv", "NanoFinBlockchain");
+            client = new MultiChainClient("188.166.170.248", 2748, false, "multichainrpc", "7yPU3yrroGZp4WAgrL2cD9JDe7WbwwiUmLps3PPmPPde", "NanoFinBlockchain");
             this.user_ID = user_ID;
         }
 
@@ -35,7 +35,8 @@ namespace TheNanoFinAPI.MultiChainLib.Controllers
 
         public async Task<MUserController> init()
         {
-            userAddress = await MUtilityClass.getAddress(client, user_ID, BlockchainPermissions.Receive,BlockchainPermissions.Send);
+            //userAddress = await MUtilityClass.getAddress(client, user_ID, BlockchainPermissions.Receive,BlockchainPermissions.Send);
+            userAddress = await MUtilityClass.getAddress(client, user_ID);
             return this;
         }
         //returns users associated address. if user has no address -> give user address -> return new address.

@@ -19,6 +19,7 @@ namespace NanofinAPI.Controllers
 
         database_nanofinEntities db = new database_nanofinEntities();
 
+        #region Customer Side Claim Code
 
         //get claim template object for a specific productID
         public DTOclaimtemplate getClaimTemplateForProduct(int productID)
@@ -165,9 +166,11 @@ namespace NanofinAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+#endregion
+
         #region Insurance Manager Claim Side Code
 
-     
+
         [HttpGet]
         //Get list of all claim templates and info
         public List<DTOclaimtemplate> Getclaimtemplates()
@@ -217,7 +220,15 @@ namespace NanofinAPI.Controllers
         }
 
 
-        //GetClaimDocuments
+        //View Claims to be processed
+        
+
+        //Accept/Reject Claim
+
+
+
+        //Confirm payment of claim...doc upload
+
 
 
         #endregion
