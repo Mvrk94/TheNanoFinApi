@@ -234,9 +234,42 @@ namespace NanofinAPI.Controllers
             return toReturn;
         }
 
-        //Accept/Reject Claim
+        //Get a claim's uploadDocumentPath
+        [HttpGet]
+        public string getClaimUploadedDocsPath(int ClaimID)
+        {
+            string docPath = (from d in db.claimuploaddocuments where d.Claim_ID == ClaimID select d.claimUploadDocumentPath).SingleOrDefault();
+            return docPath;
+        }
+
+        //Accept/Reject Claim: Claim status
+        [HttpPut]
+        public async Task<IHttpActionResult> updateClaimStatus(int ClaimID, string status)
+        {
+            claim toUpdate = (from c in db.claims where c.Claim_ID == ClaimID select c).SingleOrDefault();
+            DTOclaim dtoClaim = new DTOclaim(toUpdate);
+            dtoClaim.claimStatus = status;
+            toUpdate = EntityMapper.updateEntity(toUpdate, dtoClaim);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.OK);
+
+        }
 
 
+        //Set that the claim has been payed.
+        [HttpPut]
+        public async Task<IHttpActionResult> updateClaimPaymentStatus(int ClaimID, string paymentStatus)
+        {
+            claim toUpdate = (from c in db.claims where c.Claim_ID == ClaimID select c).SingleOrDefault();
+            DTOclaim dtoClaim = new DTOclaim(toUpdate);
+            dtoClaim.claimPaymentFinalised = paymentStatus;
+            toUpdate = EntityMapper.updateEntity(toUpdate, dtoClaim);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.OK);
+
+        }
 
         //Confirm payment of claim...doc upload
 
