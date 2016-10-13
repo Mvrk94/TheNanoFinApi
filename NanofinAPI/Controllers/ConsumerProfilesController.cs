@@ -16,5 +16,10 @@ namespace NanofinAPI.Controllers
         {
             return db.consumerprofiledatas.ToList();
         }
+
+        public List<consumerpreferencesreport> getPreferencesReports()
+        {
+            return db.consumerpreferencesreports.ToList();
+        }
     }
 }
