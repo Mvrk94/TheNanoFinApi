@@ -224,7 +224,7 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<dtoViewClaimApplication> viewClaimsToBeProcessed()
         {
-            List<claim> list = (from c in db.claims where c.claimStatus == "In Progress" && c.claimPaymentFinalised == "false" select c).ToList();
+            List<claim> list = (from c in db.claims where (c.claimStatus == "In Progress" && c.claimPaymentFinalised == "false") || (c.claimStatus == "Accepted" && c.claimPaymentFinalised =="false") select c).ToList();
             List<dtoViewClaimApplication> toReturn = new List<dtoViewClaimApplication>();
 
             foreach (claim c in list)

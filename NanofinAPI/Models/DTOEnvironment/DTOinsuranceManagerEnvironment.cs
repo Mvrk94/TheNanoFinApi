@@ -164,7 +164,8 @@ namespace NanofinAPI.Models.DTOEnvironment
         public Nullable<int> activeProductID;
         public string productName;
         public string capturedClaimFormData;
-       
+        public string claimStatus;
+        public string claimPaymentFinalised;
 
       
 
@@ -177,6 +178,8 @@ namespace NanofinAPI.Models.DTOEnvironment
             this.activeProductID = cl.ActiveProductItems_ID;
             this.productName = cl.activeproductitem.product.productName;
             this.capturedClaimFormData = cl.capturedClaimFormDataJson;
+            this.claimStatus = cl.claimStatus;
+            this.claimPaymentFinalised = cl.claimPaymentFinalised;
            
         }
     }
