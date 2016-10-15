@@ -270,6 +270,7 @@ namespace NanofinAPI.Controllers
         public string getClaimUploadedDocsPath(int ClaimID)
         {
             string docPath = (from d in db.claimuploaddocuments where d.Claim_ID == ClaimID select d.claimUploadDocumentPath).SingleOrDefault();
+        
             return docPath;
         }
 

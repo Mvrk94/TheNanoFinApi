@@ -132,7 +132,7 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<FileInfo> getFileInfoInDirectory(string filepath)
         {
-            var localFilePath = HttpContext.Current.Server.MapPath("/UploadFiles/"+filepath);
+            var localFilePath = HttpContext.Current.Server.MapPath(filepath);
             DirectoryInfo directory = new DirectoryInfo(localFilePath);
             var files = directory.GetFiles().ToList();
 
@@ -143,7 +143,7 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<string> getFileNamesInDirectory(string filepath)
         {
-            var localFilePath = HttpContext.Current.Server.MapPath("/UploadFiles/" + filepath);
+            var localFilePath = HttpContext.Current.Server.MapPath(filepath);
             DirectoryInfo directory = new DirectoryInfo(localFilePath);
             var files = directory.GetFiles().ToList();
             List<string> namesList = new List<string>();
