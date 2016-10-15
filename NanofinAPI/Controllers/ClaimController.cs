@@ -252,9 +252,9 @@ namespace NanofinAPI.Controllers
 
 
         [HttpGet]
-        public dtoViewClaimApplication getSingleClaimToBeProcessed(int ActiveProdID)
+        public dtoViewClaimApplication getSingleClaimToBeProcessed(int claimID)
         {
-            claim cl = (from c in db.claims where c.ActiveProductItems_ID == ActiveProdID select c).SingleOrDefault();
+            claim cl = (from c in db.claims where c.Claim_ID == claimID select c).SingleOrDefault();
             dtoViewClaimApplication toRet = new dtoViewClaimApplication(cl);
             return toRet;
         }
