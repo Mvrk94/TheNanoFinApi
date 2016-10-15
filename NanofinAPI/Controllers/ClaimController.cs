@@ -204,11 +204,17 @@ namespace NanofinAPI.Controllers
 
         [HttpGet]
         //View a specific claim for an active product
-        public DTOclaim getClaim(int activeProductItem_ID)
+        [ResponseType(typeof(DTOclaim))]
+        public async Task<IHttpActionResult> getClaim(int activeProductItem_ID)
         {
-            claim cl = (from c in db.claims where c.ActiveProductItems_ID == activeProductItem_ID select c).SingleOrDefault();
+            claim cl = await (from c in db.claims where c.ActiveProductItems_ID == activeProductItem_ID select c).SingleOrDefaultAsync();
             DTOclaim dtoClaim = new DTOclaim(cl);
-            return dtoClaim;
+
+            if (dtoClaim == null)
+            {
+                return NotFound();
+            }
+            return Ok(dtoClaim);
 
         }
 
