@@ -108,7 +108,7 @@ namespace NanofinAPI.Controllers
         public HttpResponseMessage GetTestFile()
         {
             HttpResponseMessage result = null;
-            var localFilePath = HttpContext.Current.Server.MapPath("/UploadFiles/MargTest/MatriekSertifikaat.pdf");
+            var localFilePath = HttpContext.Current.Server.MapPath("/UploadFiles/claims/Khaya Cover/12491/MF passport.pdf");
 
             if (!File.Exists(localFilePath))
             {
@@ -120,7 +120,7 @@ namespace NanofinAPI.Controllers
                 result = Request.CreateResponse(HttpStatusCode.OK);
                 result.Content = new StreamContent(new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
                 result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-                result.Content.Headers.ContentDisposition.FileName = "MatriekSertifikaat.pdf";
+                result.Content.Headers.ContentDisposition.FileName = "MF passport.pdf";
             }
 
             
