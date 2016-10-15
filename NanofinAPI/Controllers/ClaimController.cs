@@ -250,6 +250,15 @@ namespace NanofinAPI.Controllers
             return toReturn;
         }
 
+
+        [HttpGet]
+        public dtoViewClaimApplication getSingleClaimToBeProcessed(int ActiveProdID)
+        {
+            claim cl = (from c in db.claims where c.ActiveProductItems_ID == ActiveProdID select c).SingleOrDefault();
+            dtoViewClaimApplication toRet = new dtoViewClaimApplication(cl);
+            return toRet;
+        }
+
         //Get a claim's uploadDocumentPath
         [HttpGet]
         public string getClaimUploadedDocsPath(int ClaimID)
