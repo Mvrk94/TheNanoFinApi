@@ -105,10 +105,10 @@ namespace NanofinAPI.Controllers
 
         }
 
-        public HttpResponseMessage GetTestFile()
+        public HttpResponseMessage GetTestFile(string path)
         {
             HttpResponseMessage result = null;
-            var localFilePath = HttpContext.Current.Server.MapPath("/UploadFiles/claims/Khaya Cover/12491/MF passport.pdf");
+            var localFilePath = HttpContext.Current.Server.MapPath(path);// "/UploadFiles/claims/Khaya Cover/12491/MF passport.pdf"
 
             if (!File.Exists(localFilePath))
             {
@@ -122,21 +122,42 @@ namespace NanofinAPI.Controllers
                 result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
                 result.Content.Headers.ContentDisposition.FileName = "MF passport.pdf";
             }
-
-            
-
-            return result;
-
+           return result;
         }
+
+
+        public HttpResponseMessage DownloadFile(string path, string filename)
+        {
+            HttpResponseMessage result = null;
+            var localFilePath = HttpContext.Current.Server.MapPath(path);// "/UploadFiles/claims/Khaya Cover/15561/MF passport.pdf"
+
+            if (!File.Exists(localFilePath))
+            {
+                result = Request.CreateResponse(HttpStatusCode.Gone);
+            }
+            else
+            {
+                // Serve the file to the client
+                result = Request.CreateResponse(HttpStatusCode.OK);
+                result.Content = new StreamContent(new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
+                result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+                result.Content.Headers.ContentDisposition.FileName = filename;
+            }
+            return result;
+        }
+
+
 
         [HttpGet]
         public List<FileInfo> getFileInfoInDirectory(string filepath)
         {
             var localFilePath = HttpContext.Current.Server.MapPath(filepath);
             DirectoryInfo directory = new DirectoryInfo(localFilePath);
+            if (!directory.Exists)
+            {
+                return null;
+            }
             var files = directory.GetFiles().ToList();
-
-         
             return files;
         }
 
@@ -145,9 +166,12 @@ namespace NanofinAPI.Controllers
         {
             var localFilePath = HttpContext.Current.Server.MapPath(filepath);
             DirectoryInfo directory = new DirectoryInfo(localFilePath);
+            if (!directory.Exists)
+            { return null; }
             var files = directory.GetFiles().ToList();
             List<string> namesList = new List<string>();
 
+           
             foreach (FileInfo f in files)
             {  
                 namesList.Add(f.Name);
