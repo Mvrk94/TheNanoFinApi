@@ -80,6 +80,22 @@ namespace NanofinAPI.Controllers
             return newDTO;
         }
 
+        [HttpPost]
+        public async Task<IHttpActionResult> PostClaimForChris(Nullable<int> Consumer_ID, Nullable<int> ActiveProductItems_ID, string capturedClaimFormDataJson, Nullable<DateTime> claimDate, string claimStatus, string claimPaymentFinalised)
+        {
+            claim newClaim = new claim();
+            newClaim.Consumer_ID = Consumer_ID;
+            newClaim.ActiveProductItems_ID = ActiveProductItems_ID;
+            newClaim.capturedClaimFormDataJson = capturedClaimFormDataJson;
+            newClaim.claimDate = claimDate;
+            newClaim.claimStatus = claimStatus;
+            newClaim.claimPaymentFinalised = claimPaymentFinalised;
+            db.claims.Add(newClaim);
+            await db.SaveChangesAsync();
+
+            return StatusCode(HttpStatusCode.OK);
+        }
+
         [HttpGet]
    
         public int GetClaimID(int activeProductID)
