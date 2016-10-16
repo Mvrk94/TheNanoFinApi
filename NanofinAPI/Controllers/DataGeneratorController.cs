@@ -123,7 +123,7 @@ namespace NanofinAPI.Controllers
 
 
         [HttpGet]
-        public async Task<Boolean> GenerateTransactiions(int consumerStart, int resell, int monthStart)
+        public async Task<Boolean> GenerateTransactiions(int consumerStart, int numResellers, int monthStart, int yearStart)
         {
 
             var res = db.resellers.ToArray();
@@ -143,8 +143,8 @@ namespace NanofinAPI.Controllers
             Random random = new Random();
             int resllerCounter;
             int continueM = consumerStart;
-            DateTime  LASTYear  =  new DateTime (2016,monthStart,01);
-             resllerCounter = resell;
+            DateTime  LASTYear  =  new DateTime (yearStart, monthStart,01);
+             resllerCounter = numResellers;
             while(LASTYear < DateTime.Now)
             {
 
@@ -263,12 +263,12 @@ namespace NanofinAPI.Controllers
                         purchases.Add(purchase);
                     }
                     int resID = res.ElementAt(r).User_ID;
-                 //   await wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
+                    await wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
 
 
                     foreach( var s  in purchases)
                     {
-                     //   await wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost + 3,  LASTYear.AddHours(24 + random.Next(92)));
+                        await wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost + 3,  LASTYear.AddHours(24 + random.Next(92)));
                         int count = 0;
                         foreach( var pur  in s.data)
                         {

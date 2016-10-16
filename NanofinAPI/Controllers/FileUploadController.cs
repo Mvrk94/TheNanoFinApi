@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 
 namespace NanofinAPI.Controllers
@@ -104,26 +105,108 @@ namespace NanofinAPI.Controllers
 
         }
 
-
-        //to download files...Content still to fix
-        [HttpGet]
-        public HttpResponseMessage getFile()
+        public HttpResponseMessage GetTestFile(string path)
         {
-            var path = System.Web.HttpContext.Current.Server.MapPath("/UploadFiles/letter.pdf"); ;
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
-            result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            result.Content.Headers.ContentDisposition.FileName = Path.GetFileName(path);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            result.Content.Headers.ContentLength = stream.Length;
+            HttpResponseMessage result = null;
+            var localFilePath = HttpContext.Current.Server.MapPath(path);// "/UploadFiles/claims/Khaya Cover/12491/MF passport.pdf"
+
+            if (!File.Exists(localFilePath))
+            {
+                result = Request.CreateResponse(HttpStatusCode.Gone);
+            }
+            else
+            {
+                // Serve the file to the client
+                result = Request.CreateResponse(HttpStatusCode.OK);
+                result.Content = new StreamContent(new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
+                result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+                result.Content.Headers.ContentDisposition.FileName = "MF passport.pdf";
+            }
+           return result;
+        }
+
+
+        public HttpResponseMessage DownloadFile(string path, string filename)
+        {
+            HttpResponseMessage result = null;
+            var localFilePath = HttpContext.Current.Server.MapPath(path);// "/UploadFiles/claims/Khaya Cover/15561/MF passport.pdf"
+
+            if (!File.Exists(localFilePath))
+            {
+                result = Request.CreateResponse(HttpStatusCode.Gone);
+            }
+            else
+            {
+                // Serve the file to the client
+                result = Request.CreateResponse(HttpStatusCode.OK);
+                result.Content = new StreamContent(new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
+                result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+                result.Content.Headers.ContentDisposition.FileName = filename;
+            }
             return result;
         }
 
-     
 
 
-       
+        [HttpGet]
+        public List<FileInfo> getFileInfoInDirectory(string filepath)
+        {
+            var localFilePath = HttpContext.Current.Server.MapPath(filepath);
+            DirectoryInfo directory = new DirectoryInfo(localFilePath);
+            if (!directory.Exists)
+            {
+                return null;
+            }
+            var files = directory.GetFiles().ToList();
+            return files;
+        }
+
+        [HttpGet]
+        public List<string> getFileNamesInDirectory(string filepath)
+        {
+            var localFilePath = HttpContext.Current.Server.MapPath(filepath);
+            DirectoryInfo directory = new DirectoryInfo(localFilePath);
+            if (!directory.Exists)
+            { return null; }
+            var files = directory.GetFiles().ToList();
+            List<string> namesList = new List<string>();
+
+           
+            foreach (FileInfo f in files)
+            {  
+                namesList.Add(f.Name);
+            }
+
+            return namesList;
+        }
+
+
+        [HttpGet]
+        public string rootpath()
+        {
+            String rootPath = HttpContext.Current.Server.MapPath("~");
+            return rootPath;
+        }
+
+        ////to download files...Content still to fix
+        //[HttpGet]
+        //public HttpResponseMessage getFile()
+        //{
+        //    var path = System.Web.HttpContext.Current.Server.MapPath("/UploadFiles/letter.pdf"); ;
+        //    HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+        //    var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+        //    result.Content = new StreamContent(stream);
+        //    result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+        //    result.Content.Headers.ContentDisposition.FileName = Path.GetFileName(path);
+        //    result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+        //    result.Content.Headers.ContentLength = stream.Length;
+        //    return result;
+        //}
+
+
+
+
+
         [HttpDelete]
         public HttpResponseMessage deleteFile(string filePath)
         {

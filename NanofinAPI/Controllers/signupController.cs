@@ -46,9 +46,9 @@ namespace NanofinAPI.Controllers
             tmp.userPassword = encryptPass(userPass);
             tmp.userIsActive = true;
             tmp.userType = userType;
-            if(userType == 11) //user is consumer
+            if(userType == 11) //user is consumer - to be validated by admin
             {
-                tmp.userActivationType = "verified";
+                tmp.userActivationType = "Pending";
             }
             else if (userType == 21) //user is reseller - verified through NF staff
             {

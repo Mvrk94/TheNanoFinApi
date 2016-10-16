@@ -80,6 +80,22 @@ namespace NanofinAPI.Controllers
             return newDTO;
         }
 
+        [HttpPost]
+        public async Task<IHttpActionResult> PostClaimForChris(Nullable<int> Consumer_ID, Nullable<int> ActiveProductItems_ID, string capturedClaimFormDataJson, Nullable<DateTime> claimDate, string claimStatus, string claimPaymentFinalised)
+        {
+            claim newClaim = new claim();
+            newClaim.Consumer_ID = Consumer_ID;
+            newClaim.ActiveProductItems_ID = ActiveProductItems_ID;
+            newClaim.capturedClaimFormDataJson = capturedClaimFormDataJson;
+            newClaim.claimDate = claimDate;
+            newClaim.claimStatus = claimStatus;
+            newClaim.claimPaymentFinalised = claimPaymentFinalised;
+            db.claims.Add(newClaim);
+            await db.SaveChangesAsync();
+
+            return StatusCode(HttpStatusCode.OK);
+        }
+
         [HttpGet]
    
         public int GetClaimID(int activeProductID)
@@ -188,11 +204,17 @@ namespace NanofinAPI.Controllers
 
         [HttpGet]
         //View a specific claim for an active product
-        public DTOclaim getClaim(int activeProductItem_ID)
+        [ResponseType(typeof(DTOclaim))]
+        public async Task<IHttpActionResult> getClaim(int activeProductItem_ID)
         {
-            claim cl = (from c in db.claims where c.ActiveProductItems_ID == activeProductItem_ID select c).SingleOrDefault();
+            claim cl = await (from c in db.claims where c.ActiveProductItems_ID == activeProductItem_ID select c).SingleOrDefaultAsync();
             DTOclaim dtoClaim = new DTOclaim(cl);
-            return dtoClaim;
+
+            if (dtoClaim == null)
+            {
+                return NotFound();
+            }
+            return Ok(dtoClaim);
 
         }
 
@@ -224,7 +246,7 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<dtoViewClaimApplication> viewClaimsToBeProcessed()
         {
-            List<claim> list = (from c in db.claims where c.claimStatus == "In Progress" && c.claimPaymentFinalised == "false" select c).ToList();
+            List<claim> list = (from c in db.claims where (c.claimStatus == "In Progress" && c.claimPaymentFinalised == "false") || (c.claimStatus == "Accepted" && c.claimPaymentFinalised =="false") select c).ToList();
             List<dtoViewClaimApplication> toReturn = new List<dtoViewClaimApplication>();
 
             foreach (claim c in list)
@@ -234,9 +256,52 @@ namespace NanofinAPI.Controllers
             return toReturn;
         }
 
-        //Accept/Reject Claim
+
+        [HttpGet]
+        public dtoViewClaimApplication getSingleClaimToBeProcessed(int claimID)
+        {
+            claim cl = (from c in db.claims where c.Claim_ID == claimID select c).SingleOrDefault();
+            dtoViewClaimApplication toRet = new dtoViewClaimApplication(cl);
+            return toRet;
+        }
+
+        //Get a claim's uploadDocumentPath
+        [HttpGet]
+        public string getClaimUploadedDocsPath(int ClaimID)
+        {
+            string docPath = (from d in db.claimuploaddocuments where d.Claim_ID == ClaimID select d.claimUploadDocumentPath).SingleOrDefault();
+        
+            return docPath;
+        }
+
+        //Accept/Reject Claim: Claim status
+        [HttpPut]
+        public async Task<IHttpActionResult> updateClaimStatus(int ClaimID, string status)
+        {
+            claim toUpdate = (from c in db.claims where c.Claim_ID == ClaimID select c).SingleOrDefault();
+            DTOclaim dtoClaim = new DTOclaim(toUpdate);
+            dtoClaim.claimStatus = status;
+            toUpdate = EntityMapper.updateEntity(toUpdate, dtoClaim);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.OK);
+
+        }
 
 
+        //Set that the claim has been payed.
+        [HttpPut]
+        public async Task<IHttpActionResult> updateClaimPaymentStatus(int ClaimID, string paymentStatus)
+        {
+            claim toUpdate = (from c in db.claims where c.Claim_ID == ClaimID select c).SingleOrDefault();
+            DTOclaim dtoClaim = new DTOclaim(toUpdate);
+            dtoClaim.claimPaymentFinalised = paymentStatus;
+            toUpdate = EntityMapper.updateEntity(toUpdate, dtoClaim);
+            db.Entry(toUpdate).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return StatusCode(HttpStatusCode.OK);
+
+        }
 
         //Confirm payment of claim...doc upload
 

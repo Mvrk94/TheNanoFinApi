@@ -19,6 +19,22 @@ namespace NanofinAPI.Controllers
         database_nanofinEntities db = new database_nanofinEntities();
         //redeem  -> accept / reject(refund)
 
+
+
+       
+
+
+         [HttpPost]
+        [ResponseType(typeof(bool))]
+        public async Task<bool> resellerBuyBulk(int userID, int amount)
+        {
+            MResellerController resellerCtrl = new MResellerController(userID);
+            resellerCtrl = await resellerCtrl.init();
+            await resellerCtrl.buyBulk(Decimal.ToInt32(amount));
+            return true;
+        }
+
+
         [HttpPost]
         [ResponseType(typeof(bool))]
         public async Task<bool> consumerRedeem(int productID, int userID, int amount)
@@ -79,6 +95,10 @@ namespace NanofinAPI.Controllers
             return true;
         }
 
+        
+
+
+        
 
 
 
