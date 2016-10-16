@@ -94,6 +94,9 @@ namespace NanofinAPI.Models
         public virtual DbSet<clientswithunprocessedapplication> clientswithunprocessedapplications { get; set; }
         public virtual DbSet<consumerpreferencesreport> consumerpreferencesreports { get; set; }
         public virtual DbSet<getallconsumerinformation> getallconsumerinformations { get; set; }
+        public virtual DbSet<resavgamountsendpermonth> resavgamountsendpermonths { get; set; }
+        public virtual DbSet<resunitssendpermonth> resunitssendpermonths { get; set; }
+        public virtual DbSet<resvouchersendvessold> resvouchersendvessolds { get; set; }
     
         public virtual ObjectResult<monthlyProvinceSales_Result> monthlyProvinceSales(Nullable<int> providerID)
         {

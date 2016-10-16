@@ -115,6 +115,9 @@
         <EntityTypeShape EntityType="nanofinEntites.clientswithunprocessedapplication" Width="1.5" PointX="17.375" PointY="9.75" />
         <EntityTypeShape EntityType="nanofinEntites.consumerpreferencesreport" Width="1.5" PointX="5.375" PointY="9.75" />
         <EntityTypeShape EntityType="nanofinEntites.getallconsumerinformation" Width="1.5" PointX="17.375" PointY="12.75" />
+        <EntityTypeShape EntityType="nanofinEntites.resavgamountsendpermonth" Width="1.5" PointX="17.75" PointY="17.75" />
+        <EntityTypeShape EntityType="nanofinEntites.resunitssendpermonth" Width="1.5" PointX="0.75" PointY="18.75" />
+        <EntityTypeShape EntityType="nanofinEntites.resvouchersendvessold" Width="1.5" PointX="2.75" PointY="18.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

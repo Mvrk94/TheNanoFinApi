@@ -82,7 +82,7 @@ namespace NanoFinAPI.Controllers
 
         // POST: api/products Add
         [ResponseType(typeof(product))]
-        public async Task<IHttpActionResult> Postproduct(DTOproduct productT)
+        public  IHttpActionResult Postproduct(DTOproduct productT)
         {
             if (!ModelState.IsValid)
             {

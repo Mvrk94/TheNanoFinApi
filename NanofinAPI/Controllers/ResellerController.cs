@@ -72,5 +72,27 @@ namespace NanofinAPI.Controllers
             db.SaveChanges();
         }
 
+
+        #region Reseller Reports
+
+        //last 6 months
+        public List<resavgamountsendpermonth> getAverageAmountSentPerMonth(int userID)
+        {
+            return db.resavgamountsendpermonths.Where(c => c.User_ID == userID).ToList();
+        }
+
+        //last 6  months
+        public List<resunitssendpermonth>  getNumUnitsSendPerMonth(int userID)
+        {
+            return db.resunitssendpermonths.Where(c => c.User_ID == userID).ToList();
+        }
+
+        public List<resvouchersendvessold> getCurrentMonthSalesAndSoldVouchers(int userID)
+        {
+            return db.resvouchersendvessolds.Where(c => c.User_ID == userID).ToList();
+        }
+
+        #endregion 
+
     }
 }

@@ -573,7 +573,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
-
         public static productlocationmonthlysale updateEntity(productlocationmonthlysale entityObjct, DTOproductlocationmonthlysale dto)
         {
             if (entityObjct == null) entityObjct = new productlocationmonthlysale();

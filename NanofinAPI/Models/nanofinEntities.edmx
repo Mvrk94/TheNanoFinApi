@@ -936,6 +936,17 @@ warning 6002: The table/view 'def.database_nanofin.provincialproducttypedistribu
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.resavgamountsendpermonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="resavgamountsendpermonth">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="TransactionAmount" Type="decimal" Precision="34" Scale="6" />
+          <Property Name="datum" Type="varchar" MaxLength="37" />
+          <Property Name="monthDate" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.resellersalespermonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="resellersalespermonth">
           <Key>
@@ -970,6 +981,31 @@ warning 6002: The table/view 'def.database_nanofin.resellersendvouchergenderspec
           <Property Name="date_format(vouchertransaction.transactionDate,&quot;%Y-%b&quot;)" Type="varchar" MaxLength="37" />
           <Property Name="gender" Type="varchar" MaxLength="10" />
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.resunitssendpermonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="resunitssendpermonth">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="numUnitsSold" />
+          </Key>
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="numUnitsSold" Type="bigint" Nullable="false" />
+          <Property Name="datum" Type="varchar" MaxLength="37" />
+          <Property Name="monthDate" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.resvouchersendvessold' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="resvouchersendvessold">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="TransactionType_ID" />
+            <PropertyRef Name="transactionDate" />
+          </Key>
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="TransactionAmount" Type="decimal" Precision="30" Scale="2" />
+          <Property Name="TransactionType_ID" Type="int" Nullable="false" />
+          <Property Name="transactionDate" Type="datetime" Precision="0" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.salespermonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1947,6 +1983,14 @@ FROM `provincialinsurancetypesales` AS `provincialinsurancetypesales`</DefiningQ
 `provincialproducttypedistributionlastmonth`.`sales`
 FROM `provincialproducttypedistributionlastmonth` AS `provincialproducttypedistributionlastmonth`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="resavgamountsendpermonth" EntityType="Self.resavgamountsendpermonth" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`resavgamountsendpermonth`.`User_ID`, 
+`resavgamountsendpermonth`.`TransactionAmount`, 
+`resavgamountsendpermonth`.`datum`, 
+`resavgamountsendpermonth`.`monthDate`
+FROM `resavgamountsendpermonth` AS `resavgamountsendpermonth`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="resellersalespermonth" EntityType="Self.resellersalespermonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `resellersalespermonth`.`VoucherSentTo`, 
@@ -1970,6 +2014,22 @@ FROM `resellersendmonthlysales` AS `resellersendmonthlysales`</DefiningQuery>
 `resellersendvouchergenderspecific`.`gender`, 
 `resellersendvouchergenderspecific`.`sales`
 FROM `resellersendvouchergenderspecific` AS `resellersendvouchergenderspecific`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="resunitssendpermonth" EntityType="Self.resunitssendpermonth" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`resunitssendpermonth`.`User_ID`, 
+`resunitssendpermonth`.`numUnitsSold`, 
+`resunitssendpermonth`.`datum`, 
+`resunitssendpermonth`.`monthDate`
+FROM `resunitssendpermonth` AS `resunitssendpermonth`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="resvouchersendvessold" EntityType="Self.resvouchersendvessold" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`resvouchersendvessold`.`User_ID`, 
+`resvouchersendvessold`.`TransactionAmount`, 
+`resvouchersendvessold`.`TransactionType_ID`, 
+`resvouchersendvessold`.`transactionDate`
+FROM `resvouchersendvessold` AS `resvouchersendvessold`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="salespermonth" EntityType="Self.salespermonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
@@ -2423,7 +2483,10 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <EntitySet Name="clientswithunprocessedapplications" EntityType="nanofinEntites.clientswithunprocessedapplication" />
           <EntitySet Name="consumerpreferencesreports" EntityType="nanofinEntites.consumerpreferencesreport" />
           <EntitySet Name="getallconsumerinformations" EntityType="nanofinEntites.getallconsumerinformation" />
-        </EntityContainer>
+          <EntitySet Name="resavgamountsendpermonths" EntityType="nanofinEntites.resavgamountsendpermonth" />
+          <EntitySet Name="resunitssendpermonths" EntityType="nanofinEntites.resunitssendpermonth" />
+          <EntitySet Name="resvouchersendvessolds" EntityType="nanofinEntites.resvouchersendvessold" />
+          </EntityContainer>
         <EntityType Name="activeproductitem">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
@@ -3946,6 +4009,36 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="userContactNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="consumerAddress" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="resavgamountsendpermonth">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionAmount" Type="Decimal" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="monthDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="resunitssendpermonth">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="numUnitsSold" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="numUnitsSold" Type="Int64" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="monthDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="resvouchersendvessold">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="TransactionType_ID" />
+            <PropertyRef Name="transactionDate" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionAmount" Type="Decimal" />
+          <Property Name="TransactionType_ID" Type="Int32" Nullable="false" />
+          <Property Name="transactionDate" Type="DateTime" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4880,7 +4973,37 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="resavgamountsendpermonths">
+            <EntityTypeMapping TypeName="nanofinEntites.resavgamountsendpermonth">
+              <MappingFragment StoreEntitySet="resavgamountsendpermonth">
+                <ScalarProperty Name="monthDate" ColumnName="monthDate" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resunitssendpermonths">
+            <EntityTypeMapping TypeName="nanofinEntites.resunitssendpermonth">
+              <MappingFragment StoreEntitySet="resunitssendpermonth">
+                <ScalarProperty Name="monthDate" ColumnName="monthDate" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="numUnitsSold" ColumnName="numUnitsSold" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resvouchersendvessolds">
+            <EntityTypeMapping TypeName="nanofinEntites.resvouchersendvessold">
+              <MappingFragment StoreEntitySet="resvouchersendvessold">
+                <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
+                <ScalarProperty Name="TransactionType_ID" ColumnName="TransactionType_ID" />
+                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
