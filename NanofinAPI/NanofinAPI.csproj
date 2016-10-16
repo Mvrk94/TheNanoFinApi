@@ -207,6 +207,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BCTestController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\ConsumerWalletHandlerController.cs" />
