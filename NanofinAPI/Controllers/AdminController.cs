@@ -20,7 +20,7 @@ namespace NanofinAPI.Controllers
         [ResponseType(typeof(List<DTOuser>))]
         public IHttpActionResult getUnvalidatedConsumers()
         {
-            List<user> unvalidatedUsers = (from l in db.users where l.userActivationType == null || l.userActivationType == "" || l.userActivationType == String.Empty && l.userType == 11 select l).ToList();
+            List<user> unvalidatedUsers = (from l in db.users where l.userActivationType == null || l.userActivationType == "" || l.userActivationType == "Pending" || l.userActivationType == String.Empty && l.userType == 11 select l).ToList();
             if(unvalidatedUsers.Count == 0)
             {
                 return BadRequest("No unvalidated users");
@@ -31,7 +31,7 @@ namespace NanofinAPI.Controllers
                 {
                     unvalidatedDTOUsers.Add(new DTOuser(u));
                 }
-                return Ok();
+                return Ok(unvalidatedDTOUsers);
             }
         }
 
