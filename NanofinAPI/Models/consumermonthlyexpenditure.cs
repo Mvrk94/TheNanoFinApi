@@ -10,8 +10,13 @@
 namespace NanofinAPI.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class ProductLocationSales1_Result
+    public partial class consumermonthlyexpenditure
     {
+        public int @ref { get; set; }
+        public int consumerRef { get; set; }
+        public string datum { get; set; }
+        public Nullable<decimal> monthEXP { get; set; }
     }
 }

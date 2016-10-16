@@ -150,33 +150,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
-
-        public static consumerinfosummary updateEntity(consumerinfosummary entityObjct, DTOconsumerinfosummary dto)
-        {
-            if (entityObjct == null) entityObjct = new consumerinfosummary();
-
-            entityObjct.idConsumer = dto.idConsumer;
-            entityObjct.userFirstName = dto.userFirstName;
-            entityObjct.userLastName = dto.userLastName;
-            entityObjct.IDnumber = dto.IDnumber;
-            entityObjct.City = dto.City;
-            entityObjct.Province = dto.Province;
-            entityObjct.gender = dto.gender;
-            entityObjct.maritalStatus = dto.maritalStatus;
-            entityObjct.employmentStatus = dto.employmentStatus;
-            entityObjct.claimRate = dto.claimRate;
-            entityObjct.RiskCategory = dto.RiskCategory;
-            entityObjct.numUnprocessed = dto.numUnprocessed;
-            entityObjct.ageRiskValue = dto.ageRiskValue;
-            entityObjct.genderRiskValue = dto.genderRiskValue;
-            entityObjct.maritalStatusRiskValue = dto.maritalStatusRiskValue;
-            entityObjct.employmentStatusRiskValue = dto.employmentStatusRiskValue;
-            entityObjct.UnemploymentRate = dto.UnemploymentRate;
-
-            return entityObjct;
-        }
-
-
         public static consumernumclaim updateEntity(consumernumclaim entityObjct, DTOconsumernumclaim dto)
         {
             if (entityObjct == null) entityObjct = new consumernumclaim();
@@ -319,24 +292,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             entityObjct.documentDescription = dto.documentDescription;
             entityObjct.docPreferredFormat = dto.docPreferredFormat;
             entityObjct.docPreparationRequired = dto.docPreparationRequired;
-
-            return entityObjct;
-        }
-
-
-        public static individualconsumerprofilerrawdata updateEntity(individualconsumerprofilerrawdata entityObjct, DTOindividualconsumerprofilerrawdata dto)
-        {
-            if (entityObjct == null) entityObjct = new individualconsumerprofilerrawdata();
-
-            entityObjct.Consumer_ID = dto.Consumer_ID;
-            entityObjct.User_ID = dto.User_ID;
-            entityObjct.gender = dto.gender;
-            entityObjct.maritalStatus = dto.maritalStatus;
-            entityObjct.employmentStatus = dto.employmentStatus;
-            entityObjct.numPurchases = dto.numPurchases;
-            entityObjct.age = dto.age;
-            entityObjct.numClaims = dto.numClaims;
-            entityObjct.ratio = dto.ratio;
 
             return entityObjct;
         }
@@ -520,15 +475,6 @@ namespace NanofinAPI.Models.DTOEnvironment
         }
 
 
-        public static monthlyProvinceSales_Result updateEntity(monthlyProvinceSales_Result entityObjct, DTOmonthlyProvinceSales_Result dto)
-        {
-            if (entityObjct == null) entityObjct = new monthlyProvinceSales_Result();
-
-
-            return entityObjct;
-        }
-
-
         public static monthlyprovincialproducttypedistribution updateEntity(monthlyprovincialproducttypedistribution entityObjct, DTOmonthlyprovincialproducttypedistribution dto)
         {
             if (entityObjct == null) entityObjct = new monthlyprovincialproducttypedistribution();
@@ -543,14 +489,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
-
-        public static nanofinEntities updateEntity(nanofinEntities entityObjct, DTOnanofinEntities dto)
-        {
-            if (entityObjct == null) entityObjct = new nanofinEntities();
-
-
-            return entityObjct;
-        }
 
 
         public static notificationlog updateEntity(notificationlog entityObjct, DTOnotificationlog dto)
@@ -651,22 +589,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         }
 
 
-        public static ProductLocationSales_Result updateEntity(ProductLocationSales_Result entityObjct, DTOProductLocationSales_Result dto)
-        {
-            if (entityObjct == null) entityObjct = new ProductLocationSales_Result();
-
-
-            return entityObjct;
-        }
-
-
-        public static productPredictedSalesPerLocation_Result updateEntity(productPredictedSalesPerLocation_Result entityObjct, DTOproductPredictedSalesPerLocation_Result dto)
-        {
-            if (entityObjct == null) entityObjct = new productPredictedSalesPerLocation_Result();
-
-
-            return entityObjct;
-        }
+       
 
 
         public static productprovider updateEntity(productprovider entityObjct, DTOproductprovider dto)
@@ -877,18 +800,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         }
 
 
-        public static saleslastmonth updateEntity(saleslastmonth entityObjct, DTOsaleslastmonth dto)
-        {
-            if (entityObjct == null) entityObjct = new saleslastmonth();
-
-            entityObjct.activeProductItemStartDate = dto.activeProductItemStartDate;
-            entityObjct.datum = dto.datum;
-            entityObjct.Product_ID = dto.Product_ID;
-            entityObjct.productName = dto.productName;
-            entityObjct.sales = dto.sales;
-
-            return entityObjct;
-        }
+       
 
 
         public static salespermonth updateEntity(salespermonth entityObjct, DTOsalespermonth dto)

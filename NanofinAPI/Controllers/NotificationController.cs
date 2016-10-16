@@ -146,13 +146,13 @@ namespace NanofinAPI.Controllers
                     dtoOtpView.otpCode = null;
                     dtoOtpView.otpRetryCount = 3;
                     dtoOtpView.otpExpirationTime = null;
-                    dtoOtpView.otpNextAllowedTime = DateTime.Now.AddMinutes(5);
+                    dtoOtpView.otpNextAllowedTime = DateTime.Now.AddMinutes(2);//block time
                     dtoOtpView.otpRecordCreated = DateTime.Now;
 
                     toUpdate = EntityMapper.updateEntity(toUpdate, dtoOtpView);
                     db.Entry(toUpdate).State = EntityState.Modified;
                     db.SaveChanges();
-                    return Content(HttpStatusCode.Forbidden, "User blocked, OTP not Resent");
+                    return Content(HttpStatusCode.OK, "User blocked, OTP not Resent");
                 }
                 return StatusCode(HttpStatusCode.NoContent);
             }
@@ -165,7 +165,7 @@ namespace NanofinAPI.Controllers
                     sendEmailViaWebApi(correctPhoneNum, "Hello from Nanofin! Your OTP for your transaction is: " + newOTP);
                     dtoOtpView.otpCode = newOTP;
                     dtoOtpView.otpRetryCount = 0;
-                    dtoOtpView.otpExpirationTime = DateTime.Now.AddMinutes(3);
+                    dtoOtpView.otpExpirationTime = DateTime.Now.AddMinutes(1);//expiry time
                     dtoOtpView.otpNextAllowedTime = null; //remains null as long as the user isn't blocked
                     dtoOtpView.otpRecordCreated = DateTime.Now;
 
@@ -176,14 +176,15 @@ namespace NanofinAPI.Controllers
                 }
                 else //user is still blocked
                 {
-                    return Content(HttpStatusCode.Forbidden, "User is still blocked");
+                    return Content(HttpStatusCode.OK, "User is still blocked");
                     
-                }
+                } 
 
             }
 
         }
 
+        [HttpGet]
         public string checkEnteredOTP(int UserID, string enteredOTP)
         {
             //cases: 1. expired OTP, 2. Valid OTP, 3. Invalid OTP
@@ -196,7 +197,7 @@ namespace NanofinAPI.Controllers
 
             if (Nullable.Compare(nowTime, expiryDate) > 0) //now is later than expiry: so OTP has expired!
             {
-                return "Your OTP has expired, please retry the transaction"; //access denied?
+                return "OTP Expired";//, please retry the transaction"; //access denied?
             }
             else //OTP has not expired
             {
@@ -217,11 +218,11 @@ namespace NanofinAPI.Controllers
                     sendUserOTPAndSaveOTP(UserID, true);//resend-has 2 paths
                     if (otpView.otpRetryCount < 3)
                     {
-                        return "OTP Invalid: New OTP Resent";
+                        return "OTP Invalid";
                     }
                     else
                     {
-                        return "User blocked, OTP not resent";
+                        return "User Blocked";
                     }
                             
                    

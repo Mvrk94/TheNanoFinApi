@@ -10,8 +10,13 @@
 namespace NanofinAPI.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class monthlyProvinceSales1_Result
+    public partial class consumerpreference
     {
+        public int pRef { get; set; }
+        public int consumerRef { get; set; }
+        public int Product_ID { get; set; }
+        public long numPurchase { get; set; }
     }
 }

@@ -10,8 +10,12 @@
 namespace NanofinAPI.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class productPredictedSalesPerLocation1_Result
+    public partial class consumerpreferencesreport
     {
+        public int Product_ID { get; set; }
+        public string productName { get; set; }
+        public long count { get; set; }
     }
 }

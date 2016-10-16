@@ -12,14 +12,13 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class monthlylocationsale
+    public partial class clientswithunprocessedapplication
     {
-        public int ActiveProductItems_ID { get; set; }
-        public string dateM { get; set; }
-        public Nullable<System.DateTime> datum { get; set; }
-        public int Product_ID { get; set; }
-        public string productName { get; set; }
-        public Nullable<int> transactionLocation { get; set; }
-        public Nullable<decimal> sales { get; set; }
+        public int idConsumer { get; set; }
+        public string clientName { get; set; }
+        public Nullable<int> Consumer_ID { get; set; }
+        public Nullable<decimal> claimRate { get; set; }
+        public string RiskCategory { get; set; }
+        public long numUnprocessed { get; set; }
     }
 }

@@ -155,4 +155,35 @@ namespace NanofinAPI.Models.DTOEnvironment
 
     }
 
+    public class dtoViewClaimApplication
+    {
+        public int claimID;
+        public Nullable<DateTime> claimDate;
+        public string consumerName;
+        public string consumerSurname;
+        public Nullable<int> activeProductID;
+        public string productName;
+        public string capturedClaimFormData;
+        public string claimStatus;
+        public string claimPaymentFinalised;
+
+      
+
+        public dtoViewClaimApplication(claim cl)
+        {
+            this.claimID = cl.Claim_ID;
+            this.claimDate = cl.claimDate;
+            this.consumerName = cl.consumer.user.userFirstName;
+            this.consumerSurname = cl.consumer.user.userLastName;
+            this.activeProductID = cl.ActiveProductItems_ID;
+            this.productName = cl.activeproductitem.product.productName;
+            this.capturedClaimFormData = cl.capturedClaimFormDataJson;
+            this.claimStatus = cl.claimStatus;
+            this.claimPaymentFinalised = cl.claimPaymentFinalised;
+           
+        }
+    }
+
+
+
 }

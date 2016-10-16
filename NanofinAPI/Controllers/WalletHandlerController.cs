@@ -494,8 +494,13 @@ namespace NanoFinAPI.Controllers
         }
 
         public bool isUserConsumer(int UserID)
-        {
-            return db.consumers.Where(c => c.User_ID == UserID).Any();
+        { //'usertype 11 = consumer, usertype 21 is reseller'
+
+            Nullable<int> userTypeId = (from c in db.users where c.User_ID == UserID select c.userType).SingleOrDefault();
+            if (userTypeId == 11)
+            { return true; }
+            return false;
+            //return db.consumers.Where(c => c.User_ID == UserID).Any();
         }
 
     }

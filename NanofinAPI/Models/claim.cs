@@ -21,16 +21,16 @@ namespace NanofinAPI.Models
         }
     
         public int Claim_ID { get; set; }
+        public Nullable<int> Consumer_ID { get; set; }
         public Nullable<int> ActiveProductItems_ID { get; set; }
         public string capturedClaimFormDataJson { get; set; }
         public Nullable<System.DateTime> claimDate { get; set; }
         public string claimStatus { get; set; }
         public string claimPaymentFinalised { get; set; }
-        public Nullable<int> Consumer_ID { get; set; }
     
         public virtual activeproductitem activeproductitem { get; set; }
+        public virtual consumer consumer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<claimuploaddocument> claimuploaddocuments { get; set; }
-        public virtual consumer consumer { get; set; }
     }
 }

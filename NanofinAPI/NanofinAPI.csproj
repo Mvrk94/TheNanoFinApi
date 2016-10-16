@@ -210,6 +210,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BCTestController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
+    <Compile Include="Controllers\ConsumerProfilesController.cs" />
     <Compile Include="Controllers\ConsumerWalletHandlerController.cs" />
     <Compile Include="Controllers\ContactListController.cs" />
     <Compile Include="Controllers\DataGeneratorController.cs" />
@@ -238,13 +239,28 @@
     <Compile Include="Models\claimuploaddocument.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\clientswithunprocessedapplication.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\consumer.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\consumerinfosummary.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\consumermonthlyexpenditure.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\consumernumclaim.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\consumerpreference.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\consumerpreferencesreport.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\consumerprofiledata.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\consumerriskvalue.cs">
@@ -263,6 +279,9 @@
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\demographicconsumerproductlocationsaleslastmonth.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\demographicriskvalue.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\documentspecification.cs">
@@ -292,6 +311,9 @@
     <Compile Include="Models\DTOEnvironment\Reports.cs" />
     <Compile Include="Models\DTOEnvironment\reportsMaster.cs" />
     <Compile Include="Models\DTOEnvironment\ValidatorDTO.cs" />
+    <Compile Include="Models\getallconsumerinformation.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\individualconsumerprofilerrawdata.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
@@ -323,9 +345,6 @@
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\monthlyproductsalesperlocation.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\monthlyProvinceSales1_Result.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\monthlyprovincesalesview.cs">
@@ -370,13 +389,7 @@
     <Compile Include="Models\productlocationmonthlysale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductLocationSales1_Result.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProductLocationSales_Result.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\productPredictedSalesPerLocation1_Result.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\productPredictedSalesPerLocation_Result.cs">
@@ -422,9 +435,6 @@
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\risk_agegroup.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\saleslastmonth.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\salespermonth.cs">

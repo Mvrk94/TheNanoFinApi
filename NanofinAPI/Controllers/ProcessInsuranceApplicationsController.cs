@@ -17,65 +17,67 @@ namespace NanofinAPI.Controllers
         database_nanofinEntities db = new database_nanofinEntities();
 
         [HttpPost]
-        public List<DTOconsumerriskvalue> getUnprocessedApplications()
+        public List<clientswithunprocessedapplication> getUnprocessedApplications()
         {
-            var toreturn = new List<DTOconsumerriskvalue>();
-            var list = (from c in db.consumerriskvalues where c.numUnprocessed > 0 select c);
-
-            foreach(var p  in list)
-            {
-                toreturn.Add(new DTOconsumerriskvalue(p));
-            }
-
-            return toreturn;
+            return  db.clientswithunprocessedapplications.ToList();
         }
 
 
 
-        [HttpPost]
-        public Boolean ProcessBatchApplication(int [] consumerList)
-        {
+        //[HttpPost]
+        //public Boolean ProcessBatchApplication(int [] consumerList)
+        //{
           
-            foreach( var  i  in consumerList)
-            {
-                db.processApplications1(i);
-            }
-            db.UpdateConsumerRiskValues();
+        //    foreach( var  i  in consumerList)
+        //    {
+        //       db.processApplications1(i);
+        //    }
+        //   db.UpdateConsumerRiskProfiles();
 
-            return true;
-        }
+        //    return true;
+        //}
 
         [HttpPost]
-        public Boolean ProcessApplication(int  consumerID)
+        public Boolean ProcessAllConsumerApplication(int  consumerID)
         {
             db.processApplications1(consumerID);
-            db.UpdateConsumerRiskValues();
+            db.UpdateConsumerRiskProfiles();
             return true;
         }
 
         [HttpPost]
         public List<unprocessedapplication> getConsummerUnProccessedPurchases(int idConsumer)
         {
-            var ConsumerID = db.consumerriskvalues.Single(c => c.idConsumer == idConsumer).Consumer_ID;
+            var ConsumerID = db.consumerriskvalues.Find(idConsumer).Consumer_ID;
 
-            return (from c in db.unprocessedapplications where c.Consumer_ID == ConsumerID select c).ToList();
+            return (from c in db.unprocessedapplications  select c).ToList();
         }
 
         [HttpPost]
         public Boolean ProcessSingleApplication(int activeProductID)
         {
-            db.processSingleApplication2(activeProductID);
+            db.processSingleClientApplication(activeProductID);
             return true;
         }
 
         [HttpPost]
-        public  List<consumerinfosummary> getUserInformation(int idConsumer)
+        public  getallconsumerinformation getUserInformation(int idConsumer)
         {
-            return db.consumerinfosummaries.Where(c => c.idConsumer == idConsumer).ToList();
+            return db.getallconsumerinformations.SingleOrDefault(c => c.idConsumer == idConsumer);
         }
 
         [HttpPost]
-        public async void RejectedApplication(int ActiveProductID)
+        public Boolean processApplicationNativeImp(int activeProductID)
+        {
+            var toDeactivate = db.activeproductitems.Find(activeProductID);
+            toDeactivate.activeProductItemPolicyNum = "PP_IM_" + activeProductID.ToString();
+            db.SaveChanges();
+            return true;
+        }
+
+
+        [HttpPost]
+        public async Task RejectedApplication(int ActiveProductID)
         {
             var rejectProd = db.activeproductitems.Find(ActiveProductID);
             var prodValue = rejectProd.productValue;
@@ -95,10 +97,11 @@ namespace NanofinAPI.Controllers
             message += prodIDToProdName(rejectProd.Product_ID);
             message += "; has been rejected. Your Account has been refunded with R";
             message += rejectProd.productValue.ToString() + ".";
-            db.UpdateConsumerRiskValues();
+            //db.UpdateConsumerRiskValues();
             NC.SendSMS(tempUser.userContactNumber, message);
+
             //reflect on blockchain
-            string productName =  prodIDToProdName(rejectProd.Product_ID);
+            string productName = prodIDToProdName(rejectProd.Product_ID);
             MConsumerController consumerCtrl = new MConsumerController(tempUser.User_ID);
             consumerCtrl = await consumerCtrl.init();
             await consumerCtrl.refundConsumer(productName, Decimal.ToInt32(prodValue));

@@ -243,51 +243,6 @@ namespace NanofinAPI.Models.DTOEnvironment
     }
 
 
-    public class DTOconsumerinfosummary
-    {
-        public int idConsumer { get; set; }
-        public string userFirstName { get; set; }
-        public string userLastName { get; set; }
-        public string IDnumber { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
-        public string gender { get; set; }
-        public string maritalStatus { get; set; }
-        public string employmentStatus { get; set; }
-        public Nullable<decimal> claimRate { get; set; }
-        public string RiskCategory { get; set; }
-        public Nullable<int> numUnprocessed { get; set; }
-        public Nullable<int> ageRiskValue { get; set; }
-        public Nullable<int> genderRiskValue { get; set; }
-        public Nullable<int> maritalStatusRiskValue { get; set; }
-        public Nullable<int> employmentStatusRiskValue { get; set; }
-        public Nullable<decimal> UnemploymentRate { get; set; }
-
-        public DTOconsumerinfosummary() { }
-
-        public DTOconsumerinfosummary(consumerinfosummary entityObjct)
-        {
-            idConsumer = entityObjct.idConsumer;
-            userFirstName = entityObjct.userFirstName;
-            userLastName = entityObjct.userLastName;
-            IDnumber = entityObjct.IDnumber;
-            City = entityObjct.City;
-            Province = entityObjct.Province;
-            gender = entityObjct.gender;
-            maritalStatus = entityObjct.maritalStatus;
-            employmentStatus = entityObjct.employmentStatus;
-            claimRate = entityObjct.claimRate;
-            RiskCategory = entityObjct.RiskCategory;
-            numUnprocessed = entityObjct.numUnprocessed;
-            ageRiskValue = entityObjct.ageRiskValue;
-            genderRiskValue = entityObjct.genderRiskValue;
-            maritalStatusRiskValue = entityObjct.maritalStatusRiskValue;
-            employmentStatusRiskValue = entityObjct.employmentStatusRiskValue;
-            UnemploymentRate = entityObjct.UnemploymentRate;
-        }
-    }
-
-
     public class DTOconsumernumclaim
     {
         public int Consumer_ID { get; set; }
@@ -519,35 +474,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             documentDescription = entityObjct.documentDescription;
             docPreferredFormat = entityObjct.docPreferredFormat;
             docPreparationRequired = entityObjct.docPreparationRequired;
-        }
-    }
-
-
-    public class DTOindividualconsumerprofilerrawdata
-    {
-        public int Consumer_ID { get; set; }
-        public int User_ID { get; set; }
-        public string gender { get; set; }
-        public string maritalStatus { get; set; }
-        public string employmentStatus { get; set; }
-        public long numPurchases { get; set; }
-        public Nullable<int> age { get; set; }
-        public Nullable<int> numClaims { get; set; }
-        public Nullable<decimal> ratio { get; set; }
-
-        public DTOindividualconsumerprofilerrawdata() { }
-
-        public DTOindividualconsumerprofilerrawdata(individualconsumerprofilerrawdata entityObjct)
-        {
-            Consumer_ID = entityObjct.Consumer_ID;
-            User_ID = entityObjct.User_ID;
-            gender = entityObjct.gender;
-            maritalStatus = entityObjct.maritalStatus;
-            employmentStatus = entityObjct.employmentStatus;
-            numPurchases = entityObjct.numPurchases;
-            age = entityObjct.age;
-            numClaims = entityObjct.numClaims;
-            ratio = entityObjct.ratio;
         }
     }
 
@@ -830,18 +756,6 @@ namespace NanofinAPI.Models.DTOEnvironment
         }
     }
 
-
-    public class DTOmonthlyProvinceSales_Result
-    {
-
-        public DTOmonthlyProvinceSales_Result() { }
-
-        public DTOmonthlyProvinceSales_Result(monthlyProvinceSales_Result entityObjct)
-        {
-        }
-    }
-
-
     public class DTOmonthlyprovincialproducttypedistribution
     {
         public int ActiveProductItems_ID { get; set; }
@@ -861,17 +775,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             Province = entityObjct.Province;
             insuranctTypeDescription = entityObjct.insuranctTypeDescription;
             sales = entityObjct.sales;
-        }
-    }
-
-
-    public class DTOnanofinEntities
-    {
-
-        public DTOnanofinEntities() { }
-
-        public DTOnanofinEntities(nanofinEntities entityObjct)
-        {
         }
     }
 
@@ -1026,28 +929,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             productName = entityObjct.productName;
             Product_ID = entityObjct.Product_ID;
             sales = entityObjct.sales;
-        }
-    }
-
-
-    public class DTOProductLocationSales_Result
-    {
-
-        public DTOProductLocationSales_Result() { }
-
-        public DTOProductLocationSales_Result(ProductLocationSales_Result entityObjct)
-        {
-        }
-    }
-
-
-    public class DTOproductPredictedSalesPerLocation_Result
-    {
-
-        public DTOproductPredictedSalesPerLocation_Result() { }
-
-        public DTOproductPredictedSalesPerLocation_Result(productPredictedSalesPerLocation_Result entityObjct)
-        {
         }
     }
 
@@ -1367,27 +1248,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             description = entityObjct.description;
             lowest = entityObjct.lowest;
             highest = entityObjct.highest;
-        }
-    }
-
-
-    public class DTOsaleslastmonth
-    {
-        public Nullable<System.DateTime> activeProductItemStartDate { get; set; }
-        public string datum { get; set; }
-        public int Product_ID { get; set; }
-        public string productName { get; set; }
-        public Nullable<decimal> sales { get; set; }
-
-        public DTOsaleslastmonth() { }
-
-        public DTOsaleslastmonth(saleslastmonth entityObjct)
-        {
-            activeProductItemStartDate = entityObjct.activeProductItemStartDate;
-            datum = entityObjct.datum;
-            Product_ID = entityObjct.Product_ID;
-            productName = entityObjct.productName;
-            sales = entityObjct.sales;
         }
     }
 
