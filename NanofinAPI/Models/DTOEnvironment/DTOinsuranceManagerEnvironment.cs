@@ -166,7 +166,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public string capturedClaimFormData;
         public string claimStatus;
         public string claimPaymentFinalised;
-
+        public string contactNumber;
       
 
         public dtoViewClaimApplication(claim cl)
@@ -180,6 +180,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             this.capturedClaimFormData = cl.capturedClaimFormDataJson;
             this.claimStatus = cl.claimStatus;
             this.claimPaymentFinalised = cl.claimPaymentFinalised;
+            this.contactNumber = cl.consumer.user.userContactNumber;
            
         }
     }
