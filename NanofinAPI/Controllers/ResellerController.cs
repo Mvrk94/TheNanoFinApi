@@ -75,13 +75,13 @@ namespace NanofinAPI.Controllers
 
         #region Reseller Reports
 
-        //last 6 months
+        //last 6 months- ave amount of all people sold to per month.
         public List<resavgamountsendpermonth> getAverageAmountSentPerMonth(int userID)
         {
             return db.resavgamountsendpermonths.Where(c => c.User_ID == userID).ToList();
         }
 
-        //last 6  months
+        //last 6  months - num units sent per month 
         public List<resunitssendpermonth>  getNumUnitsSendPerMonth(int userID)
         {
             return db.resunitssendpermonths.Where(c => c.User_ID == userID).ToList();
