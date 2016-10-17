@@ -74,8 +74,6 @@ namespace NanofinAPI.Controllers
 
             }
 
-
-
             //check num files:
             for (int iCnt = 0; iCnt <= hfc.Count - 1; iCnt++)
             {
@@ -103,6 +101,19 @@ namespace NanofinAPI.Controllers
                 return "Upload Failed";
             }
 
+        }
+
+        [HttpPost()]
+        public string justCreateANewDirectory(string strDirectory)
+        {
+            string fileUploadDir = "";
+            fileUploadDir = System.Web.Hosting.HostingEnvironment.MapPath("/UploadFiles/" + strDirectory + "/");
+            if (!System.IO.Directory.Exists(fileUploadDir))
+            {
+                System.IO.Directory.CreateDirectory(fileUploadDir);
+                    return fileUploadDir;
+            }
+            return "Directory already exists";
         }
 
         public HttpResponseMessage GetTestFile(string path)
