@@ -25,6 +25,13 @@ namespace NanofinAPI.Controllers
             return db.consumerpreferencesreports.ToList();
         }
 
+
+
+
+
+
+
+
         //Update method consumer table: Additional Sign up Info
         //Accept/Reject Claim: Claim status
         [HttpPut]

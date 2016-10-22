@@ -74,6 +74,15 @@
           <Property Name="numClaims" Type="int" />
           <Property Name="ageGroup_ID" Type="int" />
         </EntityType>
+        <EntityType Name="consumergroups">
+          <Key>
+            <PropertyRef Name="idconsumerGroups" />
+          </Key>
+          <Property Name="idconsumerGroups" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="attributes" Type="varchar" MaxLength="100" />
+          <Property Name="lastupdate" Type="datetime" Precision="0" />
+          <Property Name="claimRate" Type="decimal" Precision="8" Scale="2" />
+        </EntityType>
         <EntityType Name="consumerriskvalues">
           <Key>
             <PropertyRef Name="idConsumer" />
@@ -465,14 +474,6 @@ warning 6002: The table/view 'def.database_nanofin.clientswithunprocessedapplica
           <Property Name="RiskCategory" Type="varchar" MaxLength="45" />
           <Property Name="numUnprocessed" Type="bigint" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'def.database_nanofin.consumeragegroupclaimrate' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="consumeragegroupclaimrate">
-          <Property Name="ageGroup_ID" Type="int" />
-          <Property Name="numPurchase" Type="decimal" Precision="42" Scale="0" />
-          <Property Name="numClaims" Type="decimal" Precision="32" Scale="0" />
-          <Property Name="ratio" Type="decimal" Precision="39" Scale="4" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.consumerinfosummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="consumerinfosummary">
@@ -1591,6 +1592,7 @@ warning 6002: The table/view 'def.database_nanofin.unprocessedapplications' does
           <EntitySet Name="claimtemplate" EntityType="Self.claimtemplate" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="claimuploaddocument" EntityType="Self.claimuploaddocument" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="consumer" EntityType="Self.consumer" Schema="database_nanofin" store:Type="Tables" />
+          <EntitySet Name="consumergroups" EntityType="Self.consumergroups" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="consumerriskvalues" EntityType="Self.consumerriskvalues" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="contactlist" EntityType="Self.contactlist" Schema="database_nanofin" store:Type="Tables" />
           <EntitySet Name="demographicriskvalues" EntityType="Self.demographicriskvalues" Schema="database_nanofin" store:Type="Tables" />
@@ -2508,6 +2510,7 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             <End Role="voucher" EntitySet="vouchers" />
             <End Role="vouchertransaction" EntitySet="vouchertransactions" />
           </AssociationSet>
+          <EntitySet Name="consumergroups" EntityType="nanofinEntites.consumergroup" />
           </EntityContainer>
         <ComplexType Name="monthlyProvinceSales_Result" />
         <ComplexType Name="ProductLocationSales_Result" />
@@ -4069,6 +4072,15 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="consumergroup">
+          <Key>
+            <PropertyRef Name="idconsumerGroups" />
+          </Key>
+          <Property Name="idconsumerGroups" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="attributes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="lastupdate" Type="DateTime" />
+          <Property Name="claimRate" Type="Decimal" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5035,6 +5047,16 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="productName" ColumnName="productName" />
                 <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="consumergroups">
+            <EntityTypeMapping TypeName="nanofinEntites.consumergroup">
+              <MappingFragment StoreEntitySet="consumergroups">
+                <ScalarProperty Name="claimRate" ColumnName="claimRate" />
+                <ScalarProperty Name="lastupdate" ColumnName="lastupdate" />
+                <ScalarProperty Name="attributes" ColumnName="attributes" />
+                <ScalarProperty Name="idconsumerGroups" ColumnName="idconsumerGroups" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -214,7 +214,6 @@
     <Compile Include="Controllers\ConsumerWalletHandlerController.cs" />
     <Compile Include="Controllers\ContactListController.cs" />
     <Compile Include="Controllers\DataGeneratorController.cs" />
-    <Compile Include="Controllers\ExtremeReportsController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsuranceManagerHandlerController.cs" />
@@ -245,6 +244,9 @@
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\consumer.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\consumergroup.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\consumerinfosummary.cs">

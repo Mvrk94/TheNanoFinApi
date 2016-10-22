@@ -414,6 +414,24 @@ namespace NanofinAPI.Models.DTOEnvironment
     }
 
 
+    public class DTOconsumergroup
+    {
+        public int idconsumerGroups { get; set; }
+        public string attributes { get; set; }
+        public Nullable<System.DateTime> lastupdate { get; set; }
+        public Nullable<decimal> claimRate { get; set; }
+
+        public DTOconsumergroup() { }
+
+        public DTOconsumergroup(consumergroup entityObjct)
+        {
+            idconsumerGroups = entityObjct.idconsumerGroups;
+            attributes = entityObjct.attributes;
+            lastupdate = entityObjct.lastupdate;
+            claimRate = entityObjct.claimRate;
+        }
+    }
+
     public class DTOdocumentspecification
     {
         public int document_ID { get; set; }

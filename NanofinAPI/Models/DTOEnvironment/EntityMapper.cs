@@ -382,6 +382,18 @@ namespace NanofinAPI.Models.DTOEnvironment
             return entityObjct;
         }
 
+        public static consumergroup updateEntity(consumergroup entityObjct, DTOconsumergroup dto)
+        {
+            if (entityObjct == null) entityObjct = new consumergroup();
+
+            entityObjct.idconsumerGroups = dto.idconsumerGroups;
+            entityObjct.attributes = dto.attributes;
+            entityObjct.lastupdate = dto.lastupdate;
+            entityObjct.claimRate = dto.claimRate;
+
+            return entityObjct;
+        }
+
 
         public static monlthlocationsalessum updateEntity(monlthlocationsalessum entityObjct, DTOmonlthlocationsalessum dto)
         {
