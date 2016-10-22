@@ -25,7 +25,62 @@ namespace NanofinAPI.Controllers
             return db.consumerpreferencesreports.ToList();
         }
 
-     
+        public List<DTOconsumergroup> getConsumerGroups()
+        {
+            var toreturn = new List<DTOconsumergroup>();
+            var list = db.consumergroups;
+
+            foreach(var temp in  list)
+            {
+                toreturn.Add(new DTOconsumergroup(temp));
+            }
+
+            return toreturn;
+        }
+
+
+        public DTOconsumergroup getSingleConsumerGroup( int consumerGroupID)
+        {
+            var temp = db.consumergroups.Find(consumerGroupID);
+            return new DTOconsumergroup(temp);
+        }
+
+        public Boolean AddConsumerGroups(DTOconsumergroup newGroup)
+        {
+            var newGroupEntity = EntityMapper.updateEntity(null, newGroup);
+
+            db.consumergroups.Add(newGroupEntity);
+            db.SaveChanges();
+            return true;
+        }
+
+        public Boolean updateConsumerGroup(DTOconsumergroup updateGroup)
+        {
+
+            var updateded = db.consumergroups.Find(updateGroup.idconsumerGroups);
+
+            EntityMapper.updateEntity(updateded, updateGroup);
+
+            db.Entry(updateded).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return true;
+        }
+
+        public Boolean sendMessageToConsumer(string message , List<int> consumerReferences)
+        {
+            var notificationH = new NotificationController();
+
+            foreach ( var  id  in consumerReferences)
+            {
+                var cons = db.consumers.Find(id);
+                notificationH.SendSMS(cons.user.userContactNumber, message);
+            }
+
+            return true;
+        }
+
+
 
 
 

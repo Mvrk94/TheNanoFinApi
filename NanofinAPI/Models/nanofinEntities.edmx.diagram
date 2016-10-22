@@ -119,6 +119,7 @@
         <AssociationConnector Association="nanofinEntites.voucher_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_2" />
+        <EntityTypeShape EntityType="nanofinEntites.consumergroup" Width="1.5" PointX="19.75" PointY="21" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
