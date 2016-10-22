@@ -84,9 +84,9 @@ namespace NanoFinAPI.Controllers
 
         // GET: api/insuranceManager/5
         [ResponseType(typeof(DTOinsuranceproduct))]
-        public async Task<IHttpActionResult> Getinsuranceproduct(int ProductProviderID, int InsuranceProduct_ID)
+        public async Task<IHttpActionResult> Getinsuranceproduct(int ProductProviderID, int productID)
         {
-            insuranceproduct prod = await db.insuranceproducts.SingleAsync(c => c.ProductProvider_ID == ProductProviderID && c.InsuranceProduct_ID == InsuranceProduct_ID);
+            insuranceproduct prod = await db.insuranceproducts.SingleAsync(c => c.ProductProvider_ID == ProductProviderID && c.Product_ID == productID);
             DTOinsuranceproduct insuranceproduct = new DTOinsuranceproduct(prod);
 
             if (insuranceproduct == null)

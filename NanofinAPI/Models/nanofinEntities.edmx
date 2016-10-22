@@ -466,6 +466,14 @@ warning 6002: The table/view 'def.database_nanofin.clientswithunprocessedapplica
           <Property Name="numUnprocessed" Type="bigint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6013: The table/view 'def.database_nanofin.consumeragegroupclaimrate' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="consumeragegroupclaimrate">
+          <Property Name="ageGroup_ID" Type="int" />
+          <Property Name="numPurchase" Type="decimal" Precision="42" Scale="0" />
+          <Property Name="numClaims" Type="decimal" Precision="32" Scale="0" />
+          <Property Name="ratio" Type="decimal" Precision="39" Scale="4" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.consumerinfosummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="consumerinfosummary">
           <Key>
@@ -568,6 +576,22 @@ warning 6002: The table/view 'def.database_nanofin.currentmonthdailysale' does n
           <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.currentmonthproductsales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="currentmonthproductsales">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+            <PropertyRef Name="productName" />
+          </Key>
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="InsuranceType_ID" Type="int" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+          <Property Name="salesTargetAmount" Type="decimal" Precision="8" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.demographicconsumerproductlocationlastmonthsales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="demographicconsumerproductlocationlastmonthsales">
           <Key>
@@ -578,7 +602,6 @@ warning 6002: The table/view 'def.database_nanofin.demographicconsumerproductloc
             <PropertyRef Name="numEmploymentStatus" />
           </Key>
           <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
-          <Property Name="datum" Type="varchar" MaxLength="37" />
           <Property Name="transactionLocation" Type="int" />
           <Property Name="numConsumers" Type="bigint" Nullable="false" />
           <Property Name="gender" Type="varchar" MaxLength="10" />
@@ -594,30 +617,6 @@ warning 6002: The table/view 'def.database_nanofin.demographicconsumerproductloc
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.demographicconsumerproductlocationmonthlysales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="demographicconsumerproductlocationmonthlysales">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="numConsumers" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="numMartialStatus" />
-            <PropertyRef Name="numEmploymentStatus" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
-          <Property Name="datum" Type="varchar" MaxLength="37" />
-          <Property Name="transactionLocation" Type="int" />
-          <Property Name="numConsumers" Type="bigint" Nullable="false" />
-          <Property Name="gender" Type="varchar" MaxLength="10" />
-          <Property Name="maritalStatus" Type="varchar" MaxLength="30" />
-          <Property Name="Product_ID" Type="int" Nullable="false" />
-          <Property Name="numMartialStatus" Type="bigint" Nullable="false" />
-          <Property Name="employmentStatus" Type="varchar" MaxLength="80" />
-          <Property Name="numEmploymentStatus" Type="bigint" Nullable="false" />
-          <Property Name="netIncome" Type="decimal" Precision="12" Scale="6" />
-          <Property Name="NumDependants" Type="decimal" Precision="14" Scale="4" />
-          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.database_nanofin.demographicconsumerproductlocationsaleslastmonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="demographicconsumerproductlocationsaleslastmonth">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
             <PropertyRef Name="numConsumers" />
@@ -879,6 +878,24 @@ warning 6002: The table/view 'def.database_nanofin.productprovideryearlysales' d
           <Property Name="yearSales" Type="decimal" Precision="30" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.database_nanofin.productsalesandtargets' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="productsalesandtargets">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="productName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="InsuranceType_ID" Type="int" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sales" Type="decimal" Precision="30" Scale="2" />
+          <Property Name="salesTargetAmount" Type="decimal" Precision="8" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.database_nanofin.productsalespermonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="productsalespermonth">
           <Key>
@@ -914,7 +931,6 @@ warning 6002: The table/view 'def.database_nanofin.provincialinsurancetypesales'
             <PropertyRef Name="insuranctTypeDescription" />
           </Key>
           <Property Name="ActiveProductItems_ID" Type="int" Nullable="false" />
-          <Property Name="datum" Type="varchar" MaxLength="37" />
           <Property Name="InsuranceType_ID" Type="int" Nullable="false" />
           <Property Name="insuranctTypeDescription" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Province" Type="varchar" MaxLength="32" />
@@ -939,8 +955,10 @@ warning 6002: The table/view 'def.database_nanofin.provincialproducttypedistribu
 warning 6002: The table/view 'def.database_nanofin.resavgamountsendpermonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="resavgamountsendpermonth">
           <Key>
+            <PropertyRef Name="VoucherSentTo" />
             <PropertyRef Name="User_ID" />
           </Key>
+          <Property Name="VoucherSentTo" Type="int" Nullable="false" />
           <Property Name="User_ID" Type="int" Nullable="false" />
           <Property Name="TransactionAmount" Type="decimal" Precision="34" Scale="6" />
           <Property Name="datum" Type="varchar" MaxLength="37" />
@@ -1725,10 +1743,19 @@ FROM `consumerprofiledata` AS `consumerprofiledata`</DefiningQuery>
 `currentmonthdailysale`.`sales`
 FROM `currentmonthdailysale` AS `currentmonthdailysale`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="currentmonthproductsales" EntityType="Self.currentmonthproductsales" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`currentmonthproductsales`.`Product_ID`, 
+`currentmonthproductsales`.`InsuranceType_ID`, 
+`currentmonthproductsales`.`insuranctTypeDescription`, 
+`currentmonthproductsales`.`productName`, 
+`currentmonthproductsales`.`sales`, 
+`currentmonthproductsales`.`salesTargetAmount`
+FROM `currentmonthproductsales` AS `currentmonthproductsales`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="demographicconsumerproductlocationlastmonthsales" EntityType="Self.demographicconsumerproductlocationlastmonthsales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `demographicconsumerproductlocationlastmonthsales`.`ActiveProductItems_ID`, 
-`demographicconsumerproductlocationlastmonthsales`.`datum`, 
 `demographicconsumerproductlocationlastmonthsales`.`transactionLocation`, 
 `demographicconsumerproductlocationlastmonthsales`.`numConsumers`, 
 `demographicconsumerproductlocationlastmonthsales`.`gender`, 
@@ -1758,23 +1785,6 @@ FROM `demographicconsumerproductlocationlastmonthsales` AS `demographicconsumerp
 `demographicconsumerproductlocationmonthlysales`.`NumDependants`, 
 `demographicconsumerproductlocationmonthlysales`.`sales`
 FROM `demographicconsumerproductlocationmonthlysales` AS `demographicconsumerproductlocationmonthlysales`</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="demographicconsumerproductlocationsaleslastmonth" EntityType="Self.demographicconsumerproductlocationsaleslastmonth" store:Type="Views" store:Schema="database_nanofin">
-            <DefiningQuery>SELECT
-`demographicconsumerproductlocationsaleslastmonth`.`ActiveProductItems_ID`, 
-`demographicconsumerproductlocationsaleslastmonth`.`datum`, 
-`demographicconsumerproductlocationsaleslastmonth`.`transactionLocation`, 
-`demographicconsumerproductlocationsaleslastmonth`.`numConsumers`, 
-`demographicconsumerproductlocationsaleslastmonth`.`gender`, 
-`demographicconsumerproductlocationsaleslastmonth`.`maritalStatus`, 
-`demographicconsumerproductlocationsaleslastmonth`.`Product_ID`, 
-`demographicconsumerproductlocationsaleslastmonth`.`numMartialStatus`, 
-`demographicconsumerproductlocationsaleslastmonth`.`employmentStatus`, 
-`demographicconsumerproductlocationsaleslastmonth`.`numEmploymentStatus`, 
-`demographicconsumerproductlocationsaleslastmonth`.`netIncome`, 
-`demographicconsumerproductlocationsaleslastmonth`.`NumDependants`, 
-`demographicconsumerproductlocationsaleslastmonth`.`sales`
-FROM `demographicconsumerproductlocationsaleslastmonth` AS `demographicconsumerproductlocationsaleslastmonth`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="getallconsumerinformation" EntityType="Self.getallconsumerinformation" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
@@ -1946,6 +1956,17 @@ FROM `productlocationmonthlysales` AS `productlocationmonthlysales`</DefiningQue
 `productprovideryearlysales`.`yearSales`
 FROM `productprovideryearlysales` AS `productprovideryearlysales`</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="productsalesandtargets" EntityType="Self.productsalesandtargets" store:Type="Views" store:Schema="database_nanofin">
+            <DefiningQuery>SELECT
+`productsalesandtargets`.`ActiveProductItems_ID`, 
+`productsalesandtargets`.`Product_ID`, 
+`productsalesandtargets`.`productName`, 
+`productsalesandtargets`.`InsuranceType_ID`, 
+`productsalesandtargets`.`insuranctTypeDescription`, 
+`productsalesandtargets`.`sales`, 
+`productsalesandtargets`.`salesTargetAmount`
+FROM `productsalesandtargets` AS `productsalesandtargets`</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="productsalespermonth" EntityType="Self.productsalespermonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `productsalespermonth`.`activeProductItemStartDate`, 
@@ -1966,7 +1987,6 @@ FROM `productswithpurchases` AS `productswithpurchases`</DefiningQuery>
           <EntitySet Name="provincialinsurancetypesales" EntityType="Self.provincialinsurancetypesales" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
 `provincialinsurancetypesales`.`ActiveProductItems_ID`, 
-`provincialinsurancetypesales`.`datum`, 
 `provincialinsurancetypesales`.`InsuranceType_ID`, 
 `provincialinsurancetypesales`.`insuranctTypeDescription`, 
 `provincialinsurancetypesales`.`Province`, 
@@ -1985,6 +2005,7 @@ FROM `provincialproducttypedistributionlastmonth` AS `provincialproducttypedistr
           </EntitySet>
           <EntitySet Name="resavgamountsendpermonth" EntityType="Self.resavgamountsendpermonth" store:Type="Views" store:Schema="database_nanofin">
             <DefiningQuery>SELECT
+`resavgamountsendpermonth`.`VoucherSentTo`, 
 `resavgamountsendpermonth`.`User_ID`, 
 `resavgamountsendpermonth`.`TransactionAmount`, 
 `resavgamountsendpermonth`.`datum`, 
@@ -2225,6 +2246,25 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
     <edmx:ConceptualModels>
       <Schema Namespace="nanofinEntites" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="database_nanofinEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="monthlyProvinceSales" ReturnType="Collection(nanofinEntites.monthlyProvinceSales_Result)">
+          <Parameter Name="providerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="processApplications1">
+          <Parameter Name="consumerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="processSingleClientApplication">
+          <Parameter Name="ActiveProductID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProductLocationSales" ReturnType="Collection(nanofinEntites.ProductLocationSales_Result)">
+          <Parameter Name="productID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="productPredictedSalesPerLocation" ReturnType="Collection(nanofinEntites.productPredictedSalesPerLocation_Result)">
+            <Parameter Name="productID" Mode="In" Type="Int32" />
+            <Parameter Name="locationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SetConsumerPreferences" />
+          <FunctionImport Name="UpdateConsumerRiskProfiles" />
+          <FunctionImport Name="updateDemographicRiskValues" />
           <EntitySet Name="activeproductitems" EntityType="nanofinEntites.activeproductitem" />
           <EntitySet Name="claims" EntityType="nanofinEntites.claim" />
           <EntitySet Name="claimtemplates" EntityType="nanofinEntites.claimtemplate" />
@@ -2255,6 +2295,47 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <EntitySet Name="vouchers" EntityType="nanofinEntites.voucher" />
           <EntitySet Name="vouchertransactions" EntityType="nanofinEntites.vouchertransaction" />
           <EntitySet Name="vouchertypes" EntityType="nanofinEntites.vouchertype" />
+          <EntitySet Name="activeproductitemswithdetails" EntityType="nanofinEntites.activeproductitemswithdetail" />
+          <EntitySet Name="chrisviewconsumeractiveproducts" EntityType="nanofinEntites.chrisviewconsumeractiveproduct" />
+          <EntitySet Name="clientswithunprocessedapplications" EntityType="nanofinEntites.clientswithunprocessedapplication" />
+          <EntitySet Name="consumerinfosummaries" EntityType="nanofinEntites.consumerinfosummary" />
+          <EntitySet Name="consumermonthlyexpenditures" EntityType="nanofinEntites.consumermonthlyexpenditure" />
+          <EntitySet Name="consumernumclaims" EntityType="nanofinEntites.consumernumclaim" />
+          <EntitySet Name="consumerpreferences" EntityType="nanofinEntites.consumerpreference" />
+          <EntitySet Name="consumerpreferencesreports" EntityType="nanofinEntites.consumerpreferencesreport" />
+          <EntitySet Name="consumerprofiledatas" EntityType="nanofinEntites.consumerprofiledata" />
+          <EntitySet Name="currentmonthdailysales" EntityType="nanofinEntites.currentmonthdailysale" />
+          <EntitySet Name="currentmonthproductsales" EntityType="nanofinEntites.currentmonthproductsale" />
+          <EntitySet Name="demographicconsumerproductlocationlastmonthsales" EntityType="nanofinEntites.demographicconsumerproductlocationlastmonthsale" />
+          <EntitySet Name="demographicconsumerproductlocationmonthlysales" EntityType="nanofinEntites.demographicconsumerproductlocationmonthlysale" />
+          <EntitySet Name="getallconsumerinformations" EntityType="nanofinEntites.getallconsumerinformation" />
+          <EntitySet Name="individualconsumerprofilerrawdatas" EntityType="nanofinEntites.individualconsumerprofilerrawdata" />
+          <EntitySet Name="insuranceproducttypemonthlysales" EntityType="nanofinEntites.insuranceproducttypemonthlysale" />
+          <EntitySet Name="lastmonthinsurancetypesales" EntityType="nanofinEntites.lastmonthinsurancetypesale" />
+          <EntitySet Name="lastmonthprovincesales" EntityType="nanofinEntites.lastmonthprovincesale" />
+          <EntitySet Name="locationsaleslastmonths" EntityType="nanofinEntites.locationsaleslastmonth" />
+          <EntitySet Name="monlthlocationsalessums" EntityType="nanofinEntites.monlthlocationsalessum" />
+          <EntitySet Name="monthlylocationsales" EntityType="nanofinEntites.monthlylocationsale" />
+          <EntitySet Name="monthlyproductsalesperlocations" EntityType="nanofinEntites.monthlyproductsalesperlocation" />
+          <EntitySet Name="monthlyprovincesalesviews" EntityType="nanofinEntites.monthlyprovincesalesview" />
+          <EntitySet Name="monthlyprovincialproducttypedistributions" EntityType="nanofinEntites.monthlyprovincialproducttypedistribution" />
+          <EntitySet Name="otpviews" EntityType="nanofinEntites.otpview" />
+          <EntitySet Name="overallproductlocationsales" EntityType="nanofinEntites.overallproductlocationsale" />
+          <EntitySet Name="productlocationmonthlysales" EntityType="nanofinEntites.productlocationmonthlysale" />
+          <EntitySet Name="productprovideryearlysales" EntityType="nanofinEntites.productprovideryearlysale" />
+          <EntitySet Name="productsalesandtargets" EntityType="nanofinEntites.productsalesandtarget" />
+          <EntitySet Name="productsalespermonths" EntityType="nanofinEntites.productsalespermonth" />
+          <EntitySet Name="productswithpurchases" EntityType="nanofinEntites.productswithpurchas" />
+          <EntitySet Name="provincialinsurancetypesales" EntityType="nanofinEntites.provincialinsurancetypesale" />
+          <EntitySet Name="provincialproducttypedistributionlastmonths" EntityType="nanofinEntites.provincialproducttypedistributionlastmonth" />
+          <EntitySet Name="resavgamountsendpermonths" EntityType="nanofinEntites.resavgamountsendpermonth" />
+          <EntitySet Name="resellersalespermonths" EntityType="nanofinEntites.resellersalespermonth" />
+          <EntitySet Name="resellersendmonthlysales" EntityType="nanofinEntites.resellersendmonthlysale" />
+          <EntitySet Name="resellersendvouchergenderspecifics" EntityType="nanofinEntites.resellersendvouchergenderspecific" />
+          <EntitySet Name="resunitssendpermonths" EntityType="nanofinEntites.resunitssendpermonth" />
+          <EntitySet Name="resvouchersendvessolds" EntityType="nanofinEntites.resvouchersendvessold" />
+          <EntitySet Name="salespermonths" EntityType="nanofinEntites.salespermonth" />
+          <EntitySet Name="unprocessedapplications" EntityType="nanofinEntites.unprocessedapplication" />
           <AssociationSet Name="activeproductitems_ibfk_1" Association="nanofinEntites.activeproductitems_ibfk_1">
             <End Role="consumer" EntitySet="consumers" />
             <End Role="activeproductitem" EntitySet="activeproductitems" />
@@ -2427,66 +2508,10 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             <End Role="voucher" EntitySet="vouchers" />
             <End Role="vouchertransaction" EntitySet="vouchertransactions" />
           </AssociationSet>
-          <EntitySet Name="activeproductitemswithdetails" EntityType="nanofinEntites.activeproductitemswithdetail" />
-          <EntitySet Name="chrisviewconsumeractiveproducts" EntityType="nanofinEntites.chrisviewconsumeractiveproduct" />
-          <EntitySet Name="consumerinfosummaries" EntityType="nanofinEntites.consumerinfosummary" />
-          <EntitySet Name="consumermonthlyexpenditures" EntityType="nanofinEntites.consumermonthlyexpenditure" />
-          <EntitySet Name="consumernumclaims" EntityType="nanofinEntites.consumernumclaim" />
-          <EntitySet Name="consumerpreferences" EntityType="nanofinEntites.consumerpreference" />
-          <EntitySet Name="consumerprofiledatas" EntityType="nanofinEntites.consumerprofiledata" />
-          <EntitySet Name="currentmonthdailysales" EntityType="nanofinEntites.currentmonthdailysale" />
-          <EntitySet Name="demographicconsumerproductlocationlastmonthsales" EntityType="nanofinEntites.demographicconsumerproductlocationlastmonthsale" />
-          <EntitySet Name="demographicconsumerproductlocationmonthlysales" EntityType="nanofinEntites.demographicconsumerproductlocationmonthlysale" />
-          <EntitySet Name="demographicconsumerproductlocationsaleslastmonths" EntityType="nanofinEntites.demographicconsumerproductlocationsaleslastmonth" />
-          <EntitySet Name="individualconsumerprofilerrawdatas" EntityType="nanofinEntites.individualconsumerprofilerrawdata" />
-          <EntitySet Name="insuranceproducttypemonthlysales" EntityType="nanofinEntites.insuranceproducttypemonthlysale" />
-          <EntitySet Name="lastmonthinsurancetypesales" EntityType="nanofinEntites.lastmonthinsurancetypesale" />
-          <EntitySet Name="lastmonthprovincesales" EntityType="nanofinEntites.lastmonthprovincesale" />
-          <EntitySet Name="locationsaleslastmonths" EntityType="nanofinEntites.locationsaleslastmonth" />
-          <EntitySet Name="monlthlocationsalessums" EntityType="nanofinEntites.monlthlocationsalessum" />
-          <EntitySet Name="monthlylocationsales" EntityType="nanofinEntites.monthlylocationsale" />
-          <EntitySet Name="monthlyproductsalesperlocations" EntityType="nanofinEntites.monthlyproductsalesperlocation" />
-          <EntitySet Name="monthlyprovincesalesviews" EntityType="nanofinEntites.monthlyprovincesalesview" />
-          <EntitySet Name="monthlyprovincialproducttypedistributions" EntityType="nanofinEntites.monthlyprovincialproducttypedistribution" />
-          <EntitySet Name="otpviews" EntityType="nanofinEntites.otpview" />
-          <EntitySet Name="overallproductlocationsales" EntityType="nanofinEntites.overallproductlocationsale" />
-          <EntitySet Name="productlocationmonthlysales" EntityType="nanofinEntites.productlocationmonthlysale" />
-          <EntitySet Name="productprovideryearlysales" EntityType="nanofinEntites.productprovideryearlysale" />
-          <EntitySet Name="productsalespermonths" EntityType="nanofinEntites.productsalespermonth" />
-          <EntitySet Name="productswithpurchases" EntityType="nanofinEntites.productswithpurchas" />
-          <EntitySet Name="provincialinsurancetypesales" EntityType="nanofinEntites.provincialinsurancetypesale" />
-          <EntitySet Name="provincialproducttypedistributionlastmonths" EntityType="nanofinEntites.provincialproducttypedistributionlastmonth" />
-          <EntitySet Name="resellersalespermonths" EntityType="nanofinEntites.resellersalespermonth" />
-          <EntitySet Name="resellersendmonthlysales" EntityType="nanofinEntites.resellersendmonthlysale" />
-          <EntitySet Name="resellersendvouchergenderspecifics" EntityType="nanofinEntites.resellersendvouchergenderspecific" />
-          <EntitySet Name="salespermonths" EntityType="nanofinEntites.salespermonth" />
-          <EntitySet Name="unprocessedapplications" EntityType="nanofinEntites.unprocessedapplication" />
-          <FunctionImport Name="monthlyProvinceSales" ReturnType="Collection(nanofinEntites.monthlyProvinceSales_Result)">
-          <Parameter Name="providerID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="processApplications1">
-          <Parameter Name="consumerID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="processSingleClientApplication">
-          <Parameter Name="ActiveProductID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ProductLocationSales" ReturnType="Collection(nanofinEntites.ProductLocationSales_Result)">
-          <Parameter Name="productID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="productPredictedSalesPerLocation" ReturnType="Collection(nanofinEntites.productPredictedSalesPerLocation_Result)">
-            <Parameter Name="productID" Mode="In" Type="Int32" />
-            <Parameter Name="locationID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SetConsumerPreferences" />
-          <FunctionImport Name="UpdateConsumerRiskProfiles" />
-          <FunctionImport Name="updateDemographicRiskValues" />
-          <EntitySet Name="clientswithunprocessedapplications" EntityType="nanofinEntites.clientswithunprocessedapplication" />
-          <EntitySet Name="consumerpreferencesreports" EntityType="nanofinEntites.consumerpreferencesreport" />
-          <EntitySet Name="getallconsumerinformations" EntityType="nanofinEntites.getallconsumerinformation" />
-          <EntitySet Name="resavgamountsendpermonths" EntityType="nanofinEntites.resavgamountsendpermonth" />
-          <EntitySet Name="resunitssendpermonths" EntityType="nanofinEntites.resunitssendpermonth" />
-          <EntitySet Name="resvouchersendvessolds" EntityType="nanofinEntites.resvouchersendvessold" />
           </EntityContainer>
+        <ComplexType Name="monthlyProvinceSales_Result" />
+        <ComplexType Name="ProductLocationSales_Result" />
+        <ComplexType Name="productPredictedSalesPerLocation_Result" />
         <EntityType Name="activeproductitem">
           <Key>
             <PropertyRef Name="ActiveProductItems_ID" />
@@ -2953,6 +2978,580 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="VoucherType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="voucherTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="vouchers" Relationship="nanofinEntites.voucher_ibfk_1" FromRole="vouchertype" ToRole="voucher" />
+        </EntityType>
+        <EntityType Name="activeproductitemswithdetail">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="Consumer_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="activeProductItemPolicyNum" />
+            <PropertyRef Name="productValue" />
+            <PropertyRef Name="duration" />
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="InsuranceType_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemPolicyNum" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="Accepted" Type="Boolean" />
+          <Property Name="productValue" Type="Decimal" Nullable="false" />
+          <Property Name="duration" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="activeProductItemEndDate" Type="DateTime" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="ProductType_ID" Type="Int32" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="productDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="productPolicyDocPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isAvailableForPurchase" Type="Boolean" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="ipCoverAmount" Type="Decimal" />
+          <Property Name="ipUnitType" Type="Int32" />
+          <Property Name="UnitTypeDescription" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="ipUnitCost" Type="Decimal" />
+          <Property Name="claimTimeframe" Type="DateTime" />
+          <Property Name="claimContactNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="claimtemplate_ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="chrisviewconsumeractiveproduct">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="Consumer_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="duration" />
+            <PropertyRef Name="productValue" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="InsuranceType_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="duration" Type="Int32" Nullable="false" />
+          <Property Name="productValue" Type="Decimal" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="productDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="ipCoverAmount" Type="Decimal" />
+          <Property Name="UnitTypeDescription" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="clientswithunprocessedapplication">
+          <Key>
+            <PropertyRef Name="idConsumer" />
+            <PropertyRef Name="numUnprocessed" />
+          </Key>
+          <Property Name="idConsumer" Type="Int32" Nullable="false" />
+          <Property Name="clientName" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="Consumer_ID" Type="Int32" />
+          <Property Name="claimRate" Type="Decimal" />
+          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="numUnprocessed" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consumerinfosummary">
+          <Key>
+            <PropertyRef Name="idConsumer" />
+          </Key>
+          <Property Name="idConsumer" Type="Int32" Nullable="false" />
+          <Property Name="clientName" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="claimRate" Type="Decimal" />
+          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="numUnprocessed" Type="Int32" />
+          <Property Name="ageRiskValue" Type="Int32" />
+          <Property Name="genderRiskValue" Type="Int32" />
+          <Property Name="maritalStatusRiskValue" Type="Int32" />
+          <Property Name="employmentStatusRiskValue" Type="Int32" />
+          <Property Name="UnemploymentRate" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="consumermonthlyexpenditure">
+          <Key>
+            <PropertyRef Name="ref" />
+            <PropertyRef Name="consumerRef" />
+          </Key>
+          <Property Name="ref" Type="Int32" Nullable="false" />
+          <Property Name="consumerRef" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="monthEXP" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="consumernumclaim">
+          <Key>
+            <PropertyRef Name="Consumer_ID" />
+            <PropertyRef Name="numClaims" />
+          </Key>
+          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
+          <Property Name="numClaims" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consumerpreference">
+          <Key>
+            <PropertyRef Name="pRef" />
+            <PropertyRef Name="consumerRef" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="numPurchase" />
+          </Key>
+          <Property Name="pRef" Type="Int32" Nullable="false" />
+          <Property Name="consumerRef" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="numPurchase" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consumerpreferencesreport">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="count" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="count" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="consumerprofiledata">
+          <Key>
+            <PropertyRef Name="idConsumer" />
+            <PropertyRef Name="Consumer_ID" />
+          </Key>
+          <Property Name="idConsumer" Type="Int32" Nullable="false" />
+          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="claimRate" Type="Decimal" />
+          <Property Name="numUnprocessed" Type="Int32" />
+          <Property Name="ageRiskValue" Type="Int32" />
+          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="ageGroup" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="genderRiskValue" Type="Int32" />
+          <Property Name="maritalStatusRiskValue" Type="Int32" />
+          <Property Name="employmentStatusRiskValue" Type="Int32" />
+          <Property Name="locationClaimRate" Type="Decimal" />
+          <Property Name="topProductCategoriesInterestedIn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="monthPurchases" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="currentmonthdailysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="currentmonthproductsale">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+            <PropertyRef Name="productName" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+          <Property Name="salesTargetAmount" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="demographicconsumerproductlocationlastmonthsale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="numConsumers" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="numMartialStatus" />
+            <PropertyRef Name="numEmploymentStatus" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="numConsumers" Type="Int64" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="numMartialStatus" Type="Int64" Nullable="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="numEmploymentStatus" Type="Int64" Nullable="false" />
+          <Property Name="netIncome" Type="Decimal" />
+          <Property Name="NumDependants" Type="Decimal" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="demographicconsumerproductlocationmonthlysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="numConsumers" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="numMartialStatus" />
+            <PropertyRef Name="numEmploymentStatus" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="numConsumers" Type="Int64" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="numMartialStatus" Type="Int64" Nullable="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="numEmploymentStatus" Type="Int64" Nullable="false" />
+          <Property Name="netIncome" Type="Decimal" />
+          <Property Name="NumDependants" Type="Decimal" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="getallconsumerinformation">
+          <Key>
+            <PropertyRef Name="idConsumer" />
+            <PropertyRef Name="userContactNumber" />
+          </Key>
+          <Property Name="idConsumer" Type="Int32" Nullable="false" />
+          <Property Name="clientName" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="claimRate" Type="Decimal" />
+          <Property Name="numUnprocessed" Type="Int32" />
+          <Property Name="ageRiskValue" Type="Int32" />
+          <Property Name="genderRiskValue" Type="Int32" />
+          <Property Name="maritalStatusRiskValue" Type="Int32" />
+          <Property Name="employmentStatusRiskValue" Type="Int32" />
+          <Property Name="locationClaimRate" Type="Decimal" />
+          <Property Name="residentTown" Type="String" MaxLength="66" FixedLength="false" Unicode="false" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="userContactNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="consumerAddress" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="individualconsumerprofilerrawdata">
+          <Key>
+            <PropertyRef Name="Consumer_ID" />
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="numPurchases" />
+          </Key>
+          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="numPurchases" Type="Int64" Nullable="false" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="numClaims" Type="Int32" />
+          <Property Name="ratio" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="insuranceproducttypemonthlysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="monthDate" Type="DateTime" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="lastmonthinsurancetypesale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="monthSales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="lastmonthprovincesale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="ProductProvider_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="locationsaleslastmonth">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="Location_ID" />
+          </Key>
+          <Property Name="purchaseDate" Type="DateTime" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Location_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="monlthlocationsalessum">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="Location_ID" />
+          </Key>
+          <Property Name="purchaseDate" Type="DateTime" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="Location_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="monthlylocationsale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="dateM" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="datum" Type="DateTime" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="monthlyproductsalesperlocation">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="Location_ID" />
+          </Key>
+          <Property Name="purchaseDate" Type="DateTime" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Location_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="monthlyprovincesalesview">
+          <Key>
+            <PropertyRef Name="ProductProvider_ID" />
+          </Key>
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="monthlyprovincialproducttypedistribution">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemEndDate" Type="DateTime" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="otpview">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="otpCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="otpRetryCount" Type="Int32" />
+          <Property Name="otpExpirationTime" Type="DateTime" />
+          <Property Name="otpNextAllowedTime" Type="DateTime" />
+          <Property Name="otpRecordCreated" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="overallproductlocationsale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="numConsumers" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="numMartialStatus" />
+            <PropertyRef Name="numEmploymentStatus" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="numConsumers" Type="Int64" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="numMartialStatus" Type="Int64" Nullable="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="numEmploymentStatus" Type="Int64" Nullable="false" />
+          <Property Name="netIncome" Type="Decimal" />
+          <Property Name="NumDependants" Type="Decimal" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="productlocationmonthlysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="date_format_activeProductItemStartDate___Y__b__" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="transactionLocation" Type="Int32" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="productprovideryearlysale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="ProductProvider_ID" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="yearSales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="productsalesandtarget">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+          <Property Name="salesTargetAmount" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="productsalespermonth">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="productName" />
+          </Key>
+          <Property Name="activeProductItemStartDate" Type="DateTime" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="productswithpurchas">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="provincialinsurancetypesale">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="provincialproducttypedistributionlastmonth">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="InsuranceType_ID" />
+            <PropertyRef Name="insuranctTypeDescription" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="activeProductItemEndDate" Type="DateTime" />
+          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="resavgamountsendpermonth">
+          <Key>
+            <PropertyRef Name="VoucherSentTo" />
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="VoucherSentTo" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionAmount" Type="Decimal" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="monthDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="resellersalespermonth">
+          <Key>
+            <PropertyRef Name="VoucherSentTo" />
+            <PropertyRef Name="transactionDate" />
+            <PropertyRef Name="Sender_ID" />
+          </Key>
+          <Property Name="VoucherSentTo" Type="Int32" Nullable="false" />
+          <Property Name="transactionDate" Type="DateTime" Nullable="false" />
+          <Property Name="Sender_ID" Type="Int32" Nullable="false" />
+          <Property Name="sold" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="resellersendmonthlysale">
+          <Key>
+            <PropertyRef Name="VoucherSentTo" />
+            <PropertyRef Name="Sender_ID" />
+          </Key>
+          <Property Name="VoucherSentTo" Type="Int32" Nullable="false" />
+          <Property Name="Sender_ID" Type="Int32" Nullable="false" />
+          <Property Name="date_format_vouchertransaction_transactionDate___Y__b__" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="resellersendvouchergenderspecific">
+          <Key>
+            <PropertyRef Name="VoucherSentTo" />
+          </Key>
+          <Property Name="VoucherSentTo" Type="Int32" Nullable="false" />
+          <Property Name="date_format_vouchertransaction_transactionDate___Y__b__" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="resunitssendpermonth">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="numUnitsSold" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="numUnitsSold" Type="Int64" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
+          <Property Name="monthDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="resvouchersendvessold">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="TransactionType_ID" />
+            <PropertyRef Name="transactionDate" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionAmount" Type="Decimal" />
+          <Property Name="TransactionType_ID" Type="Int32" Nullable="false" />
+          <Property Name="transactionDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="salespermonth">
+          <Key>
+            <PropertyRef Name="activeProductItems_ID" />
+          </Key>
+          <Property Name="activeProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="sales" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="unprocessedapplication">
+          <Key>
+            <PropertyRef Name="ActiveProductItems_ID" />
+            <PropertyRef Name="Consumer_ID" />
+            <PropertyRef Name="productName" />
+            <PropertyRef Name="productValue" />
+          </Key>
+          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
+          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
+          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="datum" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="productValue" Type="Decimal" Nullable="false" />
         </EntityType>
         <Association Name="activeproductitems_ibfk_1">
           <End Type="nanofinEntites.consumer" Role="consumer" Multiplicity="1" />
@@ -3470,581 +4069,32 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="activeproductitemswithdetail">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="User_ID" />
-            <PropertyRef Name="Consumer_ID" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="activeProductItemPolicyNum" />
-            <PropertyRef Name="productValue" />
-            <PropertyRef Name="duration" />
-            <PropertyRef Name="ProductProvider_ID" />
-            <PropertyRef Name="productName" />
-            <PropertyRef Name="InsuranceType_ID" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemPolicyNum" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="Accepted" Type="Boolean" />
-          <Property Name="productValue" Type="Decimal" Nullable="false" />
-          <Property Name="duration" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemStartDate" Type="DateTime" />
-          <Property Name="activeProductItemEndDate" Type="DateTime" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
-          <Property Name="ProductType_ID" Type="Int32" />
-          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="productDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="productPolicyDocPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="isAvailableForPurchase" Type="Boolean" />
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
-          <Property Name="ipCoverAmount" Type="Decimal" />
-          <Property Name="ipUnitType" Type="Int32" />
-          <Property Name="UnitTypeDescription" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="ipUnitCost" Type="Decimal" />
-          <Property Name="claimTimeframe" Type="DateTime" />
-          <Property Name="claimContactNo" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="claimtemplate_ID" Type="Int32" />
-        </EntityType>
-        <EntityType Name="chrisviewconsumeractiveproduct">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="Consumer_ID" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="duration" />
-            <PropertyRef Name="productValue" />
-            <PropertyRef Name="productName" />
-            <PropertyRef Name="InsuranceType_ID" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemStartDate" Type="DateTime" />
-          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="duration" Type="Int32" Nullable="false" />
-          <Property Name="productValue" Type="Decimal" Nullable="false" />
-          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="productDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
-          <Property Name="ipCoverAmount" Type="Decimal" />
-          <Property Name="UnitTypeDescription" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="consumerinfosummary">
-          <Key>
-            <PropertyRef Name="idConsumer" />
-          </Key>
-          <Property Name="idConsumer" Type="Int32" Nullable="false" />
-          <Property Name="clientName" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="claimRate" Type="Decimal" />
-          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="numUnprocessed" Type="Int32" />
-          <Property Name="ageRiskValue" Type="Int32" />
-          <Property Name="genderRiskValue" Type="Int32" />
-          <Property Name="maritalStatusRiskValue" Type="Int32" />
-          <Property Name="employmentStatusRiskValue" Type="Int32" />
-          <Property Name="UnemploymentRate" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="consumermonthlyexpenditure">
-          <Key>
-            <PropertyRef Name="ref" />
-            <PropertyRef Name="consumerRef" />
-          </Key>
-          <Property Name="ref" Type="Int32" Nullable="false" />
-          <Property Name="consumerRef" Type="Int32" Nullable="false" />
-          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="monthEXP" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="consumernumclaim">
-          <Key>
-            <PropertyRef Name="Consumer_ID" />
-            <PropertyRef Name="numClaims" />
-          </Key>
-          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
-          <Property Name="numClaims" Type="Int64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="consumerpreference">
-          <Key>
-            <PropertyRef Name="pRef" />
-            <PropertyRef Name="consumerRef" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="numPurchase" />
-          </Key>
-          <Property Name="pRef" Type="Int32" Nullable="false" />
-          <Property Name="consumerRef" Type="Int32" Nullable="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="numPurchase" Type="Int64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="consumerprofiledata">
-          <Key>
-            <PropertyRef Name="idConsumer" />
-            <PropertyRef Name="Consumer_ID" />
-          </Key>
-          <Property Name="idConsumer" Type="Int32" Nullable="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="claimRate" Type="Decimal" />
-          <Property Name="numUnprocessed" Type="Int32" />
-          <Property Name="ageRiskValue" Type="Int32" />
-          <Property Name="genderRiskValue" Type="Int32" />
-          <Property Name="maritalStatusRiskValue" Type="Int32" />
-          <Property Name="employmentStatusRiskValue" Type="Int32" />
-          <Property Name="locationClaimRate" Type="Decimal" />
-          <Property Name="topProductCategoriesInterestedIn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="monthPurchases" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
-          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="ageGroup" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="currentmonthdailysale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemStartDate" Type="DateTime" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="demographicconsumerproductlocationlastmonthsale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="numConsumers" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="numMartialStatus" />
-            <PropertyRef Name="numEmploymentStatus" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="transactionLocation" Type="Int32" />
-          <Property Name="numConsumers" Type="Int64" Nullable="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="numMartialStatus" Type="Int64" Nullable="false" />
-          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="numEmploymentStatus" Type="Int64" Nullable="false" />
-          <Property Name="netIncome" Type="Decimal" />
-          <Property Name="NumDependants" Type="Decimal" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="demographicconsumerproductlocationmonthlysale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="numConsumers" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="numMartialStatus" />
-            <PropertyRef Name="numEmploymentStatus" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="transactionLocation" Type="Int32" />
-          <Property Name="numConsumers" Type="Int64" Nullable="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="numMartialStatus" Type="Int64" Nullable="false" />
-          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="numEmploymentStatus" Type="Int64" Nullable="false" />
-          <Property Name="netIncome" Type="Decimal" />
-          <Property Name="NumDependants" Type="Decimal" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="demographicconsumerproductlocationsaleslastmonth">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="numConsumers" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="numMartialStatus" />
-            <PropertyRef Name="numEmploymentStatus" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="transactionLocation" Type="Int32" />
-          <Property Name="numConsumers" Type="Int64" Nullable="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="numMartialStatus" Type="Int64" Nullable="false" />
-          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="numEmploymentStatus" Type="Int64" Nullable="false" />
-          <Property Name="netIncome" Type="Decimal" />
-          <Property Name="NumDependants" Type="Decimal" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="individualconsumerprofilerrawdata">
-          <Key>
-            <PropertyRef Name="Consumer_ID" />
-            <PropertyRef Name="User_ID" />
-            <PropertyRef Name="numPurchases" />
-          </Key>
-          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="numPurchases" Type="Int64" Nullable="false" />
-          <Property Name="age" Type="Int32" />
-          <Property Name="numClaims" Type="Int32" />
-          <Property Name="ratio" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="insuranceproducttypemonthlysale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="InsuranceType_ID" />
-            <PropertyRef Name="insuranctTypeDescription" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="monthDate" Type="DateTime" />
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
-          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="lastmonthinsurancetypesale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="InsuranceType_ID" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
-          <Property Name="monthSales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="lastmonthprovincesale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="ProductProvider_ID" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="locationsaleslastmonth">
-          <Key>
-            <PropertyRef Name="ProductProvider_ID" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="Location_ID" />
-          </Key>
-          <Property Name="purchaseDate" Type="DateTime" />
-          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="Location_ID" Type="Int32" Nullable="false" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="city" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="monlthlocationsalessum">
-          <Key>
-            <PropertyRef Name="ProductProvider_ID" />
-            <PropertyRef Name="Location_ID" />
-          </Key>
-          <Property Name="purchaseDate" Type="DateTime" />
-          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
-          <Property Name="Location_ID" Type="Int32" Nullable="false" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="city" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="monthlylocationsale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="productName" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="dateM" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="datum" Type="DateTime" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="transactionLocation" Type="Int32" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="monthlyproductsalesperlocation">
-          <Key>
-            <PropertyRef Name="ProductProvider_ID" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="productName" />
-            <PropertyRef Name="Location_ID" />
-          </Key>
-          <Property Name="purchaseDate" Type="DateTime" />
-          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Location_ID" Type="Int32" Nullable="false" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="city" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="monthlyprovincesalesview">
-          <Key>
-            <PropertyRef Name="ProductProvider_ID" />
-          </Key>
-          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="LatLng" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="monthlyprovincialproducttypedistribution">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="InsuranceType_ID" />
-            <PropertyRef Name="insuranctTypeDescription" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemEndDate" Type="DateTime" />
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="otpview">
-          <Key>
-            <PropertyRef Name="User_ID" />
-          </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="otpCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="otpRetryCount" Type="Int32" />
-          <Property Name="otpExpirationTime" Type="DateTime" />
-          <Property Name="otpNextAllowedTime" Type="DateTime" />
-          <Property Name="otpRecordCreated" Type="DateTime" />
-        </EntityType>
-        <EntityType Name="overallproductlocationsale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="numConsumers" />
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="numMartialStatus" />
-            <PropertyRef Name="numEmploymentStatus" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="transactionLocation" Type="Int32" />
-          <Property Name="numConsumers" Type="Int64" Nullable="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="numMartialStatus" Type="Int64" Nullable="false" />
-          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="numEmploymentStatus" Type="Int64" Nullable="false" />
-          <Property Name="netIncome" Type="Decimal" />
-          <Property Name="NumDependants" Type="Decimal" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="productlocationmonthlysale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="productName" />
-            <PropertyRef Name="Product_ID" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="date_format_activeProductItemStartDate___Y__b__" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="transactionLocation" Type="Int32" />
-          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="productprovideryearlysale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="ProductProvider_ID" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="ProductProvider_ID" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemStartDate" Type="DateTime" />
-          <Property Name="yearSales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="productsalespermonth">
-          <Key>
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="productName" />
-          </Key>
-          <Property Name="activeProductItemStartDate" Type="DateTime" />
-          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="productswithpurchas">
-          <Key>
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="InsuranceType_ID" />
-            <PropertyRef Name="insuranctTypeDescription" />
-          </Key>
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
-          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="provincialinsurancetypesale">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="InsuranceType_ID" />
-            <PropertyRef Name="insuranctTypeDescription" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
-          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="provincialproducttypedistributionlastmonth">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="InsuranceType_ID" />
-            <PropertyRef Name="insuranctTypeDescription" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="activeProductItemEndDate" Type="DateTime" />
-          <Property Name="InsuranceType_ID" Type="Int32" Nullable="false" />
-          <Property Name="Province" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="insuranctTypeDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="resellersalespermonth">
-          <Key>
-            <PropertyRef Name="VoucherSentTo" />
-            <PropertyRef Name="transactionDate" />
-            <PropertyRef Name="Sender_ID" />
-          </Key>
-          <Property Name="VoucherSentTo" Type="Int32" Nullable="false" />
-          <Property Name="transactionDate" Type="DateTime" Nullable="false" />
-          <Property Name="Sender_ID" Type="Int32" Nullable="false" />
-          <Property Name="sold" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="resellersendmonthlysale">
-          <Key>
-            <PropertyRef Name="VoucherSentTo" />
-            <PropertyRef Name="Sender_ID" />
-          </Key>
-          <Property Name="VoucherSentTo" Type="Int32" Nullable="false" />
-          <Property Name="Sender_ID" Type="Int32" Nullable="false" />
-          <Property Name="date_format_vouchertransaction_transactionDate___Y__b__" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="resellersendvouchergenderspecific">
-          <Key>
-            <PropertyRef Name="VoucherSentTo" />
-          </Key>
-          <Property Name="VoucherSentTo" Type="Int32" Nullable="false" />
-          <Property Name="date_format_vouchertransaction_transactionDate___Y__b__" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="salespermonth">
-          <Key>
-            <PropertyRef Name="activeProductItems_ID" />
-          </Key>
-          <Property Name="activeProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="datum" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="sales" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="unprocessedapplication">
-          <Key>
-            <PropertyRef Name="ActiveProductItems_ID" />
-            <PropertyRef Name="Consumer_ID" />
-            <PropertyRef Name="productName" />
-            <PropertyRef Name="productValue" />
-          </Key>
-          <Property Name="ActiveProductItems_ID" Type="Int32" Nullable="false" />
-          <Property Name="Consumer_ID" Type="Int32" Nullable="false" />
-          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="datum" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
-          <Property Name="productValue" Type="Decimal" Nullable="false" />
-        </EntityType>
-        <ComplexType Name="monthlyProvinceSales_Result" />
-        <ComplexType Name="ProductLocationSales_Result" />
-        <ComplexType Name="productPredictedSalesPerLocation_Result" />
-        <EntityType Name="clientswithunprocessedapplication">
-          <Key>
-            <PropertyRef Name="idConsumer" />
-            <PropertyRef Name="numUnprocessed" />
-          </Key>
-          <Property Name="idConsumer" Type="Int32" Nullable="false" />
-          <Property Name="clientName" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
-          <Property Name="Consumer_ID" Type="Int32" />
-          <Property Name="claimRate" Type="Decimal" />
-          <Property Name="RiskCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="numUnprocessed" Type="Int64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="consumerpreferencesreport">
-          <Key>
-            <PropertyRef Name="Product_ID" />
-            <PropertyRef Name="productName" />
-            <PropertyRef Name="count" />
-          </Key>
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="productName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="count" Type="Int64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="getallconsumerinformation">
-          <Key>
-            <PropertyRef Name="idConsumer" />
-            <PropertyRef Name="userContactNumber" />
-          </Key>
-          <Property Name="idConsumer" Type="Int32" Nullable="false" />
-          <Property Name="clientName" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="maritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="employmentStatus" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="claimRate" Type="Decimal" />
-          <Property Name="numUnprocessed" Type="Int32" />
-          <Property Name="ageRiskValue" Type="Int32" />
-          <Property Name="genderRiskValue" Type="Int32" />
-          <Property Name="maritalStatusRiskValue" Type="Int32" />
-          <Property Name="employmentStatusRiskValue" Type="Int32" />
-          <Property Name="locationClaimRate" Type="Decimal" />
-          <Property Name="residentTown" Type="String" MaxLength="66" FixedLength="false" Unicode="false" />
-          <Property Name="age" Type="Int32" />
-          <Property Name="userContactNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="consumerAddress" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="resavgamountsendpermonth">
-          <Key>
-            <PropertyRef Name="User_ID" />
-          </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="TransactionAmount" Type="Decimal" />
-          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="monthDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="resunitssendpermonth">
-          <Key>
-            <PropertyRef Name="User_ID" />
-            <PropertyRef Name="numUnitsSold" />
-          </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="numUnitsSold" Type="Int64" Nullable="false" />
-          <Property Name="datum" Type="String" MaxLength="37" FixedLength="false" Unicode="false" />
-          <Property Name="monthDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="resvouchersendvessold">
-          <Key>
-            <PropertyRef Name="User_ID" />
-            <PropertyRef Name="TransactionType_ID" />
-            <PropertyRef Name="transactionDate" />
-          </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="TransactionAmount" Type="Decimal" />
-          <Property Name="TransactionType_ID" Type="Int32" Nullable="false" />
-          <Property Name="transactionDate" Type="DateTime" Nullable="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="nanofinEntitesStoreContainer" CdmEntityContainer="database_nanofinEntities">
+          <FunctionImportMapping FunctionImportName="monthlyProvinceSales" FunctionName="nanofinEntites.Store.monthlyProvinceSales">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="nanofinEntites.monthlyProvinceSales_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="processApplications1" FunctionName="nanofinEntites.Store.processApplications1" />
+          <FunctionImportMapping FunctionImportName="processSingleClientApplication" FunctionName="nanofinEntites.Store.processSingleClientApplication" />
+          <FunctionImportMapping FunctionImportName="ProductLocationSales" FunctionName="nanofinEntites.Store.ProductLocationSales">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="nanofinEntites.ProductLocationSales_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="productPredictedSalesPerLocation" FunctionName="nanofinEntites.Store.productPredictedSalesPerLocation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="nanofinEntites.productPredictedSalesPerLocation_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SetConsumerPreferences" FunctionName="nanofinEntites.Store.SetConsumerPreferences" />
+          <FunctionImportMapping FunctionImportName="UpdateConsumerRiskProfiles" FunctionName="nanofinEntites.Store.UpdateConsumerRiskProfiles" />
+          <FunctionImportMapping FunctionImportName="updateDemographicRiskValues" FunctionName="nanofinEntites.Store.updateDemographicRiskValues" />
           <EntitySetMapping Name="activeproductitems">
             <EntityTypeMapping TypeName="nanofinEntites.activeproductitem">
               <MappingFragment StoreEntitySet="activeproductitems">
@@ -4502,6 +4552,18 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="clientswithunprocessedapplications">
+            <EntityTypeMapping TypeName="nanofinEntites.clientswithunprocessedapplication">
+              <MappingFragment StoreEntitySet="clientswithunprocessedapplications">
+                <ScalarProperty Name="numUnprocessed" ColumnName="numUnprocessed" />
+                <ScalarProperty Name="RiskCategory" ColumnName="RiskCategory" />
+                <ScalarProperty Name="claimRate" ColumnName="claimRate" />
+                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
+                <ScalarProperty Name="clientName" ColumnName="clientName" />
+                <ScalarProperty Name="idConsumer" ColumnName="idConsumer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="consumerinfosummaries">
             <EntityTypeMapping TypeName="nanofinEntites.consumerinfosummary">
               <MappingFragment StoreEntitySet="consumerinfosummary">
@@ -4549,24 +4611,33 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="consumerpreferencesreports">
+            <EntityTypeMapping TypeName="nanofinEntites.consumerpreferencesreport">
+              <MappingFragment StoreEntitySet="consumerpreferencesreport">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="consumerprofiledatas">
             <EntityTypeMapping TypeName="nanofinEntites.consumerprofiledata">
               <MappingFragment StoreEntitySet="consumerprofiledata">
-                <ScalarProperty Name="ageGroup" ColumnName="ageGroup" />
-                <ScalarProperty Name="RiskCategory" ColumnName="RiskCategory" />
-                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
                 <ScalarProperty Name="monthPurchases" ColumnName="monthPurchases" />
                 <ScalarProperty Name="topProductCategoriesInterestedIn" ColumnName="topProductCategoriesInterestedIn" />
                 <ScalarProperty Name="locationClaimRate" ColumnName="locationClaimRate" />
                 <ScalarProperty Name="employmentStatusRiskValue" ColumnName="employmentStatusRiskValue" />
                 <ScalarProperty Name="maritalStatusRiskValue" ColumnName="maritalStatusRiskValue" />
                 <ScalarProperty Name="genderRiskValue" ColumnName="genderRiskValue" />
+                <ScalarProperty Name="ageGroup" ColumnName="ageGroup" />
+                <ScalarProperty Name="RiskCategory" ColumnName="RiskCategory" />
                 <ScalarProperty Name="ageRiskValue" ColumnName="ageRiskValue" />
                 <ScalarProperty Name="numUnprocessed" ColumnName="numUnprocessed" />
                 <ScalarProperty Name="claimRate" ColumnName="claimRate" />
                 <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
                 <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
                 <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
                 <ScalarProperty Name="idConsumer" ColumnName="idConsumer" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4577,6 +4648,18 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="sales" ColumnName="sales" />
                 <ScalarProperty Name="activeProductItemStartDate" ColumnName="activeProductItemStartDate" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="currentmonthproductsales">
+            <EntityTypeMapping TypeName="nanofinEntites.currentmonthproductsale">
+              <MappingFragment StoreEntitySet="currentmonthproductsales">
+                <ScalarProperty Name="salesTargetAmount" ColumnName="salesTargetAmount" />
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="insuranctTypeDescription" ColumnName="insuranctTypeDescription" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4594,7 +4677,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="numConsumers" ColumnName="numConsumers" />
                 <ScalarProperty Name="transactionLocation" ColumnName="transactionLocation" />
-                <ScalarProperty Name="datum" ColumnName="datum" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4618,22 +4700,25 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="demographicconsumerproductlocationsaleslastmonths">
-            <EntityTypeMapping TypeName="nanofinEntites.demographicconsumerproductlocationsaleslastmonth">
-              <MappingFragment StoreEntitySet="demographicconsumerproductlocationsaleslastmonth">
-                <ScalarProperty Name="sales" ColumnName="sales" />
-                <ScalarProperty Name="NumDependants" ColumnName="NumDependants" />
-                <ScalarProperty Name="netIncome" ColumnName="netIncome" />
-                <ScalarProperty Name="numEmploymentStatus" ColumnName="numEmploymentStatus" />
+          <EntitySetMapping Name="getallconsumerinformations">
+            <EntityTypeMapping TypeName="nanofinEntites.getallconsumerinformation">
+              <MappingFragment StoreEntitySet="getallconsumerinformation">
+                <ScalarProperty Name="consumerAddress" ColumnName="consumerAddress" />
+                <ScalarProperty Name="userContactNumber" ColumnName="userContactNumber" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="residentTown" ColumnName="residentTown" />
+                <ScalarProperty Name="locationClaimRate" ColumnName="locationClaimRate" />
+                <ScalarProperty Name="employmentStatusRiskValue" ColumnName="employmentStatusRiskValue" />
+                <ScalarProperty Name="maritalStatusRiskValue" ColumnName="maritalStatusRiskValue" />
+                <ScalarProperty Name="genderRiskValue" ColumnName="genderRiskValue" />
+                <ScalarProperty Name="ageRiskValue" ColumnName="ageRiskValue" />
+                <ScalarProperty Name="numUnprocessed" ColumnName="numUnprocessed" />
+                <ScalarProperty Name="claimRate" ColumnName="claimRate" />
                 <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
-                <ScalarProperty Name="numMartialStatus" ColumnName="numMartialStatus" />
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
                 <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
                 <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="numConsumers" ColumnName="numConsumers" />
-                <ScalarProperty Name="transactionLocation" ColumnName="transactionLocation" />
-                <ScalarProperty Name="datum" ColumnName="datum" />
-                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+                <ScalarProperty Name="clientName" ColumnName="clientName" />
+                <ScalarProperty Name="idConsumer" ColumnName="idConsumer" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4815,6 +4900,19 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="productsalesandtargets">
+            <EntityTypeMapping TypeName="nanofinEntites.productsalesandtarget">
+              <MappingFragment StoreEntitySet="productsalesandtargets">
+                <ScalarProperty Name="salesTargetAmount" ColumnName="salesTargetAmount" />
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="insuranctTypeDescription" ColumnName="insuranctTypeDescription" />
+                <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="productsalespermonths">
             <EntityTypeMapping TypeName="nanofinEntites.productsalespermonth">
               <MappingFragment StoreEntitySet="productsalespermonth">
@@ -4843,7 +4941,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="Province" ColumnName="Province" />
                 <ScalarProperty Name="insuranctTypeDescription" ColumnName="insuranctTypeDescription" />
                 <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
-                <ScalarProperty Name="datum" ColumnName="datum" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4857,6 +4954,17 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="InsuranceType_ID" ColumnName="InsuranceType_ID" />
                 <ScalarProperty Name="activeProductItemEndDate" ColumnName="activeProductItemEndDate" />
                 <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resavgamountsendpermonths">
+            <EntityTypeMapping TypeName="nanofinEntites.resavgamountsendpermonth">
+              <MappingFragment StoreEntitySet="resavgamountsendpermonth">
+                <ScalarProperty Name="monthDate" ColumnName="monthDate" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="VoucherSentTo" ColumnName="VoucherSentTo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4890,99 +4998,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="salespermonths">
-            <EntityTypeMapping TypeName="nanofinEntites.salespermonth">
-              <MappingFragment StoreEntitySet="salespermonth">
-                <ScalarProperty Name="sales" ColumnName="sales" />
-                <ScalarProperty Name="datum" ColumnName="datum" />
-                <ScalarProperty Name="activeProductItems_ID" ColumnName="activeProductItems_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="unprocessedapplications">
-            <EntityTypeMapping TypeName="nanofinEntites.unprocessedapplication">
-              <MappingFragment StoreEntitySet="unprocessedapplications">
-                <ScalarProperty Name="productValue" ColumnName="productValue" />
-                <ScalarProperty Name="datum" ColumnName="datum" />
-                <ScalarProperty Name="productName" ColumnName="productName" />
-                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
-                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="monthlyProvinceSales" FunctionName="nanofinEntites.Store.monthlyProvinceSales">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="nanofinEntites.monthlyProvinceSales_Result" />
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="processApplications1" FunctionName="nanofinEntites.Store.processApplications1" />
-          <FunctionImportMapping FunctionImportName="processSingleClientApplication" FunctionName="nanofinEntites.Store.processSingleClientApplication" />
-          <FunctionImportMapping FunctionImportName="ProductLocationSales" FunctionName="nanofinEntites.Store.ProductLocationSales">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="nanofinEntites.ProductLocationSales_Result" />
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="productPredictedSalesPerLocation" FunctionName="nanofinEntites.Store.productPredictedSalesPerLocation">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="nanofinEntites.productPredictedSalesPerLocation_Result" />
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SetConsumerPreferences" FunctionName="nanofinEntites.Store.SetConsumerPreferences" />
-          <FunctionImportMapping FunctionImportName="UpdateConsumerRiskProfiles" FunctionName="nanofinEntites.Store.UpdateConsumerRiskProfiles" />
-          <FunctionImportMapping FunctionImportName="updateDemographicRiskValues" FunctionName="nanofinEntites.Store.updateDemographicRiskValues" />
-          <EntitySetMapping Name="clientswithunprocessedapplications">
-            <EntityTypeMapping TypeName="nanofinEntites.clientswithunprocessedapplication">
-              <MappingFragment StoreEntitySet="clientswithunprocessedapplications">
-                <ScalarProperty Name="numUnprocessed" ColumnName="numUnprocessed" />
-                <ScalarProperty Name="RiskCategory" ColumnName="RiskCategory" />
-                <ScalarProperty Name="claimRate" ColumnName="claimRate" />
-                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
-                <ScalarProperty Name="clientName" ColumnName="clientName" />
-                <ScalarProperty Name="idConsumer" ColumnName="idConsumer" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="consumerpreferencesreports">
-            <EntityTypeMapping TypeName="nanofinEntites.consumerpreferencesreport">
-              <MappingFragment StoreEntitySet="consumerpreferencesreport">
-                <ScalarProperty Name="count" ColumnName="count" />
-                <ScalarProperty Name="productName" ColumnName="productName" />
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="getallconsumerinformations">
-            <EntityTypeMapping TypeName="nanofinEntites.getallconsumerinformation">
-              <MappingFragment StoreEntitySet="getallconsumerinformation">
-                <ScalarProperty Name="consumerAddress" ColumnName="consumerAddress" />
-                <ScalarProperty Name="userContactNumber" ColumnName="userContactNumber" />
-                <ScalarProperty Name="age" ColumnName="age" />
-                <ScalarProperty Name="residentTown" ColumnName="residentTown" />
-                <ScalarProperty Name="locationClaimRate" ColumnName="locationClaimRate" />
-                <ScalarProperty Name="employmentStatusRiskValue" ColumnName="employmentStatusRiskValue" />
-                <ScalarProperty Name="maritalStatusRiskValue" ColumnName="maritalStatusRiskValue" />
-                <ScalarProperty Name="genderRiskValue" ColumnName="genderRiskValue" />
-                <ScalarProperty Name="ageRiskValue" ColumnName="ageRiskValue" />
-                <ScalarProperty Name="numUnprocessed" ColumnName="numUnprocessed" />
-                <ScalarProperty Name="claimRate" ColumnName="claimRate" />
-                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
-                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="clientName" ColumnName="clientName" />
-                <ScalarProperty Name="idConsumer" ColumnName="idConsumer" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="resavgamountsendpermonths">
-            <EntityTypeMapping TypeName="nanofinEntites.resavgamountsendpermonth">
-              <MappingFragment StoreEntitySet="resavgamountsendpermonth">
-                <ScalarProperty Name="monthDate" ColumnName="monthDate" />
-                <ScalarProperty Name="datum" ColumnName="datum" />
-                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="resunitssendpermonths">
             <EntityTypeMapping TypeName="nanofinEntites.resunitssendpermonth">
               <MappingFragment StoreEntitySet="resunitssendpermonth">
@@ -5000,6 +5015,26 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="TransactionType_ID" ColumnName="TransactionType_ID" />
                 <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="salespermonths">
+            <EntityTypeMapping TypeName="nanofinEntites.salespermonth">
+              <MappingFragment StoreEntitySet="salespermonth">
+                <ScalarProperty Name="sales" ColumnName="sales" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="activeProductItems_ID" ColumnName="activeProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="unprocessedapplications">
+            <EntityTypeMapping TypeName="nanofinEntites.unprocessedapplication">
+              <MappingFragment StoreEntitySet="unprocessedapplications">
+                <ScalarProperty Name="productValue" ColumnName="productValue" />
+                <ScalarProperty Name="datum" ColumnName="datum" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="Consumer_ID" ColumnName="Consumer_ID" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -15,7 +15,6 @@ namespace NanofinAPI.Models
     public partial class provincialinsurancetypesale
     {
         public int ActiveProductItems_ID { get; set; }
-        public string datum { get; set; }
         public int InsuranceType_ID { get; set; }
         public string insuranctTypeDescription { get; set; }
         public string Province { get; set; }

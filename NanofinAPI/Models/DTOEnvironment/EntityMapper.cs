@@ -218,7 +218,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new demographicconsumerproductlocationlastmonthsale();
 
             entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
-            entityObjct.datum = dto.datum;
             entityObjct.transactionLocation = dto.transactionLocation;
             entityObjct.numConsumers = dto.numConsumers;
             entityObjct.gender = dto.gender;
@@ -255,31 +254,6 @@ namespace NanofinAPI.Models.DTOEnvironment
 
             return entityObjct;
         }
-
-
-        public static demographicconsumerproductlocationsaleslastmonth updateEntity(demographicconsumerproductlocationsaleslastmonth entityObjct, DTOdemographicconsumerproductlocationsaleslastmonth dto)
-        {
-            if (entityObjct == null) entityObjct = new demographicconsumerproductlocationsaleslastmonth();
-
-            entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
-            entityObjct.datum = dto.datum;
-            entityObjct.transactionLocation = dto.transactionLocation;
-            entityObjct.numConsumers = dto.numConsumers;
-            entityObjct.gender = dto.gender;
-            entityObjct.maritalStatus = dto.maritalStatus;
-            entityObjct.Product_ID = dto.Product_ID;
-            entityObjct.numMartialStatus = dto.numMartialStatus;
-            entityObjct.employmentStatus = dto.employmentStatus;
-            entityObjct.numEmploymentStatus = dto.numEmploymentStatus;
-            entityObjct.netIncome = dto.netIncome;
-            entityObjct.NumDependants = dto.NumDependants;
-            entityObjct.sales = dto.sales;
-
-            return entityObjct;
-        }
-
-
-       
 
 
         public static documentspecification updateEntity(documentspecification entityObjct, DTOdocumentspecification dto)
@@ -690,7 +664,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new provincialinsurancetypesale();
 
             entityObjct.ActiveProductItems_ID = dto.ActiveProductItems_ID;
-            entityObjct.datum = dto.datum;
             entityObjct.InsuranceType_ID = dto.InsuranceType_ID;
             entityObjct.insuranctTypeDescription = dto.insuranctTypeDescription;
             entityObjct.Province = dto.Province;

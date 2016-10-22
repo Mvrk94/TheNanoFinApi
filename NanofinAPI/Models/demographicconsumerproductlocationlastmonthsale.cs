@@ -15,7 +15,6 @@ namespace NanofinAPI.Models
     public partial class demographicconsumerproductlocationlastmonthsale
     {
         public int ActiveProductItems_ID { get; set; }
-        public string datum { get; set; }
         public Nullable<int> transactionLocation { get; set; }
         public long numConsumers { get; set; }
         public string gender { get; set; }

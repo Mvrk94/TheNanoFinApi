@@ -274,13 +274,13 @@
     <Compile Include="Models\currentmonthdailysale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\currentmonthproductsale.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\demographicconsumerproductlocationlastmonthsale.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\demographicconsumerproductlocationmonthlysale.cs">
-      <DependentUpon>nanofinEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\demographicconsumerproductlocationsaleslastmonth.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\demographicriskvalue.cs">
@@ -407,6 +407,9 @@
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\productredemptionlog.cs">
+      <DependentUpon>nanofinEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\productsalesandtarget.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\productsalespermonth.cs">

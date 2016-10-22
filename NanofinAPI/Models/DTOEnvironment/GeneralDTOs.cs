@@ -362,7 +362,6 @@ namespace NanofinAPI.Models.DTOEnvironment
         public DTOdemographicconsumerproductlocationlastmonthsale(demographicconsumerproductlocationlastmonthsale entityObjct)
         {
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
-            datum = entityObjct.datum;
             transactionLocation = entityObjct.transactionLocation;
             numConsumers = entityObjct.numConsumers;
             gender = entityObjct.gender;
@@ -413,46 +412,6 @@ namespace NanofinAPI.Models.DTOEnvironment
             sales = entityObjct.sales;
         }
     }
-
-
-    public class DTOdemographicconsumerproductlocationsaleslastmonth
-    {
-        public int ActiveProductItems_ID { get; set; }
-        public string datum { get; set; }
-        public Nullable<int> transactionLocation { get; set; }
-        public long numConsumers { get; set; }
-        public string gender { get; set; }
-        public string maritalStatus { get; set; }
-        public int Product_ID { get; set; }
-        public long numMartialStatus { get; set; }
-        public string employmentStatus { get; set; }
-        public long numEmploymentStatus { get; set; }
-        public Nullable<decimal> netIncome { get; set; }
-        public Nullable<decimal> NumDependants { get; set; }
-        public Nullable<decimal> sales { get; set; }
-
-        public DTOdemographicconsumerproductlocationsaleslastmonth() { }
-
-        public DTOdemographicconsumerproductlocationsaleslastmonth(demographicconsumerproductlocationsaleslastmonth entityObjct)
-        {
-            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
-            datum = entityObjct.datum;
-            transactionLocation = entityObjct.transactionLocation;
-            numConsumers = entityObjct.numConsumers;
-            gender = entityObjct.gender;
-            maritalStatus = entityObjct.maritalStatus;
-            Product_ID = entityObjct.Product_ID;
-            numMartialStatus = entityObjct.numMartialStatus;
-            employmentStatus = entityObjct.employmentStatus;
-            numEmploymentStatus = entityObjct.numEmploymentStatus;
-            netIncome = entityObjct.netIncome;
-            NumDependants = entityObjct.NumDependants;
-            sales = entityObjct.sales;
-        }
-    }
-
-
-    
 
 
     public class DTOdocumentspecification
@@ -1086,7 +1045,6 @@ namespace NanofinAPI.Models.DTOEnvironment
         public DTOprovincialinsurancetypesale(provincialinsurancetypesale entityObjct)
         {
             ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
-            datum = entityObjct.datum;
             InsuranceType_ID = entityObjct.InsuranceType_ID;
             insuranctTypeDescription = entityObjct.insuranctTypeDescription;
             Province = entityObjct.Province;
