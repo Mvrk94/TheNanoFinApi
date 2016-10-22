@@ -210,6 +210,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BCTestController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
+    <Compile Include="Controllers\ConsumerAdditionalProfileInfoController.cs" />
     <Compile Include="Controllers\ConsumerProfilesController.cs" />
     <Compile Include="Controllers\ConsumerWalletHandlerController.cs" />
     <Compile Include="Controllers\ContactListController.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsuranceManagerHandlerController.cs" />
+    <Compile Include="Controllers\PaymentGatewayController.cs" />
     <Compile Include="Controllers\ProcessInsuranceApplicationsController.cs" />
     <Compile Include="Controllers\ProductProviderController.cs" />
     <Compile Include="Controllers\ResellerController.cs" />

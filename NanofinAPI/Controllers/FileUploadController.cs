@@ -226,7 +226,6 @@ namespace NanofinAPI.Controllers
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
 
 
-            
 
             var path = System.Web.HttpContext.Current.Server.MapPath("/UploadFiles/"); ;
             if (File.Exists(path+filePath))
@@ -262,7 +261,7 @@ namespace NanofinAPI.Controllers
 
         }
 
-        public async Task<HttpResponseMessage> PostFileForMobile()
+        public async Task<HttpResponseMessage> PostFileForMobile(string strDirectory)
         {
             try
             {
@@ -270,9 +269,18 @@ namespace NanofinAPI.Controllers
                 {
                     throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
                 }
+                //new 
+                string fileUploadDir = "";
+                fileUploadDir = System.Web.Hosting.HostingEnvironment.MapPath("/UploadFiles/" + strDirectory + "/");
+
+                if (!System.IO.Directory.Exists(fileUploadDir))
+                {
+                    System.IO.Directory.CreateDirectory(fileUploadDir);
+                }
+
 
                 //Save To this server location
-                var uploadPath = HttpContext.Current.Server.MapPath("/UploadFiles/");
+                var uploadPath = HttpContext.Current.Server.MapPath("/UploadFiles/" + strDirectory + "/");
 
                 //Save file via CustomUploadMultipartFormProvider
                 var multipartFormDataStreamProvider = new CustomUploadMultiPartFormProvider(uploadPath);
