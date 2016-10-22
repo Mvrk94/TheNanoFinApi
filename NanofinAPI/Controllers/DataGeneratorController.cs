@@ -263,12 +263,12 @@ namespace NanofinAPI.Controllers
                         purchases.Add(purchase);
                     }
                     int resID = res.ElementAt(r).User_ID;
-                    await wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
+                   // await wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
 
 
                     foreach( var s  in purchases)
                     {
-                        await wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost + 3,  LASTYear.AddHours(24 + random.Next(92)));
+                       // await wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost + 3,  LASTYear.AddHours(24 + random.Next(92)));
                         int count = 0;
                         foreach( var pur  in s.data)
                         {
