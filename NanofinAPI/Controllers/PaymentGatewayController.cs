@@ -20,7 +20,7 @@ namespace NanofinAPI.Controllers
     {
         private nanofinEntities db = new nanofinEntities();
 
-   
+        [HttpGet]
         public  Dictionary<string, dynamic> InitRequest(double amount)
         {
             Dictionary<string, dynamic> responseData;
