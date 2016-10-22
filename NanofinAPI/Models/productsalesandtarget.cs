@@ -12,20 +12,14 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class demographicconsumerproductlocationsaleslastmonth
+    public partial class productsalesandtarget
     {
         public int ActiveProductItems_ID { get; set; }
-        public string datum { get; set; }
-        public Nullable<int> transactionLocation { get; set; }
-        public long numConsumers { get; set; }
-        public string gender { get; set; }
-        public string maritalStatus { get; set; }
         public int Product_ID { get; set; }
-        public long numMartialStatus { get; set; }
-        public string employmentStatus { get; set; }
-        public long numEmploymentStatus { get; set; }
-        public Nullable<decimal> netIncome { get; set; }
-        public Nullable<decimal> NumDependants { get; set; }
+        public string productName { get; set; }
+        public int InsuranceType_ID { get; set; }
+        public string insuranctTypeDescription { get; set; }
         public Nullable<decimal> sales { get; set; }
+        public Nullable<decimal> salesTargetAmount { get; set; }
     }
 }

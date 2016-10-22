@@ -17,28 +17,28 @@ namespace NanofinAPI.Controllers
         database_nanofinEntities db = new database_nanofinEntities();
 
         [HttpGet]
-        public List<productTarget> TargetProgrees(int productProvider, int numMonths)
+        public List<productsalesandtarget> TargetProgrees(int productProvider, int numMonths)
         {
 
-            var toreturn = new List<productTarget>();
-            var currentDate = DateTime.Now.AddMonths(numMonths*-1);
-            var datum = "2016-" + numMonths.ToString("00");
-            var salesPerProduct = (from c  in db.salespermonths where c.datum == datum select c).ToList() ;
+            //var toreturn = new List<productTarget>();
+            //var currentDate = DateTime.Now.AddMonths(numMonths*-1);
+            //var datum = "2016-" + numMonths.ToString("00");
+            //var salesPerProduct = (from c  in db.salespermonths where c.datum == datum select c).ToList() ;
             
 
-            foreach (var  p in salesPerProduct)
-            {
-                //toreturn.Add(new productTarget
-                //{
-                //    name = p.productName, 
-                //    ProductID = p.Product_ID,
-                //    currentSales = p.sales,
-                //    targetSales = db.products.Find(p.Product_ID).salesTargetAmount,
-                //    monthSate = p.datum,
-                //});
-            }
+            //foreach (var  p in salesPerProduct)
+            //{
+            //    toreturn.Add(new productTarget
+            //    {
+            //        //name = p.productName,
+            //        //ProductID = p.Product_ID,
+            //        //currentSales = p.sales,
+            //        //targetSales = db.products.Find(p.Product_ID).salesTargetAmount,
+            //        //monthSate = p.datum,
+            //    });
+            //}
 
-            return toreturn;
+            return db.productsalesandtargets.ToList();
         }
 
         [HttpGet]
@@ -148,7 +148,10 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<DTOmonthlyproductsalesperlocation> getProductLocationExpenditure(int productID)
         {
-            var list = (from c in db.monthlyproductsalesperlocations where c.datum == "2016-08" && c.Product_ID == productID select c).ToList();
+
+            DateTime now = DateTime.Now;
+            DateTime date = new DateTime(now.Year, now.Month, 1);
+            var list = (from c in db.monthlyproductsalesperlocations where c.purchaseDate >= date && c.Product_ID == productID select c).ToList();
 
             var toreturn = new List<DTOmonthlyproductsalesperlocation>();
 
@@ -167,18 +170,28 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<monlthlocationsalessum> getCurrentMonthlyLocationSalesSum()
         {
-            var list = (from c in db.monlthlocationsalessums where c.datum == "2016-Aug" select c).ToList();
+            var lowerDate = DateTime.Now;
+            var upperDate = DateTime.Now;
+
+            var currentDay = (lowerDate.Day * -1);
+            lowerDate = lowerDate.AddDays(currentDay);
+
+            var list = (from c in db.monlthlocationsalessums where c.purchaseDate > lowerDate && c.purchaseDate <= upperDate select c).ToList();
 
             return list;
         }
-
+        
 
         [HttpGet]
         public List<monthlylocationsale> getCurrentMonthLocationProductSalesDistribution(int locationID)
         {
-            var lowerDate = new DateTime(2016, 09, 1);
-            var upperDate = new DateTime(2016, 09, 30);
-            var toreturn = (from c in db.monthlylocationsales where c.datum > lowerDate where c.transactionLocation == locationID  && c.datum < upperDate  orderby c.sales descending select c).ToList();
+            var lowerDate = DateTime.Now;
+            var upperDate = DateTime.Now;
+
+            var currentDay = (lowerDate.Day * -1);
+            lowerDate = lowerDate.AddDays(currentDay);
+
+            var toreturn = (from c in db.monthlylocationsales where c.datum > lowerDate && c.transactionLocation == locationID  && c.datum < upperDate  orderby c.sales descending select c).ToList();
             
             return toreturn;
         }
@@ -193,8 +206,13 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<monthlylocationsale> getProductSalesThisMonth(int productID)
         {
-            var lowerDate = new DateTime(2016, 08, 1);
-            var upperDate = new DateTime(2016, 09, 01);
+
+            var lowerDate = DateTime.Now;
+            var upperDate = DateTime.Now;
+
+            var currentDay = (lowerDate.Day * -1);
+            lowerDate = lowerDate.AddDays(currentDay);
+
             var toreturn = (from c in db.monthlylocationsales where c.datum > lowerDate where c.Product_ID == productID && c.datum < upperDate select c).ToList();
 
             return toreturn;
@@ -251,8 +269,7 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<provincialinsurancetypesale> getProvincialProductType()
         {
-            return (from c in db.provincialinsurancetypesales where c.datum == "2016-Aug" select c).ToList();
-
+            return (from c in db.provincialinsurancetypesales select c).ToList();
         }
 
         #endregion
@@ -282,6 +299,20 @@ namespace NanofinAPI.Controllers
                 timeS[i] = counter++;
 
             return timeS;
+        }
+
+
+        public List<double> getPredictions(List<double>  prevValues, int numPredictions, int value1 = 1, int value2 = 5)
+        {
+            List<double> toreturn = new List<double>();
+
+            toreturn.AddRange(Array.ConvertAll(prevValues.ToArray(), c => (double)c));
+            ArimaModel model = new ArimaModel(toreturn.ToArray(), value1, value2);
+            model.Compute();
+
+            toreturn.AddRange(Array.ConvertAll(model.Forecast(numPredictions).ToArray(), x => (double)x));
+
+            return toreturn;
         }
 
         #endregion

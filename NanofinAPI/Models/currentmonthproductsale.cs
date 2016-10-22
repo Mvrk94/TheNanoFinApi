@@ -12,12 +12,13 @@ namespace NanofinAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class resavgamountsendpermonth
+    public partial class currentmonthproductsale
     {
-        public int VoucherSentTo { get; set; }
-        public int User_ID { get; set; }
-        public Nullable<decimal> TransactionAmount { get; set; }
-        public string datum { get; set; }
-        public string monthDate { get; set; }
+        public int Product_ID { get; set; }
+        public int InsuranceType_ID { get; set; }
+        public string insuranctTypeDescription { get; set; }
+        public string productName { get; set; }
+        public Nullable<decimal> sales { get; set; }
+        public Nullable<decimal> salesTargetAmount { get; set; }
     }
 }
