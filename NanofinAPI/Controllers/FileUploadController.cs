@@ -1,10 +1,12 @@
-﻿using System;
+﻿using NanofinAPI.Custom;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -258,6 +260,44 @@ namespace NanofinAPI.Controllers
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
 
+        }
+
+        public async Task<HttpResponseMessage> PostFileForMobile()
+        {
+            try
+            {
+                if (!Request.Content.IsMimeMultipartContent())
+                {
+                    throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+                }
+
+                //Save To this server location
+                var uploadPath = HttpContext.Current.Server.MapPath("/UploadFiles/");
+
+                //Save file via CustomUploadMultipartFormProvider
+                var multipartFormDataStreamProvider = new CustomUploadMultiPartFormProvider(uploadPath);
+
+                // Read the MIME multipart asynchronously 
+                await Request.Content.ReadAsMultipartAsync(multipartFormDataStreamProvider);
+
+                // Show all the key-value pairs.
+                foreach (var key in multipartFormDataStreamProvider.FormData.AllKeys)
+                {
+                    foreach (var val in multipartFormDataStreamProvider.FormData.GetValues(key))
+                    {
+                        Console.WriteLine(string.Format("{0}: {1}", key, val));
+                    }
+                }
+
+                return new HttpResponseMessage(HttpStatusCode.OK);
+
+            } catch (Exception e)
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotImplemented)
+                {
+                    Content = new StringContent(e.Message)
+                };
+            }
         }
 
 

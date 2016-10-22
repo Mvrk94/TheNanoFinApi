@@ -222,6 +222,7 @@
     <Compile Include="Controllers\ProductProviderController.cs" />
     <Compile Include="Controllers\ResellerController.cs" />
     <Compile Include="Controllers\signupController.cs" />
+    <Compile Include="Custom\CustomUploadMultiPartFormProvider.cs" />
     <Compile Include="Models\activeproductitem.cs">
       <DependentUpon>nanofinEntities.tt</DependentUpon>
     </Compile>
