@@ -280,7 +280,7 @@ namespace NanofinAPI.Controllers
 
 
                 //Save To this server location
-                var uploadPath = HttpContext.Current.Server.MapPath(fileUploadDir);
+                var uploadPath = HttpContext.Current.Server.MapPath("/UploadFiles/" + strDirectory + "/");
 
                 //Save file via CustomUploadMultipartFormProvider
                 var multipartFormDataStreamProvider = new CustomUploadMultiPartFormProvider(uploadPath);
