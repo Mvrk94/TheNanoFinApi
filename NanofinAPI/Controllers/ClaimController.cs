@@ -312,38 +312,38 @@ namespace NanofinAPI.Controllers
 
 
         //View claims that are in progress of being processed by the insurance manager
-        [HttpPost]
-        public List<DTOclaim> getClaimsInProgress(int ConsumerID)
+        [HttpGet]
+        public List<DTOclaimdetails> getClaimsInProgress(int userID)
         {
-            List<DTOclaim> toReturn = new List<DTOclaim>();
+            List<DTOclaimdetails> toReturn = new List<DTOclaimdetails>();
 
-            List<claim> list = (from c in db.claims where c.Consumer_ID==ConsumerID && c.claimStatus=="In Progress" select c).ToList();
+            List<claim> list = (from c in db.claims where c.consumer.User_ID==userID && c.claimStatus=="In Progress" select c).ToList();
             if (!list.Any())
             {
                 return null;
             }
             foreach (claim p in list)
             {
-                toReturn.Add(new DTOclaim(p));
+                toReturn.Add(new DTOclaimdetails(p));
             }
 
             return toReturn;
         }
 
         //View claims that have been settled in the past, will be with a doc download
-        [HttpPost]
-        public List<DTOclaim> getClaimsThatHaveBeenSettled(int ConsumerID)
+        [HttpGet]
+        public List<DTOclaimdetails> getClaimsThatHaveBeenSettled(int userID)
         {
-            List<DTOclaim> toReturn = new List<DTOclaim>();
+            List<DTOclaimdetails> toReturn = new List<DTOclaimdetails>();
 
-            List<claim> list = (from c in db.claims where c.Consumer_ID == ConsumerID && c.claimStatus == "Accepted" && c.claimPaymentFinalised == "true" select c).ToList();
+            List<claim> list = (from c in db.claims where c.consumer.User_ID == userID && c.claimStatus == "Accepted" && c.claimPaymentFinalised == "true" select c).ToList();
             if (!list.Any())
             {
                 return null;
             }
             foreach (claim p in list)
             {
-                toReturn.Add(new DTOclaim(p));
+                toReturn.Add(new DTOclaimdetails(p));
             }
 
             return toReturn;
