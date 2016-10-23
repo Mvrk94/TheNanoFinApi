@@ -312,7 +312,7 @@ namespace NanofinAPI.Controllers
 
 
         //View claims that are in progress of being processed by the insurance manager
-        [HttpPost]
+        [HttpGet]
         public List<DTOclaim> getClaimsInProgress(int ConsumerID)
         {
             List<DTOclaim> toReturn = new List<DTOclaim>();
@@ -331,7 +331,7 @@ namespace NanofinAPI.Controllers
         }
 
         //View claims that have been settled in the past, will be with a doc download
-        [HttpPost]
+        [HttpGet]
         public List<DTOclaim> getClaimsThatHaveBeenSettled(int ConsumerID)
         {
             List<DTOclaim> toReturn = new List<DTOclaim>();
