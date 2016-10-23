@@ -170,6 +170,38 @@ namespace NanofinAPI.Models.DTOEnvironment
 
         }
 
+       
+
+    }
+
+    public class DTOclaimdetails
+    {
+        public int Claim_ID { get; set; }
+        public Nullable<int> ActiveProductItems_ID { get; set; }
+        public string capturedClaimFormDataJson { get; set; }
+        public Nullable<System.DateTime> claimDate { get; set; }
+        public string claimStatus { get; set; }
+        public string claimPaymentFinalised { get; set; }
+        public Nullable<int> Consumer_ID { get; set; }
+        public string productName { get; set; }
+        public string productDescription { get; set; }
+       
+
+        public DTOclaimdetails() { }
+
+        public DTOclaimdetails(claim entityObjct)
+        {
+            Claim_ID = entityObjct.Claim_ID;
+            ActiveProductItems_ID = entityObjct.ActiveProductItems_ID;
+            capturedClaimFormDataJson = entityObjct.capturedClaimFormDataJson;
+            claimDate = entityObjct.claimDate;
+            claimStatus = entityObjct.claimStatus;
+            claimPaymentFinalised = entityObjct.claimPaymentFinalised;
+            Consumer_ID = entityObjct.Consumer_ID;
+            productName = entityObjct.activeproductitem.product.productName;
+            productDescription = entityObjct.activeproductitem.product.productDescription;
+           
+        }
     }
 
 }
