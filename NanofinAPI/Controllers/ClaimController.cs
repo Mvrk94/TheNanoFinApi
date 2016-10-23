@@ -332,9 +332,9 @@ namespace NanofinAPI.Controllers
 
         //View claims that have been settled in the past, will be with a doc download
         [HttpGet]
-        public List<DTOclaim> getClaimsThatHaveBeenSettled(int userID)
+        public List<DTOclaimdetails> getClaimsThatHaveBeenSettled(int userID)
         {
-            List<DTOclaim> toReturn = new List<DTOclaim>();
+            List<DTOclaimdetails> toReturn = new List<DTOclaimdetails>();
 
             List<claim> list = (from c in db.claims where c.consumer.User_ID == userID && c.claimStatus == "Accepted" && c.claimPaymentFinalised == "true" select c).ToList();
             if (!list.Any())
@@ -343,7 +343,7 @@ namespace NanofinAPI.Controllers
             }
             foreach (claim p in list)
             {
-                toReturn.Add(new DTOclaim(p));
+                toReturn.Add(new DTOclaimdetails(p));
             }
 
             return toReturn;
