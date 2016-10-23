@@ -35,7 +35,7 @@ namespace NanofinAPI.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
         public bool getIsHomeOwnerTypeNull(int userID)
         {
             consumer cons = (from c in db.consumers where c.User_ID == userID select c).SingleOrDefault();
