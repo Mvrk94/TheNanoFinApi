@@ -15,8 +15,13 @@ namespace NanofinAPI.Models
     public partial class consumergroup
     {
         public int idconsumerGroups { get; set; }
-        public string attributes { get; set; }
+        public string alias { get; set; }
         public Nullable<System.DateTime> lastupdate { get; set; }
         public Nullable<decimal> claimRate { get; set; }
+        public string agegroup { get; set; }
+        public string gender { get; set; }
+        public string employmentStatus { get; set; }
+        public string maritalStatus { get; set; }
+        public string riskCat { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6e2d27c8992549a4b12377b36951034c" Name="Diagram1" ZoomLevel="25">
+      <Diagram DiagramId="6e2d27c8992549a4b12377b36951034c" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="nanofinEntites.activeproductitem" Width="1.5" PointX="13.5" PointY="37.125" />
         <EntityTypeShape EntityType="nanofinEntites.claim" Width="1.5" PointX="15.75" PointY="35.25" />
         <EntityTypeShape EntityType="nanofinEntites.claimtemplate" Width="1.5" PointX="7.5" PointY="40.125" />
@@ -119,7 +119,7 @@
         <AssociationConnector Association="nanofinEntites.voucher_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_2" />
-        <EntityTypeShape EntityType="nanofinEntites.consumergroup" Width="1.5" PointX="19.75" PointY="21" />
+        <EntityTypeShape EntityType="nanofinEntites.consumergroup" Width="1.5" PointX="0.75" PointY="17.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

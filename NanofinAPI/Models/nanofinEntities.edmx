@@ -79,9 +79,14 @@
             <PropertyRef Name="idconsumerGroups" />
           </Key>
           <Property Name="idconsumerGroups" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="attributes" Type="varchar" MaxLength="100" />
+          <Property Name="alias" Type="varchar" MaxLength="100" />
           <Property Name="lastupdate" Type="datetime" Precision="0" />
           <Property Name="claimRate" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="agegroup" Type="varchar" MaxLength="45" />
+          <Property Name="gender" Type="varchar" MaxLength="45" />
+          <Property Name="employmentStatus" Type="varchar" MaxLength="45" />
+          <Property Name="maritalStatus" Type="varchar" MaxLength="45" />
+          <Property Name="riskCat" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="consumerriskvalues">
           <Key>
@@ -4077,9 +4082,14 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             <PropertyRef Name="idconsumerGroups" />
           </Key>
           <Property Name="idconsumerGroups" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="attributes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="alias" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="lastupdate" Type="DateTime" />
           <Property Name="claimRate" Type="Decimal" />
+          <Property Name="agegroup" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="employmentStatus" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="maritalStatus" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="riskCat" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5053,9 +5063,14 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <EntitySetMapping Name="consumergroups">
             <EntityTypeMapping TypeName="nanofinEntites.consumergroup">
               <MappingFragment StoreEntitySet="consumergroups">
+                <ScalarProperty Name="riskCat" ColumnName="riskCat" />
+                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
+                <ScalarProperty Name="employmentStatus" ColumnName="employmentStatus" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="agegroup" ColumnName="agegroup" />
                 <ScalarProperty Name="claimRate" ColumnName="claimRate" />
                 <ScalarProperty Name="lastupdate" ColumnName="lastupdate" />
-                <ScalarProperty Name="attributes" ColumnName="attributes" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
                 <ScalarProperty Name="idconsumerGroups" ColumnName="idconsumerGroups" />
               </MappingFragment>
             </EntityTypeMapping>
