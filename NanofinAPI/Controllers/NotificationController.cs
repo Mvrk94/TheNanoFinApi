@@ -232,7 +232,14 @@ namespace NanofinAPI.Controllers
 
         }
 
-      
+        [HttpGet]
+        public string getUsersLastOTPForBackup(int userID)
+        {
+            string OTP = "";
+            user u = (from usr in db.users where usr.User_ID == userID select usr).SingleOrDefault();
+            OTP = u.otpCode;
+            return OTP;
+        }
 
     }
 }
