@@ -19,25 +19,6 @@ namespace NanofinAPI.Controllers
         [HttpGet]
         public List<productsalesandtarget> TargetProgrees(int productProvider, int numMonths)
         {
-
-            //var toreturn = new List<productTarget>();
-            //var currentDate = DateTime.Now.AddMonths(numMonths*-1);
-            //var datum = "2016-" + numMonths.ToString("00");
-            //var salesPerProduct = (from c  in db.salespermonths where c.datum == datum select c).ToList() ;
-            
-
-            //foreach (var  p in salesPerProduct)
-            //{
-            //    toreturn.Add(new productTarget
-            //    {
-            //        //name = p.productName,
-            //        //ProductID = p.Product_ID,
-            //        //currentSales = p.sales,
-            //        //targetSales = db.products.Find(p.Product_ID).salesTargetAmount,
-            //        //monthSate = p.datum,
-            //    });
-            //}
-
             return db.productsalesandtargets.ToList();
         }
 
@@ -302,18 +283,7 @@ namespace NanofinAPI.Controllers
         }
 
 
-        public List<double> getPredictions(List<double>  prevValues, int numPredictions, int value1 = 1, int value2 = 5)
-        {
-            List<double> toreturn = new List<double>();
-
-            toreturn.AddRange(Array.ConvertAll(prevValues.ToArray(), c => (double)c));
-            ArimaModel model = new ArimaModel(toreturn.ToArray(), value1, value2);
-            model.Compute();
-
-            toreturn.AddRange(Array.ConvertAll(model.Forecast(numPredictions).ToArray(), x => (double)x));
-
-            return toreturn;
-        }
+       
 
         #endregion
 

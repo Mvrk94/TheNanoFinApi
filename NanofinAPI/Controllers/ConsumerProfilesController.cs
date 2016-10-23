@@ -8,9 +8,16 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Extreme.Statistics.TimeSeriesAnalysis;
 
 namespace NanofinAPI.Controllers
 {
+    public class predictions
+    {
+        public List<double>  values { get; set;}
+    }
+
+
     public class ConsumerProfilesController : ApiController
     {
         database_nanofinEntities db = new database_nanofinEntities();
@@ -80,7 +87,17 @@ namespace NanofinAPI.Controllers
             return true;
         }
 
+        public List<double> getPredictions([FromUri] int[] prevValues, int numPredictions, int value1 = 1, int value2 = 1)
+        {
+            List<double> toreturn = new List<double>();
 
+            toreturn.AddRange(Array.ConvertAll(prevValues, c => (double)c));
+            ArimaModel model = new ArimaModel(toreturn.ToArray(), value1, value2);
+            model.Compute();
+
+            toreturn.AddRange(Array.ConvertAll(model.Forecast(numPredictions).ToArray(), x => (double)x));
+            return toreturn;
+        }
 
 
 
