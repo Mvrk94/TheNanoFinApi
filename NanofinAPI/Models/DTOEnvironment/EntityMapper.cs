@@ -387,9 +387,14 @@ namespace NanofinAPI.Models.DTOEnvironment
             if (entityObjct == null) entityObjct = new consumergroup();
 
             entityObjct.idconsumerGroups = dto.idconsumerGroups;
-            entityObjct.attributes = dto.attributes;
+            entityObjct.alias = dto.alias;
             entityObjct.lastupdate = dto.lastupdate;
             entityObjct.claimRate = dto.claimRate;
+            entityObjct.agegroup = dto.agegroup;
+            entityObjct.gender = dto.gender;
+            entityObjct.employmentStatus = dto.employmentStatus;
+            entityObjct.maritalStatus = dto.maritalStatus;
+            entityObjct.riskCat = dto.riskCat;
 
             return entityObjct;
         }
