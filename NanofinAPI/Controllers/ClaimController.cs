@@ -313,11 +313,11 @@ namespace NanofinAPI.Controllers
 
         //View claims that are in progress of being processed by the insurance manager
         [HttpGet]
-        public List<DTOclaim> getClaimsInProgress(int ConsumerID)
+        public List<DTOclaim> getClaimsInProgress(int userID)
         {
             List<DTOclaim> toReturn = new List<DTOclaim>();
 
-            List<claim> list = (from c in db.claims where c.Consumer_ID==ConsumerID && c.claimStatus=="In Progress" select c).ToList();
+            List<claim> list = (from c in db.claims where c.consumer.User_ID==userID && c.claimStatus=="In Progress" select c).ToList();
             if (!list.Any())
             {
                 return null;
@@ -332,11 +332,11 @@ namespace NanofinAPI.Controllers
 
         //View claims that have been settled in the past, will be with a doc download
         [HttpGet]
-        public List<DTOclaim> getClaimsThatHaveBeenSettled(int ConsumerID)
+        public List<DTOclaim> getClaimsThatHaveBeenSettled(int userID)
         {
             List<DTOclaim> toReturn = new List<DTOclaim>();
 
-            List<claim> list = (from c in db.claims where c.Consumer_ID == ConsumerID && c.claimStatus == "Accepted" && c.claimPaymentFinalised == "true" select c).ToList();
+            List<claim> list = (from c in db.claims where c.consumer.User_ID == userID && c.claimStatus == "Accepted" && c.claimPaymentFinalised == "true" select c).ToList();
             if (!list.Any())
             {
                 return null;
