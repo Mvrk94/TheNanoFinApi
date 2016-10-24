@@ -14,9 +14,14 @@ namespace NanofinAPI.Controllers
 {
     public class predictions
     {
-        public List<double>  values { get; set;}
+        public string  values { get; set;}
     }
 
+    public  class ClientMessage
+    {
+        public string message { get; set; }
+        public string IDs { get; set; }
+    }
 
     public class ConsumerProfilesController : ApiController
     {
@@ -74,24 +79,27 @@ namespace NanofinAPI.Controllers
             return true;
         }
 
-        public Boolean sendMessageToConsumer(string message , List<int> consumerReferences)
+        public Boolean sendMessageToConsumer(ClientMessage advt)
         {
             var notificationH = new NotificationController();
+            var consumerReferences = advt.IDs.Split(',').Select(Int32.Parse).ToList();
 
             foreach ( var  id  in consumerReferences)
             {
                 var cons = db.consumers.Find(id);
-                notificationH.SendSMS(cons.user.userContactNumber, message);
+                notificationH.SendSMS(cons.user.userContactNumber, advt.message);
             }
 
             return true;
         }
 
-        public List<double> getPredictions([FromUri] int[] prevValues, int numPredictions, int value1 = 1, int value2 = 1)
+        public List<double> getPredictions(predictions prevValueStr, int numPredictions, int value1 = 1, int value2 = 1)
         {
             List<double> toreturn = new List<double>();
 
-            toreturn.AddRange(Array.ConvertAll(prevValues, c => (double)c));
+            var prevValues = prevValueStr.values.Split(',').Select(Int32.Parse).ToList();
+
+            toreturn.AddRange(Array.ConvertAll(prevValues.ToArray(), c => (double)c));
             ArimaModel model = new ArimaModel(toreturn.ToArray(), value1, value2);
             model.Compute();
 
