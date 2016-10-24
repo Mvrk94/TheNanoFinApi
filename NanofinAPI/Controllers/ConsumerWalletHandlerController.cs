@@ -534,6 +534,15 @@ namespace NanoFinAPI.Controllers
 
         #endregion
 
+
+        [HttpGet]
+        public string getJSONDocsRequiredForInsuranceType(int insTypeID)
+        {
+            insurancetype instype = (from i in db.insurancetypes where i.InsuranceType_ID == insTypeID select i).SingleOrDefault();
+            string docsNeededJson = instype.RequirementsForPurchase;
+            return docsNeededJson;
+        }
+
     }
 
 }
