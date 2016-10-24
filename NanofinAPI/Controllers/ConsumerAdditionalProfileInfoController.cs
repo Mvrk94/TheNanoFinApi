@@ -139,16 +139,17 @@ namespace NanofinAPI.Controllers
             return StatusCode(HttpStatusCode.OK);
         }
 
-        [HttpPut]
-        public async Task<IHttpActionResult> setIsActiveToTrue(int activeProductID)
+        [HttpGet]
+        public bool isUserNameUnique(string userName)
         {
-            activeproductitem toUpdate = (from c in db.activeproductitems where c.ActiveProductItems_ID == activeProductID select c).SingleOrDefault();
-            DTOactiveproductitem dtoAct = new DTOactiveproductitem(toUpdate);
-            dtoAct.isActive = true;
-            toUpdate = EntityMapper.updateEntity(toUpdate, dtoAct);
-            db.Entry(toUpdate).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return StatusCode(HttpStatusCode.NoContent);
+            if (db.users.Any(un => un.userName.Equals(userName)))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
