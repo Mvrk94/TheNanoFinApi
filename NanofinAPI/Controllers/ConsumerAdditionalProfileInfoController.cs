@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace NanofinAPI.Controllers
 {
@@ -39,7 +40,7 @@ namespace NanofinAPI.Controllers
         public bool getIsHomeOwnerTypeNull(int userID)
         {
             consumer cons = (from c in db.consumers where c.User_ID == userID select c).SingleOrDefault();
-            if (cons.homeOwnerType == null)
+            if (cons.homeOwnerType==null)
             {
                 return true;
             }
@@ -47,6 +48,17 @@ namespace NanofinAPI.Controllers
             {
                 return false;
             }
+
+
+            ////if one of the following are false- know that a legit value has been entered...not null, if they all are true- the IS NULL
+            //if ((!(cons.homeOwnerType.Equals("Renting"))&&(!(cons.homeOwnerType.Equals("Yes")))&&(!(cons.homeOwnerType.Equals("Living with parents")))&&(!(cons.homeOwnerType.Equals("Other")))))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
         }
 
         //Update method consumer table: Additional Sign up Info
@@ -57,11 +69,11 @@ namespace NanofinAPI.Controllers
             //user Table:
             user toUpdateUser = (from u in db.users where u.User_ID == userID select u).SingleOrDefault();
             DTOuser dtoUser = new DTOuser(toUpdateUser);
-            toUpdateUser.userFirstName = userFirstName;
-            toUpdateUser.userLastName = userLastName;
-            toUpdateUser.userName = UserName;
-            toUpdateUser.userEmail = userEmail;
-            toUpdateUser.userContactNumber = userContactNum;
+            dtoUser.userFirstName = userFirstName;
+            dtoUser.userLastName = userLastName;
+            dtoUser.userName = UserName;
+            dtoUser.userEmail = userEmail;
+            dtoUser.userContactNumber = userContactNum;
             toUpdateUser = EntityMapper.updateEntity(toUpdateUser, dtoUser);
             db.Entry(toUpdateUser).State = EntityState.Modified;
             await db.SaveChangesAsync();
@@ -91,15 +103,25 @@ namespace NanofinAPI.Controllers
             //user Table:
             user toUpdateUser = (from u in db.users where u.User_ID == userID select u).SingleOrDefault();
             DTOuser dtoUser = new DTOuser(toUpdateUser);
-            toUpdateUser.userFirstName = userFirstName;
-            toUpdateUser.userLastName = userLastName;
-            toUpdateUser.userName = UserName;
-            toUpdateUser.userEmail = userEmail;
-            toUpdateUser.userContactNumber = userContactNum;
+            dtoUser.userFirstName = userFirstName;
+            dtoUser.userLastName = userLastName;
+            dtoUser.userName = UserName;
+            dtoUser.userEmail = userEmail;
+            dtoUser.userContactNumber = userContactNum;
             toUpdateUser = EntityMapper.updateEntity(toUpdateUser, dtoUser);
             db.Entry(toUpdateUser).State = EntityState.Modified;
             await db.SaveChangesAsync();
+
+            consumer toUpdCons = (from c in db.consumers where c.User_ID==userID select c ).SingleOrDefault();
+            DTOconsumer dtoconsumer = new DTOconsumer(toUpdCons);
+            dtoconsumer.consumerDateOfBirth = consumerDateOfBirth;
+            dtoconsumer.consumerAddress = consumerAddress;
+            dtoconsumer.maritalStatus = maritalStatus;
+            toUpdCons = EntityMapper.updateEntity(toUpdCons, dtoconsumer);
+            db.Entry(toUpdCons).State = EntityState.Modified;
+            await db.SaveChangesAsync();
             return StatusCode(HttpStatusCode.OK);
+           
         }
 
         //deactivate user: to reactivate...they must just login again?
@@ -109,7 +131,7 @@ namespace NanofinAPI.Controllers
             //user Table:
             user toUpdateUser = (from u in db.users where u.User_ID == userID select u).SingleOrDefault();
             DTOuser dtoUser = new DTOuser(toUpdateUser);
-            toUpdateUser.userIsActive = false;
+            dtoUser.userIsActive = false;
 
             toUpdateUser = EntityMapper.updateEntity(toUpdateUser, dtoUser);
             db.Entry(toUpdateUser).State = EntityState.Modified;
@@ -117,6 +139,17 @@ namespace NanofinAPI.Controllers
             return StatusCode(HttpStatusCode.OK);
         }
 
-
+        [HttpGet]
+        public bool isUserNameUnique(string userName)
+        {
+            if (db.users.Any(un => un.userName.Equals(userName)))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

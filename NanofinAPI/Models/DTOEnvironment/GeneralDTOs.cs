@@ -417,18 +417,28 @@ namespace NanofinAPI.Models.DTOEnvironment
     public class DTOconsumergroup
     {
         public int idconsumerGroups { get; set; }
-        public string attributes { get; set; }
+        public string alias { get; set; }
         public Nullable<System.DateTime> lastupdate { get; set; }
         public Nullable<decimal> claimRate { get; set; }
+        public string agegroup { get; set; }
+        public string gender { get; set; }
+        public string employmentStatus { get; set; }
+        public string maritalStatus { get; set; }
+        public string riskCat { get; set; }
 
         public DTOconsumergroup() { }
 
         public DTOconsumergroup(consumergroup entityObjct)
         {
             idconsumerGroups = entityObjct.idconsumerGroups;
-            attributes = entityObjct.attributes;
+            alias = entityObjct.alias;
             lastupdate = entityObjct.lastupdate;
             claimRate = entityObjct.claimRate;
+            agegroup = entityObjct.agegroup;
+            gender = entityObjct.gender;
+            employmentStatus = entityObjct.employmentStatus;
+            maritalStatus = entityObjct.maritalStatus;
+            riskCat = entityObjct.riskCat;
         }
     }
 

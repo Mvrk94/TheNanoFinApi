@@ -20,6 +20,7 @@ namespace NanofinAPI.Models
         public string Description { get; set; }
         public Nullable<decimal> AmountToPay { get; set; }
         public Nullable<bool> hasBeenPayed { get; set; }
+        public Nullable<System.DateTime> DatePayed { get; set; }
     
         public virtual activeproductitem activeproductitem { get; set; }
         public virtual productprovider productprovider { get; set; }

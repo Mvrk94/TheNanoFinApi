@@ -43,7 +43,6 @@ namespace NanofinAPI.Models
         public virtual DbSet<processapplication> processapplications { get; set; }
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<productprovider> productproviders { get; set; }
-        public virtual DbSet<productproviderpayment> productproviderpayments { get; set; }
         public virtual DbSet<productredemptionlog> productredemptionlogs { get; set; }
         public virtual DbSet<producttype> producttypes { get; set; }
         public virtual DbSet<reseller> resellers { get; set; }
@@ -70,7 +69,6 @@ namespace NanofinAPI.Models
         public virtual DbSet<currentmonthproductsale> currentmonthproductsales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationlastmonthsale> demographicconsumerproductlocationlastmonthsales { get; set; }
         public virtual DbSet<demographicconsumerproductlocationmonthlysale> demographicconsumerproductlocationmonthlysales { get; set; }
-        public virtual DbSet<getallconsumerinformation> getallconsumerinformations { get; set; }
         public virtual DbSet<individualconsumerprofilerrawdata> individualconsumerprofilerrawdatas { get; set; }
         public virtual DbSet<insuranceproducttypemonthlysale> insuranceproducttypemonthlysales { get; set; }
         public virtual DbSet<lastmonthinsurancetypesale> lastmonthinsurancetypesales { get; set; }
@@ -96,9 +94,11 @@ namespace NanofinAPI.Models
         public virtual DbSet<resellersendvouchergenderspecific> resellersendvouchergenderspecifics { get; set; }
         public virtual DbSet<resunitssendpermonth> resunitssendpermonths { get; set; }
         public virtual DbSet<resvouchersendvessold> resvouchersendvessolds { get; set; }
-        public virtual DbSet<salespermonth> salespermonths { get; set; }
         public virtual DbSet<unprocessedapplication> unprocessedapplications { get; set; }
         public virtual DbSet<consumergroup> consumergroups { get; set; }
+        public virtual DbSet<getallconsumerinformation> getallconsumerinformations { get; set; }
+        public virtual DbSet<salespermonth> salespermonths { get; set; }
+        public virtual DbSet<productproviderpayment> productproviderpayments { get; set; }
     
         public virtual ObjectResult<monthlyProvinceSales_Result> monthlyProvinceSales(Nullable<int> providerID)
         {

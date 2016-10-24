@@ -16,6 +16,7 @@ namespace NanofinAPI.Models
     {
         public int activeProductItems_ID { get; set; }
         public string datum { get; set; }
+        public Nullable<System.DateTime> monthDate { get; set; }
         public Nullable<decimal> sales { get; set; }
     }
 }
