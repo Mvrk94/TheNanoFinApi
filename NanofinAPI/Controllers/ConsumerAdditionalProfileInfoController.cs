@@ -40,7 +40,7 @@ namespace NanofinAPI.Controllers
         public bool getIsHomeOwnerTypeNull(int userID)
         {
             consumer cons = (from c in db.consumers where c.User_ID == userID select c).SingleOrDefault();
-            if ((cons.homeOwnerType.Equals("Renting")))
+            if (cons.homeOwnerType==null)
             {
                 return true;
             }
@@ -48,6 +48,17 @@ namespace NanofinAPI.Controllers
             {
                 return false;
             }
+
+
+            ////if one of the following are false- know that a legit value has been entered...not null, if they all are true- the IS NULL
+            //if ((!(cons.homeOwnerType.Equals("Renting"))&&(!(cons.homeOwnerType.Equals("Yes")))&&(!(cons.homeOwnerType.Equals("Living with parents")))&&(!(cons.homeOwnerType.Equals("Other")))))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
         }
 
         //Update method consumer table: Additional Sign up Info
