@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6e2d27c8992549a4b12377b36951034c" Name="Diagram1" ZoomLevel="82">
+      <Diagram DiagramId="6e2d27c8992549a4b12377b36951034c" Name="Diagram1" ZoomLevel="66">
         <EntityTypeShape EntityType="nanofinEntites.activeproductitem" Width="1.5" PointX="13.5" PointY="37.125" />
         <EntityTypeShape EntityType="nanofinEntites.claim" Width="1.5" PointX="15.75" PointY="35.25" />
         <EntityTypeShape EntityType="nanofinEntites.claimtemplate" Width="1.5" PointX="7.5" PointY="40.125" />
@@ -43,12 +43,11 @@
         <EntityTypeShape EntityType="nanofinEntites.consumernumclaim" Width="1.5" PointX="0.75" PointY="7.75" />
         <EntityTypeShape EntityType="nanofinEntites.consumerpreference" Width="1.5" PointX="2.75" PointY="7.75" />
         <EntityTypeShape EntityType="nanofinEntites.consumerpreferencesreport" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="nanofinEntites.consumerprofiledata" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="nanofinEntites.consumerprofiledata" Width="2" PointX="8.75" PointY="3.75" />
         <EntityTypeShape EntityType="nanofinEntites.currentmonthdailysale" Width="1.5" PointX="4.75" PointY="8.75" />
         <EntityTypeShape EntityType="nanofinEntites.currentmonthproductsale" Width="1.5" PointX="6.75" PointY="8.75" />
         <EntityTypeShape EntityType="nanofinEntites.demographicconsumerproductlocationlastmonthsale" Width="1.5" PointX="8.75" PointY="8.75" />
         <EntityTypeShape EntityType="nanofinEntites.demographicconsumerproductlocationmonthlysale" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="nanofinEntites.getallconsumerinformation" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="nanofinEntites.individualconsumerprofilerrawdata" Width="1.5" PointX="10.75" PointY="5.75" />
         <EntityTypeShape EntityType="nanofinEntites.insuranceproducttypemonthlysale" Width="1.5" PointX="10.75" PointY="8.75" />
         <EntityTypeShape EntityType="nanofinEntites.lastmonthinsurancetypesale" Width="1.5" PointX="2.75" PointY="11.75" />
@@ -74,7 +73,6 @@
         <EntityTypeShape EntityType="nanofinEntites.resellersendvouchergenderspecific" Width="1.5" PointX="16.75" PointY="9.75" />
         <EntityTypeShape EntityType="nanofinEntites.resunitssendpermonth" Width="1.5" PointX="10.75" PointY="16.75" />
         <EntityTypeShape EntityType="nanofinEntites.resvouchersendvessold" Width="1.5" PointX="16.75" PointY="12.75" />
-        <EntityTypeShape EntityType="nanofinEntites.salespermonth" Width="1.5" PointX="12.75" PointY="16.75" />
         <EntityTypeShape EntityType="nanofinEntites.unprocessedapplication" Width="1.5" PointX="14.75" PointY="16.75" />
         <AssociationConnector Association="nanofinEntites.activeproductitems_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.activeproductitems_ibfk_2" />
@@ -120,6 +118,8 @@
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_1" />
         <AssociationConnector Association="nanofinEntites.vouchertransaction_ibfk_2" />
         <EntityTypeShape EntityType="nanofinEntites.consumergroup" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="nanofinEntites.getallconsumerinformation" Width="1.5" PointX="17.375" PointY="15.75" />
+        <EntityTypeShape EntityType="nanofinEntites.salespermonth" Width="1.5" PointX="19.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
