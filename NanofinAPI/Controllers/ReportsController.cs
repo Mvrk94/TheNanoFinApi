@@ -212,5 +212,12 @@ namespace NanofinAPI.Controllers
         {
             return (from c in db.resellersalespermonths where c.Sender_ID == resellerID orderby c.transactionDate ascending select c ).ToList();
         }
+
+
+        [HttpGet]
+        public List<salespermonth> getSalesPermonthForRange(DateTime start , DateTime end)
+        {
+            return (from c in db.salespermonths where c.monthDate >= start && c.monthDate <= end select c).ToList();
+        }
     }
 }

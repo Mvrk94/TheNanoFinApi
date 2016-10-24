@@ -26,6 +26,7 @@ namespace NanofinAPI.Models
         public Nullable<int> maritalStatusRiskValue { get; set; }
         public Nullable<int> employmentStatusRiskValue { get; set; }
         public Nullable<decimal> locationClaimRate { get; set; }
+        public string IDnumber { get; set; }
         public string residentTown { get; set; }
         public Nullable<int> age { get; set; }
         public string userContactNumber { get; set; }
