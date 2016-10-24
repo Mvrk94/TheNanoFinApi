@@ -84,6 +84,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public string userContactNumber { get; set; }
         public string userPassword { get; set; }
         public Nullable<bool> isuserActive { get; set; }
+        public string maritalStatus { get; set; }
 
         public DTOconsumerUserProfileInfo()
         { }
@@ -100,6 +101,8 @@ namespace NanofinAPI.Models.DTOEnvironment
             userContactNumber = c.user.userContactNumber;
             userPassword = c.user.userPassword;
             isuserActive = c.user.userIsActive;
+            maritalStatus = c.maritalStatus;
+               
         }
 
     }
