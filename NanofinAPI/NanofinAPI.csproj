@@ -314,6 +314,7 @@
     <Compile Include="Models\DTOEnvironment\EntityMapper.cs" />
     <Compile Include="Models\DTOEnvironment\GeneralDTOs.cs" />
     <Compile Include="Models\DTOEnvironment\ProductDTO.cs" />
+    <Compile Include="Models\DTOEnvironment\ProductProviderAgregatePaymentInformation.cs" />
     <Compile Include="Models\DTOEnvironment\Reports.cs" />
     <Compile Include="Models\DTOEnvironment\reportsMaster.cs" />
     <Compile Include="Models\DTOEnvironment\ValidatorDTO.cs" />

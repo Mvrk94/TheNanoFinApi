@@ -96,7 +96,24 @@ namespace NanofinAPI.Controllers
             {
                 toReturn.Add(new DTOproductproviderpayment(p));
             }
+
             return toReturn;
+        }
+
+
+        [HttpGet]
+        public productproviderpayment getTotalOwedToPP(int productProviderID)
+        {
+            List<DTOproductproviderpayment> toReturn = new List<DTOproductproviderpayment>();
+            List<productproviderpayment> list = (from l in db.productproviderpayments where l.ProductProvider_ID == productProviderID && l.hasBeenPayed == false select l).ToList();
+
+            productproviderpayment prodProvider = new productproviderpayment();
+            prodProvider.AmountToPay = 0;
+            foreach (productproviderpayment p in list)
+            {
+                prodProvider.AmountToPay += p.AmountToPay;
+            }
+            return prodProvider;
         }
 
 
