@@ -43,7 +43,6 @@ namespace NanofinAPI.Models
         public virtual DbSet<processapplication> processapplications { get; set; }
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<productprovider> productproviders { get; set; }
-        public virtual DbSet<productproviderpayment> productproviderpayments { get; set; }
         public virtual DbSet<productredemptionlog> productredemptionlogs { get; set; }
         public virtual DbSet<producttype> producttypes { get; set; }
         public virtual DbSet<reseller> resellers { get; set; }
@@ -99,6 +98,7 @@ namespace NanofinAPI.Models
         public virtual DbSet<consumergroup> consumergroups { get; set; }
         public virtual DbSet<getallconsumerinformation> getallconsumerinformations { get; set; }
         public virtual DbSet<salespermonth> salespermonths { get; set; }
+        public virtual DbSet<productproviderpayment> productproviderpayments { get; set; }
     
         public virtual ObjectResult<monthlyProvinceSales_Result> monthlyProvinceSales(Nullable<int> providerID)
         {

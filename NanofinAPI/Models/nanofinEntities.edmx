@@ -237,6 +237,7 @@
           <Property Name="Description" Type="varchar" MaxLength="45" />
           <Property Name="AmountToPay" Type="decimal" Precision="8" Scale="2" />
           <Property Name="hasBeenPayed" Type="bool" />
+          <Property Name="DatePayed" Type="date" />
         </EntityType>
         <EntityType Name="productredemptionlog">
           <Key>
@@ -2292,7 +2293,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <EntitySet Name="processapplications" EntityType="nanofinEntites.processapplication" />
           <EntitySet Name="products" EntityType="nanofinEntites.product" />
           <EntitySet Name="productproviders" EntityType="nanofinEntites.productprovider" />
-          <EntitySet Name="productproviderpayments" EntityType="nanofinEntites.productproviderpayment" />
           <EntitySet Name="productredemptionlogs" EntityType="nanofinEntites.productredemptionlog" />
           <EntitySet Name="producttypes" EntityType="nanofinEntites.producttype" />
           <EntitySet Name="resellers" EntityType="nanofinEntites.reseller" />
@@ -2368,10 +2368,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <AssociationSet Name="fk_transactionlocation" Association="nanofinEntites.fk_transactionlocation">
             <End Role="location" EntitySet="locations" />
             <End Role="activeproductitem" EntitySet="activeproductitems" />
-          </AssociationSet>
-          <AssociationSet Name="productproviderpayment_ibfk_2" Association="nanofinEntites.productproviderpayment_ibfk_2">
-            <End Role="activeproductitem" EntitySet="activeproductitems" />
-            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
           </AssociationSet>
           <AssociationSet Name="productredemptionlog_ibfk_2" Association="nanofinEntites.productredemptionlog_ibfk_2">
             <End Role="activeproductitem" EntitySet="activeproductitems" />
@@ -2465,10 +2461,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             <End Role="user" EntitySet="users" />
             <End Role="productprovider" EntitySet="productproviders" />
           </AssociationSet>
-          <AssociationSet Name="productproviderpayment_ibfk_1" Association="nanofinEntites.productproviderpayment_ibfk_1">
-            <End Role="productprovider" EntitySet="productproviders" />
-            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
-          </AssociationSet>
           <AssociationSet Name="productredemptionlog_ibfk_1" Association="nanofinEntites.productredemptionlog_ibfk_1">
             <End Role="voucher" EntitySet="vouchers" />
             <End Role="productredemptionlog" EntitySet="productredemptionlogs" />
@@ -2520,6 +2512,15 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <EntitySet Name="consumergroups" EntityType="nanofinEntites.consumergroup" />
           <EntitySet Name="getallconsumerinformations" EntityType="nanofinEntites.getallconsumerinformation" />
           <EntitySet Name="salespermonths" EntityType="nanofinEntites.salespermonth" />
+          <EntitySet Name="productproviderpayments" EntityType="nanofinEntites.productproviderpayment" />
+          <AssociationSet Name="productproviderpayment_ibfk_2" Association="nanofinEntites.productproviderpayment_ibfk_2">
+            <End Role="activeproductitem" EntitySet="activeproductitems" />
+            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
+          </AssociationSet>
+          <AssociationSet Name="productproviderpayment_ibfk_1" Association="nanofinEntites.productproviderpayment_ibfk_1">
+            <End Role="productprovider" EntitySet="productproviders" />
+            <End Role="productproviderpayment" EntitySet="productproviderpayments" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="monthlyProvinceSales_Result" />
         <ComplexType Name="ProductLocationSales_Result" />
@@ -2546,8 +2547,8 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <NavigationProperty Name="claims" Relationship="nanofinEntites.ActiveProductItems_ID" FromRole="activeproductitem" ToRole="claim" />
           <NavigationProperty Name="claimuploaddocuments" Relationship="nanofinEntites.claimuploaddocument_ibfk_2" FromRole="activeproductitem" ToRole="claimuploaddocument" />
           <NavigationProperty Name="location1" Relationship="nanofinEntites.fk_transactionlocation" FromRole="activeproductitem" ToRole="location" />
-          <NavigationProperty Name="productproviderpayments" Relationship="nanofinEntites.productproviderpayment_ibfk_2" FromRole="activeproductitem" ToRole="productproviderpayment" />
           <NavigationProperty Name="productredemptionlogs" Relationship="nanofinEntites.productredemptionlog_ibfk_2" FromRole="activeproductitem" ToRole="productredemptionlog" />
+          <NavigationProperty Name="productproviderpayments" Relationship="nanofinEntites.productproviderpayment_ibfk_2" FromRole="activeproductitem" ToRole="productproviderpayment" />
         </EntityType>
         <EntityType Name="claim">
           <Key>
@@ -2780,19 +2781,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <NavigationProperty Name="products" Relationship="nanofinEntites.product_ibfk_1" FromRole="productprovider" ToRole="product" />
           <NavigationProperty Name="user" Relationship="nanofinEntites.productprovider_ibfk_1" FromRole="productprovider" ToRole="user" />
           <NavigationProperty Name="productproviderpayments" Relationship="nanofinEntites.productproviderpayment_ibfk_1" FromRole="productprovider" ToRole="productproviderpayment" />
-        </EntityType>
-        <EntityType Name="productproviderpayment">
-          <Key>
-            <PropertyRef Name="Productproviderpayment_ID" />
-          </Key>
-          <Property Name="Productproviderpayment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductProvider_ID" Type="Int32" />
-          <Property Name="ActiveProductItems_ID" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="AmountToPay" Type="Decimal" />
-          <Property Name="hasBeenPayed" Type="Boolean" />
-          <NavigationProperty Name="activeproductitem" Relationship="nanofinEntites.productproviderpayment_ibfk_2" FromRole="productproviderpayment" ToRole="activeproductitem" />
-          <NavigationProperty Name="productprovider" Relationship="nanofinEntites.productproviderpayment_ibfk_1" FromRole="productproviderpayment" ToRole="productprovider" />
         </EntityType>
         <EntityType Name="productredemptionlog">
           <Key>
@@ -3607,18 +3595,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="productproviderpayment_ibfk_2">
-          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="0..1" />
-          <End Type="nanofinEntites.productproviderpayment" Role="productproviderpayment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="activeproductitem">
-              <PropertyRef Name="ActiveProductItems_ID" />
-            </Principal>
-            <Dependent Role="productproviderpayment">
-              <PropertyRef Name="ActiveProductItems_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="productredemptionlog_ibfk_2">
           <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="1" />
           <End Type="nanofinEntites.productredemptionlog" Role="productredemptionlog" Multiplicity="*" />
@@ -3895,18 +3871,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="productproviderpayment_ibfk_1">
-          <End Type="nanofinEntites.productprovider" Role="productprovider" Multiplicity="0..1" />
-          <End Type="nanofinEntites.productproviderpayment" Role="productproviderpayment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productprovider">
-              <PropertyRef Name="ProductProvider_ID" />
-            </Principal>
-            <Dependent Role="productproviderpayment">
-              <PropertyRef Name="ProductProvider_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="productredemptionlog_ibfk_1">
           <End Type="nanofinEntites.voucher" Role="voucher" Multiplicity="1" />
           <End Type="nanofinEntites.productredemptionlog" Role="productredemptionlog" Multiplicity="*" />
@@ -4097,6 +4061,44 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
           <Property Name="monthDate" Type="DateTime" />
           <Property Name="sales" Type="Decimal" />
         </EntityType>
+        <EntityType Name="productproviderpayment">
+          <Key>
+            <PropertyRef Name="Productproviderpayment_ID" />
+          </Key>
+          <Property Name="Productproviderpayment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductProvider_ID" Type="Int32" />
+          <Property Name="ActiveProductItems_ID" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="AmountToPay" Type="Decimal" />
+          <Property Name="hasBeenPayed" Type="Boolean" />
+          <Property Name="DatePayed" Type="DateTime" />
+          <NavigationProperty Name="activeproductitem" Relationship="nanofinEntites.productproviderpayment_ibfk_2" FromRole="productproviderpayment" ToRole="activeproductitem" />
+          <NavigationProperty Name="productprovider" Relationship="nanofinEntites.productproviderpayment_ibfk_1" FromRole="productproviderpayment" ToRole="productprovider" />
+        </EntityType>
+        <Association Name="productproviderpayment_ibfk_2">
+          <End Type="nanofinEntites.activeproductitem" Role="activeproductitem" Multiplicity="0..1" />
+          <End Type="nanofinEntites.productproviderpayment" Role="productproviderpayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="activeproductitem">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Principal>
+            <Dependent Role="productproviderpayment">
+              <PropertyRef Name="ActiveProductItems_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="productproviderpayment_ibfk_1">
+          <End Type="nanofinEntites.productprovider" Role="productprovider" Multiplicity="0..1" />
+          <End Type="nanofinEntites.productproviderpayment" Role="productproviderpayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productprovider">
+              <PropertyRef Name="ProductProvider_ID" />
+            </Principal>
+            <Dependent Role="productproviderpayment">
+              <PropertyRef Name="ProductProvider_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4344,18 +4346,6 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="ppCompanyName" ColumnName="ppCompanyName" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productproviderpayments">
-            <EntityTypeMapping TypeName="nanofinEntites.productproviderpayment">
-              <MappingFragment StoreEntitySet="productproviderpayment">
-                <ScalarProperty Name="hasBeenPayed" ColumnName="hasBeenPayed" />
-                <ScalarProperty Name="AmountToPay" ColumnName="AmountToPay" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
-                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
-                <ScalarProperty Name="Productproviderpayment_ID" ColumnName="Productproviderpayment_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5080,6 +5070,19 @@ FROM `unprocessedapplications` AS `unprocessedapplications`</DefiningQuery>
                 <ScalarProperty Name="monthDate" ColumnName="monthDate" />
                 <ScalarProperty Name="datum" ColumnName="datum" />
                 <ScalarProperty Name="activeProductItems_ID" ColumnName="activeProductItems_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productproviderpayments">
+            <EntityTypeMapping TypeName="nanofinEntites.productproviderpayment">
+              <MappingFragment StoreEntitySet="productproviderpayment">
+                <ScalarProperty Name="DatePayed" ColumnName="DatePayed" />
+                <ScalarProperty Name="hasBeenPayed" ColumnName="hasBeenPayed" />
+                <ScalarProperty Name="AmountToPay" ColumnName="AmountToPay" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ActiveProductItems_ID" ColumnName="ActiveProductItems_ID" />
+                <ScalarProperty Name="ProductProvider_ID" ColumnName="ProductProvider_ID" />
+                <ScalarProperty Name="Productproviderpayment_ID" ColumnName="Productproviderpayment_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
