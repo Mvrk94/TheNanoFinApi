@@ -370,6 +370,27 @@ namespace NanofinAPI.Controllers
             return toReturn;
         }
 
+        //View claims that have been settled in the past, will be with a doc download
+        [HttpGet]
+        public List<DTOclaimdetails> ChrisgetClaimsThatHaveBeenSettled(int userID)
+        {
+            List<DTOclaimdetails> toReturn = new List<DTOclaimdetails>();
+
+            List<claim> list = (from c in db.claims where c.consumer.User_ID == userID && c.claimStatus == "Accepted" && c.claimPaymentFinalised == "true" select c).ToList();
+            if (!list.Any())
+            {
+                return null;
+            }
+            foreach (claim p in list)
+            {
+                var toAdd = new DTOclaimdetails(p);
+                toAdd.ProductID = p.activeproductitem.Product_ID;
+                toReturn.Add(toAdd);
+            }
+
+            return toReturn;
+        }
+
 
     }
 }
