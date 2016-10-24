@@ -116,6 +116,12 @@ namespace NanofinAPI.Controllers
             return prodProvider;
         }
 
+        [HttpGet]
+        public DTOProductProviderAgregatePaymentInformation getProductProviderAgregatePaymentInfo(int productProviderID)
+        {
+            return new DTOProductProviderAgregatePaymentInformation(productProviderID);
+        }
+
 
         //update the isActive based on Expiries
         [HttpPut]
