@@ -603,6 +603,7 @@
       <DependentUpon>nanofinEntities.edmx</DependentUpon>
     </Content>
     <Content Include="MultiChainLib\Solution Items\COPYING" />
+    <None Include="Properties\PublishProfiles\nanofinapifinal.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
