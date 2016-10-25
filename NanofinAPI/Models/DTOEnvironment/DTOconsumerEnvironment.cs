@@ -179,6 +179,7 @@ namespace NanofinAPI.Models.DTOEnvironment
 
     public class DTOclaimdetails
     {
+
         public int Claim_ID { get; set; }
         public Nullable<int> ActiveProductItems_ID { get; set; }
         public string capturedClaimFormDataJson { get; set; }
@@ -188,6 +189,7 @@ namespace NanofinAPI.Models.DTOEnvironment
         public Nullable<int> Consumer_ID { get; set; }
         public string productName { get; set; }
         public string productDescription { get; set; }
+        public int ProductID { get; set; }
        
 
         public DTOclaimdetails() { }

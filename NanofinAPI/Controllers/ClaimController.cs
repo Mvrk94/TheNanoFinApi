@@ -330,6 +330,27 @@ namespace NanofinAPI.Controllers
             return toReturn;
         }
 
+        //View claims that are in progress of being processed by the insurance manager
+        [HttpGet]
+        public List<DTOclaimdetails> ChrisgetClaimsInProgress(int userID)
+        {
+            List<DTOclaimdetails> toReturn = new List<DTOclaimdetails>();
+
+            List<claim> list = (from c in db.claims where c.consumer.User_ID == userID && c.claimStatus == "In Progress" select c).ToList();
+            if (!list.Any())
+            {
+                return null;
+            }
+            foreach (claim p in list)
+            {
+                var toAdd  = new DTOclaimdetails(p);
+                toAdd.ProductID = p.activeproductitem.Product_ID;
+                toReturn.Add(toAdd);
+            }
+
+            return toReturn;
+        }
+
         //View claims that have been settled in the past, will be with a doc download
         [HttpGet]
         public List<DTOclaimdetails> getClaimsThatHaveBeenSettled(int userID)
@@ -344,6 +365,27 @@ namespace NanofinAPI.Controllers
             foreach (claim p in list)
             {
                 toReturn.Add(new DTOclaimdetails(p));
+            }
+
+            return toReturn;
+        }
+
+        //View claims that have been settled in the past, will be with a doc download
+        [HttpGet]
+        public List<DTOclaimdetails> ChrisgetClaimsThatHaveBeenSettled(int userID)
+        {
+            List<DTOclaimdetails> toReturn = new List<DTOclaimdetails>();
+
+            List<claim> list = (from c in db.claims where c.consumer.User_ID == userID && c.claimStatus == "Accepted" && c.claimPaymentFinalised == "true" select c).ToList();
+            if (!list.Any())
+            {
+                return null;
+            }
+            foreach (claim p in list)
+            {
+                var toAdd = new DTOclaimdetails(p);
+                toAdd.ProductID = p.activeproductitem.Product_ID;
+                toReturn.Add(toAdd);
             }
 
             return toReturn;
