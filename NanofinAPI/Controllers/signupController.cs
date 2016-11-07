@@ -19,6 +19,13 @@ namespace NanofinAPI.Controllers
 
         database_nanofinEntities db = new database_nanofinEntities();
 
+        public bool login(string email, string pass)
+        {
+            String hashedPass = BCrypt.Net.BCrypt.HashPassword(pass);
+            email.Replace("%40", "@");
+           return ( db.users.Count(a => a.userEmail == email && a.userPassword == hashedPass ) ==  1 )? true : false  ;
+        }
+
         //post user - return true if user created. userType - 11 for consumer & 21 for reseller
         public async Task<DTOuser> postUser(string fName, string lName, string userName, string email,string contactNum, string userPass, int userType, string IDnumber ) 
         {
