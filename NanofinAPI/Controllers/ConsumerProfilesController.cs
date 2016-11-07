@@ -103,26 +103,19 @@ namespace NanofinAPI.Controllers
 
         public Boolean sendVoucherToClients(ClientVouchers advt)
         {
-            var notificationH = new NotificationController();
+         
             var consumerReferences = advt.IDs.Split(',').Select(Int32.Parse).ToList();
 
             foreach (var id in consumerReferences)
             {
                 var cons = db.consumers.Find(id);
-               
+                sendVoucher(cons.User_ID, (Decimal)advt.amount);
             }
 
             return true;
         }
 
-
-    
-        private  async Task sendConsmerVoucher(int User_ID, double amount)
-        {
-            refundConsumer(User_ID, (Decimal)amount);
-        }
-
-        private void refundConsumer(int userID, decimal voucherAmout)
+        private void sendVoucher(int userID, decimal voucherAmout)
         {
             voucher newVoucher = new voucher();
             newVoucher.User_ID = userID;
@@ -147,7 +140,6 @@ namespace NanofinAPI.Controllers
             DateTime now = DateTime.Now;
             now.ToString("yyyy-MM-dd H:mm:ss");
             newTransaction.transactionDate = now;
-            //newTransaction.transactionDate = DateTime.Now;
 
             transactiontype transactionTypeString = (from list in db.transactiontypes where list.TransactionType_ID == transactionTypeID select list).Single();
             newTransaction.transactionDescription = transactionTypeString.transactionTypeDescription;
