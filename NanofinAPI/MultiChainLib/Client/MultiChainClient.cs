@@ -13,6 +13,7 @@ using TheNanoFinAPI.MultiChainLib.Controllers;
 
 namespace MultiChainLib
 {
+    //note open source code from - https://github.com/PbjCloud/MultiChainLib used
     public class MultiChainClient
     {
         private string Hostname { get; set; }

@@ -36,7 +36,7 @@ namespace NanofinAPI.Controllers
         {
             var ConsumerID = db.consumerriskvalues.Find(idConsumer).Consumer_ID;
 
-            return (from c in db.unprocessedapplications  select c).ToList();
+            return (from c in db.unprocessedapplications where c.Consumer_ID ==  ConsumerID  select c).ToList();
         }
 
         [HttpPost]

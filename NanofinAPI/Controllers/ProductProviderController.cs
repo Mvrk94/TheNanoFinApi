@@ -96,7 +96,57 @@ namespace NanofinAPI.Controllers
             {
                 toReturn.Add(new DTOproductproviderpayment(p));
             }
+
             return toReturn;
+        }
+
+
+        [HttpGet]
+        public productproviderpayment getTotalOwedToPP(int productProviderID)
+        {
+            List<DTOproductproviderpayment> toReturn = new List<DTOproductproviderpayment>();
+            List<productproviderpayment> list = (from l in db.productproviderpayments where l.ProductProvider_ID == productProviderID && l.hasBeenPayed == false select l).ToList();
+
+            productproviderpayment prodProvider = new productproviderpayment();
+            prodProvider.AmountToPay = 0;
+            foreach (productproviderpayment p in list)
+            {
+                prodProvider.AmountToPay += p.AmountToPay;
+            }
+
+
+            return prodProvider;
+
+            //decimal totalAmount = 0;
+
+            //List<productproviderpayment> paymentsNotMadeList = (from c in db.productproviderpayments where c.hasBeenPayed == false && c.ProductProvider_ID == productProviderID select c).ToList();
+
+
+            //foreach (productproviderpayment p in paymentsNotMadeList)
+            //{
+            //    activeproductitem activeProdRelatedToPayment = (from a in db.activeproductitems where a.ActiveProductItems_ID == p.ActiveProductItems_ID select a).SingleOrDefault();
+            //    if (activeProdRelatedToPayment.Accepted == true)//this product purchase has gone through so the IM should get paid
+            //    {
+            //        totalAmount += activeProdRelatedToPayment.productValue;
+            //    }
+            //    else // IM has not accepted/rejected the product.
+            //         //Check if date has passed - if yes pay IM. This assumes the rule: consumer covered by Product Provider unless IM rejects
+            //    {
+            //        if (hasDateExpired(activeProdRelatedToPayment.activeProductItemEndDate) == true)
+            //        {
+            //            totalAmount += activeProdRelatedToPayment.productValue;
+            //        }
+            //    }
+
+            //}
+
+            //return totalAmount;
+        }
+
+        [HttpGet]
+        public DTOProductProviderAgregatePaymentInformation getProductProviderAgregatePaymentInfo(int productProviderID)
+        {
+            return new DTOProductProviderAgregatePaymentInformation(productProviderID);
         }
 
 
