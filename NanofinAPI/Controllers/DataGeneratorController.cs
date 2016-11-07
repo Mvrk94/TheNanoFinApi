@@ -145,7 +145,9 @@ namespace NanofinAPI.Controllers
             int continueM = consumerStart;
             DateTime  LASTYear  =  new DateTime (yearStart, monthStart,01);
              resllerCounter = numResellers;
-            while(LASTYear < DateTime.Now)
+
+            var run = true;
+            while(run)
             {
 
                 
@@ -263,17 +265,17 @@ namespace NanofinAPI.Controllers
                         purchases.Add(purchase);
                     }
                     int resID = res.ElementAt(r).User_ID;
-                   // await wc.buyBulkVoucher(resID, (Decimal)overallCost + 60, LASTYear.AddHours( random.Next(24))); 
+                   await wc.buyBulkVoucher(resID, (Decimal)overallCost + 60); 
 
 
                     foreach( var s  in purchases)
                     {
-                       // await wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost + 3,  LASTYear.AddHours(24 + random.Next(92)));
+                        await wc.sendBulkVoucher(resID, s.ConsumerID, (Decimal)s.cost + 3);
                         int count = 0;
                         foreach( var pur  in s.data)
                         {
                             count++;
-                            if (pur != 0) await cw.redeemProduct(s.ConsumerID, pur, 1, LASTYear.AddHours(168*count +random.Next(150)));
+                            if (pur != 0) await cw.redeemProduct(s.ConsumerID, pur, 1,DateTime.Now);
                         }
                     }
 
@@ -284,6 +286,8 @@ namespace NanofinAPI.Controllers
                 continueM = 0;
            
                 LASTYear = LASTYear.AddMonths(1);
+
+                run = false;
             }
 
 
