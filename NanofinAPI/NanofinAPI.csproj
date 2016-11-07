@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44396</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -604,6 +604,8 @@
       <DependentUpon>nanofinEntities.edmx</DependentUpon>
     </Content>
     <Content Include="MultiChainLib\Solution Items\COPYING" />
+    <None Include="Properties\PublishProfiles\Local IIS Website.pubxml" />
+    <None Include="Properties\PublishProfiles\nanofinapifinal.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

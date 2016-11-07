@@ -85,6 +85,8 @@ namespace NanofinAPI.Controllers
             }
         }
 
+      
+
         //Show list of payments to still make to this PP
         [HttpGet]
         public List<DTOproductproviderpayment> ppPaymentsToStillMake(int productProviderID)
@@ -101,21 +103,23 @@ namespace NanofinAPI.Controllers
         }
 
 
+
+
         [HttpGet]
-        public productproviderpayment getTotalOwedToPP(int productProviderID)
+        public Nullable<decimal> getTotalOwedToPP(int productProviderID)
         {
             List<DTOproductproviderpayment> toReturn = new List<DTOproductproviderpayment>();
             List<productproviderpayment> list = (from l in db.productproviderpayments where l.ProductProvider_ID == productProviderID && l.hasBeenPayed == false select l).ToList();
 
             productproviderpayment prodProvider = new productproviderpayment();
-            prodProvider.AmountToPay = 0;
+            Nullable<decimal> AmountToPay = 0;
             foreach (productproviderpayment p in list)
             {
-                prodProvider.AmountToPay += p.AmountToPay;
+                AmountToPay += p.AmountToPay;
             }
 
 
-            return prodProvider;
+            return AmountToPay;
 
             //decimal totalAmount = 0;
 
