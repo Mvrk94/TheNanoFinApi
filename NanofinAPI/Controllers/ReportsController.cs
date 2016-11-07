@@ -109,7 +109,7 @@ namespace NanofinAPI.Controllers
             [HttpGet]
             public decimal getThisMonthSales()
             {
-                return (Decimal)(from c in db.salespermonths where c.datum == "2016-09" select c.sales).First();
+                return (Decimal)(from c in db.salespermonths where c.datum == "2016-11" select c.sales).First();
             }
 
 

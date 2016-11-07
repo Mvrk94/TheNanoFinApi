@@ -85,6 +85,8 @@ namespace NanofinAPI.Controllers
             }
         }
 
+      
+
         //Show list of payments to still make to this PP
         [HttpGet]
         public List<DTOproductproviderpayment> ppPaymentsToStillMake(int productProviderID)
@@ -101,46 +103,48 @@ namespace NanofinAPI.Controllers
         }
 
 
+
+
         [HttpGet]
         public Nullable<decimal> getTotalOwedToPP(int productProviderID)
         {
-            //List<DTOproductproviderpayment> toReturn = new List<DTOproductproviderpayment>();
-            //List<productproviderpayment> list = (from l in db.productproviderpayments where l.ProductProvider_ID == productProviderID && l.hasBeenPayed == false select l).ToList();
+            List<DTOproductproviderpayment> toReturn = new List<DTOproductproviderpayment>();
+            List<productproviderpayment> list = (from l in db.productproviderpayments where l.ProductProvider_ID == productProviderID && l.hasBeenPayed == false select l).ToList();
 
-            //productproviderpayment prodProvider = new productproviderpayment();
-            //prodProvider.AmountToPay = 0;
-            //foreach (productproviderpayment p in list)
-            //{
-            //    prodProvider.AmountToPay += p.AmountToPay;
-            //}
-
-
-            //return prodProvider.AmountToPay;
-
-            decimal totalAmount = 0;
-
-            List<productproviderpayment> paymentsNotMadeList = (from c in db.productproviderpayments where c.hasBeenPayed == false && c.ProductProvider_ID == productProviderID select c).ToList();
-
-
-            foreach (productproviderpayment p in paymentsNotMadeList)
+            productproviderpayment prodProvider = new productproviderpayment();
+            Nullable<decimal> AmountToPay = 0;
+            foreach (productproviderpayment p in list)
             {
-                activeproductitem activeProdRelatedToPayment = (from a in db.activeproductitems where a.ActiveProductItems_ID == p.ActiveProductItems_ID select a).SingleOrDefault();
-                if (activeProdRelatedToPayment.Accepted == true)//this product purchase has gone through so the IM should get paid
-                {
-                    totalAmount += activeProdRelatedToPayment.productValue;
-                }
-                else // IM has not accepted/rejected the product.
-                     //Check if date has passed - if yes pay IM. This assumes the rule: consumer covered by Product Provider unless IM rejects
-                {
-                    if (hasDateExpired(activeProdRelatedToPayment.activeProductItemEndDate) == true)
-                    {
-                        totalAmount += activeProdRelatedToPayment.productValue;
-                    }
-                }
-
+                AmountToPay += p.AmountToPay;
             }
 
-            return totalAmount;
+
+            return AmountToPay;
+
+            //decimal totalAmount = 0;
+
+            //List<productproviderpayment> paymentsNotMadeList = (from c in db.productproviderpayments where c.hasBeenPayed == false && c.ProductProvider_ID == productProviderID select c).ToList();
+
+
+            //foreach (productproviderpayment p in paymentsNotMadeList)
+            //{
+            //    activeproductitem activeProdRelatedToPayment = (from a in db.activeproductitems where a.ActiveProductItems_ID == p.ActiveProductItems_ID select a).SingleOrDefault();
+            //    if (activeProdRelatedToPayment.Accepted == true)//this product purchase has gone through so the IM should get paid
+            //    {
+            //        totalAmount += activeProdRelatedToPayment.productValue;
+            //    }
+            //    else // IM has not accepted/rejected the product.
+            //         //Check if date has passed - if yes pay IM. This assumes the rule: consumer covered by Product Provider unless IM rejects
+            //    {
+            //        if (hasDateExpired(activeProdRelatedToPayment.activeProductItemEndDate) == true)
+            //        {
+            //            totalAmount += activeProdRelatedToPayment.productValue;
+            //        }
+            //    }
+
+            //}
+
+            //return totalAmount;
         }
 
         [HttpGet]

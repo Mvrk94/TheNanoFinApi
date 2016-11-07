@@ -29,7 +29,7 @@ namespace NanofinAPI.Models.DTOEnvironment
             cellPhoneNumber = tmpUser.userContactNumber;
             email = tmpUser.userEmail;
 
-           // totalCashedOwed = (int) ctrl.getTotalOwedToPP(tmpProductProvider.ProductProvider_ID);
+            //totalCashedOwed = (int) ctrl.getTotalOwedToPP(tmpProductProvider.ProductProvider_ID);
 
             lastPaymentMade = Latestpayment.DatePayed;
 
