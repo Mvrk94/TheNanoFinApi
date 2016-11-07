@@ -46,10 +46,11 @@ namespace NanoFinAPI.Controllers
             if (prodTotalPrice <= totalVoucherValues)//can proceed with redeem process
             {
                 //Add activeProductItem to db table
-                var consumerID = (from c in db.consumers where c.User_ID == userID select c.Consumer_ID).FirstOrDefault();
+                var consumerID = (from c in db.consumers where c.User_ID == userID select c).FirstOrDefault();
                 string prodUnitType = getProductUnitType(productID);//get the string eg 'per day'
                 DateTime endDate = getEndDateForProduct(prodUnitType, startdate, numberUnits); //calculate the end date
-                activeproductitem activeProdItem = createActiveProductItem(consumerID, productID, "", true, prodTotalPrice, numberUnits, startdate,endDate);
+                activeproductitem activeProdItem = createActiveProductItem(consumerID.Consumer_ID, productID, "", true, prodTotalPrice, numberUnits, startdate,endDate);
+                activeProdItem.transactionlocation =  consumerID.Location_ID;
                 db.activeproductitems.Add(activeProdItem);
                 db.SaveChanges();
 

@@ -38,7 +38,7 @@ namespace NanofinAPI.Controllers
 
         [HttpGet]
         [ResponseType(typeof(Boolean))]
-        public async Task<Boolean> ModifyHistory(int voucherID, int consumerVoucherID)
+        public bool ModifyHistory(int voucherID, int consumerVoucherID)
         {
 
             List<voucher> voucherlist = (from c in db.vouchers where c.VoucherType_ID == 1 && c.Voucher_ID > voucherID select c).ToList();
@@ -70,7 +70,7 @@ namespace NanofinAPI.Controllers
 
         [HttpGet]
         [ResponseType(typeof(String))]
-        public async Task<String> CorrectTransactions()
+        public string CorrectTransactions()
         {
             //List<vouchertransaction> voucherTrans = (from c  in  db.vouchertransactions where ;
             //List<>
@@ -96,7 +96,7 @@ namespace NanofinAPI.Controllers
 
         [HttpGet]
         [ResponseType(typeof(Boolean))]
-        public async Task<Boolean> PurchaseProducts()
+        public bool PurchaseProducts()
         {
 
             List<voucher> voucherlist = (from c in db.vouchers where c.voucherValue >= 10 select c).ToList();
@@ -127,7 +127,7 @@ namespace NanofinAPI.Controllers
 
 
         //Send bulk voucher recipient details known
-        public async Task<IHttpActionResult> sendBulkVoucher(int resellerUserID, int recipientID, decimal transferAmount)
+        public IHttpActionResult sendBulkVoucher(int resellerUserID, int recipientID, decimal transferAmount)
         {
             if (isUserReseller(resellerUserID))
             {
@@ -201,7 +201,7 @@ namespace NanofinAPI.Controllers
         }
 
         //Send bulk voucher recipient details unknown
-        public async Task<IHttpActionResult> sendBulkVoucher_RecipientUnknown(int resellerUserID, string recipientDetails, decimal transferAmount)
+        public IHttpActionResult sendBulkVoucher_RecipientUnknown(int resellerUserID, string recipientDetails, decimal transferAmount)
         {
             if (isUserReseller(resellerUserID))
             {
